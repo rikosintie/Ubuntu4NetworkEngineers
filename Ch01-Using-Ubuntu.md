@@ -39,4 +39,6 @@ In VLC, select “Playback, Renderer” to send VLC’s output to the TV. I don�
 You can hit the Windows key (Superkey is what it's called in Ubuntu) to bring up a search box. Below the search box are the applications that are currently running. You can use the Tab key and enter or use the mouse
 to select one of the running applications.
 
-test
+<p align="center" width="100%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Open-Applications.png">
+</p>
