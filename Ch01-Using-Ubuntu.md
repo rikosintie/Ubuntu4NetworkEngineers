@@ -65,7 +65,7 @@ The dock has a small icon at the bottom, it’s three rows of three dots. You ca
 installed applications in a window. At the bottom, you can select all or frequent. Below is a screenshot with
 frequent selected. As you can see, it’s very easy to get started.
 
-<p align="left" width="100%">
+<p align="left" width="20%">
     <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
 </p>
 
