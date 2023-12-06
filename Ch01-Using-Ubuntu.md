@@ -74,3 +74,20 @@ frequent selected. As you can see, it’s very easy to get started with the file
 <p align="center" width="100%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
 </p>
+
+If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page.
+
+
+If you have several copies of the same application open you can switch between them using the super key and `\~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
+icon and then select the one you want but the keyboard is much easier and faster.
+
+### Configuring the Dock
+
+Like Windows and Mac, Ubuntu with the Gnome DE has a dock. You customize the dock using the Gnome Settings app. To open the Gnome Settings application, click on "Gnome Quick Setting" icon at the top right corner of the
+screen, then select the Wrench/Screw drive icon.
+
+At the top left corner of the screen there is a magnifying glass. Click it and enter "dock". The dock is under "Ubuntu Desktop".
+
+<p align="center" width="100%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock.png">
+</p>
