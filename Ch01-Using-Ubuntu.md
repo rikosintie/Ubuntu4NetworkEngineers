@@ -91,3 +91,27 @@ At the top left corner of the screen there is a magnifying glass. Click it and e
 <p align="center" width="100%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock.png">
 </p>
+
+One thing I do to help me use all three operating systems
+is to customize the dock to be similar across all OSes. I set Windows, Mac and Linux to display it on the left
+because I am almost 100% of the time on a laptop and the screen is wider than it is high. I also set the dock to
+auto-hide and display a few commonly used apps.
+
+
+Using the super key and typing the first few letters is now my preferred work flow rather than clicking on an
+icon in the dock. One thing I like about Ubuntu is that when I’m using multiple monitors it puts the dock on all
+the monitors.
+
+### Customizing Gnome - Tweaks
+Ubuntu ships with Gnome as the desktop environment (DE). Unlike Windows, Linux distributions can use a lot of different desktop environments (DE). Gnome is the default desktop environment for Ubuntu and Redhat (CentOS) so it has a large percentage of the desktop market in Linux. If you want to try others there are several official flavors of Ubuntu that you can download from Canonical.
+
+First, install the Gnome Tweak Tool. This tool allows you to change a lot of the Gnome settings to your preference. Open a terminal window, ctrl + alt + t, and type the following:
+
+`sudo apt install gnome-tweak-tool`
+
+Enter your password and the install will start. When it finishes, hit the super key, type `tweak` and hit enter.
+It’s very similar to “System Preferences” on the Mac or Control Panel on Windows up to 7.
+
+<p align="center" width="100%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/tweaks.png">
+</p>
