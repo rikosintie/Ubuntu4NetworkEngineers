@@ -170,4 +170,8 @@ Files works well and has a feature I love – Tabs! Once you get used to having 
 and the right click menu showing “Open in Terminal”. You can see how convenient this is.
 
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
-Files has an extensive right click menu. Here are the options for the folder Visio.
+Files has an extensive right click menu. Here are the options for the folder Scripts.
+
+<p align="center" width="100%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
+</p>
