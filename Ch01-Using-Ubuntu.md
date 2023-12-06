@@ -66,9 +66,9 @@ installed applications in a window. At the bottom, you can select all or frequen
 frequent selected. As you can see, it’s very easy to get started.
 
 <p align="left" width="20%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
+    <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
 </p>
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
 </p>
