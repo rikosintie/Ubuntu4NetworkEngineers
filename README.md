@@ -1,5 +1,7 @@
 # The Ubuntu for Network Engineers Cookbook<!-- omit from toc -->
 
+[markdownlint rules](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+
 A guide to network engineering with Ubuntu
 
 <p align="center" width="100%">

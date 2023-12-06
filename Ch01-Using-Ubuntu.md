@@ -42,3 +42,9 @@ to select one of the running applications.
 <p align="center" width="100%">
     <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Open-Applications.png">
 </p>
+
+Notice that the files application icon has two dots on the left side. If you click on the icon, the screen will change to show the two files windows.
+
+<p align="center" width="100%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-side-by-side.png">
+</p>
