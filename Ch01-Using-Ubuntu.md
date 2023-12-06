@@ -1,14 +1,16 @@
 - [Using Ubuntu](#using-ubuntu)
   - [Podcasts on Linux](#podcasts-on-linux)
   - [Casting your display](#casting-your-display)
-  - [Opening Applications](#opening-applications)
+  - [Working with Applications](#working-with-applications)
     - [The Super Key](#the-super-key)
     - [Search for an application](#search-for-an-application)
-  - [Switching Applications](#switching-applications)
-  - [Viewing all installed applications](#viewing-all-installed-applications)
+    - [Switching Applications](#switching-applications)
+    - [Viewing all installed applications](#viewing-all-installed-applications)
+    - [Switching between multiple open windows in the same application](#switching-between-multiple-open-windows-in-the-same-application)
   - [Configuring the Dock](#configuring-the-dock)
   - [Customizing Gnome - The Tweaks Tool](#customizing-gnome---the-tweaks-tool)
-    - [Managing Files](#managing-files)
+    - [Startup Applications](#startup-applications)
+  - [Managing Files](#managing-files)
 
 
 # Using Ubuntu
@@ -49,7 +51,7 @@ In VLC, select “Playback, Renderer” to send VLC’s output to the TV. I don�
 
 ----------------------------------------------------------------
 
-## Opening Applications
+## Working with Applications
 
 Like in Windows, there are many ways to open applications in Gnome.
 
@@ -79,7 +81,7 @@ LibreOffice Calc!
 
 You can also use the mouse and click on any application that is displayed to open it.
 
-## Switching Applications
+### Switching Applications
 
 Tap the super key (Windows key on some keyboards). Below the search box are the applications that are currently running. If you want to switch to one of the open applications, you can use the Tab key and [enter] or use the mouse to select one of the running applications.
 
@@ -87,7 +89,7 @@ You can also use ctrl+tab just like in Windows.
 
 Finally, you can use the dock to open applications that you have pinned to it.
 
-## Viewing all installed applications
+### Viewing all installed applications
 The dock has a small icon at the bottom, it’s three rows of three dots. You can click that icon to see the
 installed applications in a window.
 
@@ -102,6 +104,7 @@ frequent selected. As you can see, it’s very easy to open applications in Ubun
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
 </p>
 
+### Switching between multiple open windows in the same application
 
 If you have several copies of the same application open you can switch between them using the super key and `\~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
 icon and then select the one you want but the keyboard is much easier and faster.
@@ -112,6 +115,7 @@ For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to 
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png">
 </p>
 
+----------------------------------------------------------------
 
 ## Configuring the Dock
 
@@ -151,12 +155,18 @@ and hit [enter].
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/tweaks.png">
 </p>
 
+### Startup Applications
+
+Gnome Tweaks is where you set the applications that run on startup. I try to keep these to a minimum. It's easy to forget that some application is automatically starting and you have forgotten about it.
+
 There are a lot of options that you can "tweak" with the tool. I don't make a lot of changes but I do like having the Top Bar show Day, Data and Time.
 
 ----------------------------------------------------------------
 
-### Managing Files
-Files is the file manager for Gnome. It works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
+## Managing Files
+Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
+
+Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
 and the right click menu showing “Open in Terminal”. You can see how convenient this is.
 
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
