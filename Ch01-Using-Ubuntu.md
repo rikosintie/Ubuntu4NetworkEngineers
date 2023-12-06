@@ -48,3 +48,27 @@ Notice that the files application icon has two dots on the left side. If you cli
 <p align="center" width="100%">
     <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-side-by-side.png">
 </p>
+
+To open an application using search, simply start typing the name of the application in the search box. As you
+type, all the matching applications will be displayed below the search box. If the one you want is the first one
+displayed on the left you can just hit enter. If not, keep typing and the list of displayed applications will get
+smaller. In the screenshot below, hitting enter will open the built in calculator app. Right arrow, Enter will open
+LibreOffice Calc!
+
+<p align="center" width="100%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/search.png">
+</p>
+
+You can also use the mouse and click on any application that is displayed to run it.
+
+The dock has a small icon at the bottom, it’s three rows of three dots. You can that click that icon to see the
+installed applications in a window. At the bottom, you can select all or frequent. Below is a screenshot with
+frequent selected. As you can see, it’s very easy to get started.
+
+<p align="left" width="100%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
+</p>
+
+<p align="center" width="100%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
+</p>
