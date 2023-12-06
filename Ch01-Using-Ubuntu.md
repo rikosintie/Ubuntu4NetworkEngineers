@@ -62,12 +62,14 @@ LibreOffice Calc!
 You can also use the mouse and click on any application that is displayed to run it.
 
 The dock has a small icon at the bottom, it’s three rows of three dots. You can that click that icon to see the
-installed applications in a window. At the bottom, you can select all or frequent. Below is a screenshot with
-frequent selected. As you can see, it’s very easy to get started.
+installed applications in a window.
 
 <p align="left" width="20%">
     <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
 </p>
+
+At the bottom, you can select all or frequent. Below is a screenshot with
+frequent selected. As you can see, it’s very easy to get started with the files application.
 
 <p align="center" width="100%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
