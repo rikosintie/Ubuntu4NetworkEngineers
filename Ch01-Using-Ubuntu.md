@@ -11,6 +11,8 @@
   - [Customizing Gnome - The Tweaks Tool](#customizing-gnome---the-tweaks-tool)
     - [Startup Applications](#startup-applications)
   - [Managing Files](#managing-files)
+    - [Creating archives](#creating-archives)
+    - [Display the Full path in files](#display-the-full-path-in-files)
 
 
 # Using Ubuntu
@@ -174,4 +176,16 @@ Files has an extensive right click menu. Here are the options for the folder Scr
 
 <p align="center" width="40%">
     <img width="40%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
+</p>
+
+### Creating archives
+
+From the right click menu you can select "Compress..." to create a zip, password protected zip, a tar.gz or if you have installed 7zip, a 7z archive.
+
+### Display the Full path in files
+
+Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
+
+<p align="center" width="60%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png">
 </p>
