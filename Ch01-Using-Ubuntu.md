@@ -172,6 +172,6 @@ and the right click menu showing “Open in Terminal”. You can see how conveni
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
 Files has an extensive right click menu. Here are the options for the folder Scripts.
 
-<p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
+<p align="center" width="80%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
 </p>
