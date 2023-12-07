@@ -101,7 +101,7 @@ If there are too many to display, a column of circles will appear at the bottom 
 frequent selected. As you can see, it’s very easy to open applications in Ubuntu.
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent-new.png">
 </p>
 
 ### Switching between multiple open windows in the same application
