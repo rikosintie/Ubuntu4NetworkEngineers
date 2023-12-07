@@ -13,6 +13,7 @@
   - [Managing Files](#managing-files)
     - [Creating archives](#creating-archives)
     - [Display the Full path in files](#display-the-full-path-in-files)
+    - [Easily preview files in Nautilus](#easily-preview-files-in-nautilus)
 
 
 # Using Ubuntu
@@ -189,3 +190,8 @@ Sometimes you want to copy the full path to a file when working in the file mana
 <p align="center" width="60%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png">
 </p>
+
+### Easily preview files in Nautilus
+One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.
+
+[How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)](https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/)
