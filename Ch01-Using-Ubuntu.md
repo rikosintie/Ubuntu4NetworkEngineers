@@ -213,7 +213,7 @@ One of the features that I wanted was the completely new "Files" application tha
 One of the best features in Files is the new search. Just click on the magnifying glass next to the address bar and enter some text. Unlike in Windows, you can enter text that is in the middle of the filename. In the screenshot below, I entered "new" and it found "frequent-new.png" in a directory one level down.
 
 <p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-search.png" alt="Search for for files">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-search1.png" alt="Search for for files">
 </p>
 
 
