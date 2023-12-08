@@ -16,6 +16,7 @@
     - [Easily preview files in Nautilus](#easily-preview-files-in-nautilus)
     - [Search](#search)
 
+----------------------------------------------------------------
 
 # Using Ubuntu
 
@@ -60,19 +61,21 @@ In VLC, select “Playback, Renderer” to send VLC’s output to the TV. I don�
 Like in Windows, there are many ways to open applications in Gnome.
 
 ### The Super Key
+
 You can hit the Windows key (Superkey is what it's called in Ubuntu) to bring up a search box.
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Open-Applications.png">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Open-Applications.png" alt="Show open applications">
 </p>
 
 Notice that the files application icon has two dots on the left side. If you click on the icon, the screen will change to show the two files windows.
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-side-by-side.png">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-side-by-side.png" alt="Show multiple windows of the same application">
 </p>
 
 ### Search for an application
+
 To open an application using search, simply start typing the name of the application in the search box. As you
 type, all the matching applications will be displayed below the search box. If the one you want is the first one
 displayed on the left you can just hit enter. If not, keep typing and the list of displayed applications will get
@@ -80,7 +83,7 @@ smaller. In the screenshot below, hitting enter will open the built in calculato
 LibreOffice Calc!
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/search.png">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/search.png" alt="Application Search">
 </p>
 
 You can also use the mouse and click on any application that is displayed to open it.
@@ -94,18 +97,19 @@ You can also use ctrl+tab just like in Windows.
 Finally, you can use the dock to open applications that you have pinned to it.
 
 ### Viewing all installed applications
+
 The dock has a small icon at the bottom, it’s three rows of three dots. You can click that icon to see the
 installed applications in a window.
 
 <p align="left" width="20%">
-    <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png">
+    <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png" alt="Dock icon to show all applications">
 </p>
 
 If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. Below is a screenshot with
 frequent selected. As you can see, it’s very easy to open applications in Ubuntu.
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent-new.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent-new.png" alt="Installed Applications">
 </p>
 
 ### Switching between multiple open windows in the same application
@@ -116,7 +120,7 @@ icon and then select the one you want but the keyboard is much easier and faster
 For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the "alt+`" key combination. Here is a screenshot of two spreadsheets.
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png" alt="Switch between windows of the same application>
 </p>
 
 ----------------------------------------------------------------
@@ -129,7 +133,7 @@ screen, then select the gear icon. This will open the "settings" application. It
 At the top left corner of the screen there is a magnifying glass. Click it and enter "dock". The dock is under "Ubuntu Desktop".
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock.png" alt="Dock Settings">
 </p>
 
 One thing I do to help me use all three operating systems
@@ -137,12 +141,12 @@ is to customize the dock to be similar across all OSes. I set Windows, Mac and L
 because I am almost 100% of the time on a laptop and the screen is wider than it is high. I also set the dock to
 auto-hide and display a few commonly used apps.
 
-
 Using the super key and typing the first few letters is now my preferred work flow rather than clicking on an
 icon in the dock. One thing I like about Ubuntu is that when I’m using multiple monitors it puts the dock on all
 the monitors.
 
 ## Customizing Gnome - The Tweaks Tool
+
 Ubuntu ships with Gnome as the desktop environment (DE). Unlike Windows, Linux distributions can use a lot of different desktop environments (DE). Gnome is the default desktop environment for Ubuntu and Redhat (CentOS) so it has a large percentage of the desktop market in Linux. If you want to try others there are several official flavors of Ubuntu that you can download from Canonical.
 
 First, install the Gnome Tweak Tool. This tool allows you to change a lot of the Gnome settings to your preference. Open a terminal window, ctrl+alt+t, and type the following:
@@ -156,7 +160,7 @@ Press [enter], you will be prompted for your password because of sudo, and the i
 and hit [enter].
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/tweaks.png">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/tweaks.png" alt="Gnome Tweaks tool">
 </p>
 
 ### Startup Applications
@@ -177,7 +181,7 @@ On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
 Files has an extensive right click menu. Here are the options for the folder Scripts.
 
 <p align="center" width="60%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png" alt="Right Click Menu">
 </p>
 
 ### Creating archives
