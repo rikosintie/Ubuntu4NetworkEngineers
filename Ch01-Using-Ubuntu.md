@@ -189,7 +189,7 @@ From the right click menu you can select "Compress..." to create a zip, password
 Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
 
 <p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files" />
 </p>
 
 ### Easily preview files in Nautilus
