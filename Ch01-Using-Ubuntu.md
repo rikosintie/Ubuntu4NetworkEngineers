@@ -20,7 +20,7 @@
 
 # Using Ubuntu
 
-Switching from Windows to Ubuntu with the Gnome desktop is both easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Nautilus) is similar to Windows Explorer and of course Chrome or Firefox work just like they do in Windows including syncing, Extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
+Switching from Windows to Ubuntu with the Gnome desktop is both easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course Chrome or Firefox work just like they do in Windows including syncing, Extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
 
 So, what is the hard part? Things like killing a hung application, searching for files from the terminal, checking free disk space are different and will take a little getting used to. Since MacOS is based on Open BSD Unix,
 once your muscle memory is up to speed you will be able to jump back and forth easily between Windows, Mac and Linux. In a later chapter I will discuss the terminal tools that make Linux so much fun and so powerful for
@@ -47,6 +47,7 @@ There are a lot of podcasts dedicated to Linux. In your podcast application just
 - Late Night Linux - A weekly podcast on Linux and the wider tech industry.
 - Linux After Dark - A weekly podcast on Linux experiences.
 - Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a projects community"
+- This Week in Linux - A weekly podcast on Linux
 
 ## Casting your display
 
@@ -172,6 +173,7 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 ----------------------------------------------------------------
 
 ## Managing Files
+
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
 
 Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
@@ -204,6 +206,15 @@ One thing I missed from Windows Explorer was the preview pane. In Ubuntu running
 
 ### Search
 
-NOTE: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. One of those is a completely new "Files" application that is amazing. One of the best features is search.
+**NOTE**: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. And 24.04 will be out in six months!
+
+One of the features that I wanted was the completely new "Files" application that is amazing. Here is the announcement from the project [Introducing GNOME 45, “Rīga”](https://release.gnome.org/45/)
+
+One of the best features in Files is the new search. Just click on the magnifying glass next to the address bar and enter some text. Unlike in Windows, you can enter text that is in the middle of the filename. In the screenshot below, I entered "new" and it found "frequent-new.png" in a directory one level down.
+
+<p align="center" width="60%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-search.png" alt="Search for for files">
+</p>
+
 
 [Search for files](https://help.ubuntu.com/stable/ubuntu-help/files-search.html.en#:~:text=Open%20the%20Files%20application%20from,shown%20in%20the%20search%20bar.)
