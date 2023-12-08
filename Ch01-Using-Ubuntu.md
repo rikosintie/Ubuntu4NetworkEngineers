@@ -176,8 +176,8 @@ and the right click menu showing “Open in Terminal”. You can see how conveni
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
 Files has an extensive right click menu. Here are the options for the folder Scripts.
 
-<p align="center" width="40%">
-    <img width="40%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
+<p align="center" width="60%">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png">
 </p>
 
 ### Creating archives
@@ -189,7 +189,7 @@ From the right click menu you can select "Compress..." to create a zip, password
 Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
 
 <p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files" />
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files">
 </p>
 
 ### Easily preview files in Nautilus
@@ -199,6 +199,7 @@ One thing I missed from Windows Explorer was the preview pane. In Ubuntu running
 [How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)](https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/)
 
 ### Search
+
 NOTE: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. One of those is a completely new "Files" application that is amazing. One of the best features is search.
 
 [Search for files](https://help.ubuntu.com/stable/ubuntu-help/files-search.html.en#:~:text=Open%20the%20Files%20application%20from,shown%20in%20the%20search%20bar.)
