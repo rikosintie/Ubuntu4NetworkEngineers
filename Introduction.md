@@ -1,7 +1,12 @@
 # Introduction<!-- omit from toc -->
 
 - [Why use Ubuntu?](#why-use-ubuntu)
+- [Open Source In Cisco Products](#open-source-in-cisco-products)
+- [NetDevOps Certifications](#netdevops-certifications)
+- [Linux Certifications](#linux-certifications)
 - [Installing Ubuntu](#installing-ubuntu)
+
+----------------------------------------------------------------
 
 ## Why use Ubuntu?
 
@@ -12,8 +17,51 @@ Download it here: [Cisco Certified DevNet Expert (v1.0) Equipment and Software L
 Here is an image from the Cisco DevNet Associate course. You can see the emphasis on coding and automation.
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png">
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png" alt="Cisco DevOps Topics>
 </p>
+
+Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that!
+
+What I love about Ubuntu is the `Open Source Software` community. It is a large community of developers, users, engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
+
+- FireFox
+- MariaDB
+- OpenSSH
+- OpenSSL
+- Apache
+- Nmap
+- KeePassXC
+- Python
+
+Just to name a few!
+
+## Open Source In Cisco Products
+
+From Cisco's [website](https://www.cisco.com/c/en/us/about/legal/open-source-documentation-responsive.html):
+Cisco values the open source community as an essential resource and partner in innovation. Here you can find information on the open source used in Cisco products.
+
+**Cisco is a Leader in Open Source Innovation**
+
+Open source is changing the technology industry and Cisco is a dedicated partner in that innovation. Cisco has been participating in open source development for nearly 3 decades, including founding projects like OpenDaylight, FD.io, VPP, PNDA, SNAS, and OpenH264, and contributing to projects like OPNFV, Kubernetes, OpenStack, Ansible, Chef, Puppet, Maven, and countless more.
+
+There are pages and pages of links to the Open Source software that is used in Cisco products.
+
+Why am I bringing this up? Because when I started using Linux I just say it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, etc. runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
+
+## NetDevOps Certifications
+
+Cisco and Juniper both have certifications for NetDevOps. They both have a substantial amount of free training material available. I have a repository with information on both programs. If you are interested in working on either certification you can find the repositories here:
+
+- [Cisco DevNetAssoc](https://github.com/rikosintie/DevNetAssoc)
+- [Juniper DevOps](https://github.com/rikosintie/Juniper-DevOps)
+
+----------------------------------------------------------------
+
+## Linux Certifications
+
+The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. The Linux Essentials is a good one to start with. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on their site.
+
+----------------------------------------------------------------
 
 ## Installing Ubuntu
 
@@ -25,8 +73,6 @@ My suggestion if you have never touched Linux is to install Ubuntu as a VM and g
 
 I have Kali running on a 2015 MacBook Pro and Ubuntu on a Dell G5 laptop. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to really learn. The
 VM can do just about anything the bare metal can do but when I would get stuck on something I would just shut it down and go back to Windows instead of figuring it out. Running on bare metal removed the temptation to do that!
-
-The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. The Linux Essentials is a good one to start with. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on their site.
 
 There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials, here is link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo x280 is a good choice. They are under $200 on ebay in good condition and they have hardware that is supported on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well supported on Ubuntu.
 
