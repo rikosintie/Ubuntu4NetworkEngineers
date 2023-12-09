@@ -20,6 +20,8 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
     <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png" alt="Cisco DevOps Topics>
 </p>
 
+----------------------------------------------------------------
+
 Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that!
 
 What I love about Ubuntu is the `Open Source Software` community. It is a large community of developers, users, engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
