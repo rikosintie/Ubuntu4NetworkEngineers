@@ -17,9 +17,8 @@ Download it here: [Cisco Certified DevNet Expert (v1.0) Equipment and Software L
 Here is an image from the Cisco DevNet Associate course. You can see the emphasis on coding and automation.
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png" alt="Cisco DevOps Topics>
+    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png" alt="Cisco DevOps Topics">
 </p>
-
 
 ----------------------------------------------------------------
 
