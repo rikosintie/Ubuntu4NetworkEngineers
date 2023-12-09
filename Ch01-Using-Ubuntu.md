@@ -125,7 +125,7 @@ icon and then select the one you want but the keyboard is much easier and faster
 For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the "alt+`" key combination. Here is a screenshot of two spreadsheets.
 
 <p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png" alt="Switch between windows of the same application>
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png" alt="Switch between windows of the same application">
 </p>
 
 ----------------------------------------------------------------
