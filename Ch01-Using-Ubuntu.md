@@ -15,6 +15,8 @@
     - [Display the Full path in files](#display-the-full-path-in-files)
     - [Easily preview files in Nautilus](#easily-preview-files-in-nautilus)
     - [Search](#search)
+    - [Why do I have a red Lock on a file or folder?](#why-do-i-have-a-red-lock-on-a-file-or-folder)
+  - [Creating a bootable USB stick from an ISO image](#creating-a-bootable-usb-stick-from-an-iso-image)
 
 ----------------------------------------------------------------
 
@@ -216,5 +218,42 @@ One of the best features in Files is the new search. Just click on the magnifyin
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-search1.png" alt="Search for for files">
 </p>
 
+You can click on the funnel icon after you open search and filter on:
+
+- Date
+  - Created
+    - Last Modified
+    - Last Used
+- What - There are well over 100 file types to choose from
+- Full Text or Filename
 
 Ubuntu has an article on using the new feature here: [Search for files](https://help.ubuntu.com/stable/ubuntu-help/files-search.html.en#:~:text=Open%20the%20Files%20application%20from,shown%20in%20the%20search%20bar.)
+
+Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/files.html.en#more-file-tasks) page for Files
+
+
+### Why do I have a red Lock on a file or folder?
+
+Nautilus, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
+
+If the icon has a red lock in it, you don’t have full
+permissions to the file or folder.
+Here is a screenshot of Nautilus showing one file with a green check mark and one with a red x.
+
+<p align="center" width="60%">
+    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/red-lock.png" alt="File that you don't have permissions to">
+</p>
+
+To take ownership of the file open the terminal and enter:
+
+`sudo chown mhubbard testsync.txt`
+
+You will be prompted to enter your password.
+
+**Reference**
+
+[Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
+
+----------------------------------------------------------------
+
+## Creating a bootable USB stick from an ISO image
