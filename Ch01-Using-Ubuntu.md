@@ -13,7 +13,7 @@
   - [Managing Files](#managing-files)
     - [Creating archives](#creating-archives)
     - [Display the Full path in files](#display-the-full-path-in-files)
-    - [Easily preview files in Nautilus](#easily-preview-files-in-nautilus)
+    - [Easily preview files in Files](#easily-preview-files-in-files)
     - [Search](#search)
     - [Why do I have a red Lock on a file or folder?](#why-do-i-have-a-red-lock-on-a-file-or-folder)
   - [Creating a bootable USB stick from an ISO image](#creating-a-bootable-usb-stick-from-an-iso-image)
@@ -203,7 +203,7 @@ Sometimes you want to copy the full path to a file when working in the file mana
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files">
 </p>
 
-### Easily preview files in Nautilus
+### Easily preview files in Files
 
 One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.
 
@@ -237,11 +237,11 @@ Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/file
 
 ### Why do I have a red Lock on a file or folder?
 
-Nautilus, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
+Files, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
 
 If the icon has a red lock in it, you don’t have full
 permissions to the file or folder.
-Here is a screenshot of Nautilus showing one file with a green check mark and one with a red x.
+Here is a screenshot of Files showing one file with a green check mark and one with a red x.
 
 <p align="center" width="60%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/red-lock.png" alt="File that you don't have permissions to">
@@ -271,12 +271,11 @@ You don't need a third-party tool to create a bootable USB stick on Linux if you
 
 If you create the alias you can use df -h instead of including the --exclude=squashfs option.
 
-
 - run df -h --exclude=squashfs
 - Insert the flash drive
 - run df -h --exclude=squashfs
 
-Look for a new entry in the table. For example, on my laptop I have two flash driver mounted.
+Look for a new entry in the table. For example, on my laptop I have two flash drives mounted.
 
 ```bash
 Filesystem      Size  Used Avail Use% Mounted on

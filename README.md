@@ -25,9 +25,11 @@ The following conventions are used in “Ubuntu for Network Engineers”:
 
 ----------------------------------------------------------------
 
+- [Chapter 1](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Ch01-Using-Ubuntu.md) - Introduction to Cisco DevNet Associate
+
 ## Why use Ubuntu?
 
-Network Engineering is moving to a NetDevOps model and away from the CLI. This means using Python, Ansible, Git and other DevOps tools. Ubuntu is the OS that Cisco recommends for the DevNet certifications. In fact Cisco is so strong on Ubuntu that they released an Ubuntu image for the DevNet Expert course. There is no reason not to use it for learning Linux. It's available as an OVA for VMWare Workstation and a QCOW2 for Linux.
+Network Engineering is moving to a [NetDevOps](https://developer.cisco.com/video/net-prog-basics/) model and away from the CLI. This means using Python, Ansible, Git and other DevOps tools. Ubuntu is the OS that Cisco recommends for the DevNet certifications. In fact Cisco is so strong on Ubuntu that they released an Ubuntu image for the DevNet Expert course. There is no reason not to use it for learning Linux. It's available as an OVA for VMWare Workstation and a QCOW2 for Linux.
 
 Download it here: [Cisco Certified DevNet Expert (v1.0) Equipment and Software List](https://learningnetwork.cisco.com/s/article/devnet-expert-equipment-and-software-list?t=1696124836669)
 
