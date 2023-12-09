@@ -314,7 +314,7 @@ If you are creating a live USB to try an Ubuntu distro you can use the
 built in “Startup disk creator” by tapping the super key (Windows Key) and typing start. You will see the Startup disk icon:
 
 <p align="left" width="100%">
-    <img width="100%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup.png" alt="Startup Disk Icon">
+    <img width="20%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup.png" alt="Startup Disk Icon">
 </p>
 
 Pick the ISO image from the “Source disc image (.iso)” drop down, then select the USB stick, click “Make Startup Disk”. After the image is complete, Ubuntu will use QEMU to test the disc.
