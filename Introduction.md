@@ -22,7 +22,7 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
 
 ----------------------------------------------------------------
 
-Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that!
+Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software or Libre Software. In this case the "free" refers freedom, not zero cost.
 
 What I love about Ubuntu is the `Open Source Software` community. It is a large community of developers, users, engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
 
@@ -48,7 +48,7 @@ Open source is changing the technology industry and Cisco is a dedicated partner
 
 There are pages and pages of links to the Open Source software that is used in Cisco products.
 
-Why am I bringing this up? Because when I started using Linux I just say it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, etc. runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
+Why am I bringing this up? Because when I started using Linux I just saw it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, etc. runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
 
 ## NetDevOps Certifications
 

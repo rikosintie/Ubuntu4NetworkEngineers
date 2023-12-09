@@ -25,13 +25,13 @@
 
 # Using Ubuntu
 
-Switching from Windows to Ubuntu with the Gnome desktop is both easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course Chrome or Firefox work just like they do in Windows including syncing, Extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
+Switching from Windows to Ubuntu with the Gnome desktop is both easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course Chrome or Edge work just like they do in Windows including syncing, extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
 
 So, what is the hard part? Things like killing a hung application, searching for files from the terminal, checking free disk space are different and will take a little getting used to. Since MacOS is based on Open BSD Unix,
 once your muscle memory is up to speed you will be able to jump back and forth easily between Windows, Mac and Linux. In a later chapter I will discuss the terminal tools that make Linux so much fun and so powerful for
 a network engineer.
 
-One of the big advantages for the Linux desktop is that you can customize almost everything since it’s free and open source. You can change the terminal you use, the file manager, the way almost anything works and even the desktop itself.
+One of the big advantages for the Linux desktop is that you can customize almost everything since open source. You can change the terminal you use, the file manager, the way almost anything works and even the desktop itself.
 
 The most popular desktop environments (DE) for Linux are Gnome (Ubuntu’s default), and KDE (which is available on Ubuntu) but there are many more. I use the computer for work and just learned to customize Gnome to fit my workflow but I use Terminator for my terminal app.
 
@@ -111,8 +111,7 @@ installed applications in a window.
     <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png" alt="Dock icon to show all applications">
 </p>
 
-If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. Below is a screenshot with
-frequent selected. As you can see, it’s very easy to open applications in Ubuntu.
+If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.
 
 <p align="center" width="100%">
     <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent-new.png" alt="Installed Applications">
