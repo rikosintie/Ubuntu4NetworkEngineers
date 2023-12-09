@@ -17,6 +17,8 @@
     - [Search](#search)
     - [Why do I have a red Lock on a file or folder?](#why-do-i-have-a-red-lock-on-a-file-or-folder)
   - [Creating a bootable USB stick from an ISO image](#creating-a-bootable-usb-stick-from-an-iso-image)
+    - [Use dd to make bootable flash](#use-dd-to-make-bootable-flash)
+    - [Use the Ubuntu "Make Startup disk" tool](#use-the-ubuntu-make-startup-disk-tool)
 
 ----------------------------------------------------------------
 
@@ -257,3 +259,62 @@ You will be prompted to enter your password.
 ----------------------------------------------------------------
 
 ## Creating a bootable USB stick from an ISO image
+
+You don't need a third-party tool to create a bootable USB stick on Linux if you don't mind using the terminal.
+
+### Use dd to make bootable flash
+
+**NOTE**: Ubuntu uses a system called "snaps" to sandbox applications. The drawback to snaps is that they mount every application using a "squashfs". I use the following alias so that I don't have to see all the applications.
+
+`alias df="df -h --exclude=squashfs"`
+
+If you create the alias you can use df -h instead of including the --exclude=squashfs option.
+
+
+- run df -h --exclude=squashfs
+- Insert the flash drive
+- run df -h --exclude=squashfs
+
+Look for a new entry in the table. For example, on my laptop I have two flash driver mounted.
+
+```bash
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           3.2G  4.0M  3.1G   1% /run
+/dev/nvme0n1p2  457G  392G   43G  91% /
+tmpfs            16G  219M   16G   2% /dev/shm
+tmpfs           5.0M   12K  5.0M   1% /run/lock
+efivarfs        384K   80K  300K  21% /sys/firmware/efi/efivars
+/dev/nvme0n1p1  513M   31M  483M   6% /boot/efi
+tmpfs           3.2G  1.3M  3.2G   1% /run/user/1000
+/dev/sdc1       7.5G  4.1G  3.5G  55% /media/mhubbard/C253-EE9A
+/dev/sdb1       116G  5.0G  111G   5% /media/mhubbard/LINUX-ARCHI
+```
+
+The two flash drives are /dev/sdc1 and /dev/sdb1. I can tell because they are listed as /media/mhubbard which is the mount point for the flash drives.
+
+In this example I am burning System Rescue to the flash drive.
+Parameters:
+
+- if - input file name
+- of - output filename
+- bs - Block size to use
+- status=progress - display progress
+- && sync - In Linux the "&&" means finish the first command then run the next command. In this case sync the writes to make sure it's ejected cleanly
+Enter the following:
+
+`dd if=systemrescue.iso of=/dev/sdb bs=10M status=progress && sync`
+
+**NOTE**: dd is commonly referred to as "disk destroyer", meaning that it starts as soon as you hit enter, there are no "Are you sure" prompts.
+
+MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!
+
+### Use the Ubuntu "Make Startup disk" tool
+
+If you are creating a live USB to try an Ubuntu distro you can use the
+built in “Startup disk creator” by tapping the super key (Windows Key) and typing start. You will see the Startup disk icon:
+
+<p align="left" width="100%">
+    <img width="100%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup.png" alt="Startup Disk Icon">
+</p>
+
+Pick the ISO image from the “Source disc image (.iso)” drop down, then select the USB stick, click “Make Startup Disk”. After the image is complete, Ubuntu will use QEMU to test the disc.
