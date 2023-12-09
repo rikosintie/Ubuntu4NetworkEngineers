@@ -19,6 +19,7 @@
   - [Creating a bootable USB stick from an ISO image](#creating-a-bootable-usb-stick-from-an-iso-image)
     - [Use dd to make bootable flash](#use-dd-to-make-bootable-flash)
     - [Use the Ubuntu "Make Startup disk" tool](#use-the-ubuntu-make-startup-disk-tool)
+    - [Use qemu to test a startup disk](#use-qemu-to-test-a-startup-disk)
 
 ----------------------------------------------------------------
 
@@ -310,17 +311,26 @@ MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!
 
 ### Use the Ubuntu "Make Startup disk" tool
 
-If you are creating a live USB to try an Ubuntu distro you can use the
-built in “Startup disk creator” by tapping the super key (Windows Key) and typing start. You will see the Startup disk icon:
+You can use the built in “Startup disk creator” by tapping the super key (Windows Key) and typing `start`. You will see the Startup disk icon:
 
 <p align="left" width="100%">
     <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup.png" alt="Startup Disk Icon">
 </p>
 
-Pick the ISO image from the “Source disc image (.iso)” drop down, then select the USB stick, click “Make Startup Disk”. After the image is complete, Ubuntu will use QEMU to test the disc.
+- Pick the ISO image from the “Source disc image (.iso)” drop down
+- Then select the USB stick from "Disk to Use"
+- Click “Make Startup Disk”
+- You will be prompted to select "Yes or No"
 
 <p align="left" width="100%">
     <img width="75%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup-disk.png" alt="Startup Disk Interface">
 </p>
 
 In this example, I am burning Kali Linux 2023.3 to the flash drive.
+
+### Use qemu to test a startup disk
+
+You can install qemu and create a simple virtual machine to test a startup disk. I'm not going to cover that but these two articles will explain.
+
+- [How do I install qemu on Ubuntu 23.10?](https://askubuntu.com/questions/1490805/how-do-i-install-qemu-on-ubuntu-23-10)
+- [Using QEMU to quickly test an ISO or bootable USB drive](https://makandracards.com/makandra/1192-using-qemu-to-quickly-test-an-iso-or-bootable-usb-drive)
