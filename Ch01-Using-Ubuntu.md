@@ -320,7 +320,7 @@ built in “Startup disk creator” by tapping the super key (Windows Key) and t
 Pick the ISO image from the “Source disc image (.iso)” drop down, then select the USB stick, click “Make Startup Disk”. After the image is complete, Ubuntu will use QEMU to test the disc.
 
 <p align="left" width="100%">
-    <img width="50%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup-disk.png" alt="Startup Disk Interface">
+    <img width="75%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup-disk.png" alt="Startup Disk Interface">
 </p>
 
 In this example, I am burning Kali Linux 2023.3 to the flash drive.
