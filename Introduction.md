@@ -1,3 +1,7 @@
+<p align="center">
+Advance your “Network Engineer of the future” career with the OS of the Cloud
+</p>
+
 # Introduction<!-- omit from toc -->
 
 - [Who is this guide written for?](#who-is-this-guide-written-for)
@@ -8,7 +12,6 @@
 - [Installing Ubuntu](#installing-ubuntu)
 
 ----------------------------------------------------------------
-Advance your “Network Engineer of the future” career with the OS of the Cloud
 
 ## Who is this guide written for?
 
