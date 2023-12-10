@@ -27,6 +27,7 @@ This guide is written assuming that you have skills in MS Windows, Putty, Networ
 
 ----------------------------------------------------------------
 
+<<<<<<< HEAD
 The following conventions are used in “Ubuntu for Network Engineers”:
 
 * Italic
@@ -43,3 +44,7 @@ The following conventions are used in “Ubuntu for Network Engineers”:
 * [Introduction](https://github.com/rikosintie/Ubuntu4NetworkEngineers/tree/main/Introduction) - Introduction to Ubuntu
 * [Chapter 1](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Ch01-Using-Ubuntu.md) - Using Ubuntu
 * [Chapter 2](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Ch02-Install-Tools.md) - Installing Tools
+=======
+- [Introduction](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Introduction.md) - Introduction to Ubuntu
+- [Chapter 1](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Ch01-Using-Ubuntu.md) - Using Ubuntu
+>>>>>>> 6666efb5d5978f0fe97b5d9f3fc01158c27d0569
