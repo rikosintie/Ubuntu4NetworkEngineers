@@ -268,6 +268,8 @@ You don't need a third-party tool to create a bootable USB stick on Linux if you
 
 `alias df="df -h --exclude=squashfs"`
 
+I will show you how to create aliases in a later section.
+
 If you create the alias you can use df -h instead of including the --exclude=squashfs option.
 
 - run df -h --exclude=squashfs
