@@ -21,6 +21,9 @@
     - [Use dd to make bootable flash](#use-dd-to-make-bootable-flash)
     - [Use the Ubuntu "Make Startup disk" tool](#use-the-ubuntu-make-startup-disk-tool)
     - [Use qemu to test a startup disk](#use-qemu-to-test-a-startup-disk)
+  - [Working with the Linux File System](#working-with-the-linux-file-system)
+    - [LSBLK](#lsblk)
+    - [LSUSB](#lsusb)
 
 ----------------------------------------------------------------
 
@@ -238,7 +241,6 @@ Ubuntu has an article on using the new feature here: [Search for files](https://
 
 Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/files.html.en#more-file-tasks) page for Files
 
-
 ### Why do I have a red Lock on a file or folder?
 
 Files, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
@@ -339,3 +341,118 @@ You can install qemu and create a simple virtual machine to test a startup disk.
 
 - [How do I install qemu on Ubuntu 23.10?](https://askubuntu.com/questions/1490805/how-do-i-install-qemu-on-ubuntu-23-10)
 - [Using QEMU to quickly test an ISO or bootable USB drive](https://makandracards.com/makandra/1192-using-qemu-to-quickly-test-an-iso-or-bootable-usb-drive)
+
+----------------------------------------------------------------
+
+## Working with the Linux File System
+
+If you have been a Windows user for a long time the hardest part of switching to Linux is the file system. There is no concept of drive letters in Linux. The Linux file system is based on the “File system Hierarchy Standard” maintained by the Linux Foundation.
+
+The top of the Linux file system is called the root. All files and directories are referenced from the root, even if they are stored on different physical or virtual devices. That is so different from Windows that it will take some
+time to get comfortable with.
+
+Here is a link to a great tutorial on the Linux file system by Abhishek Prakash - [Linux Directory Structure Explained for Beginners](https://linuxhandbook.com/linux-directory-structure/). His tutorial will get you up to speed on the Linux file system. Abhishek creates Linux tutorials and I recommend that you sign up for his newsletter. The subscribe button is at the top of the page.
+
+On Windows you have drive letters and the root of the file system is the “\” character – The good old C:\. But Linux/Mac, or any *NIX for that matter, doesn’t use drive letters. The file system is usually described as a tree
+with root at the beginning. Root is shown in the file system as /. Everything is then displayed off the root. The “/” is another difference that will take a while to get used to. Unix/Linux/Mac use a forward slash instead of the backslash “\” for file system commands. When you use a web browser, you use the forward slash for file commands – <https://github.com/rikosintie> for example.
+
+### LSBLK
+For a quick look at block devices (hard drives, thumb drives, nvme, etc.) on the system, you can use the "list block devices" command - lsblk. Here is an lsblk listing on my Dell laptop which has an m.2 NVME drive with the OS on it and 1TB SSD for data.
+
+```bash
+$ lsblk -e7
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda           8:0    0 931.5G  0 disk /media/mhubbard/Data
+nvme0n1     259:0    0 465.8G  0 disk
+├─nvme0n1p1 259:1    0 513.1M  0 part /boot/efi
+└─nvme0n1p2 259:2    0 465.3G  0 part /
+```
+
+Notice that I included -e7 on the end of the `lsblk` command. That is because Ubuntu uses "snaps" for a lot of applications and the show up as "loop" devices in lsblk.
+
+So you can see that I have an NVME drive called nvme01n1. There are two partitions on the nvme drive:
+
+- nvme01n1p1
+- nvme01n1p2
+
+P1 is the boot partition and p2 has the operating system. Notice
+that nvme0n1p2 is type partition and mount is /. That means nvme0n1p2 is the root of the file system.
+
+There is also a "block device" named sda. This is a 1TB SATA SSD drive and it's mounted at /media/mhubbard/Data off the root.
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Drives.png" alt="Disks in Files">
+</p>
+
+The display needs a little explanation. For the disk labeled “Ubuntu” it says 45.4 GB / 490.6 GB available.
+That actually means it’s a 490.6GB drive with 45.4GB available.
+
+Once you get used to it, this seems more intuitive and easier to scale than the drive letter model used by Windows. You will also notice in the lsblk output that Linux/Mac, and again all *NIX systems, use the forward
+slash as a delimiter rather than the backslash.
+
+Linux has many “ls” commands for listing things:
+
+- lsblk – list block level devices like disk drives, thumb drives, etc.
+- lspci – list the PCI bus devices on the system
+- lsusb – list USB bus devices
+- lsof – list open files
+- lslogins – list logins
+- lsmod – list the status of modules inserted into the kernel
+
+I will cover each of these a later in this section.
+
+To list the commands that start with "ls" you can type ls and press [tab].
+
+```bash
+$ ls
+ls           lsattr       lsb_release  LSCOLORS     lsdiff       lsinitramfs  lslocks      lsmem        lsns         lspci        lspgpot      lsusb
+lsa          lsblk        LS_COLORS    lscpu        lshw         lsipc        lslogins     lsmod        lsof         lspcmcia     lspower
+
+```
+
+### LSUSB
+
+lsusb
+Linux makes it easy to see what USB devices are connected, who the manufacturer is and what the Product ID (PID) and Vendor ID (VID) are.
+
+In this example, I have a USB to Serial adapter connected. It uses the Future Technology Devices International (FTDI) UART. It’s connected to Bus 001 and the Vendor ID is 0403, Product ID is 6001.
+
+```bash
+lsusb
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 002: ID 0c45:6a08 Microdia
+Bus 001 Device 003: ID 8087:0aaa Intel Corp.
+Bus 001 Device 006: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART)
+IC
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+```
+
+This is a very useful command once you make it part of your skill set. Anytime you connect a USB device you can quickly see who the manufacturer of the chipset is. This is especially useful if the device isn’t working correctly and want to Google for some information.
+
+Another command that will help here is dmesg. This displays the system messages that have been logged. With the `lsusb` command above you can see a Future Technology USB-Serial adapter has been inserted.
+
+If I run:
+
+```bash
+dmesg | grep FT232
+[83003.234941] usb 1-3: Product: FT232R USB UART
+[83003.242719] usb 1-3: Detected FT232RL
+[106493.653320] usb 1-3: Detected FT232RL
+```
+
+You can see that the system logged the insertion of the UART.
+To see what kernel module is loaded for the UART (Note – I am only showing the UART module. Other USB kernel modules were displayed):
+
+```bash
+lsmod | grep usb
+usbserial
+49152 3 ftdi_sio
+```
+
+In this example the Future Technology USB-Serial adapter is working correctly but you would do the same things to troubleshoot a device that wasn’t working.
+The big difference over Windows is that support for a device in Linux is built into the kernel and loads when the device is inserted.
+
+There are cases where there is no support in the kernel and you will have to go to the manufacturer’s site and download a kernel module (driver in Windows).
+
+The steps above will quickly let you
+know that the device isn’t being discovered by Linux
