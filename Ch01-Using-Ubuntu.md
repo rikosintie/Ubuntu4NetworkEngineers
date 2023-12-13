@@ -473,13 +473,16 @@ The OpenSSH client allows you to create SSH keys. My current recommended cipher 
 
 -a 100 Use 100 rounds of pbkdf2 (password based key derivation 2)
 
+-t Specifies the type of key to create. The choices are dsa | ecdsa | ecdsa‐sk | ed25519 | ed25519‐sk | rsa
+
 Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
 
-Check the existing keys on your system
+**Check the existing keys on your system**
+
 `for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq`
 
-- DSA or RSA 1024 bits: red flag. Unsafe.
-- RSA 2048: yellow recommended to change
+- DSA or RSA 1024 bits: This is a red flag. Unsafe.
+- RSA 2048: This is a yellow flage, recommended to change
 - RSA 3072/4096: great, but Ed25519 has some benefits!
 - ECDSA: depends. Recommended to change
 - Ed25519: wow cool, but are you brute-force safe?
