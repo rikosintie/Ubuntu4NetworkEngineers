@@ -24,6 +24,7 @@
   - [Working with the Linux File System](#working-with-the-linux-file-system)
     - [LSBLK](#lsblk)
     - [LSUSB](#lsusb)
+  - [SSH](#ssh)
 
 ----------------------------------------------------------------
 
@@ -368,7 +369,7 @@ nvme0n1     259:0    0 465.8G  0 disk
 └─nvme0n1p2 259:2    0 465.3G  0 part /
 ```
 
-Notice that I included -e7 on the end of the `lsblk` command. That is because Ubuntu uses "snaps" for a lot of applications and the show up as "loop" devices in lsblk.
+Notice that I included -e7 on the end of the `lsblk` command. That is because Ubuntu uses "snaps" for a lot of applications and the show up as "loop" devices in lsblk. The -e means exclude and 7 is the number loop devices.
 
 So you can see that I have an NVME drive called nvme01n1. There are two partitions on the nvme drive:
 
@@ -401,7 +402,7 @@ Linux has many “ls” commands for listing things:
 
 I will cover each of these a later in this section.
 
-To list the commands that start with "ls" you can type ls and press [tab].
+To list the commands that start with "ls" you can type ls and press [tab]. This works with any Linux command. Just like in a Cisco switch, Linux has "tab completion" but it will also show you a list f all commands that match.
 
 ```bash
 $ ls
@@ -410,20 +411,21 @@ lsa          lsblk        LS_COLORS    lscpu        lshw         lsipc        ls
 
 ```
 
+----------------------------------------------------------------
+
 ### LSUSB
 
 lsusb
 Linux makes it easy to see what USB devices are connected, who the manufacturer is and what the Product ID (PID) and Vendor ID (VID) are.
 
-In this example, I have a USB to Serial adapter connected. It uses the Future Technology Devices International (FTDI) UART. It’s connected to Bus 001 and the Vendor ID is 0403, Product ID is 6001.
+In this example, I have a USB to Serial adapter connected. It uses the Future Technology Devices International (FTDI) UART. It’s connected to Bus 001, the Vendor ID is 0403, and the Product ID is 6001.
 
 ```bash
 lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 002: ID 0c45:6a08 Microdia
 Bus 001 Device 003: ID 8087:0aaa Intel Corp.
-Bus 001 Device 006: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART)
-IC
+Bus 001 Device 006: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART) IC
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
 
@@ -456,3 +458,42 @@ There are cases where there is no support in the kernel and you will have to go 
 
 The steps above will quickly let you
 know that the device isn’t being discovered by Linux
+
+----------------------------------------------------------------
+
+## SSH
+
+*nix systems have SSH installed by default. Newer versions of the OpenSSH client don’t allow weak ciphers.
+
+The OpenSSH client allows you to create SSH keys. My current recommended cipher is Bruce Schnierers ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
+
+`ssh-keygen -o -a 100 -t ed25519`
+
+-o Use the new RFC4716 key format and the use of a modern key derivation function powered by bcrypt.
+
+-a 100 Use 100 rounds of pbkdf2 (password based key derivation 2)
+
+Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
+
+Check the existing keys on your system
+`for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq`
+
+- DSA or RSA 1024 bits: red flag. Unsafe.
+- RSA 2048: yellow recommended to change
+- RSA 3072/4096: great, but Ed25519 has some benefits!
+- ECDSA: depends. Recommended to change
+- Ed25519: wow cool, but are you brute-force safe?
+
+
+Here is what it looked like on my laptop. Looks Like I have some key generation to do!
+
+```bash
+$ for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
+2048 SHA256:YRwfm94a26cfCQZK6mT3SO29XaLoAHWJgnixN2OZDM0 mhubbard@1S1K-G5-5587 (RSA)
+2048 SHA256:WFuzqdjjnEVd+tW+2fKz1dEKVzK+vfjhgvsCGlSZrrk mhubbard@1S1K-G5-5587 (RSA)
+
+```
+
+**Reference**
+
+[Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
