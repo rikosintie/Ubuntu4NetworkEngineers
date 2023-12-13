@@ -25,6 +25,8 @@
     - [LSBLK](#lsblk)
     - [LSUSB](#lsusb)
   - [SSH](#ssh)
+    - [OpenSSH Server](#openssh-server)
+    - [Creating SSH Keys](#creating-ssh-keys)
 
 ----------------------------------------------------------------
 
@@ -465,6 +467,31 @@ know that the device isn’t being discovered by Linux
 
 *nix systems have SSH installed by default. Newer versions of the OpenSSH client don’t allow weak ciphers.
 
+I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
+
+
+### OpenSSH Server
+
+Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the Open-ssh server. Follow these instruction to enable the SSH server:
+
+```bash
+sudo apt update
+sudo apt install ssh
+```
+
+**Useful SSH system commands**
+- sudo systemctl start ssh - Start the SSH server
+- sudo systemctl stop ssh - Stop the SSH server
+- systemctl status ssh - Show server status
+- sudo systemctl disable ssh – disables SSH server after next reboot
+- sudo systemctl enable ssh – enables SSH after the next reboot.
+
+Reference:
+
+[How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
+
+
+### Creating SSH Keys
 The OpenSSH client allows you to create SSH keys. My current recommended cipher is Bruce Schnierers ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
 
 `ssh-keygen -o -a 100 -t ed25519`
@@ -486,7 +513,6 @@ Specify a strong passphrase when prompted. The passphrase is required anytime yo
 - RSA 3072/4096: great, but Ed25519 has some benefits!
 - ECDSA: depends. Recommended to change
 - Ed25519: wow cool, but are you brute-force safe?
-
 
 Here is what it looked like on my laptop. Looks Like I have some key generation to do!
 
