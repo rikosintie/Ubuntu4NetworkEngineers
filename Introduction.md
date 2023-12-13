@@ -6,6 +6,8 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 
 - [Who is this guide written for?](#who-is-this-guide-written-for)
 - [Why use Ubuntu?](#why-use-ubuntu)
+  - [As a Network Engineer](#as-a-network-engineer)
+- [Open source software and the community](#open-source-software-and-the-community)
 - [Open Source In Cisco Products](#open-source-in-cisco-products)
 - [NetDevOps Certifications](#netdevops-certifications)
 - [Linux Certifications](#linux-certifications)
@@ -15,20 +17,26 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 
 ## Who is this guide written for?
 
-Any network engineer or admin running Microsoft Windows! I used MS Windows from Windows 3.1 up until Windows 8 came out. At that time I had been using Linux for things like [Nagios](https://www.nagios.org/downloads/nagios-core/) and the Asterisk VoIP system but not as a daily driver. Windows 8 pushed me over the edge!
+Any technical user running Microsoft Windows who wants to try Linux! I used MS Windows from Windows 3.1 up until Windows 8 came out. At that time I had been using Linux for things like [Nagios](https://www.nagios.org/downloads/nagios-core/) and the Asterisk VoIP system but not on my laptop. Windows 8 pushed me over the edge!
 
-Once I started working with Python and Cisco DevOps, it became clear that Linux is a better choice for a network Engineer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix Terminal, etc. and different shells (what most people call "the Terminal"). This guide will show you how to switch from BASH to ZSH in a later chapter.
+Once I started working with Python and Cisco DevOps, it became clear that Linux is a better choice for a technical user, whether they are a network Engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch from BASH to ZSH in a later chapter.
 
-- Network Engineers can use this guide to get started with Linux and then to customize their daily driver to fit the unique needs of a network engineer.
-- Network Administrators will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. These tools are discussed in "Working in the Terminal".
-- Security Personnel will find a plethora of open source tools available for Linux. Many of these tools are discussed in the DNS chapter and in the networking tools chapter.
-- A Curious student who wants to learn about Linux, Open Source, and NetDevOps.
+- **Network Engineers** can use this guide to get started with Linux and then to customize their daily driver to fit the unique needs of a network engineer.
+- **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. These tools are discussed in "Working in the Terminal".
+- **Security Personnel** will find a plethora of open source tools available for Linux. Many of these tools are discussed in the DNS chapter and in the networking tools chapter.
+- **A Curious student** who wants to learn about Linux, Open Source, and NetDevOps.
 
 This guide is written assuming that you have skills in MS Windows, Putty, Network devices, and a desire to learn how Linux can make you a better, more efficient engineer.
 
 ----------------------------------------------------------------
 
 ## Why use Ubuntu?
+
+I helped a college student who is studying data science switch to Ubuntu recently. Our conversations had all been over text. I had the chance to meet him in person a month or so later and I asked him if he stuck with Ubuntu. His response was an enthusiastic Yes!
+
+I have been using Linux for quite a while so his next comment caught me off guard. He said "I love how there are no ads and nothing pops up in the start menu." There were more comments about how "clean" the Ubuntu interface is. I didn't realize how bad Windows 10/11 home edition are with the constant ads and pushing MS software.
+
+### As a Network Engineer
 
 Network Engineering is moving to a [NetDevOps](https://developer.cisco.com/video/net-prog-basics/) model and away from the CLI. This means using Python, Ansible, Git and other DevOps tools. Ubuntu is the OS that Cisco recommends for the DevNet certifications. In fact Cisco is so strong on Ubuntu that they released an Ubuntu image for the DevNet Expert course. There is no reason not to use it for learning Linux. It's available as an OVA for VMWare Workstation and a QCOW2 for Linux.
 
@@ -41,6 +49,8 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
 </p>
 
 ----------------------------------------------------------------
+
+## Open source software and the community
 
 Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software or Libre Software. In this case the "free" refers freedom, not zero cost.
 
@@ -70,6 +80,8 @@ There are pages and pages of links to the Open Source software that is used in C
 
 Why am I bringing this up? Because when I started using Linux I just saw it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, etc. runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
 
+----------------------------------------------------------------
+
 ## NetDevOps Certifications
 
 Cisco and Juniper both have certifications for NetDevOps. They both have a substantial amount of free training material available. I have a repository with information on each program. If you are interested in working on either certification you can find the repositories here:
@@ -87,7 +99,7 @@ The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several di
 
 ## Installing Ubuntu
 
-This document is meant for Network Engineers who are currently using Microsoft Windows and need to get up to speed with Ubuntu. The first question is should I just spin up a virtual machine or use bare metal? I used Linux for a few years as a VM before I bought dedicated hardware.
+This document is meant to get you up to speed with Ubuntu quickly. The first question is should I just spin up a virtual machine or use bare metal? I used Linux for a few years as a VM before I bought dedicated hardware.
 
 The advantage of using a VM is that if you damage it or decide for any reason it’s not the right distribution you can just delete it and try another one. The drawback to a VM is that the hypervisor hides the hardware so you don’t get the experience of installing, configuring, and maintaining Linux.
 
