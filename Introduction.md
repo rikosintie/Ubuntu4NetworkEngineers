@@ -6,7 +6,7 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 
 - [Who is this guide written for?](#who-is-this-guide-written-for)
 - [Why use Ubuntu?](#why-use-ubuntu)
-  - [As a Network Engineer](#as-a-network-engineer)
+  - [As a Network Engineer it Rocks](#as-a-network-engineer-it-rocks)
 - [Open source software and the community](#open-source-software-and-the-community)
 - [Open Source In Cisco Products](#open-source-in-cisco-products)
 - [NetDevOps Certifications](#netdevops-certifications)
@@ -19,7 +19,7 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 
 Any technical user running Microsoft Windows who wants to try Linux! I used MS Windows from Windows 3.1 up until Windows 8 came out. At that time I had been using Linux for things like [Nagios](https://www.nagios.org/downloads/nagios-core/) and the Asterisk VoIP system but not on my laptop. Windows 8 pushed me over the edge!
 
-Once I started working with Python and Cisco DevOps, it became clear that Linux is a better choice for a technical user, whether they are a network Engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch from BASH to ZSH in a later chapter.
+Once I started working with Python and studying for the Cisco NetDevOps certification, it became clear that Linux is a better choice for a technical user, whether they are a network Engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch from BASH to ZSH in a later chapter.
 
 - **Network Engineers** can use this guide to get started with Linux and then to customize their daily driver to fit the unique needs of a network engineer.
 - **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. These tools are discussed in "Working in the Terminal".
@@ -36,7 +36,7 @@ I helped a college student who is studying data science switch to Ubuntu recentl
 
 I have been using Linux for quite a while so his next comment caught me off guard. He said "I love how there are no ads and nothing pops up in the start menu." There were more comments about how "clean" the Ubuntu interface is. I didn't realize how bad Windows 10/11 home edition are with the constant ads and pushing MS software.
 
-### As a Network Engineer
+### As a Network Engineer it Rocks
 
 Network Engineering is moving to a [NetDevOps](https://developer.cisco.com/video/net-prog-basics/) model and away from the CLI. This means using Python, Ansible, Git and other DevOps tools. Ubuntu is the OS that Cisco recommends for the DevNet certifications. In fact Cisco is so strong on Ubuntu that they released an Ubuntu image for the DevNet Expert course. There is no reason not to use it for learning Linux. It's available as an OVA for VMWare Workstation and a QCOW2 for Linux.
 
@@ -52,7 +52,7 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
 
 ## Open source software and the community
 
-Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software or Libre Software. In this case the "free" refers freedom, not zero cost.
+Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software (FOSS) or Libre Software. In this case the "free" refers freedom, not zero cost.
 
 What I love about Ubuntu is the "Open Source Software" community. It is a large community of developers, users, engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
 
