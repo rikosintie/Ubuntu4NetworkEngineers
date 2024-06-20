@@ -1,4 +1,9 @@
-site_name: My Docs
+site_name: Ubuntu for Network Engineers
+nav:
+  - home: README.md
+  - Introduction: Introduction.md
+  - Chapter 1: Ch01-Using-Ubuntu.md
+  - Chapter 2: CH02-Install-Tools.md
 theme:
   name: material
   features:
