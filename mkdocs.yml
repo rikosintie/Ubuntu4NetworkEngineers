@@ -1,4 +1,5 @@
 site_name: Ubuntu for Network Engineers
+site_author: Michael Hubbard (rikosintie)
 nav:
   - home: README.md
   - Introduction: Introduction.md
