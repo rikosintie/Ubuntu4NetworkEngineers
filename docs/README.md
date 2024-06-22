@@ -3,12 +3,11 @@
 [![License](https://img.shields.io/github/license/rikosintie/Ubuntu4NetworkEngineers?color=0096FF)](https://github.com/rikosintie/Ubuntu4NetworkEngineers)
 [![X](https://img.shields.io/twitter/follow/rikosintie?style=social&logo=x)](https://twitter.com/rikosintie)
 
-# The Ubuntu for Network Engineers Guide<!-- omit from toc -->
+# Ubuntu for Network Engineers<!-- omit from toc -->
 
 A guide to network engineering with Ubuntu
 
 ![screenshot](img/penquin.jpg)
-
 
 ----------------------------------------------------------------
 
