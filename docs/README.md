@@ -26,7 +26,3 @@ The following conventions are used in “Ubuntu for Network Engineers”:
   * Text that should be replaced by user supplied values
 
 ----------------------------------------------------------------
-
-* [Introduction](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/docs/Introduction.md) - Introduction to Ubuntu
-* [Chapter 1](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/Ch01-Using-Ubuntu.md) - Using Ubuntu
-* [Chapter 2](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/CH02-Install-Tools.md) - Installing Tools
