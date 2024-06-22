@@ -7,12 +7,10 @@
 
 A guide to network engineering with Ubuntu
 
-[markdownlint rules](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 <p align="center" width="100%">
     <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/penquin.jpg" alt="A modern Linux network engineer">
 </p>
 
-[The book is located here](https://rikosintie.github.io/Ubuntu4NetworkEngineers/)
 
 ----------------------------------------------------------------
 
