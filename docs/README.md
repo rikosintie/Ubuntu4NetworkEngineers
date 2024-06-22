@@ -8,7 +8,7 @@
 A guide to network engineering with Ubuntu
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/penquin.jpg" alt="A modern Linux network engineer">
+    <img width="60%" src="[https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/penquin.jpg](https://github.com/rikosintie/Ubuntu4NetworkEngineers/tree/main/docs/img)" alt="A modern Linux network engineer">
 </p>
 
 
