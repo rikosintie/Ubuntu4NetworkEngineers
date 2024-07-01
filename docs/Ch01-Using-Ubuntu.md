@@ -81,15 +81,11 @@ Like in Windows, there are many ways to open applications in Gnome.
 
 You can hit the Windows key (Superkey is what it's called in Ubuntu) to bring up a search box.
 
-<p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Open-Applications.png" alt="Show open applications">
-</p>
+![screenshot](img/Open-Applications.png)
 
 Notice that the files application icon has two dots on the left side. If you click on the icon, the screen will change to show the two files windows.
 
-<p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-side-by-side.png" alt="Show multiple windows of the same application">
-</p>
+![screenshot](img/files-side-by-side.png)
 
 ### Search for an application
 
@@ -99,9 +95,7 @@ displayed on the left you can just hit enter. If not, keep typing and the list o
 smaller. In the screenshot below, hitting enter will open the built in calculator app. Right arrow, Enter will open
 LibreOffice Calc!
 
-<p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/search.png" alt="Application Search">
-</p>
+![screenshot](img/search.png)
 
 You can also use the mouse and click on any application that is displayed to open it.
 
@@ -118,15 +112,11 @@ Finally, you can use the dock to open applications that you have pinned to it.
 The dock has a small icon at the bottom, it’s three rows of three dots. You can click that icon to see the
 installed applications in a window.
 
-<p align="left" width="20%">
-    <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock-square.png" alt="Dock icon to show all applications">
-</p>
+![screenshot](img/Dock-square.png)
 
 If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.
 
-<p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/frequent-new.png" alt="Installed Applications">
-</p>
+![screenshot](img/frequent-new.png)
 
 ### Switching between multiple open windows in the same application
 
@@ -135,9 +125,7 @@ icon and then select the one you want but the keyboard is much easier and faster
 
 For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the "alt+`" key combination. Here is a screenshot of two spreadsheets.
 
-<p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/alt%2B~.png" alt="Switch between windows of the same application">
-</p>
+![screenshot](img/alt%2B~.png)
 
 ----------------------------------------------------------------
 
@@ -148,9 +136,7 @@ screen, then select the gear icon. This will open the "settings" application. It
 
 At the top left corner of the screen there is a magnifying glass. Click it and enter "dock". The dock is under "Ubuntu Desktop".
 
-<p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Dock.png" alt="Dock Settings">
-</p>
+![screenshot](img/Dock.png)
 
 One thing I do to help me use all three operating systems
 is to customize the dock to be similar across all OSes. I set Windows, Mac and Linux to display it on the left
@@ -175,9 +161,7 @@ Press [enter], you will be prompted for your password because of sudo, and the i
 
 and hit [enter].
 
-<p align="center" width="100%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/tweaks.png" alt="Gnome Tweaks tool">
-</p>
+![screenshot](img/tweaks.png)
 
 ### Startup Applications
 
@@ -197,9 +181,7 @@ and the right click menu showing “Open in Terminal”. You can see how conveni
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
 Files has an extensive right click menu. Here are the options for the folder Scripts.
 
-<p align="center" width="60%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Right-Click.png" alt="Right Click Menu">
-</p>
+![screenshot](img/Right-Click.png)
 
 ### Creating archives
 
@@ -209,9 +191,7 @@ From the right click menu you can select "Compress..." to create a zip, password
 
 Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
 
-<p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/ZIP.png" alt="Display full path in files">
-</p>
+![screenshot](img/ZIP.png)
 
 ### Easily preview files in Files
 
@@ -221,15 +201,13 @@ One thing I missed from Windows Explorer was the preview pane. In Ubuntu running
 
 ### Search
 
-**NOTE**: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. And 24.04 will be out in six months!
+**NOTE**: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. And 24.04 is out now so I will be upgrading!
 
 One of the features that I wanted was the completely new "Files" application that is amazing. Here is the announcement from the project [Introducing GNOME 45, “Rīga”](https://release.gnome.org/45/)
 
 One of the best features in Files is the new search. Just click on the magnifying glass next to the address bar and enter some text. Unlike in Windows, you can enter text that is in the middle of the filename. In the screenshot below, I entered "new" and it found "frequent-new.png" in a directory one level down.
 
-<p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/files-search1.png" alt="Search for for files">
-</p>
+![screenshot](img/files-search1.png)
 
 You can click on the funnel icon after you open search and filter on:
 
@@ -252,9 +230,7 @@ If the icon has a red lock in it, you don’t have full
 permissions to the file or folder.
 Here is a screenshot of Files showing one file with a green check mark and one with a red x.
 
-<p align="center" width="60%">
-    <img width="80%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/red-lock.png" alt="File that you don't have permissions to">
-</p>
+![screenshot](img/red-lock.png)
 
 To take ownership of the file open the terminal and enter:
 
@@ -323,18 +299,14 @@ MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!
 
 You can use the built in “Startup disk creator” by tapping the super key (Windows Key) and typing `start`. You will see the Startup disk icon:
 
-<p align="left" width="100%">
-    <img width="10%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup.png" alt="Startup Disk Icon">
-</p>
+![screenshot](img/startup.png)
 
 - Pick the ISO image from the “Source disc image (.iso)” drop down
 - Then select the USB stick from "Disk to Use"
 - Click “Make Startup Disk”
 - You will be prompted to select "Yes or No"
 
-<p align="left" width="100%">
-    <img width="75%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/startup-disk.png" alt="Startup Disk Interface">
-</p>
+![screenshot](img/startup-disk.png)
 
 In this example, I am burning Kali Linux 2023.3 to the flash drive.
 
@@ -360,6 +332,7 @@ On Windows you have drive letters and the root of the file system is the “\”
 with root at the beginning. Root is shown in the file system as /. Everything is then displayed off the root. The “/” is another difference that will take a while to get used to. Unix/Linux/Mac use a forward slash instead of the backslash “\” for file system commands. When you use a web browser, you use the forward slash for file commands – <https://github.com/rikosintie> for example.
 
 ### LSBLK
+
 For a quick look at block devices (hard drives, thumb drives, nvme, etc.) on the system, you can use the "list block devices" command - lsblk. Here is an lsblk listing on my Dell laptop which has an m.2 NVME drive with the OS on it and 1TB SSD for data.
 
 ```bash
@@ -383,9 +356,7 @@ that nvme0n1p2 is type partition and mount is /. That means nvme0n1p2 is the roo
 
 There is also a "block device" named sda. This is a 1TB SATA SSD drive and it's mounted at /media/mhubbard/Data off the root.
 
-<p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/Drives.png" alt="Disks in Files">
-</p>
+![screenshot](img/Drives.png)
 
 The display needs a little explanation. For the disk labeled “Ubuntu” it says 45.4 GB / 490.6 GB available.
 That actually means it’s a 490.6GB drive with 45.4GB available.
@@ -469,7 +440,6 @@ know that the device isn’t being discovered by Linux
 
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
 
-
 ### OpenSSH Server
 
 Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the Open-ssh server. Follow these instruction to enable the SSH server:
@@ -480,6 +450,7 @@ sudo apt install ssh
 ```
 
 **Useful SSH system commands**
+
 - sudo systemctl start ssh - Start the SSH server
 - sudo systemctl stop ssh - Stop the SSH server
 - systemctl status ssh - Show server status
@@ -490,8 +461,8 @@ Reference:
 
 [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
 
-
 ### Creating SSH Keys
+
 The OpenSSH client allows you to create SSH keys. My current recommended cipher is Bruce Schnierers ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
 
 `ssh-keygen -o -a 100 -t ed25519`
