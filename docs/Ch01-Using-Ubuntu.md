@@ -123,7 +123,7 @@ If there are too many to display, a column of circles will appear at the bottom 
 If you have several copies of the same application open you can switch between them using the super key and `\~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
 icon and then select the one you want but the keyboard is much easier and faster.
 
-For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the "alt+`" key combination. Here is a screenshot of two spreadsheets.
+For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the alt + ` key combination. On a US keyboard that is the key to teh left of the 1 key. Here is a screenshot of two spreadsheets.
 
 ![screenshot](img/alt%2B~.png)
 
@@ -151,7 +151,7 @@ the monitors.
 
 Ubuntu ships with Gnome as the desktop environment (DE). Unlike Windows, Linux distributions can use a lot of different desktop environments (DE). Gnome is the default desktop environment for Ubuntu and Redhat (CentOS) so it has a large percentage of the desktop market in Linux. If you want to try others there are several official flavors of Ubuntu that you can download from Canonical.
 
-First, install the Gnome Tweak Tool. This tool allows you to change a lot of the Gnome settings to your preference. Open a terminal window, ctrl+alt+t, and type the following:
+First, install the Gnome Tweak Tool. This tool allows you to change a lot of the Gnome settings to your preference. Open a terminal window, `ctrl+alt+t`, and type the following:
 
 `sudo apt install gnome-tweak-tool`
 
@@ -179,7 +179,11 @@ Files works well and has a feature I love – Tabs! Once you get used to having 
 and the right click menu showing “Open in Terminal”. You can see how convenient this is.
 
 On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
-Files has an extensive right click menu. Here are the options for the folder Scripts.
+Files has an extensive right click menu. Here are the options for the folder Scripts. Note: The `Compress...` menu supports:
+
+- zip
+- 7zip
+- tar.xz
 
 ![screenshot](img/Right-Click.png)
 
