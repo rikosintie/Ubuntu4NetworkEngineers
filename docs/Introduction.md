@@ -19,7 +19,7 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 
 Any technical user running Microsoft Windows 10/11 who wants to try Linux! I used MS Windows from Windows 3.1 up until Windows 8 came out. At that time I had been using Linux for things like [Nagios](https://www.nagios.org/downloads/nagios-core/) and the Asterisk VoIP system but not on my laptop. Windows 8 pushed me over the edge!
 
-Once I started working with Python and studying for the Cisco NetDevOps certification, it became clear that Linux is a better choice for a technical user, whether they are a network Engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch from BASH to ZSH in a later chapter.
+Once I started working with Python and studying for the Cisco NetDevOps certification, it became clear that Linux is a better choice for a technical user, whether they are a network Engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch the shell from BASH to ZSH in a later chapter.
 
 - **Network Engineers** can use this guide to get started with Linux and then to customize their daily driver to fit the unique needs of a network engineer.
 - **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. These tools are discussed in "Working in the Terminal".
@@ -44,9 +44,7 @@ Download it here: [Cisco Certified DevNet Expert (v1.0) Equipment and Software L
 
 Here is an image from the Cisco DevNet Associate course. You can see the emphasis on coding and automation.
 
-<p align="center" width="100%">
-    <img width="60%" src="https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/images/DevNet-Exam-Topics.png" alt="Cisco DevOps Topics">
-</p>
+![screenshot](img/DevNet-Exam-Topics.png)
 
 ----------------------------------------------------------------
 
@@ -54,7 +52,7 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
 
 Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/) meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software (FOSS) or Libre Software. In this case the "free" refers freedom, not zero cost.
 
-What I love about Ubuntu is the "Open Source Software" community. It is a large community of developers, users, engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
+What I love about Ubuntu is the "Open Source Software" community. It is a large community of developers, users, and engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
 
 - FireFox
 - MariaDB
@@ -74,7 +72,7 @@ Cisco values the open source community as an essential resource and partner in i
 
 **Cisco is a Leader in Open Source Innovation**
 
-Open source is changing the technology industry and Cisco is a dedicated partner in that innovation. Cisco has been participating in open source development for nearly 3 decades, including founding projects like OpenDaylight, FD.io, VPP, PNDA, SNAS, and OpenH264, and contributing to projects like OPNFV, Kubernetes, OpenStack, Ansible, Chef, Puppet, Maven, and countless more.
+Open source is changing the technology industry and Cisco is a dedicated partner in that innovation. Cisco has been participating in open source development for nearly 3 decades, including founding projects like OpenDaylight, FD.io, VPP, SNAS, and OpenH264, and contributing to projects like OPNFV, Kubernetes, OpenStack, Ansible, Chef, Puppet, Maven, and countless more.
 
 There are pages and pages of links to the Open Source software that is used in Cisco products.
 
@@ -108,12 +106,12 @@ My suggestion if you have never touched Linux is to install Ubuntu as a VM and g
 I have Kali running on a 2015 MacBook Pro and Ubuntu on a Dell G5 laptop. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. The
 VM can do just about anything the bare metal can do but when I would get stuck on something I would just shut it down and go back to Windows instead of figuring it out. Running on bare metal removed the temptation to do that!
 
-There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials, here is a link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo x280 is a good choice. They are under $200 on ebay in good condition and have hardware that is supported on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
+There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials, here is a link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo T480 is a good choice. They are under $200 on ebay in good condition and have hardware that is supported on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
 
 **NOTE**: Ubuntu has two types of releases
 
-- LTS releases - Every two years on even years. So 22.04 is the long-term release from 2022.
-- Interim Releases - Released in October and April. So 22.10, 23.04, and 23.10 are interim releases after the LTS 22.04. The next LTS will be 24.04.
+- LTS releases - Every two years on even years. So 22.04 is the long-term release from 2022. The current LTS is 24.04
+- Interim Releases - Released in October and April. So 22.10, 23.04, and 23.10 are interim releases after the LTS 22.04.
 
 The LTS releases are rock solid but they don't get new features or the latest kernel versions. If you put Ubuntu on bare metal and use it as your daily driver I recommend that you use an LTS release.
 
