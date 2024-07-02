@@ -59,10 +59,11 @@ These two short YouTube videos sum it up better than I can:
 There are a lot of podcasts dedicated to Linux. In your podcast application just search Linux. My favorites are:
 
 - Destination Linux - A weekly podcast on general Open Source topics.
-- Linux Unplugged - A weekly podcast on Linux by Jupiter Broadcasting. Covers news and applications for Linux.
-- Late Night Linux - A weekly podcast on Linux and the wider tech industry.
+- Late Night Linux - A weekly podcast on Linux and the wider tech industry. NOTE: Lots of F bombs!
 - Linux After Dark - A weekly podcast on Linux experiences.
+- Linux Dev Time - A weekly podcast on Developing on Linux
 - Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a projects community"
+- Linux Unplugged - A weekly podcast on Linux by Jupiter Broadcasting. Covers news and applications for Linux.
 - This Week in Linux - A weekly podcast on Linux
 
 ## Casting your display
@@ -120,10 +121,10 @@ If there are too many to display, a column of circles will appear at the bottom 
 
 ### Switching between multiple open windows in the same application
 
-If you have several copies of the same application open you can switch between them using the super key and `\~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
+If you have several copies of the same application open you can switch between them using the super key + ~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
 icon and then select the one you want but the keyboard is much easier and faster.
 
-For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the alt + ` key combination. On a US keyboard that is the key to teh left of the 1 key. Here is a screenshot of two spreadsheets.
+For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the super + ` key combination. On a US keyboard that is the key to teh left of the 1 key. Here is a screenshot of two spreadsheets.
 
 ![screenshot](img/alt%2B~.png)
 
