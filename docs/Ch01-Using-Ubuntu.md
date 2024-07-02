@@ -11,7 +11,7 @@
   - [Configuring the Dock](#configuring-the-dock)
   - [Customizing Gnome - The Tweaks Tool](#customizing-gnome---the-tweaks-tool)
     - [Startup Applications](#startup-applications)
-  - [Managing Files](#managing-files)
+  - [Using the GUI Files application](#using-the-gui-files-application)
     - [Creating archives](#creating-archives)
     - [Display the Full path in files](#display-the-full-path-in-files)
     - [Easily preview files in Files](#easily-preview-files-in-files)
@@ -26,7 +26,9 @@
     - [LSUSB](#lsusb)
   - [SSH](#ssh)
     - [OpenSSH Server](#openssh-server)
+    - [Useful SSH system commands](#useful-ssh-system-commands)
     - [Creating SSH Keys](#creating-ssh-keys)
+  - [Working with services](#working-with-services)
 
 ----------------------------------------------------------------
 
@@ -172,25 +174,24 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 ----------------------------------------------------------------
 
-## Managing Files
+## Using the GUI Files application
 
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
 
 Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
-and the right click menu showing “Open in Terminal”. You can see how convenient this is.
+and the right click menu showing “Open in Terminal”. You can see how convenient this is. On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
 
-On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
-Files has an extensive right click menu. Here are the options for the folder Scripts. Note: The `Compress...` menu supports:
-
-- zip
-- 7zip
-- tar.xz
+Files has an extensive right click menu. Here are the options for the folder Scripts.
 
 ![screenshot](img/Right-Click.png)
 
 ### Creating archives
 
-From the right click menu you can select "Compress..." to create a zip, password protected zip, a tar.gz or if you have installed 7zip, a 7z archive.
+From the right click menu you can select "Compress..." to create an archive. The `Compress...` menu supports:
+
+- zip
+- 7zip (Must install 7z `sudo apt install 7zip`)
+- tar.xz
 
 ### Display the Full path in files
 
@@ -454,7 +455,7 @@ sudo apt update
 sudo apt install ssh
 ```
 
-**Useful SSH system commands**
+### Useful SSH system commands
 
 - sudo systemctl start ssh - Start the SSH server
 - sudo systemctl stop ssh - Stop the SSH server
@@ -485,7 +486,7 @@ Specify a strong passphrase when prompted. The passphrase is required anytime yo
 `for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq`
 
 - DSA or RSA 1024 bits: This is a red flag. Unsafe.
-- RSA 2048: This is a yellow flage, recommended to change
+- RSA 2048: This is a yellow flag, recommended to change
 - RSA 3072/4096: great, but Ed25519 has some benefits!
 - ECDSA: depends. Recommended to change
 - Ed25519: wow cool, but are you brute-force safe?
@@ -502,3 +503,9 @@ $ for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
 **Reference**
 
 [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
+
+## Working with services
+
+Gnome includes a tool like “service.msc” on Windows. You start it by tapping the super key and typing “System.
+
+Ubuntu uses a service called systemd to start and control services. At first it seems confusing and a little difficult compared to just starting “services.msc” on Windows. But like most things, after you do it a few times it’s very logical and easy to use. Here is a cheat sheet for systemd.
