@@ -28,6 +28,7 @@
     - [OpenSSH Server](#openssh-server)
     - [Useful SSH system commands](#useful-ssh-system-commands)
     - [Creating SSH Keys](#creating-ssh-keys)
+  - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
   - [Working with services](#working-with-services)
 
 ----------------------------------------------------------------
@@ -41,6 +42,8 @@ So, what is the hard part? Things like killing a hung application, searching for
 The reason for this guide is to help get you past the hurdles so that you can start enjoying Ubuntu. I promise that if you get over the hump your productivity as a network engineer will soar. Since MacOS is based on Open BSD Unix,
 once your muscle memory is up to speed you can jump back and forth easily between Windows, Mac and Linux. In a later chapter I will discuss the terminal tools that make Linux so much fun and so powerful for
 a network engineer.
+
+----------------------------------------------------------------
 
 ## Desktop Environments in Linux
 
@@ -56,6 +59,8 @@ These two short YouTube videos sum it up better than I can:
 - [6 Things to Know When Switching to Linux from Windows](https://www.youtube.com/watch?v=wcdquhB6hT8)
 - [10 things you can do with Linux that you can't do with Windows](https://www.youtube.com/watch?v=JOOkfGv58u0)
 
+----------------------------------------------------------------
+
 ## Podcasts on Linux
 
 There are a lot of podcasts dedicated to Linux. In your podcast application just search Linux. My favorites are:
@@ -67,6 +72,8 @@ There are a lot of podcasts dedicated to Linux. In your podcast application just
 - Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a projects community"
 - Linux Unplugged - A weekly podcast on Linux by Jupiter Broadcasting. Covers news and applications for Linux.
 - This Week in Linux - A weekly podcast on Linux
+
+----------------------------------------------------------------
 
 ## Casting your display
 
@@ -90,6 +97,8 @@ Notice that the files application icon has two dots on the left side. If you cli
 
 ![screenshot](img/files-side-by-side.png)
 
+----------------------------------------------------------------
+
 ### Search for an application
 
 To open an application using search, simply start typing the name of the application in the search box. As you
@@ -102,6 +111,8 @@ LibreOffice Calc!
 
 You can also use the mouse and click on any application that is displayed to open it.
 
+----------------------------------------------------------------
+
 ### Switching Applications
 
 Tap the super key (Windows key on some keyboards). Below the search box are the applications that are currently running. If you want to switch to one of the open applications, you can use the Tab key and [enter] or use the mouse to select one of the running applications.
@@ -109,6 +120,8 @@ Tap the super key (Windows key on some keyboards). Below the search box are the 
 You can also use ctrl+tab just like in Windows.
 
 Finally, you can use the dock to open applications that you have pinned to it.
+
+----------------------------------------------------------------
 
 ### Viewing all installed applications
 
@@ -120,6 +133,8 @@ installed applications in a window.
 If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.
 
 ![screenshot](img/frequent-new.png)
+
+----------------------------------------------------------------
 
 ### Switching between multiple open windows in the same application
 
@@ -150,6 +165,8 @@ Using the super key and typing the first few letters is now my preferred work fl
 icon in the dock. One thing I like about Ubuntu is that when I’m using multiple monitors it puts the dock on all
 the monitors.
 
+----------------------------------------------------------------
+
 ## Customizing Gnome - The Tweaks Tool
 
 Ubuntu ships with Gnome as the desktop environment (DE). Unlike Windows, Linux distributions can use a lot of different desktop environments (DE). Gnome is the default desktop environment for Ubuntu and Redhat (CentOS) so it has a large percentage of the desktop market in Linux. If you want to try others there are several official flavors of Ubuntu that you can download from Canonical.
@@ -165,6 +182,8 @@ Press [enter], you will be prompted for your password because of sudo, and the i
 and hit [enter].
 
 ![screenshot](img/tweaks.png)
+
+----------------------------------------------------------------
 
 ### Startup Applications
 
@@ -185,6 +204,8 @@ Files has an extensive right click menu. Here are the options for the folder Scr
 
 ![screenshot](img/Right-Click.png)
 
+----------------------------------------------------------------
+
 ### Creating archives
 
 From the right click menu you can select "Compress..." to create an archive. The `Compress...` menu supports:
@@ -193,17 +214,23 @@ From the right click menu you can select "Compress..." to create an archive. The
 - 7zip (Must install 7z `sudo apt install 7zip`)
 - tar.xz
 
+----------------------------------------------------------------
+
 ### Display the Full path in files
 
 Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
 
 ![screenshot](img/ZIP.png)
 
+----------------------------------------------------------------
+
 ### Easily preview files in Files
 
 One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.
 
 [How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)](https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/)
+
+----------------------------------------------------------------
 
 ### Search
 
@@ -227,6 +254,8 @@ You can click on the funnel icon after you open search and filter on:
 Ubuntu has an article on using the new feature here: [Search for files](https://help.ubuntu.com/stable/ubuntu-help/files-search.html.en#:~:text=Open%20the%20Files%20application%20from,shown%20in%20the%20search%20bar.)
 
 Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/files.html.en#more-file-tasks) page for Files
+
+----------------------------------------------------------------
 
 ### Why do I have a red Lock on a file or folder?
 
@@ -301,6 +330,8 @@ Enter the following:
 
 MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!
 
+----------------------------------------------------------------
+
 ### Use the Ubuntu "Make Startup disk" tool
 
 You can use the built in “Startup disk creator” by tapping the super key (Windows Key) and typing `start`. You will see the Startup disk icon:
@@ -315,6 +346,8 @@ You can use the built in “Startup disk creator” by tapping the super key (Wi
 ![screenshot](img/startup-disk.png)
 
 In this example, I am burning Kali Linux 2023.3 to the flash drive.
+
+----------------------------------------------------------------
 
 ### Use qemu to test a startup disk
 
@@ -336,6 +369,8 @@ Here is a link to a great tutorial on the Linux file system by Abhishek Prakash 
 
 On Windows you have drive letters and the root of the file system is the “\” character – The good old C:\. But Linux/Mac, or any *NIX for that matter, doesn’t use drive letters. The file system is usually described as a tree
 with root at the beginning. Root is shown in the file system as /. Everything is then displayed off the root. The “/” is another difference that will take a while to get used to. Unix/Linux/Mac use a forward slash instead of the backslash “\” for file system commands. When you use a web browser, you use the forward slash for file commands – <https://github.com/rikosintie> for example.
+
+----------------------------------------------------------------
 
 ### LSBLK
 
@@ -446,6 +481,8 @@ know that the device isn’t being discovered by Linux
 
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
 
+----------------------------------------------------------------
+
 ### OpenSSH Server
 
 Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the Open-ssh server. Follow these instruction to enable the SSH server:
@@ -454,6 +491,8 @@ Ubuntu comes with an SSH client. If you want to be able to ssh back into your la
 sudo apt update
 sudo apt install ssh
 ```
+
+----------------------------------------------------------------
 
 ### Useful SSH system commands
 
@@ -466,6 +505,8 @@ sudo apt install ssh
 Reference:
 
 [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
+
+----------------------------------------------------------------
 
 ### Creating SSH Keys
 
@@ -504,8 +545,30 @@ $ for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
 
 [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 
+----------------------------------------------------------------
+
+## Gnome System Tool (GUI)
+
+Gnome includes a tool like “service.msc” on Windows. You start it by tapping the super key and typing “System". Here is a screenshot of the "Processes" panel.
+
+![screenshot](img/Gnome-System.png)
+
+Like in Windows, you can right click and select an action:
+
+![screenshot](img/Gnome-Right-Click.png)
+
+Here is a screenshot of the "Resources" panel
+
+![screenshot](img/Gnome-Resources.png)
+
+Here is a screenshot of the "File Systems" panel
+
+![screenshot](img/Gnome-FileSystems.png)
+
+You can see that my laptop boots off a 500GB nvme disk and has a 1TB drive (sdb) for storage.
+
+----------------------------------------------------------------
+
 ## Working with services
 
-Gnome includes a tool like “service.msc” on Windows. You start it by tapping the super key and typing “System.
-
-Ubuntu uses a service called systemd to start and control services. At first it seems confusing and a little difficult compared to just starting “services.msc” on Windows. But like most things, after you do it a few times it’s very logical and easy to use. Here is a cheat sheet for systemd.
+Ubuntu uses an "init system" called systemd to start and control services. At first it seems confusing and a little difficult compared to  “services.msc” on Windows. But like most things, after you do it a few times it’s very logical and easy to use. Here is a cheat sheet for systemd.
