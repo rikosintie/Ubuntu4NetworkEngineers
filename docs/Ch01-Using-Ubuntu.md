@@ -572,3 +572,34 @@ You can see that my laptop boots off a 500GB nvme disk and has a 1TB drive (sdb)
 ## Working with services
 
 Ubuntu uses an "init system" called systemd to start and control services. At first it seems confusing and a little difficult compared to  “services.msc” on Windows. But like most things, after you do it a few times it’s very logical and easy to use. Here is a cheat sheet for systemd.
+
+| Viewing Systemd Information |                                      |
+|-----------------------------|--------------------------------------|
+| systemctl list-dependencies | Show a unit's dependencies           |
+| systemctl list-sockets      | List sockets and what activates      |
+| systemctl list-jobs         | View active systemd jobs             |
+| systemctl list-unit-files   | See unit files and their states      |
+| systemctl list-units        | Show if units are loaded/active      |
+| systemctl get - default     | List default target (like run level) |
+
+----------------------------------------------------------------
+
+| Working with Services            |                                         |
+|----------------------------------|-----------------------------------------|
+| systemctl stop service           | Stop a running service                  |
+| systemctl start service          | Start a service                         |
+| systemctl restart service        | Restart a running service               |
+| systemctl reload service         | Restart a running service               |
+| systemctl status service         | See if service is running/enabled       |
+| systemctl enable service         | Enable a service to start on boot       |
+| systemctl disable service        | Disable a service - won't start at boot |
+| systemctl -H host status network | Run any systemctl command remotely      |
+
+----------------------------------------------------------------
+
+| Changing System states |                                            |
+|------------------------|--------------------------------------------|
+| systemctl reboot       | Reboot the system (reboot.target)          |
+| systemctl poweroff     | Power off the system (poweroff.target0     |
+| systemctl emergency    | Put in emergency mode (emergency.target)   |
+| systemctl default      | Back to default target (multi-user.target) |
