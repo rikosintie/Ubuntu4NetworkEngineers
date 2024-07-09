@@ -640,6 +640,10 @@ Host 192.168.10.253
 You can add the key file if you have more than one and a custom port if needed:
 
 ```bash
+Host 192.168.10.253
+    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    MACs hmac-sha1,hmac-sha2-256
+    HostKeyAlgorithms ssh-rsa
     IdentityFile ~/.ssh/id_custom_25519
     Port 45005
 ```
