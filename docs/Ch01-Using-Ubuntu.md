@@ -530,7 +530,7 @@ My current recommended cipher is Bruce Schnierer's ED25519. To create a set of k
 
 -t Specifies the type of key to create. The choices are dsa | ecdsa | ecdsa‐sk | ed25519 | ed25519‐sk | rsa
 
-dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018.
+dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018. the keys with -sk at the end for use with `physical security keys`. See the "Yubico" topic later in this section for more information.
 
 -C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file.
 
@@ -583,7 +583,7 @@ Note: I always start my key names wih `id_`. If you don't, you will need to modi
 - ECDSA: depends. Recommended to change
 - Ed25519: wow cool, but are you brute-force safe?
 
-Here is what it looked like on my laptop. Looks Like I have some key generation to do!
+Here is what it looked like on my laptop.
 
 ```bash
 for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
@@ -595,7 +595,7 @@ You can see the comment on the first key.
 
 ### SSH Key permissions
 
-The private key should have rw to only the user. No other users or groups should have any permissions. Use the following to set the permissions:
+The private key should have rw to only the user. No other users or groups should have any permissions. Use the following to view/set the permissions:
 
 ```bash
 ls -l
@@ -608,7 +608,14 @@ chmod 600 ~/.ssh/id_custom_25519
 
 ### Connecting to Network Devices
 
-If you are connecting to network devices from a modern version of Mac/Linux you will have to customize the `~/.ssh/config` file because they don't support modern crypto.
+To connect using ssh:
+
+- Open the terminal
+- Enter the following command. Change the username and IP address to fit your device.
+
+`ssh mhubbard@192.168.10.50`
+
+If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
 
 Here is an example:
 
@@ -620,7 +627,7 @@ Host 10.124.2.1
         HostKeyAlgorithms ssh-rsa
 ```
 
-You can add the key file is you are using more than one and a custom port if needed:
+You can add the key file if you have more than one and a custom port if needed:
 
 ```bash
     IdentityFile ~/.ssh/id_custom_25519
@@ -684,6 +691,8 @@ Yubico is one of the company that makes Physical Security keys. These allow you 
 
 - [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 - [ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
+- [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
+
 ----------------------------------------------------------------
 
 ## Gnome System Tool (GUI)
