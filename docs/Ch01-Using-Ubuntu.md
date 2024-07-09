@@ -530,7 +530,7 @@ My current recommended cipher is Bruce Schnierer's ED25519. To create a set of k
 
 -t Specifies the type of key to create. The choices are dsa | ecdsa | ecdsa‐sk | ed25519 | ed25519‐sk | rsa
 
-dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018. the keys with -sk at the end for use with `physical security keys`. See the "Yubico" topic later in this section for more information.
+dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018. The keys with -sk at the end are for use with `physical security keys`. See the "Yubico" topic later in this section for more information.
 
 -C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file.
 
@@ -579,9 +579,9 @@ Note: I always start my key names wih `id_`. If you don't, you will need to modi
 
 - DSA or RSA 1024 bits: This is a red flag. Unsafe.
 - RSA 2048: This is a yellow flag, recommended to change
-- RSA 3072/4096: great, but Ed25519 has some benefits!
+- RSA 3072/4096: Good, but ED25519 is better!
 - ECDSA: depends. Recommended to change
-- Ed25519: wow cool, but are you brute-force safe?
+- ED25519: The best choice!
 
 Here is what it looked like on my laptop.
 
@@ -589,6 +589,8 @@ Here is what it looked like on my laptop.
 for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
 256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
 256 SHA256:2XtMiDbg64rBnUXOzcFFXqwzUbbAjAO2Y9RwrWvVTB4 michael.hubbard999@gmail.com (ED25519)
+2048 SHA256:WFuzqdjjnEVd+tW+2fKz1dEKVzK+vfjhgvsCGlSZrrk mhubbard@1S1K-G5-5587 (RSA)
+
 ```
 
 You can see the comment on the first key.
@@ -617,11 +619,17 @@ To connect using ssh:
 
 If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
 
-Here is an example:
+This is an example trying to connect to Cisco 3850 IOS XE switch:
+
+```bash
+Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
+```
+
+Here is the entry I added to ~/.ssh/config::
 
 ```bash
 nano ~/.ssh/config
-Host 10.124.2.1
+Host 192.168.10.25
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
         MACs hmac-sha1,hmac-sha2-256
         HostKeyAlgorithms ssh-rsa
