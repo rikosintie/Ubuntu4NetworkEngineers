@@ -30,6 +30,7 @@
     - [Creating SSH Keys](#creating-ssh-keys)
     - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
     - [SSH Key permissions](#ssh-key-permissions)
+    - [Connecting to Network Devices](#connecting-to-network-devices)
     - [Yubico Authenticator](#yubico-authenticator)
     - [Reference](#reference)
   - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
@@ -563,8 +564,8 @@ The key's randomart image is:
 Here is what the public key looks like with the comment:
 
 ```bash
-cat custom_25519.pub
-       │ File: custom_25519.pub
+cat id_custom_25519.pub
+       │ File: id_custom_25519.pub
        │ ssh-ed25519·AAAAC3NzaC1lZDI1NTE5AAAAINCnTz475PiCydfW10kXIwPqpRpufeeuicoY9NLUndbt·mhubbard@HP8600.local-2024-07-08
 ```
 
@@ -598,12 +599,80 @@ The private key should have rw to only the user. No other users or groups should
 
 ```bash
 ls -l
--rw-------    1 mhubbard  staff   464B Jul  8 15:54 custom_25519
--rw-r--r--    1 mhubbard  staff   108B Jul  8 15:54 custom_25519.pub
+-rw-------    1 mhubbard  staff   464B Jul  8 15:54 id_custom_25519
+-rw-r--r--    1 mhubbard  staff   108B Jul  8 15:54 id_custom_25519.pub
 
 If the permissions are wrong, use the following:
-chmod 600 ~/.ssh/custom_25519
+chmod 600 ~/.ssh/id_custom_25519
 ```
+
+### Connecting to Network Devices
+
+If you are connecting to network devices from a modern version of Mac/Linux you will have to customize the `~/.ssh/config` file because they don't support modern crypto.
+
+Here is an example:
+
+```bash
+nano ~/.ssh/config
+Host 10.124.2.1
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        MACs hmac-sha1,hmac-sha2-256
+        HostKeyAlgorithms ssh-rsa
+```
+
+You can add the key file is you are using more than one and a custom port if needed:
+
+```bash
+    IdentityFile ~/.ssh/id_custom_25519
+    Port 45005
+```
+
+I have found switches that required the ancient dss HostKeyAlgorithm. Add that with:
+`HostKeyAlgorithms ssh-dss`
+
+On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from my Ubiquiti Nano Station in my home.
+
+```bash
+sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
+Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
+Nmap scan report for office.pu.pri (192.168.10.50)
+Host is up (0.020s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT      STATE SERVICE    VERSION
+22/tcp    open  ssh        Dropbear sshd (protocol 2.0)
+| ssh2-enum-algos:
+|   kex_algorithms: (6)
+|       curve25519-sha256
+|       curve25519-sha256@libssh.org
+|       diffie-hellman-group14-sha256
+|       diffie-hellman-group14-sha1
+|       diffie-hellman-group1-sha1
+|       kexguess2@matt.ucc.asn.au
+|   server_host_key_algorithms: (2)
+|       ssh-rsa
+|       ssh-dss
+|   encryption_algorithms: (2)
+|       aes128-ctr
+|       aes256-ctr
+|   mac_algorithms: (2)
+|       hmac-sha1
+|       hmac-sha2-256
+|   compression_algorithms: (1)
+|_      none
+80/tcp    open  http       lighttpd 1.4.54
+|_http-server-header: lighttpd/1.4.54
+443/tcp   open  ssl/http   lighttpd 1.4.54
+|_http-server-header: lighttpd/1.4.54
+10001/tcp open  tcpwrapped
+MAC Address: FC:EC:DA:C4:6E:55 (Ubiquiti)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
+```
+
+As you can see, it has good crypto like curve 25519 and aes256-ctr but then is supports rsa-dss and diffie-hellman group1 sha1!
+
 ### Yubico Authenticator
 
 Yubico is one of the company that makes Physical Security keys. These allow you to copy your private key to the Yubico and have access no matter what laptop you are on. It's beyond the scope of this guide but here are links to Yubico.
@@ -613,8 +682,8 @@ Yubico is one of the company that makes Physical Security keys. These allow you 
 
 ### Reference
 
-[Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
-
+- [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
+- [ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 ----------------------------------------------------------------
 
 ## Gnome System Tool (GUI)
