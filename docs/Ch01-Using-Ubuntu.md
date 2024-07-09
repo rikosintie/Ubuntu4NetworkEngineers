@@ -28,8 +28,15 @@
     - [OpenSSH Server](#openssh-server)
     - [Useful SSH system commands](#useful-ssh-system-commands)
     - [Creating SSH Keys](#creating-ssh-keys)
+    - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
+    - [SSH Key permissions](#ssh-key-permissions)
+    - [Yubico Authenticator](#yubico-authenticator)
+    - [Reference](#reference)
   - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
   - [Working with services](#working-with-services)
+  - [Viewing Log Messages](#viewing-log-messages)
+  - [Locating files from the terminal](#locating-files-from-the-terminal)
+    - [Drill - A graphical and CLI tool for searching files](#drill---a-graphical-and-cli-tool-for-searching-files)
 
 ----------------------------------------------------------------
 
@@ -479,7 +486,7 @@ know that the device isn’t being discovered by Linux
 
 *nix systems have SSH installed by default. Newer versions of the OpenSSH client don’t allow weak ciphers.
 
-I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
+I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
 
 ----------------------------------------------------------------
 
@@ -510,9 +517,11 @@ Reference:
 
 ### Creating SSH Keys
 
-The OpenSSH client allows you to create SSH keys. My current recommended cipher is Bruce Schnierers ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
+The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer.
 
-`ssh-keygen -o -a 100 -t ed25519`
+My current recommended cipher is Bruce Schnierer's ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
+
+`ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519`
 
 -o Use the new RFC4716 key format and the use of a modern key derivation function powered by bcrypt.
 
@@ -520,9 +529,50 @@ The OpenSSH client allows you to create SSH keys. My current recommended cipher 
 
 -t Specifies the type of key to create. The choices are dsa | ecdsa | ecdsa‐sk | ed25519 | ed25519‐sk | rsa
 
+dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018.
+
+-C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file.
+
 Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
 
-**Check the existing keys on your system**
+Here is what the output of the command should look like:
+
+```bash
+ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in id_custom_25519
+Your public key has been saved in id_custom_25519.pub
+The key fingerprint is:
+SHA256:4alqMRHMO/O91aJjlON2NLOUVcwZ5WLBVpcIaOFKylw mhubbard@HP8600-2328.local-2024-07-08
+The key's randomart image is:
++--[ED25519 256]--+
+|   o     .o..++==|
+|    +   .o   .B+.|
+|     o Eo.   oo .|
+|    B +..o  .. . |
+|     O oS. +     |
+|    o ..= O .    |
+|     o.o B =     |
+|    ..  B o      |
+|   ..  o o       |
++----[SHA256]-----+
+```
+
+Here is what the public key looks like with the comment:
+
+```bash
+cat custom_25519.pub
+       │ File: custom_25519.pub
+       │ ssh-ed25519·AAAAC3NzaC1lZDI1NTE5AAAAINCnTz475PiCydfW10kXIwPqpRpufeeuicoY9NLUndbt·mhubbard@HP8600.local-2024-07-08
+```
+
+You can see my username, hostname and date at the end.
+
+### Display the existing keys on your system
+
+Note: I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
 
 `for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq`
 
@@ -535,13 +585,33 @@ Specify a strong passphrase when prompted. The passphrase is required anytime yo
 Here is what it looked like on my laptop. Looks Like I have some key generation to do!
 
 ```bash
-$ for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
-2048 SHA256:YRwfm94a26cfCQZK6mT3SO29XaLoAHWJgnixN2OZDM0 mhubbard@1S1K-G5-5587 (RSA)
-2048 SHA256:WFuzqdjjnEVd+tW+2fKz1dEKVzK+vfjhgvsCGlSZrrk mhubbard@1S1K-G5-5587 (RSA)
-
+for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
+256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
+256 SHA256:2XtMiDbg64rBnUXOzcFFXqwzUbbAjAO2Y9RwrWvVTB4 michael.hubbard999@gmail.com (ED25519)
 ```
 
-**Reference**
+You can see the comment on the first key.
+
+### SSH Key permissions
+
+The private key should have rw to only the user. No other users or groups should have any permissions. Use the following to set the permissions:
+
+```bash
+ls -l
+-rw-------    1 mhubbard  staff   464B Jul  8 15:54 custom_25519
+-rw-r--r--    1 mhubbard  staff   108B Jul  8 15:54 custom_25519.pub
+
+If the permissions are wrong, use the following:
+chmod 600 ~/.ssh/custom_25519
+```
+### Yubico Authenticator
+
+Yubico is one of the company that makes Physical Security keys. These allow you to copy your private key to the Yubico and have access no matter what laptop you are on. It's beyond the scope of this guide but here are links to Yubico.
+
+- [Highest assurance authentication that’s fast and easy](https://www.yubico.com/products/yubikey-5-overview/)
+- [Securing SSH Authentication with FIDO2](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html)
+
+### Reference
 
 [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 
@@ -582,6 +652,20 @@ Ubuntu uses an "init system" called systemd to start and control services. At fi
 | systemctl list-units        | Show if units are loaded/active      |
 | systemctl get - default     | List default target (like run level) |
 
+**Example**
+
+```bash
+systemctl list-dependencies ufw
+ufw.service
+● ├─system.slice
+● ├─local-fs.target
+● │ ├─-.mount
+● │ ├─boot-efi.mount
+○ │ ├─systemd-fsck-root.service
+● │ └─systemd-remount-fs.service
+● └─network-pre.target
+```
+
 ----------------------------------------------------------------
 
 | Working with Services            |                                         |
@@ -595,11 +679,81 @@ Ubuntu uses an "init system" called systemd to start and control services. At fi
 | systemctl disable service        | Disable a service - won't start at boot |
 | systemctl -H host status network | Run any systemctl command remotely      |
 
+The difference between start and enable is that you use enable to set the service to start on boot. If you just run "start" the service will be started but on reboot the service will not be started.
+
+**Example**
+
+```bash
+systemctl status ufw
+● ufw.service - Uncomplicated firewall
+     Loaded: loaded (/lib/systemd/system/ufw.service; enabled; preset: enabled)
+     Active: active (exited) since Mon 2024-07-01 17:42:00 PDT; 1 day 4h ago
+       Docs: man:ufw(8)
+   Main PID: 1713 (code=exited, status=0/SUCCESS)
+        CPU: 89ms
+
+Jul 01 17:41:59 1S1K-G5-5587 systemd[1]: Starting ufw.service - Uncomplicated firewall...
+Jul 01 17:42:00 1S1K-G5-5587 systemd[1]: Finished ufw.service - Uncomplicated firewall.
+```
+
 ----------------------------------------------------------------
 
 | Changing System states |                                            |
 |------------------------|--------------------------------------------|
-| systemctl reboot       | Reboot the system (reboot.target)          |
-| systemctl poweroff     | Power off the system (poweroff.target0     |
-| systemctl emergency    | Put in emergency mode (emergency.target)   |
-| systemctl default      | Back to default target (multi-user.target) |
+| systemctl reboot       | Reboot the system        |
+| systemctl poweroff     | Power off the system    |
+| systemctl emergency    | Put in emergency mode   |
+| systemctl default      | Back to default target |
+
+## Viewing Log Messages
+
+| Viewing Log Messages           |                                 |
+|--------------------------------|---------------------------------|
+| journalctl                     | Show all collected log messages |
+| journalctl -u network.services | See network service messages    |
+| journalctl -f                  | Follow messages as they appear  |
+| journalctl -k                  | show only kernel messages       |
+| journalctl -e                  | Jump to the end                 |
+
+**Example**
+
+```bash
+journalctl -e | grep clam
+Jul 02 19:00:01 1S1K-G5-5587 CRON[1218459]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
+Jul 02 19:10:01 1S1K-G5-5587 CRON[1226306]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
+Jul 02 19:20:01 1S1K-G5-5587 CRON[1234175]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
+Jul 02 19:30:01 1S1K-G5-5587 CRON[1242328]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
+```
+
+## Locating files from the terminal
+
+The locate tool allows you to search everywhere on the file system.
+
+`sudo apt install mlocate` – Install the tool
+`sudo updatedb` - Updates the database, run this periodically especially if you modify the configuration file.
+
+To configure locate:
+These two articles have detailed information on customizing locate.
+    • [configure locate](https://linux.die.net/man/5/updatedb.conf) - configure locate
+    • [Linux locate command practical examples](https://www.tecmint.com/linux-locate-command-practical-examples/)
+
+**Example**
+
+```bash
+locate apsum.py
+/home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
+```
+
+### Drill - A graphical and CLI tool for searching files
+
+From the website, “Search files without indexing, but clever crawling. It uses a different algorithm than most search tools and doesn't use a database like the the Ubuntu locate utility. It will search every mount point on the computer and is multithreaded so that it can search many at once. It will also use all available RAM to speed up the search.”
+
+In the GUI, just enter any part of the filename that you can remember. It's not case sensitive and will find the string anywhere in the name.
+From the website, Download Drill, you can download the GUI (.deb) and the cli (CLI .deb). It is also available as an appimage if you don't want to install it.
+
+**Example**
+
+```bash
+drill-search-cli apsum.py
+/home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
+```
