@@ -510,6 +510,8 @@ sudo apt install ssh
 - sudo systemctl disable ssh – disables SSH server after next reboot
 - sudo systemctl enable ssh – enables SSH after the next reboot.
 
+The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To edit the configuration file use the following `sudo nano /etc/ssh/ssh_config` command.
+
 Reference:
 
 [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
@@ -629,7 +631,7 @@ Here is the entry I added to ~/.ssh/config::
 
 ```bash
 nano ~/.ssh/config
-Host 192.168.10.25
+Host 192.168.10.253
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
         MACs hmac-sha1,hmac-sha2-256
         HostKeyAlgorithms ssh-rsa
@@ -642,10 +644,13 @@ You can add the key file if you have more than one and a custom port if needed:
     Port 45005
 ```
 
+To use a specific key on the fly:
+`ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
+
 I have found switches that required the ancient dss HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms ssh-dss`
 
-On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from my Ubiquiti Nano Station in my home.
+On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
 
 ```bash
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
@@ -686,7 +691,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
 ```
 
-As you can see, it has good crypto like curve 25519 and aes256-ctr but then is supports rsa-dss and diffie-hellman group1 sha1!
+As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why?
 
 ### Yubico Authenticator
 
