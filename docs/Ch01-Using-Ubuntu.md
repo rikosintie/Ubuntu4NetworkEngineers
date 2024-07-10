@@ -31,6 +31,8 @@
     - [Run network commands remotely](#run-network-commands-remotely)
     - [Network Devices with legacy ciphers](#network-devices-with-legacy-ciphers)
     - [Using a wildcard in the configuration file](#using-a-wildcard-in-the-configuration-file)
+    - [Debugging SSH connections](#debugging-ssh-connections)
+    - [What ciphers are supported?](#what-ciphers-are-supported)
     - [Creating SSH Keys](#creating-ssh-keys)
     - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
     - [SSH Key permissions](#ssh-key-permissions)
@@ -528,7 +530,7 @@ To connect using ssh:
 - Open the terminal
 - Enter the following command. Change the username and IP address to fit your device.
 
-`ssh mhubbard@192.168.10.50`
+`ssh mhubbard@192.168.10.253`
 
 ### Run network commands remotely
 
@@ -551,7 +553,7 @@ Current configuration : 17541 bytes
 end
 ```
 
-But you can also use bash commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
+But you can also use shell commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
 
 ```bash
 ssh 192.168.10.253 show run | grep "ip ssh"
@@ -568,9 +570,7 @@ Connection to 192.168.10.253 closed by remote host.
 
 ### Network Devices with legacy ciphers
 
-One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak ciphers. Most network devices have weak ciphers by default.
-
-If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
+One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak ciphers. Most network devices have weak ciphers by default. If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
 
 This is an example trying to connect to Cisco 3850 IOS XE switch running 16.12.x:
 
@@ -602,7 +602,7 @@ Host 192.168.10.253
 To use a specific key on the fly:
 `ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
 
-I have tried to connect to network devices that required the ancient dss HostKeyAlgorithm. Add that with:
+I have run across  network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms ssh-dss`
 
 ### Using a wildcard in the configuration file
@@ -618,7 +618,7 @@ Host *
         HostKeyAlgorithms ssh-rsa,ssh-dss
         MACs hmac-sha2-512,hmac-sha2-256
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-        ```
+```
 
 Add any settings that are common to your devices.
 
@@ -626,7 +626,42 @@ Add any settings that are common to your devices.
 
 You can use the -v switch to debug the SSH connection. You can repeat the v up to 4 times - -vvvv. Each extra v adds more details to the output.
 
-On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
+### What ciphers are supported?
+
+On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers.
+
+Here is an example from the Cisco 3850 in my home lab:
+
+```bash
+ssh 192.168.10.253 show ip ssh
+(mhubbard@192.168.10.253) Password:
+
+DECOM___MCI-KSC-SW1 line 2
+
+
+
+SSH Enabled - version 2.0
+Authentication methods:publickey,keyboard-interactive,password
+Authentication Publickey Algorithms:x509v3-ssh-rsa,ssh-rsa
+Hostkey Algorithms:x509v3-ssh-rsa,ssh-rsa
+Encryption Algorithms:aes256-ctr,aes192-ctr,aes128-ctr
+MAC Algorithms:hmac-sha2-256,hmac-sha2-512
+KEX Algorithms:diffie-hellman-group14-sha1
+Authentication timeout: 120 secs; Authentication retries: 3
+Minimum expected Diffie Hellman key size : 4096 bits
+IOS Keys in SECSH format(ssh-rsa, base64 encoded): SSH-KEYS
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC9HNJvj5z6RlhYQxxXk7WmWzoSGl8O9Iw5mUIFEmkR
+MRwG7Hg32r5qZ0JSI//gZv8xAVfaR8h2Z5dlJnZyHkpH9eUyXcQOFTY6Y7O4GlFcIGCsVwMWSNslipyf
+UVW9NBHFrbdfPgZnPzU6FxiTsKLCgIdbrGi51X1jpJf762Q6ZCsPV6h963gRgAMs+BsxRzDXxOVVcjYW
+nDhN+nK9FNdHC4xlf7y3LLAb3zL41JuWN3N+7NEeNlM8fVgSI4Wzv3RE6uLRB6HIir/WjUgfzAOnBi5/
+j52pac2gkstrdJmpko5ImRSWxuZfLYzn4LLXoIBXAKbps7BSk7Ci+to+RVDje5d68+Ech19ogzsfufNU
+nYHvKNkxmahaZSZav6BPZWBiJ6Xc9c1OcqHX0seVXEp7ZZ+a99yrtY22yBC5W5Wh1hY/PEULbP7W64E+
+mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
+8hQznQVtjKn/Ey+aziHBrYo7IvwyKALA6Ofk+KehGgcmijEGi8HeyQdwmKzZ9t1XlVWE25M+RZMk0YCa
+uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
+```
+
+You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
 
 ```bash
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
