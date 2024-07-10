@@ -8,18 +8,3 @@
 A guide to network engineering with Ubuntu
 
 ![screenshot](img/penquin.jpg)
-
-----------------------------------------------------------------
-
-The following conventions are used in “Ubuntu for Network Engineers”:
-
-* Italic
-  * Used for URLs, email addresses, acronyms, filenames, and new terms.
-* Constant Width (Consolas Typeface)
-  * Used for program listings and terminal command output
-* Constant Width Bold (Consolas Typeface)
-  * Text that should be typed into the terminal
-* Constant Width Italic
-  * Text that should be replaced by user supplied values
-
-----------------------------------------------------------------
