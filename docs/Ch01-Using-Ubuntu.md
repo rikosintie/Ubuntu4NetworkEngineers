@@ -661,7 +661,7 @@ mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
 uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
 ```
 
-You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
+For devices that don't have `show ip ssh`, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
 ```bash
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
@@ -702,7 +702,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
 ```
 
-As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why?
+As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why? But this is an example of why you don't want to use the wildcard in the configuration file. depending on the client you could end up using sha1 instead of sha2 or ssh-dss instead of ssh-rsa.
 
 ----------------------------------------------------------------
 
