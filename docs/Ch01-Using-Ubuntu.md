@@ -50,7 +50,7 @@
 
 Switching from Windows to Ubuntu with the Gnome desktop is easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course, Chrome or Edge work just like they do in Windows including syncing, extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
 
-So, what is the hard part? Things like killing a hung application, searching for files from the terminal, and checking free disk space are different and will take a little getting used to. It's a lot like working on Cisco IOS for years and then having to work on an Aruba or Juniper switch. At first, it's frustrating, you have to look up commands and it's frustrating.
+So, what is the hard part? Things like killing a hung application, searching for files from the terminal, and checking free disk space are different and will take a little getting used to. It's a lot like working on Cisco IOS for years and then having to work on an Aruba or Juniper switch. At first, it's frustrating, you have to look up commands and do some things differently.
 
 The reason for this guide is to help get you past the hurdles so that you can start enjoying Ubuntu. I promise that if you get over the hump your productivity as a network engineer will soar. Since MacOS is based on Open BSD Unix,
 once your muscle memory is up to speed you can jump back and forth easily between Windows, Mac and Linux. In a later chapter I will discuss the terminal tools that make Linux so much fun and so powerful for
@@ -62,9 +62,9 @@ a network engineer.
 
 One of the big advantages for Linux is that you can customize almost everything since it's open source. You can change the terminal you use, the file manager, the way almost anything works and even the desktop itself.
 
-The first choice you have to make with Ubuntu is which Desktop Environment do  you want to us. The two most popular desktop environments (DE) for Linux are Gnome (Ubuntu’s default), and KDE (which is available on Ubuntu) but there are many more. I use the computer for work and just learned to customize Gnome to fit my workflow but I use Terminator for my terminal app. Here is a TecMint article on [Desktop Environments](https://www.tecmint.com/top-best-linux-lightweight-desktop-environments/). My advice is to start out with the standard Ubuntu with Gnome until you some comfort with Linux.
+The first choice you have to make with Ubuntu is which Desktop Environment do  you want to use. The two most popular desktop environments (DE) for Linux are Gnome (Ubuntu’s default), and KDE (which is available on Ubuntu) but there are many more. Gnome is the most popular Desktop Environment in Linux and I just learned to customize Gnome to fit my workflow. Here is a TecMint article on [Desktop Environments](https://www.tecmint.com/top-best-linux-lightweight-desktop-environments/) that will explain the differences between them. My advice is to start out with Ubuntu and Gnome until you are comfortable.
 
-I listen to a lot of podcasts and KDE Plasma, XFCE and MATE are highly recommended desktop environments (DE) that you may like better than Gnome. If you watched the second episode of Mr. Robot (Season 1 – which I highly recommend) there is a scene were an executive tells Elliot that he runs KDE but
+I listen to a lot of podcasts on Linux and KDE, XFCE and MATE are highly recommended desktop environments (DE) that you may like better than Gnome. If you watched the second episode of Mr. Robot (Season 1 – which I highly recommend) there is a scene were an executive tells Elliot that he runs KDE but
 understands why Elliott prefers Gnome.
 
 These two short YouTube videos sum it up better than I can:
@@ -82,7 +82,7 @@ There are a lot of podcasts dedicated to Linux. In your podcast application just
 - Late Night Linux - A weekly podcast on Linux and the wider tech industry. NOTE: Lots of F bombs!
 - Linux After Dark - A weekly podcast on Linux experiences.
 - Linux Dev Time - A weekly podcast on Developing on Linux
-- Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a projects community"
+- Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a project's community"
 - Linux Unplugged - A weekly podcast on Linux by Jupiter Broadcasting. Covers news and applications for Linux.
 - This Week in Linux - A weekly podcast on Linux
 
@@ -106,7 +106,7 @@ You can hit the Windows key (Superkey is what it's called in Ubuntu) to bring up
 
 ![screenshot](img/Open-Applications.png)
 
-Notice that the files application icon has two dots on the left side. If you click on the icon, the screen will change to show the two files windows.
+Notice that the files application icon has two dots on the left side. That's because I have two separate windows open. If you click on the icon, the screen will change to show the two files windows.
 
 ![screenshot](img/files-side-by-side.png)
 
@@ -114,7 +114,7 @@ Notice that the files application icon has two dots on the left side. If you cli
 
 ### Search for an application
 
-To open an application using search, simply start typing the name of the application in the search box. As you
+To open an application using search, simply tap the super key and start typing the name of the application in the search box. As you
 type, all the matching applications will be displayed below the search box. If the one you want is the first one
 displayed on the left you can just hit enter. If not, keep typing and the list of displayed applications will get
 smaller. In the screenshot below, hitting enter will open the built in calculator app. Right arrow, Enter will open
@@ -132,7 +132,7 @@ Tap the super key (Windows key on some keyboards). Below the search box are the 
 
 You can also use ctrl+tab just like in Windows.
 
-Finally, you can use the dock to open applications that you have pinned to it.
+Finally, you can use the dock to open applications that you have pinned to it and switch to an open application.
 
 ----------------------------------------------------------------
 
@@ -143,7 +143,7 @@ installed applications in a window.
 
 ![screenshot](img/Dock-square.png)
 
-If there are too many to display, a column of circles will appear at the bottom of the screen and arrows on the right side. You can scroll down with the mouse button or click on one of the circles to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.
+If there are too many to display, a column of circles will appear at the bottom of the screen and and an arrow on the right side. You can scroll down with the mouse button, click on one of the circles or click the arrow on the right to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.
 
 ![screenshot](img/frequent-new.png)
 
