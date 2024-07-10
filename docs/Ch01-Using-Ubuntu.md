@@ -775,6 +775,7 @@ Yubico is one of the company that makes Physical Security keys. These allow you 
 - [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 - [ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
+- [SSH Command - Usage, Options, Configuration](https://www.ssh.com/academy/ssh/command)
 
 ----------------------------------------------------------------
 
