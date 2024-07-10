@@ -27,10 +27,13 @@
   - [SSH](#ssh)
     - [OpenSSH Server](#openssh-server)
     - [Useful SSH system commands](#useful-ssh-system-commands)
+    - [Connecting to Network Devices](#connecting-to-network-devices)
+    - [Run network commands remotely](#run-network-commands-remotely)
+    - [Network Devices with legacy ciphers](#network-devices-with-legacy-ciphers)
+    - [Using a wildcard in the configuration file](#using-a-wildcard-in-the-configuration-file)
     - [Creating SSH Keys](#creating-ssh-keys)
     - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
     - [SSH Key permissions](#ssh-key-permissions)
-    - [Connecting to Network Devices](#connecting-to-network-devices)
     - [Yubico Authenticator](#yubico-authenticator)
     - [Reference](#reference)
   - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
@@ -485,8 +488,6 @@ know that the device isn’t being discovered by Linux
 
 ## SSH
 
-*nix systems have SSH installed by default. Newer versions of the OpenSSH client don’t allow weak ciphers.
-
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
 
 ----------------------------------------------------------------
@@ -515,6 +516,158 @@ The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To ed
 Reference:
 
 [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
+
+----------------------------------------------------------------
+
+### Connecting to Network Devices
+
+*nix systems like macOS and Linux have the SSH client installed by default.
+
+To connect using ssh:
+
+- Open the terminal
+- Enter the following command. Change the username and IP address to fit your device.
+
+`ssh mhubbard@192.168.10.50`
+
+### Run network commands remotely
+
+You can also run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
+
+```bash
+ssh 192.168.10.253 show run
+(mhubbard@192.168.10.253) Password:
+DECOM___MCI-KSC-SW1 line 2
+
+Building configuration...
+
+Current configuration : 17541 bytes
+!
+! Last configuration change at 23:34:18 PDT Thu Jul 4 2024 by mhubbard
+! NVRAM config last updated at 16:19:00 PDT Tue Jul 9 2024
+.
+.
+.
+end
+```
+
+But you can also use bash commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
+
+```bash
+ssh 192.168.10.253 show run | grep "ip ssh"
+(mhubbard@192.168.10.253) Password:
+ip ssh source-interface Vlan10
+ip ssh rsa keypair-name SSH-KEYS
+ip ssh version 2
+ip ssh dh min size 4096
+ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
+ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
+ip ssh server algorithm kex diffie-hellman-group14-sha1
+Connection to 192.168.10.253 closed by remote host.
+```
+
+### Network Devices with legacy ciphers
+
+One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak ciphers. Most network devices have weak ciphers by default.
+
+If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
+
+This is an example trying to connect to Cisco 3850 IOS XE switch running 16.12.x:
+
+```bash
+Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
+```
+
+Here is the entry I added to ~/.ssh/config::
+
+```bash
+nano ~/.ssh/config
+Host 192.168.10.253
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512
+        HostKeyAlgorithms ssh-rsa
+```
+
+You can add the key file if you have more than one and a custom port if needed:
+
+```bash
+Host 192.168.10.253
+    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    MACs hmac-sha1,hmac-sha2-256
+    HostKeyAlgorithms ssh-rsa
+    IdentityFile ~/.ssh/id_custom_25519
+    Port 45005
+```
+
+To use a specific key on the fly:
+`ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
+
+I have tried to connect to network devices that required the ancient dss HostKeyAlgorithm. Add that with:
+`HostKeyAlgorithms ssh-dss`
+
+### Using a wildcard in the configuration file
+
+If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection.
+
+This is not the best solution because it can lead to a downgrade attack on a device that supports modern ciphers and legacy ciphers. But if you want to take the risk here is how to do it:
+
+```bash
+nano ~/.ssh/config
+Host *
+        Protocol 2
+        HostKeyAlgorithms ssh-rsa,ssh-dss
+        MACs hmac-sha2-512,hmac-sha2-256
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        ```
+
+Add any settings that are common to your devices.
+
+### Debugging SSH connections
+
+You can use the -v switch to debug the SSH connection. You can repeat the v up to 4 times - -vvvv. Each extra v adds more details to the output.
+
+On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
+
+```bash
+sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
+Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
+Nmap scan report for office.pu.pri (192.168.10.50)
+Host is up (0.020s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT      STATE SERVICE    VERSION
+22/tcp    open  ssh        Dropbear sshd (protocol 2.0)
+| ssh2-enum-algos:
+|   kex_algorithms: (6)
+|       curve25519-sha256
+|       curve25519-sha256@libssh.org
+|       diffie-hellman-group14-sha256
+|       diffie-hellman-group14-sha1
+|       diffie-hellman-group1-sha1
+|       kexguess2@matt.ucc.asn.au
+|   server_host_key_algorithms: (2)
+|       ssh-rsa
+|       ssh-dss
+|   encryption_algorithms: (2)
+|       aes128-ctr
+|       aes256-ctr
+|   mac_algorithms: (2)
+|       hmac-sha1
+|       hmac-sha2-256
+|   compression_algorithms: (1)
+|_      none
+80/tcp    open  http       lighttpd 1.4.54
+|_http-server-header: lighttpd/1.4.54
+443/tcp   open  ssl/http   lighttpd 1.4.54
+|_http-server-header: lighttpd/1.4.54
+10001/tcp open  tcpwrapped
+MAC Address: FC:EC:DA:C4:6E:55 (Ubiquiti)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
+```
+
+As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why?
 
 ----------------------------------------------------------------
 
@@ -609,93 +762,6 @@ ls -l
 If the permissions are wrong, use the following:
 chmod 600 ~/.ssh/id_custom_25519
 ```
-
-### Connecting to Network Devices
-
-To connect using ssh:
-
-- Open the terminal
-- Enter the following command. Change the username and IP address to fit your device.
-
-`ssh mhubbard@192.168.10.50`
-
-If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
-
-This is an example trying to connect to Cisco 3850 IOS XE switch:
-
-```bash
-Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
-```
-
-Here is the entry I added to ~/.ssh/config::
-
-```bash
-nano ~/.ssh/config
-Host 192.168.10.253
-        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-        MACs hmac-sha1,hmac-sha2-256
-        HostKeyAlgorithms ssh-rsa
-```
-
-You can add the key file if you have more than one and a custom port if needed:
-
-```bash
-Host 192.168.10.253
-    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-    MACs hmac-sha1,hmac-sha2-256
-    HostKeyAlgorithms ssh-rsa
-    IdentityFile ~/.ssh/id_custom_25519
-    Port 45005
-```
-
-To use a specific key on the fly:
-`ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
-
-I have found switches that required the ancient dss HostKeyAlgorithm. Add that with:
-`HostKeyAlgorithms ssh-dss`
-
-On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers. You can also use nmap. This is from the Ubiquiti Nano Station in my home lab.
-
-```bash
-sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
-Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
-Nmap scan report for office.pu.pri (192.168.10.50)
-Host is up (0.020s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT      STATE SERVICE    VERSION
-22/tcp    open  ssh        Dropbear sshd (protocol 2.0)
-| ssh2-enum-algos:
-|   kex_algorithms: (6)
-|       curve25519-sha256
-|       curve25519-sha256@libssh.org
-|       diffie-hellman-group14-sha256
-|       diffie-hellman-group14-sha1
-|       diffie-hellman-group1-sha1
-|       kexguess2@matt.ucc.asn.au
-|   server_host_key_algorithms: (2)
-|       ssh-rsa
-|       ssh-dss
-|   encryption_algorithms: (2)
-|       aes128-ctr
-|       aes256-ctr
-|   mac_algorithms: (2)
-|       hmac-sha1
-|       hmac-sha2-256
-|   compression_algorithms: (1)
-|_      none
-80/tcp    open  http       lighttpd 1.4.54
-|_http-server-header: lighttpd/1.4.54
-443/tcp   open  ssl/http   lighttpd 1.4.54
-|_http-server-header: lighttpd/1.4.54
-10001/tcp open  tcpwrapped
-MAC Address: FC:EC:DA:C4:6E:55 (Ubiquiti)
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
-```
-
-As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why?
 
 ### Yubico Authenticator
 
