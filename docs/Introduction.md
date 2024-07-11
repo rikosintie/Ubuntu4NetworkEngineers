@@ -12,6 +12,7 @@ Advance your “Network Engineer of the future” career with the OS of the Clou
 - [NetDevOps Certifications](#netdevops-certifications)
 - [Linux Certifications](#linux-certifications)
 - [Installing Ubuntu](#installing-ubuntu)
+  - [Ubuntu Release Types](#ubuntu-release-types)
 
 ----------------------------------------------------------------
 
@@ -103,12 +104,14 @@ The advantage of using a VM is that if you damage it or decide for any reason it
 
 My suggestion if you have never touched Linux is to install Ubuntu as a VM and get some experience with it. You won’t have to spend any money, Ubuntu is free, although I usually donate $10 when I download it to install on a fresh machine, and you can run any of the tools in this book.
 
-I have Kali running on a 2015 MacBook Pro and Ubuntu on a Dell G5 laptop. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. The
+I have Ubuntu running on a System76 Gazelle from 2016 and a Dell G5 5587 laptop from 2018. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. The
 VM can do just about anything the bare metal can do but when I would get stuck on something I would just shut it down and go back to Windows instead of figuring it out. Running on bare metal removed the temptation to do that!
 
-There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials, here is a link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo T480 is a good choice. They are under $200 on ebay in good condition and have hardware that is supported on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
+There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials. Here is a link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo T480 is a good choice. They are under $200 on ebay in good condition and have hardware that is certified on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
 
-**NOTE**: Ubuntu has two types of releases
+### Ubuntu Release Types
+
+Ubuntu is released on a regular cadence. There are two types of releases:
 
 - LTS releases - Every two years on even years. So 22.04 is the long-term release from 2022. The current LTS is 24.04
 - Interim Releases - Released in October and April. So 22.10, 23.04, and 23.10 are interim releases after the LTS 22.04.
