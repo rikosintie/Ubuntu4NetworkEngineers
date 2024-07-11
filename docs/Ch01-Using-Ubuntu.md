@@ -36,6 +36,9 @@
     - [Creating SSH Keys](#creating-ssh-keys)
     - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
     - [SSH Key permissions](#ssh-key-permissions)
+    - [Using the keys](#using-the-keys)
+      - [Using the keys with a Cisco IOS switch](#using-the-keys-with-a-cisco-ios-switch)
+    - [Can users still login who don't have keys configured?](#can-users-still-login-who-dont-have-keys-configured)
     - [Yubico Authenticator](#yubico-authenticator)
     - [Reference](#reference)
   - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
@@ -162,7 +165,7 @@ For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to 
 
 ## Configuring the Dock
 
-Like Windows and Mac, Ubuntu with the Gnome DE has a dock. You customize the dock using the Gnome Settings app. To open the Gnome Settings application, click on "Activities Overview" icon at the top right corner of the
+Like Windows and Mac, Ubuntu with the Gnome DE has a dock. You customize the dock using the Gnome Settings application. To open the Gnome Settings application, click on "Activities Overview" icon at the top right corner of the
 screen, then select the gear icon. This will open the "settings" application. It’s very similar to “System Preferences” on the Mac or Control Panel on Windows.
 
 At the top left corner of the screen there is a magnifying glass. Click it and enter "dock". The dock is under "Ubuntu Desktop".
@@ -200,7 +203,7 @@ and hit [enter].
 
 ### Startup Applications
 
-Gnome Tweaks is where you set the applications that run on startup. I try to keep these to a minimum. It's easy to forget that some application is automatically starting and you have forgotten about it.
+Gnome Tweaks is where you set the applications that run on startup. I try to keep these to a minimum. It's easy to forget that some application you don't use anymore is automatically starting and using system resources.
 
 There are a lot of options that you can "tweak" with the tool. I don't make a lot of changes but I do like having the Top Bar show Day, Data and Time.
 
@@ -710,7 +713,7 @@ As you can see, it has good crypto like curve 25519 and aes256-ctr but then it a
 
 The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer.
 
-My current recommended cipher is Bruce Schnierer's ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
+My current recommended cipher Bruce  Schneier's ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
 
 `ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519`
 
@@ -796,6 +799,212 @@ ls -l
 
 If the permissions are wrong, use the following:
 chmod 600 ~/.ssh/id_custom_25519
+```
+
+### Using the keys
+
+Once you have keys created what do you do with them? If you have any Linux servers it very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes. Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
+
+ Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
+
+```bash
+ssh-copy-id -i ~/.ssh/id_custom_25519 192.168.10.223
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/mhubbard/.ssh/id_custom_25519.pub"
+The authenticity of host '192.168.10.223 (192.168.10.223)' can't be established.
+RSA key fingerprint is SHA256:oKfQX+/8lwu3rfP8OMRpAfoeJo8EaOeUZ9kxMQfFNsc.
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:186: [hashed name]
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+mhubbard@192.168.10.223's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh '192.168.10.223'"
+and check to make sure that only the key(s) you wanted were added.
+
+
+~/.ssh ⌚ 13:19:05
+$ ssh '192.168.10.223'
+Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
+```
+
+Since we created a passphrase for key we are prompted for the passphrase, then logged in.
+
+If you need to have automated login, you can create a key without a passphrase. They actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+
+#### Using the keys with a Cisco IOS switch
+
+Unfortunately it's not nearly as easy to setup key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
+
+I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example.
+
+**Time Server**
+Accurate time is required to use ssh keys. The first step is to configure a time server.
+
+```bash
+no ntp allow mode control 3
+ntp server ip time-b.nist.gov
+ntp server 192.168.10.222 prefer
+```
+
+The `no ntp allow mode control 3` is a Cisco recommended best practice to prevent DOS attacks.
+
+- ntp allow mode control 3 --> causes the device to respond to mode 6 packet with a delay of 3 seconds, hence rate limiting and being considered not vulnerable (recommended)
+
+**Configure a Domain Name, create the key pair, set SSH to v2**
+
+To use ssh on the switch you have to create an SSH key pair. I used EC instead of rsa but the key used to authenticate to the IOS XE device must be rsa. Again, network devices have crap for crypto ciphers.
+
+```bash
+ip domain name pu.pri
+crypto key generate ec keysize 384 exportable label EC-SSH-Key
+ip ssh version 2
+```
+
+Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
+
+Display the key:
+
+```bash
+show crypto key mypubkey ec EC-SSH-Key
+% Key pair was generated at: 13:41:45 PDT Jul 11 2024
+Key name: EC-SSH-Key
+Key type: EC KEYS
+ Storage Device: private-config
+ Usage: Signature Key
+ Key is exportable. Redundancy enabled.
+ Key Data:
+  30763010 06072A86 48CE3D02 0106052B 81040022 03620004 B1EB5A86 1C06FB4B
+  4BE9C828 38A03D4C EF8BF634 EC796891 E6BD4082 7E47F9E2 B92AE813 464AC0B9
+  588B716F 93866092 D8F097B0 984D5E98 36816223 57FB8FCC D06F7378 8218FFB0
+  7FC83A93 718D4C08 400EE244 98045041 74F15237 02742339
+```
+
+**Export the Key**
+
+```bash
+(config)#crypto key export ec EC-SSH-Key pem terminal 3des Sup3rS3crt
+% Key name: EC-SSH-Key
+   Usage: Signature Key
+   Key data:
+-----BEGIN PUBLIC KEY-----
+MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEsetahhwG+0tL6cgoOKA9TO+L9jTseWiR
+5r1Agn5H+eK5KugTRkrAuViLcW+ThmCS2PCXsJhNXpg2gWIjV/uPzNBvc3iCGP+w
+f8g6k3GNTAhADuJEmARQQXTxUjcCdCM5
+-----END PUBLIC KEY-----
+-----BEGIN EC PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-CBC,F9622ABF564FFE99
+
+vSH9tLuZsR1pAWGN/ojaa5x7Xguk/4IcQqOH5eVHJoCMZ7vAKTbFsnlmFqbS7zNS
+YUn/cKmH59qFWvPjcQBqqQ1HF/gMEfCr3l8PBZ42nW0=
+-----END EC PRIVATE KEY-----
+```
+
+Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a file and store it in a secure place.
+
+**Configure AAA authentication**
+The aaa new-model command causes the local username and password on the router to be used in the absence of other AAA statements. Once you enter "aaa new-model" you will not be able to enter "login local" on vty line configuration. If you had login local configured it will be removed.
+
+When you create the username be sure to include a secret. I you don't anyone will be able to login with just the username. As always, create a strong secret and use a password manager to store it.
+
+```bash
+(config)#username cisco privilege 15 secret ^8(nn-!#who
+(config)#aaa new-model
+(config)#aaa authentication login default local
+(config)#aaa authorization exec default local
+(Authentication through the line password is not possible with SSH)
+```
+
+**Configure the line88
+
+```bash
+(config)#line vty 0 4
+(config-line)#transport input ssh
+(config-line)#logging sync (prevents console messages from interfering with your inputs)
+```
+
+**Add your PUBLIC key to the device**
+Open the public key file you created earlier in text editor. Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
+
+```bash
+gnome-text-editor id_rsa.pub
+break the lines into lengths of 100 characters
+copy the text after ssh-rsa till the comment begins.
+Close the key file but do not save it
+```
+
+Paste the key into the device
+
+```bash
+(config)#ip ssh pubkey-chain
+(conf-ssh-pubkey)#username mhubbard
+(conf-ssh-pubkey-user)#key-string
+(conf-ssh-pubkey-data)#AAAAB3NzaC1yc2EAAAADAQABAAACAQDhgWxFej4ybQHAEtMHo9gYL6zU5t7HeQE0vy3IFONK9JFsM0HSoxZPK18nh26
+(conf-ssh-pubkey-data)#58l+i8FonksmnhhjX+VOn6dkPwdedEHAOZeSPNGbPdCwQeMZhRZSgE+NCxCesgp3wOOlYLvIaBYFnpF3TbXG8SGSjPmXvupvl75
+(conf-ssh-pubkey-data)#6Obax6cxi/o5MvnRi0aA4kmQYkoDHm/3SDc/fkeEJ3Cqljsc4kTJOGOLiFvfik+wDFILt630J/2cKV/iGhk98cYxVUsPVtlV254
+(conf-ssh-pubkey-data)#ayu8x1aUxTzIhdj11T7Yw20H/+2NHbGbwLRyNn2xMPgFz6UmqnPMreNBWspR0xGcmCjqIxsI73UNZjA0YMm7ob1wTDPHRbJU7Yn
+(conf-ssh-pubkey-data)#j1Oyiqo4fISNtc6nI+MY0t95JEKBcpt653Bq//h/319pzI2h0FAh4UL2XgV581TWMZWtAe2gFQmh5wLyUhxkPyZpwdZomxS58An
+(conf-ssh-pubkey-data)#ZbxQtO8YaSJTGbWzd06lPaWYKYQ+6CMmfGTdPMPS3LsG17rfWUoE4T9ot8uWvD/+ZfteGId+gftva8kxl0rX3VW4lmOG5Vf0FNG
+(conf-ssh-pubkey-data)#HoVRNyQ00xj/rRRo6zgfzJQe7rpjp1nEWmftc2ZouTHtidGCtJ2fmfFS09A+kUHdY51gS1FeJLCySSz+2HIkZpaOVOqlhqz//xa
+(conf-ssh-pubkey-data)#g9QIk4RSWAfpKt+TqB5R+iBCpWYoQ==
+(conf-ssh-pubkey-data)#exit
+(conf-ssh-pubkey-user)#end
+
+```
+
+Make sure to press `enter` after `key-string` before you paste the key in. You have to use `exit` to end the key-string input. Then use `end` to exit configuration mode.
+
+**Verify the ssh configuration:**
+
+```bash
+show run | sec ssh
+ip ssh source-interface Vlan10
+ip ssh rsa keypair-name SSH-KEYS
+ip ssh version 2
+ip ssh dh min size 4096
+ip ssh pubkey-chain
+  username mhubbard
+   key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
+ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
+ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
+ip ssh server algorithm kex diffie-hellman-group14-sha1
+ transport input ssh
+ transport output ssh
+
+```
+
+Note - You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB` instead of `key-string`.
+
+If you need to remove a key use the `no` keyword with the key-hash keyword. I needed to remove the old 2096 bit RSA key after I changed the `ip ssh dh min key size` to 4096.
+
+```bash
+ip ssh pubkey-chain
+username mhubbard
+no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
+```
+
+**Login using the SSH Keys!**
+
+Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the ~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
+
+`ssh -i ~/.ssh/id_rsa.pub 192.168.10.253`
+
+Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add the PubKeyAcceptedKeyTypes to the config file.
+
+You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. I prefer to explicitly call the key, but it doesn't matter if you don't.
+
+### Can users still login who don't have keys configured?
+
+Yes, the key-chain must be configured for each user.
+
+```bash
+sh run | sec pubkey
+ip ssh pubkey-chain
+  username mhubbard
+   key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
 ```
 
 ### Yubico Authenticator
