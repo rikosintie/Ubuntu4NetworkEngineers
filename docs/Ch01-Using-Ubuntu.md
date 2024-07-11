@@ -38,6 +38,7 @@
     - [SSH Key permissions](#ssh-key-permissions)
     - [Using the keys](#using-the-keys)
       - [Using the keys with a Cisco IOS switch](#using-the-keys-with-a-cisco-ios-switch)
+    - [Configure AAA authentication](#configure-aaa-authentication)
     - [Can users still login who don't have keys configured?](#can-users-still-login-who-dont-have-keys-configured)
     - [Yubico Authenticator](#yubico-authenticator)
     - [Reference](#reference)
@@ -664,7 +665,7 @@ mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
 uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
 ```
 
-For devices that don't have `show ip ssh`, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
+For devices that don't have `show ip ssh`, like IoT, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
 ```bash
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
@@ -803,7 +804,9 @@ chmod 600 ~/.ssh/id_custom_25519
 
 ### Using the keys
 
-Once you have keys created what do you do with them? If you have any Linux servers it very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes. Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
+Once you have keys created what do you do with them? If you have any Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
+
+Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
 
  Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
 
@@ -836,11 +839,12 @@ If you need to have automated login, you can create a key without a passphrase. 
 
 #### Using the keys with a Cisco IOS switch
 
-Unfortunately it's not nearly as easy to setup key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
+Unfortunately it's not nearly as easy to enable key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
 
 I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example.
 
 **Time Server**
+
 Accurate time is required to use ssh keys. The first step is to configure a time server.
 
 ```bash
@@ -855,7 +859,7 @@ The `no ntp allow mode control 3` is a Cisco recommended best practice to preven
 
 **Configure a Domain Name, create the key pair, set SSH to v2**
 
-To use ssh on the switch you have to create an SSH key pair. I used EC instead of rsa but the key used to authenticate to the IOS XE device must be rsa. Again, network devices have crap for crypto ciphers.
+To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, network devices have crap for crypto ciphers.
 
 ```bash
 ip domain name pu.pri
@@ -905,20 +909,21 @@ YUn/cKmH59qFWvPjcQBqqQ1HF/gMEfCr3l8PBZ42nW0=
 
 Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a file and store it in a secure place.
 
-**Configure AAA authentication**
+### Configure AAA authentication
+
 The aaa new-model command causes the local username and password on the router to be used in the absence of other AAA statements. Once you enter "aaa new-model" you will not be able to enter "login local" on vty line configuration. If you had login local configured it will be removed.
 
 When you create the username be sure to include a secret. I you don't anyone will be able to login with just the username. As always, create a strong secret and use a password manager to store it.
 
 ```bash
-(config)#username cisco privilege 15 secret ^8(nn-!#who
+(config)#username mhubbard privilege 15 secret ^8(nn-!#who
 (config)#aaa new-model
 (config)#aaa authentication login default local
 (config)#aaa authorization exec default local
 (Authentication through the line password is not possible with SSH)
 ```
 
-**Configure the line88
+**Configure the line**
 
 ```bash
 (config)#line vty 0 4
@@ -927,16 +932,17 @@ When you create the username be sure to include a secret. I you don't anyone wil
 ```
 
 **Add your PUBLIC key to the device**
+
 Open the public key file you created earlier in text editor. Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
 ```bash
 gnome-text-editor id_rsa.pub
 break the lines into lengths of 100 characters
 copy the text after ssh-rsa till the comment begins.
-Close the key file but do not save it
+close the key file but do not save it
 ```
 
-Paste the key into the device
+**Paste the key into the device**
 
 ```bash
 (config)#ip ssh pubkey-chain
@@ -976,7 +982,7 @@ ip ssh server algorithm kex diffie-hellman-group14-sha1
 
 ```
 
-Note - You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB` instead of `key-string`.
+Note - You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB`.
 
 If you need to remove a key use the `no` keyword with the key-hash keyword. I needed to remove the old 2096 bit RSA key after I changed the `ip ssh dh min key size` to 4096.
 
@@ -986,13 +992,13 @@ username mhubbard
 no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
 ```
 
-**Login using the SSH Keys!**
+**Login using the SSH Keys**
 
-Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the ~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
+Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the `~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
 
 `ssh -i ~/.ssh/id_rsa.pub 192.168.10.253`
 
-Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add the PubKeyAcceptedKeyTypes to the config file.
+Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add the `PubKeyAcceptedKeyTypes` to the config file.
 
 You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. I prefer to explicitly call the key, but it doesn't matter if you don't.
 
