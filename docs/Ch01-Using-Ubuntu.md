@@ -1107,11 +1107,11 @@ Continuing in the theme of network devices having crap crypto, you will have to 
 
 `ssh -i ~/.ssh/id_rsa.pub 192.168.10.253`
 
-Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add the `PubKeyAcceptedKeyTypes` to the config file.
+Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add  `PubkeyAcceptedKeyTypes +ssh-rsa` to the config file for this host.
 
 You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. I prefer to explicitly call the key, but it doesn't matter if you don't.
 
-If you want to connect from a Windows computer with Putty I have a link in the references at the end of this section with a tutorial on how to create keys with puttygen.
+If you want to connect from a Windows computer with Putty I have a blog with a tutorial on how to create keys and connect using putty/puttygen - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html).
 
 ### Can users still login who don't have keys configured?
 
@@ -1123,6 +1123,25 @@ ip ssh pubkey-chain
   username mhubbard
    key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
 ```
+Here are the users I have confiugured on this switch:
+
+```bash
+show run | sec user
+username thubbard privilege 15 secret 9 $9$95tTO1OC4HNmIE$bt1Z4.7aw/EBUQHl3NmLUNMacw4hRPI.742Kbs2r4jA
+username mhubbard privilege 15 secret 9 $9$y4j0lAgHcDtV3.$sH6LI79G3qmdpVdICokss8dzjGUC3u7we4.wcPnwNQ.
+username chubbard privilege 15 secret 9 $9$LRizX4S9ps9fK.$I1GaHQAq5sGd8IQ3fk2TKYBwUp4m52W0qOM03l8bncE
+  username mhubbard
+   key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
+   key-hash ssh-rsa CCA79DBB37A7EA060C781DA2767509C0
+```
+
+You can see that `thubbard` has to use a password but `mhubbard` can use a password or SSH keys. User `mhubbard` has two keys listed because I generated keys on my Ubuntu machine and my M1 MacBook Air. I could have copiied my private key from Ubuntu to the MacBook but I wanted to show two keys.
+
+Note that IOS XE only allows two keys in the key-chain.
+
+Cisco does support strong scrypt hashing of user secres. Here is how to do that:
+
+`username thubbard privilege 15 algorithm-type scrypt secret Sup3rS3cr3t`
 
 ### Yubico Authenticator
 
