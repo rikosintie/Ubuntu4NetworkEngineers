@@ -886,7 +886,7 @@ If you need to have automated login, you can create a key without a passphrase. 
 
 #### Using the keys with a Cisco IOS switch
 
-Unfortunately it's not nearly as easy to enable key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
+Unfortunately it's not quite as easy to enable key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
 
 I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example.
 
@@ -928,7 +928,7 @@ MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 Nmap done: 1 IP address (1 host up) scanned in 5.34 seconds
 ```
 
-Notice the onl output is that the port is open. If the switch supported "monitor list" it would have returned a list of devices that have requested time.
+Notice the only output is that the port is open. If the switch supported "monitor list" it would have returned a list of devices that have requested time.
 
 The second is very useful when you are having time issues. You can run it against the configured time server and see if you get response. I have an alias setup for this script:
 
@@ -955,9 +955,20 @@ MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 Nmap done: 1 IP address (1 host up) scanned in 10.35 seconds
 ```
 
+To verify that the switch is syncing with the ntp server I configured:
+
+```bash
+show ntp association
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
++~129.6.15.29     .NIST.           1    369   1024   377 68.998  -1.408  1.066
+*~192.168.10.222  129.6.15.28      2    109   1024   377  0.989   0.619  1.037
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+```
+
 **Configure a Domain Name, create the key pair, set SSH to v2**
 
-To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, network devices have crap for crypto ciphers.
+To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, most network devices have crap for crypto ciphers.
 
 ```bash
 ip domain name pu.pri
@@ -1099,6 +1110,8 @@ Continuing in the theme of network devices having crap crypto, you will have to 
 Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add the `PubKeyAcceptedKeyTypes` to the config file.
 
 You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. I prefer to explicitly call the key, but it doesn't matter if you don't.
+
+If you want to connect from a Windows computer with Putty I have a link in the references at the end of this section with a tutorial on how to create keys with puttygen.
 
 ### Can users still login who don't have keys configured?
 
