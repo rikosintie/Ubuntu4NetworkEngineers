@@ -1122,8 +1122,10 @@ sh run | sec pubkey
 ip ssh pubkey-chain
   username mhubbard
    key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
+   key-hash ssh-rsa CCA79DBB37A7EA060C781DA2767509C0
 ```
-Here are the users I have confiugured on this switch:
+
+Here are the users I have configured on this switch:
 
 ```bash
 show run | sec user
@@ -1139,13 +1141,13 @@ You can see that `thubbard` has to use a password but `mhubbard` can use a passw
 
 Note that IOS XE only allows two keys in the key-chain.
 
-Cisco does support strong scrypt hashing of user secres. Here is how to do that:
+You can see in the ouput the user's secret is hashed as type 9. In Cisco speak that is scrypt. Scrypt is a `memory` hard hash so having hardware GPUs doesn't speed up reversing the hash. To create a users with scrypt:
 
 `username thubbard privilege 15 algorithm-type scrypt secret Sup3rS3cr3t`
 
 ### Yubico Authenticator
 
-Yubico is one of the company that makes Physical Security keys. These allow you to copy your private key to the Yubico and have access no matter what laptop you are on. It's beyond the scope of this guide but here are links to Yubico.
+Yubico is one of the companies that makes Physical Security keys. These allow you to copy your private key to the Yubico and have access no matter what laptop you are on with just one key. It's beyond the scope of this guide but here are links to Yubico.
 
 - [Highest assurance authentication that’s fast and easy](https://www.yubico.com/products/yubikey-5-overview/)
 - [Securing SSH Authentication with FIDO2](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html)
@@ -1153,12 +1155,13 @@ Yubico is one of the company that makes Physical Security keys. These allow you 
 ### Reference
 
 - [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
-- [ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
-- [SSH Command - Usage, Options, Configuration](https://www.ssh.com/academy/ssh/command)
+- [Why you should be using scrypt for Cisco Router Password Storage](https://community.cisco.com/t5/security-knowledge-base/why-you-should-be-using-scrypt-for-cisco-router-password-storage/ta-p/3157196)
+- [SSH Command - Usage, Options, Configuration](https://www.ssh.com/academy/ssh/command) - SSH Academy tips and tricks
 - [sshd_config - How to Configure the OpenSSH Server?](https://www.ssh.com/academy/ssh/sshd_config) SSH Academy Tutorial on SSH server configuration
 - [Aruba CX ssh ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.07/HTML/5200-7837/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm) - The Aruba CX platform supports state of the art crypto!
-- [Arch wiki on ssh](https://wiki.archlinux.org/title/OpenSSH) Good information on OpenSSH including configuring Google Authenticator
+- [Arch wiki on ssh server](https://wiki.archlinux.org/title/OpenSSH) Good information on OpenSSH including configuring Google Authenticator
+- [Arch wiki on ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 
 ----------------------------------------------------------------
 
