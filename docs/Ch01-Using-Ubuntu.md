@@ -34,10 +34,11 @@
     - [Debugging SSH connections](#debugging-ssh-connections)
     - [What ciphers are supported?](#what-ciphers-are-supported)
     - [Creating SSH Keys](#creating-ssh-keys)
-    - [Display the existing keys on your system](#display-the-existing-keys-on-your-system)
+    - [Display the existing keys on Ubuntu](#display-the-existing-keys-on-ubuntu)
     - [SSH Key permissions](#ssh-key-permissions)
     - [Using the keys](#using-the-keys)
       - [Using the keys with a Cisco IOS switch](#using-the-keys-with-a-cisco-ios-switch)
+    - [Checking NTP server configuration with nmap](#checking-ntp-server-configuration-with-nmap)
     - [Configure AAA authentication](#configure-aaa-authentication)
     - [Can users still login who don't have keys configured?](#can-users-still-login-who-dont-have-keys-configured)
     - [Yubico Authenticator](#yubico-authenticator)
@@ -519,6 +520,13 @@ sudo apt install ssh
 
 The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To edit the configuration file use the following `sudo nano /etc/ssh/ssh_config` command.
 
+To check the version of OpenSSH daemon installed:
+
+```bash
+sshd -V
+OpenSSH_9.3, OpenSSL 3.0.10 1 Aug 2023
+```
+
 Reference:
 
 [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
@@ -592,7 +600,7 @@ Host 192.168.10.253
         HostKeyAlgorithms ssh-rsa
 ```
 
-You can add the key file if you have more than one and a custom port if needed:
+You can add an SSH key file if you have more than one and a custom port if needed:
 
 ```bash
 Host 192.168.10.253
@@ -611,7 +619,7 @@ I have run across  network devices that required the ancient `dss` HostKeyAlgori
 
 ### Using a wildcard in the configuration file
 
-If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection.
+If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
 
 This is not the best solution because it can lead to a downgrade attack on a device that supports modern ciphers and legacy ciphers. But if you want to take the risk here is how to do it:
 
@@ -642,8 +650,6 @@ ssh 192.168.10.253 show ip ssh
 
 DECOM___MCI-KSC-SW1 line 2
 
-
-
 SSH Enabled - version 2.0
 Authentication methods:publickey,keyboard-interactive,password
 Authentication Publickey Algorithms:x509v3-ssh-rsa,ssh-rsa
@@ -665,7 +671,7 @@ mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
 uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
 ```
 
-For devices that don't have `show ip ssh`, like IoT, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
+For devices that don't have `show ip ssh`, like IoT devices, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
 ```bash
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
@@ -707,6 +713,47 @@ Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
 ```
 
 As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why? But this is an example of why you don't want to use the wildcard in the configuration file. depending on the client you could end up using sha1 instead of sha2 or ssh-dss instead of ssh-rsa.
+
+nmap also has a similar script for checking SSL (TLS) crypto:
+
+```bash
+sudo nmap --script ssl-cert,ssl-enum-ciphers -p 443,465,993,995,3389 192.168.10.253
+Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:45 PDT
+Nmap scan report for 3850.pu.pri (192.168.10.253)
+Host is up (0.0043s latency).
+
+PORT     STATE  SERVICE
+443/tcp  open   https
+| ssl-enum-ciphers:
+|   TLSv1.2:
+|     ciphers:
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - F
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - F
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - F
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - F
+|     compressors:
+|       NULL
+|     cipher preference: server
+|     warnings:
+|       Insecure certificate signature (SHA1), score capped at F
+|_  least strength: F
+| ssl-cert: Subject: commonName=IOS-Self-Signed-Certificate-1097548300
+| Issuer: commonName=IOS-Self-Signed-Certificate-1097548300
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2023-03-08T00:38:42
+| Not valid after:  2030-01-01T00:00:00
+| MD5:   12d5:9652:7129:3c66:169d:1e69:2dc1:ddcc
+|_SHA-1: 9fcc:9d66:f55a:ccec:4949:4da8:a3f7:205a:046d:78b0
+465/tcp  closed smtps
+993/tcp  closed imaps
+995/tcp  closed pop3s
+3389/tcp closed ms-wbt-server
+MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
+```
 
 ----------------------------------------------------------------
 
@@ -765,7 +812,7 @@ cat id_custom_25519.pub
 
 You can see my username, hostname and date at the end.
 
-### Display the existing keys on your system
+### Display the existing keys on Ubuntu
 
 Note: I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
 
@@ -804,7 +851,7 @@ chmod 600 ~/.ssh/id_custom_25519
 
 ### Using the keys
 
-Once you have keys created what do you do with them? If you have any Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
+Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
 
 Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
 
@@ -835,7 +882,7 @@ Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
 
 Since we created a passphrase for key we are prompted for the passphrase, then logged in.
 
-If you need to have automated login, you can create a key without a passphrase. They actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
 
 #### Using the keys with a Cisco IOS switch
 
@@ -856,6 +903,57 @@ ntp server 192.168.10.222 prefer
 The `no ntp allow mode control 3` is a Cisco recommended best practice to prevent DOS attacks.
 
 - ntp allow mode control 3 --> causes the device to respond to mode 6 packet with a delay of 3 seconds, hence rate limiting and being considered not vulnerable (recommended)
+
+### Checking NTP server configuration with nmap
+
+nmap has two built in scripts for checking the NTP server configuration.
+
+```bash
+sudo nmap -sU -p 123 -n --script=ntp-monlist  192.168.10.253
+sudo nmap -sU -p 123 --script ntp-info 192.168.10.253
+```
+
+The first one is for verifying that your ntp server doesn't support the "Monitor List" command that led to serious DDoS attacks back in 2014. Here I ran it against the ntp server on the Cisco 3850:
+
+```bash
+sudo nmap -sU -p 123 -n --script=ntp-monlist  192.168.10.253
+Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:50 PDT
+Nmap scan report for 192.168.10.253
+Host is up (0.0052s latency).
+
+PORT    STATE SERVICE
+123/udp open  ntp
+MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 5.34 seconds
+```
+
+Notice the onl output is that the port is open. If the switch supported "monitor list" it would have returned a list of devices that have requested time.
+
+The second is very useful when you are having time issues. You can run it against the configured time server and see if you get response. I have an alias setup for this script:
+
+```bash
+#Run the nmap ntp-info script. $1 is the ip of the ntp server.
+alias mw-ntp='(){sudo nmap -sU -p 123 --script ntp-info $1}'
+mw-ntp 192.168.10.253
+```
+
+Here I ran it against my Cisco 3850 after I configured it for time.
+
+```bash
+sudo nmap -sU -p 123 --script ntp-info 192.168.10.253
+Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:50 PDT
+Nmap scan report for 3850.pu.pri (192.168.10.253)
+Host is up (0.0032s latency).
+
+PORT    STATE SERVICE
+123/udp open  ntp
+| ntp-info:
+|_  receive time stamp: 2024-07-12T20:51:09
+MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 10.35 seconds
+```
 
 **Configure a Domain Name, create the key pair, set SSH to v2**
 
@@ -1026,6 +1124,9 @@ Yubico is one of the company that makes Physical Security keys. These allow you 
 - [ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
 - [SSH Command - Usage, Options, Configuration](https://www.ssh.com/academy/ssh/command)
+- [sshd_config - How to Configure the OpenSSH Server?](https://www.ssh.com/academy/ssh/sshd_config) SSH Academy Tutorial on SSH server configuration
+- [Aruba CX ssh ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.07/HTML/5200-7837/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm) - The Aruba CX platform supports state of the art crypto!
+- [Arch wiki on ssh](https://wiki.archlinux.org/title/OpenSSH) Good information on OpenSSH including configuring Google Authenticator
 
 ----------------------------------------------------------------
 
