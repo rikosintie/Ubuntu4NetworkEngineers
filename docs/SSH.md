@@ -49,7 +49,7 @@ To connect using ssh:
 
 `ssh mhubbard@192.168.10.253`
 
-## Run network commands remotely
+### Run network commands remotely
 
 You can also run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
 
@@ -85,7 +85,7 @@ ip ssh server algorithm kex diffie-hellman-group14-sha1
 Connection to 192.168.10.253 closed by remote host.
 ```
 
-## Network Devices with legacy ciphers
+### Network Devices with legacy ciphers
 
 One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak ciphers. Most network devices have weak ciphers by default. If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
 
@@ -122,7 +122,7 @@ To use a specific key on the fly:
 I have run across  network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms ssh-dss`
 
-## Using a wildcard in the configuration file
+### Using a wildcard in the configuration file
 
 If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
 
@@ -139,11 +139,11 @@ Host *
 
 Add any settings that are common to your devices.
 
-## Debugging SSH connections
+### Debugging SSH connections
 
 You can use the -v switch to debug the SSH connection. You can repeat the v up to 4 times - -vvvv. Each extra v adds more details to the output.
 
-## What ciphers are supported?
+### What ciphers are supported?
 
 On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers.
 
@@ -174,7 +174,10 @@ nYHvKNkxmahaZSZav6BPZWBiJ6Xc9c1OcqHX0seVXEp7ZZ+a99yrtY22yBC5W5Wh1hY/PEULbP7W64E+
 mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
 8hQznQVtjKn/Ey+aziHBrYo7IvwyKALA6Ofk+KehGgcmijEGi8HeyQdwmKzZ9t1XlVWE25M+RZMk0YCa
 uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
+
 ```
+
+### Checking ciphers with nmap
 
 For devices that don't have `show ip ssh`, like IoT devices, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
@@ -317,7 +320,7 @@ cat id_custom_25519.pub
 
 You can see my username, hostname and date at the end.
 
-## Display the existing keys on Ubuntu
+### Display the existing keys on Ubuntu
 
 Note: I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
 
@@ -335,13 +338,27 @@ Here is what it looked like on my laptop.
 for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
 256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
 256 SHA256:2XtMiDbg64rBnUXOzcFFXqwzUbbAjAO2Y9RwrWvVTB4 michael.hubbard999@gmail.com (ED25519)
-2048 SHA256:WFuzqdjjnEVd+tW+2fKz1dEKVzK+vfjhgvsCGlSZrrk mhubbard@1S1K-G5-5587 (RSA)
-
+4096 SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E mhubbard@1S1K-G5-5587-2024-07-11 (RSA)
+2048 SHA256:YRwfm94a26cfCQZK6mT3SO29XaLoAHWJgnixN2OZDM0 mhubbard@1S1K-G5-5587 (RSA)
 ```
 
 You can see the comment on the first key.
 
-## SSH Key permissions
+You can print the file name out by adding a print statement:
+
+```bash
+for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfile}; done | uniq
+256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
+/home/mhubbard/.ssh/id_custom_25519.pub
+256 SHA256:2XtMiDbg64rBnUXOzcFFXqwzUbbAjAO2Y9RwrWvVTB4 michael.hubbard999@gmail.com (ED25519)
+/home/mhubbard/.ssh/id_github.pub
+4096 SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E mhubbard@1S1K-G5-5587-2024-07-11 (RSA)
+/home/mhubbard/.ssh/id_rsa.pub
+2048 SHA256:YRwfm94a26cfCQZK6mT3SO29XaLoAHWJgnixN2OZDM0 mhubbard@1S1K-G5-5587 (RSA)
+/home/mhubbard/.ssh/id_rsa_pub_2096.pub
+
+
+### SSH Key permissions
 
 The private key should have rw to only the user. No other users or groups should have any permissions. Use the following to view/set the permissions:
 
@@ -354,7 +371,7 @@ If the permissions are wrong, use the following:
 chmod 600 ~/.ssh/id_custom_25519
 ```
 
-## Using the keys
+## Using the SSH keys
 
 Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
 
@@ -389,13 +406,13 @@ Since we created a passphrase for key we are prompted for the passphrase, then l
 
 If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
 
-### Using the keys with a Cisco IOS switch
+## Using the keys with a Cisco IOS switch
 
 Unfortunately it's not quite as easy to enable key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
 
 I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example.
 
-**Time Server**
+### Configure a Time Server
 
 Accurate time is required to use ssh keys. The first step is to configure a time server.
 
@@ -409,7 +426,7 @@ The `no ntp allow mode control 3` is a Cisco recommended best practice to preven
 
 - ntp allow mode control 3 --> causes the device to respond to mode 6 packet with a delay of 3 seconds, hence rate limiting and being considered not vulnerable (recommended)
 
-## Checking NTP server configuration with nmap
+### Checking NTP server configuration with nmap
 
 nmap has two built in scripts for checking the NTP server configuration.
 
@@ -471,7 +488,7 @@ show ntp association
  * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
 ```
 
-**Configure a Domain Name, create the key pair, set SSH to v2**
+### Configure a Domain Name, create the key pair, set SSH to v2
 
 To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, most network devices have crap for crypto ciphers.
 
@@ -483,7 +500,7 @@ ip ssh version 2
 
 Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
 
-Display the key:
+#### Display the key
 
 ```bash
 show crypto key mypubkey ec EC-SSH-Key
@@ -500,7 +517,7 @@ Key type: EC KEYS
   7FC83A93 718D4C08 400EE244 98045041 74F15237 02742339
 ```
 
-**Export the Key**
+#### Export the Key
 
 ```bash
 (config)#crypto key export ec EC-SSH-Key pem terminal 3des Sup3rS3crt
@@ -523,7 +540,7 @@ YUn/cKmH59qFWvPjcQBqqQ1HF/gMEfCr3l8PBZ42nW0=
 
 Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a file and store it in a secure place.
 
-## Configure AAA authentication
+### Configure AAA authentication
 
 The aaa new-model command causes the local username and password on the router to be used in the absence of other AAA statements. Once you enter "aaa new-model" you will not be able to enter "login local" on vty line configuration. If you had login local configured it will be removed.
 
@@ -537,7 +554,7 @@ When you create the username be sure to include a secret. I you don't anyone wil
 (Authentication through the line password is not possible with SSH)
 ```
 
-**Configure the line**
+#### Configure the vty lines
 
 ```bash
 (config)#line vty 0 4
@@ -545,7 +562,7 @@ When you create the username be sure to include a secret. I you don't anyone wil
 (config-line)#logging sync (prevents console messages from interfering with your inputs)
 ```
 
-**Add your PUBLIC key to the device**
+#### Add your PUBLIC key to the device
 
 Open the public key file you created earlier in text editor. Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
@@ -606,7 +623,7 @@ username mhubbard
 no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
 ```
 
-**Login using the SSH Keys**
+### Login using the SSH Keys
 
 Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the `~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
 
@@ -618,7 +635,7 @@ You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. 
 
 If you want to connect from a Windows computer with Putty I have a blog with a tutorial on how to create keys and connect using putty/puttygen - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html).
 
-## Can users still login who don't have keys configured?
+#### Can users still login who don't have keys configured?
 
 Yes, the key-chain must be configured for each user.
 
@@ -649,6 +666,19 @@ Note that IOS XE only allows two keys in the key-chain.
 You can see in the ouput the user's secret is hashed as type 9. In Cisco speak that is scrypt. Scrypt is a `memory` hard hash so having hardware GPUs doesn't speed up reversing the hash. To create a users with scrypt:
 
 `username thubbard privilege 15 algorithm-type scrypt secret Sup3rS3cr3t`
+
+## Using the keys with a JunOS switch
+
+Setting up the JunOS switch is very similar to setting up the Cisco switch.
+
+```bash
+ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
+Authorized access only! Violators will be violated!
+Enter passphrase for key '/home/mhubbard/.ssh/juniper_ed25519_key':
+Last login: Fri Jul 12 14:01:28 2024 from 192.168.10.143
+--- JUNOS 18.2R1.9 Kernel 64-bit  JNPR-11.0-20180614.6c3f819_buil
+root@TEST-Router:~ #
+```
 
 ## Yubico Authenticator
 
