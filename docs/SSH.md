@@ -426,7 +426,7 @@ The `no ntp allow mode control 3` is a Cisco recommended best practice to preven
 
 - ntp allow mode control 3 --> causes the device to respond to mode 6 packet with a delay of 3 seconds, hence rate limiting and being considered not vulnerable (recommended)
 
-### Checking NTP server configuration with nmap
+### Check NTP server config with nmap
 
 nmap has two built in scripts for checking the NTP server configuration.
 
@@ -488,7 +488,7 @@ show ntp association
  * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
 ```
 
-### Configure a Domain Name, create the key pair, set SSH to v2
+### Add a Domain Name, create the key, set SSH v2
 
 To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, most network devices have crap for crypto ciphers.
 
@@ -562,7 +562,7 @@ When you create the username be sure to include a secret. I you don't anyone wil
 (config-line)#logging sync (prevents console messages from interfering with your inputs)
 ```
 
-#### Add your PUBLIC key to the device
+### Add your PUBLIC key to the device
 
 Open the public key file you created earlier in text editor. Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
@@ -594,7 +594,7 @@ close the key file but do not save it
 
 Make sure to press `enter` after `key-string` before you paste the key in. You have to use `exit` to end the key-string input. Then use `end` to exit configuration mode.
 
-**Verify the ssh configuration:**
+### Verify the ssh configuration
 
 ```bash
 show run | sec ssh
