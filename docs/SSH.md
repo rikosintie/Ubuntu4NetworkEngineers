@@ -1,6 +1,8 @@
 # SSH
 
-I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/). When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
+I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/).
+
+When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
 
 ----------------------------------------------------------------
 
@@ -23,9 +25,11 @@ sudo apt install ssh
 - sudo systemctl disable ssh – disables SSH server after next reboot
 - sudo systemctl enable ssh – enables SSH after the next reboot.
 
-The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To edit the configuration file use the following `sudo nano /etc/ssh/ssh_config` command.
+The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To edit the configuration file use the following command:
 
-To check the version of OpenSSH daemon installed:
+`sudo nano /etc/ssh/ssh_config`
+
+To check the version of the OpenSSH daemon installed:
 
 ```bash
 sshd -V
@@ -40,14 +44,14 @@ Reference:
 
 ## Connecting to Network Devices
 
-*nix systems like macOS and Linux have the SSH client installed by default.
-
 To connect using ssh:
 
 - Open the terminal
-- Enter the following command. Change the username and IP address to fit your device.
+- Enter the following command.
 
 `ssh mhubbard@192.168.10.253`
+
+Change the username and IP address to fit your device.
 
 ### Run network commands remotely
 
@@ -70,7 +74,7 @@ Current configuration : 17541 bytes
 end
 ```
 
-But you can also use shell commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
+You can also use shell commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
 
 ```bash
 ssh 192.168.10.253 show run | grep "ip ssh"
@@ -95,7 +99,7 @@ This is an example trying to connect to a Cisco 3850 IOS XE switch running 16.12
 Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
 ```
 
-Here is the entry I added to ~/.ssh/config::
+Here is the entry I added to ~/.ssh/config:
 
 ```bash
 nano ~/.ssh/config
@@ -220,7 +224,9 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 17.98 seconds
 ```
 
-As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why? But this is an example of why you don't want to use the wildcard in the configuration file. depending on the client you could end up using sha1 instead of sha2 or ssh-dss instead of ssh-rsa.
+As you can see, it has good crypto like curve 25519 and aes256-ctr but then it also supports rsa-dss and diffie-hellman group1 sha1! Why?
+
+This is an example of why you don't want to use the wildcard in the configuration file. depending on the client you could end up using sha1 instead of sha2 or ssh-dss instead of ssh-rsa.
 
 nmap also has a similar script for checking SSL (TLS) crypto:
 
@@ -263,9 +269,11 @@ MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
 ```
 
-For new deployments you should take the time to remove legacy crypto before installing the switches. . Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
+For new deployments you should take the time to remove legacy crypto before installing the switches. Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
 
-If you have written permission from the network owner, you can use these scripts to do a quick security assessment of the existing network devices.
+If you have written permission from the network owner, you can use these scripts to do a quick security assessment of the existing network devices. I have a python script that creates a menu of nmap commands for security testing. You can find it [here](https://github.com/rikosintie/nmap-python).
+
+THe script is easy to use has a lot of nmap goodness for a network engineer.
 
 ----------------------------------------------------------------
 
