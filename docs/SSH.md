@@ -87,9 +87,9 @@ Connection to 192.168.10.253 closed by remote host.
 
 ### Network Devices with legacy ciphers
 
-One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak ciphers. Most network devices have weak ciphers by default. If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file because they don't support modern crypto!
+One problem for a network engineer is that newer versions of the OpenSSH client don’t allow weak crypto by default and most network devices have weak ciphers by default. If you are connecting to network devices from a modern version of Mac/Linux you will probably get an error and the connection will fail. You will have to customize the `~/.ssh/config` file to add the ciphers needed.
 
-This is an example trying to connect to Cisco 3850 IOS XE switch running 16.12.x:
+This is an example trying to connect to a Cisco 3850 IOS XE switch running 16.12.3a:
 
 ```bash
 Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
@@ -122,7 +122,7 @@ To use a specific key on the fly:
 I have run across  network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms ssh-dss`
 
-### Using a wildcard in the configuration file
+### Using a wildcard in the config file
 
 If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
 
@@ -143,7 +143,7 @@ Add any settings that are common to your devices.
 
 You can use the -v switch to debug the SSH connection. You can repeat the v up to 4 times - -vvvv. Each extra v adds more details to the output.
 
-### What ciphers are supported?
+### What crypto does my device support?
 
 On most switches you can use something like `show ip ssh` to get a list of the current ssh ciphers.
 
@@ -263,13 +263,17 @@ MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
 ```
 
+For new deployments you should take the time to remove legacy crypto before installing the switches. . Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
+
+If you have written permission from the network owner, you can use these scripts to do a quick security assessment of the existing network devices.
+
 ----------------------------------------------------------------
 
 ## Creating SSH Keys
 
 The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer.
 
-My current recommended cipher Bruce  Schneier's ED25519. To create a set of keys using ed25519 run the following in the terminal from the ~/.ssh directory:
+My current recommended public-key signing algorithm is Bruce Schneier's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
 `ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519`
 
@@ -360,7 +364,7 @@ for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfil
 
 ### SSH Key permissions
 
-The private key should have rw to only the user. No other users or groups should have any permissions. Use the following to view/set the permissions:
+The private key should have rw permission to only the user. No other users or groups should have any permissions. Use the following to view/set the permissions:
 
 ```bash
 ls -l
@@ -369,6 +373,20 @@ ls -l
 
 If the permissions are wrong, use the following:
 chmod 600 ~/.ssh/id_custom_25519
+```
+
+Here is the output using keys with 0644 instead of 0600:
+
+```bash
+ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
+Authorized access only! Violators will be violated!
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0664 for '/home/mhubbard/.ssh/juniper_ed25519_key' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 ```
 
 ## Using the SSH keys
@@ -426,7 +444,7 @@ The `no ntp allow mode control 3` is a Cisco recommended best practice to preven
 
 - ntp allow mode control 3 --> causes the device to respond to mode 6 packet with a delay of 3 seconds, hence rate limiting and being considered not vulnerable (recommended)
 
-### Check NTP server config with nmap
+#### Check NTP server config with nmap
 
 nmap has two built in scripts for checking the NTP server configuration.
 
@@ -653,7 +671,6 @@ Here are the users I have configured on this switch:
 show run | sec user
 username thubbard privilege 15 secret 9 $9$95tTO1OC4HNmIE$bt1Z4.7aw/EBUQHl3NmLUNMacw4hRPI.742Kbs2r4jA
 username mhubbard privilege 15 secret 9 $9$y4j0lAgHcDtV3.$sH6LI79G3qmdpVdICokss8dzjGUC3u7we4.wcPnwNQ.
-username chubbard privilege 15 secret 9 $9$LRizX4S9ps9fK.$I1GaHQAq5sGd8IQ3fk2TKYBwUp4m52W0qOM03l8bncE
   username mhubbard
    key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
    key-hash ssh-rsa CCA79DBB37A7EA060C781DA2767509C0
@@ -669,7 +686,7 @@ You can see in the ouput the user's secret is hashed as type 9. In Cisco speak t
 
 ## Using the keys with a JunOS switch
 
-Setting up the JunOS switch is very similar to setting up the Cisco switch.
+Setting up the JunOS switch is similar to setting up the Cisco switch.
 
 ```bash
 ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
