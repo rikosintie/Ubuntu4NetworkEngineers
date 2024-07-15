@@ -74,9 +74,17 @@ You can see the daemon starting, listening on port 22, and then the status of th
 
 I don't use the `sudo systemctl enable ssh` command because I don't need SSH running all the time. I start and stop it as needed for added security.
 
+----------------------------------------------------------------
+
+### Edit the OpenSSH configuration file
+
 The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To edit the configuration file use the following command:
 
 `sudo nano /etc/ssh/ssh_config`
+
+----------------------------------------------------------------
+
+### Check the OpenSSH server version
 
 To check the version of the OpenSSH daemon installed:
 
