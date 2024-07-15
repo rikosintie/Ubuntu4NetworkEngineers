@@ -8,7 +8,7 @@ When I switched to Linux my only experience with SSH was Putty. There is so much
 
 ## OpenSSH Server
 
-Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the Open-ssh server. Follow these instruction to enable the SSH server:
+Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the OpenSSH server. Run these commands to enable the SSH server:
 
 ```bash
 sudo apt update
@@ -39,7 +39,7 @@ TriggeredBy: ● ssh.socket
              man:sshd_config(5)
 ```
 
-Notice the `Disabled` keyword.
+Notice the Active status is `inactive (dead)`.
 
 Example with OpenSSH installed and started:
 
@@ -68,7 +68,9 @@ Jul 15 09:38:12 1S1K-G5-5587 sshd[3410497]: Server listening on :: port 22.
 Jul 15 09:38:12 1S1K-G5-5587 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
 ```
 
-You can see the daemon starting, listening on port 22, and then the status of the daemon changes to `Started`.
+Notice the Active status is `active (running) since Mon 2024-07-15 09:38:12 PDT; 4s ago`
+
+You can see the daemon starting, listening on port 22, and then the status of the daemon changes to `Started ssh.service - OpenBSD Secure Shell server`
 
 I don't use the `sudo systemctl enable ssh` command because I don't need SSH running all the time. I start and stop it as needed for added security.
 
@@ -136,7 +138,7 @@ Status: active
 
 ### When finished with SSH
 
-You can either disable SSH and remove the rule for just disable SSH if you use it on a reqular basis.
+You can either disable SSH and remove the rule for just disable SSH if you use it on a regular basis.
 
 From the output above ssh is on lines 4 and 8. Once rule 4 is deleted, rule 8 will become rule 7!
 
@@ -162,6 +164,90 @@ Status: active
 [ 4] 514/udp (v6)               ALLOW IN    Anywhere (v6)
 [ 5] 1716:1764/tcp (v6)         ALLOW IN    Anywhere (v6)
 [ 6] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
+```
+
+### An alias to start ssh and add the UFW rule
+
+```bash
+# start the ssh daemon and display the status
+alias mw-ssh='sudo systemctl start ssh && sudo ufw allow 22/tcp comment "Open port ssh tcp port 22" && sudo systemctl status ssh && sudo ufw status numbered'
+```
+
+Here is the output of the alias command:
+
+```bash
+mw-ssh
+Rule updated
+Rule updated (v6)
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/ssh.service.d
+             └─00-socket.conf
+     Active: active (running) since Mon 2024-07-15 09:38:12 PDT; 3h 53min ago
+TriggeredBy: ● ssh.socket
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 3410496 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 3410497 (sshd)
+      Tasks: 1 (limit: 38055)
+     Memory: 1.4M
+        CPU: 28ms
+     CGroup: /system.slice/ssh.service
+             └─3410497 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Jul 15 09:38:12 1S1K-G5-5587 systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Jul 15 09:38:12 1S1K-G5-5587 sshd[3410497]: Server listening on :: port 22.
+Jul 15 09:38:12 1S1K-G5-5587 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 514/udp                    ALLOW IN    Anywhere
+[ 2] 1716:1764/tcp              ALLOW IN    Anywhere
+[ 3] 1716:1764/udp              ALLOW IN    Anywhere
+[ 4] 22/tcp                     ALLOW IN    Anywhere                   # Open port ssh tcp port 22
+[ 5] 514/udp (v6)               ALLOW IN    Anywhere (v6)
+[ 6] 1716:1764/tcp (v6)         ALLOW IN    Anywhere (v6)
+[ 7] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
+[ 8] 22/tcp (v6)                ALLOW IN    Anywhere (v6)              # Open port ssh tcp port 22
+```
+
+### An alias to stop ssh and remove the ufw rule
+
+```bash
+# stop the ssh daemon and display the status
+alias mw-ssh-stop='sudo systemctl stop ssh && sudo ufw delete allow 22/tcp && sudo systemctl status ssh && sudo ufw status numbered'
+```
+
+Here is the output of the alias command:
+
+```bash
+mw-ssh-stop
+Warning: Stopping ssh.service, but it can still be activated by:
+  ssh.socket
+Rule deleted
+Rule deleted (v6)
+○ ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/ssh.service.d
+             └─00-socket.conf
+     Active: inactive (dead) since Mon 2024-07-15 13:37:02 PDT; 403ms ago
+   Duration: 3h 58min 50.090s
+TriggeredBy: ● ssh.socket
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 3410496 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+    Process: 3410497 ExecStart=/usr/sbin/sshd -D $SSHD_OPTS (code=exited, status=0/SUCCESS)
+   Main PID: 3410497 (code=exited, status=0/SUCCESS)
+        CPU: 30ms
+
+Jul 15 09:38:12 1S1K-G5-5587 systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Jul 15 09:38:12 1S1K-G5-5587 sshd[3410497]: Server listening on :: port 22.
+Jul 15 09:38:12 1S1K-G5-5587 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+Jul 15 13:37:02 1S1K-G5-5587 sshd[3410497]: Received signal 15; terminating.
+Jul 15 13:37:02 1S1K-G5-5587 systemd[1]: Stopping ssh.service - OpenBSD Secure Shell server...
+Jul 15 13:37:02 1S1K-G5-5587 systemd[1]: ssh.service: Deactivated successfully.
+Jul 15 13:37:02 1S1K-G5-5587 systemd[1]: Stopped ssh.service - OpenBSD Secure Shell server.
 ```
 
 References:
