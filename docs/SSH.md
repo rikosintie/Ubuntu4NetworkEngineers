@@ -85,7 +85,9 @@ sshd -V
 OpenSSH_9.3, OpenSSL 3.0.10 1 Aug 2023
 ```
 
-### Open SSH on the Firewall
+----------------------------------------------------------------
+
+### Open the SSH port on the Firewall
 
 If you need to have a switch connect to your laptop to copy files over SCP or you want to ssh back into the laptop you will need to allow SSH through the firewall.
 
@@ -98,6 +100,8 @@ If you want to lock down to a specific IP and subnet, in this example the host 1
 sudo ufw allow from 192.168.10.100 to any port 22
 sudo ufw allow from 192.168.20.0/24 to any port 22 proto tcp
 ```
+
+----------------------------------------------------------------
 
 ### Verify the UFW firewall configuration
 
@@ -116,13 +120,14 @@ Status: active
 [ 6] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
 ```
 
-You can see that I have an IPv6 stack running. I use IPv6 in my home lab. I also  have the syslog daemon installed on port 514 and I use GSConnect to communicate with my iPhone and Android phone. Obviously I don't have a rule for SSH. I'll add a UFW rule allowing SSH from any address.
+You can see that I have an IPv6 stack running. I use IPv6 in my home lab. I also have the syslog daemon installed on port 514 and I use GSConnect to communicate with my iPhone and Android phone on ports 1716-1764. Obviously I don't have a rule for SSH so let's add a UFW rule allowing SSH from any address.
 
 ```bash
-sudo ufw allow 22/tcp comment 'Open port ssh tcp port 22'
-sudo ufw status numbered
+sudo ufw allow 22/tcp comment 'Open ssh tcp port 22'
 Rule added
 Rule added (v6)
+
+sudo ufw status numbered
 Status: active
 
      To                         Action      From
@@ -135,6 +140,9 @@ Status: active
 [ 6] 1716:1764/tcp (v6)         ALLOW IN    Anywhere (v6)
 [ 7] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
 [ 8] 22/tcp (v6)                ALLOW IN    Anywhere (v6)              # Open port ssh tcp port 22
+```
+
+----------------------------------------------------------------
 
 ### When finished with SSH
 
@@ -144,16 +152,18 @@ From the output above ssh is on lines 4 and 8. Once rule 4 is deleted, rule 8 wi
 
 ```bash
 sudo ufw delete 4
-sudo ufw delete 7
-sudo ufw status numbered
 Deleting:
  allow 22/tcp comment 'Open port ssh tcp port 22'
 Proceed with operation (y|n)? y
 Rule deleted
+
+sudo ufw delete 7
 Deleting:
  allow 22/tcp comment 'Open port ssh tcp port 22'
 Proceed with operation (y|n)? y
 Rule deleted (v6)
+
+sudo ufw status numbered
 Status: active
 
      To                         Action      From
@@ -165,6 +175,8 @@ Status: active
 [ 5] 1716:1764/tcp (v6)         ALLOW IN    Anywhere (v6)
 [ 6] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
 ```
+
+----------------------------------------------------------------
 
 ### An alias to start ssh and add the UFW rule
 
@@ -211,6 +223,8 @@ Status: active
 [ 7] 1716:1764/udp (v6)         ALLOW IN    Anywhere (v6)
 [ 8] 22/tcp (v6)                ALLOW IN    Anywhere (v6)              # Open port ssh tcp port 22
 ```
+
+----------------------------------------------------------------
 
 ### An alias to stop ssh and remove the ufw rule
 
