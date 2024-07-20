@@ -8,6 +8,8 @@ When I switched to Linux my only experience with SSH was Putty. There is so much
 
 ## OpenSSH Server
 
+:arrow_forward: KEY TAKEAWAYS
+
 Ubuntu comes with an SSH client. If you want to be able to ssh back into your laptop or send files to network devices using SCP you need to install and configure the OpenSSH server. Run these commands to enable the SSH server:
 
 ```bash
