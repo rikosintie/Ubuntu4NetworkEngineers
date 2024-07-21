@@ -2,13 +2,19 @@
 
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/).
 
-When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it.
+When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit is that you have an SSH client and server that can be used from the terminal without installing proprietary software.
 
 ----------------------------------------------------------------
 
 ## Connecting to Network Devices
 
-To connect using ssh:
+:arrow_forward: KEY TAKEAWAYS
+
+- Ubuntu makes it easy to use SSH from the terminal
+- You can create custom entries in the ssh config file for each device if needed
+- You can use password authentication or public key authentication with the ssh client
+
+**To connect using ssh:**
 
 - Open the terminal
 - Enter the following command.
@@ -66,7 +72,7 @@ Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method
 Here is the entry I added to ~/.ssh/config:
 
 ```bash
-nano ~/.ssh/config
+nano ~/.ssh/config or gnome-text-editor ~/.ssh/config
 Host 192.168.10.253
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
         MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512
@@ -80,15 +86,41 @@ Host 192.168.10.253
     KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
     MACs hmac-sha1,hmac-sha2-256
     HostKeyAlgorithms ssh-rsa
-    IdentityFile ~/.ssh/id_custom_25519
+    IdentityFile ~/.ssh/id_rsa
     Port 45005
 ```
 
 To use a specific key on the fly:
 `ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
 
-I have run across  network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
-`HostKeyAlgorithms ssh-dss`
+I have run across network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
+`HostKeyAlgorithms=+ssh-rsa,ssh-dss`
+
+Here is the complete configuration and debug to log into the Cisco 3850:
+
+```bash
+gnome-text-editor ~/.ssh/config
+Host 192.168.10.253
+        Protocol 2
+        HostKeyAlgorithms +ssh-rsa,ssh-dss
+        MACs hmac-sha2-512,hmac-sha2-256
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        PubkeyAcceptedKeyTypes +ssh-rsa
+        IdentityFile ~/.ssh/id_rsa
+
+ssh -vvvv mhubbard@192.168.10.253
+Next authentication method: publickey
+Offering public key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
+send packet: type 50
+we sent a publickey packet, wait for reply
+receive packet: type 60
+Server accepts key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
+sign_and_send_pubkey: using publickey with RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
+sign_and_send_pubkey: signing using ssh-rsa SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
+send packet: type 50
+receive packet: type 52
+Authenticated to 192.168.10.253 ([192.168.10.253]:22) using "publickey".
+```
 
 ### Using a wildcard in the config file
 
@@ -395,6 +427,23 @@ Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
 Since we created a passphrase for key we are prompted for the passphrase, then logged in.
 
 If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+
+### SSH Keys with github
+
+Github doesn't accept username/password for repositories any longer. You will need to use a key pair and configure git to use it. I created a key pair just for github named id_githb. To add it to your global git configuration:
+
+```bash
+add the key
+git config --global user.signingkey ~/.ssh/id_github.pub
+
+Display the user settings in the ~/.gitconfig file
+git config --global --list
+user.name=rikosintie
+user.email=michael.hubbard999@gmail.com
+user.signingkey=/home/mhubbard/.ssh/id_github.pub
+```
+
+Once you have the key configured in the ~/.gitconfig file you will need log into github.com, settings, SSH and GPG keys, and click "New SSH key".
 
 ## Using the keys with a Cisco IOS switch
 
