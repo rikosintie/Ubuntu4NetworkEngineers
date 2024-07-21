@@ -14,6 +14,8 @@ When I switched to Linux my only experience with SSH was Putty. There is so much
 - You can create custom entries in the ssh config file for each device if needed
 - You can use password authentication or public key authentication with the ssh client
 
+----------------------------------------------------------------
+
 **To connect using ssh:**
 
 - Open the terminal
@@ -239,7 +241,7 @@ MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
 ```
 
-For new deployments you should take the time to remove legacy crypto before installing the switches. Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
+For new deployments you should take the time to remove legacy crypto in the switch configuration that you build. Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
 
 If you have written permission from the network owner, you can use these scripts to do a quick security assessment of the existing network devices. I have a python script that creates a menu of nmap commands for security testing. You can find it [here](https://github.com/rikosintie/nmap-python).
 
@@ -373,6 +375,8 @@ Once you have keys created what do you do with them? If you support Linux server
 
 Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
 
+### SSH Keys with a Linux server
+
  Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
 
 ```bash
@@ -419,11 +423,25 @@ user.signingkey=/home/mhubbard/.ssh/id_github.pub
 
 Once you have the key configured in the ~/.gitconfig file you will need log into github.com, settings, SSH and GPG keys, and click "New SSH key".
 
-## Using the keys with a Cisco IOS switch
+----------------------------------------------------------------
+
+### Using SSH keys with network devices
+
+First off why would you want to use ssh keys on switches/routers/etc? With large customers you typically use Cisco ISE, Aruba Clearpass or Microsoft Network Policy Server (NPS) and authenticate to Microsoft AD.
+
+But with smaller customers you may not have these infrastructure services available. Using SSH keys on switches/routers/etc when ISE, Clearpass or NPS isn't available is better than using local users and passwords. In this situation, over time,  the customer will usually have several different usernames and passwords across different switches and it can be a nightmare to log into all the switches. They may not even have the credentials for all devices.
+
+If you add your public key to the network devices before deploying, at least you will be able to log in efficiently without wasting time trying different passwords. You can give the private key to the customer and they can import it into Putty.
+
+----------------------------------------------------------------
+
+## Using SSH keys with a Cisco IOS switch
 
 Unfortunately it's not quite as easy to enable key based login on network devices but it's just a process. You can include it in your basic security template for example and automate it.
 
 I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example.
+
+----------------------------------------------------------------
 
 ### Configure a Time Server
 
@@ -501,6 +519,8 @@ show ntp association
  * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
 ```
 
+----------------------------------------------------------------
+
 ### Add a Domain Name, create the key, set SSH v2
 
 To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, most network devices have crap for crypto ciphers.
@@ -512,6 +532,8 @@ ip ssh version 2
 ```
 
 Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
+
+----------------------------------------------------------------
 
 #### Display the key
 
@@ -529,6 +551,8 @@ Key type: EC KEYS
   588B716F 93866092 D8F097B0 984D5E98 36816223 57FB8FCC D06F7378 8218FFB0
   7FC83A93 718D4C08 400EE244 98045041 74F15237 02742339
 ```
+
+----------------------------------------------------------------
 
 #### Export the Key
 
@@ -553,6 +577,8 @@ YUn/cKmH59qFWvPjcQBqqQ1HF/gMEfCr3l8PBZ42nW0=
 
 Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a file and store it in a secure place.
 
+----------------------------------------------------------------
+
 ### Configure AAA authentication
 
 The aaa new-model command causes the local username and password on the router to be used in the absence of other AAA statements. Once you enter "aaa new-model" you will not be able to enter "login local" on vty line configuration. If you had login local configured it will be removed.
@@ -567,6 +593,8 @@ When you create the username be sure to include a secret. I you don't anyone wil
 (Authentication through the line password is not possible with SSH)
 ```
 
+----------------------------------------------------------------
+
 #### Configure the vty lines
 
 ```bash
@@ -574,6 +602,8 @@ When you create the username be sure to include a secret. I you don't anyone wil
 (config-line)#transport input ssh
 (config-line)#logging sync (prevents console messages from interfering with your inputs)
 ```
+
+----------------------------------------------------------------
 
 ### Add your PUBLIC key to the device
 
@@ -607,6 +637,8 @@ close the key file but do not save it
 
 Make sure to press `enter` after `key-string` before you paste the key in. You have to use `exit` to end the key-string input. Then use `end` to exit configuration mode.
 
+----------------------------------------------------------------
+
 ### Verify the ssh configuration
 
 ```bash
@@ -636,6 +668,8 @@ username mhubbard
 no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
 ```
 
+----------------------------------------------------------------
+
 ### Login using the SSH Keys
 
 Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the `~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
@@ -658,7 +692,7 @@ Host 192.168.10.253
         PubkeyAcceptedKeyTypes +ssh-rsa
         IdentityFile ~/.ssh/id_rsa
 
-ssh -vvvv mhubbard@192.168.10.253
+ssh -vvvv 192.168.10.253
 Next authentication method: publickey
 Offering public key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
 send packet: type 50
@@ -671,6 +705,18 @@ send packet: type 50
 receive packet: type 52
 Authenticated to 192.168.10.253 ([192.168.10.253]:22) using "publickey".
 ```
+
+Once you have entered the passphrase it will be added to the ssh agent and you won't be prompted again until you close the terminal and open a new one. If you want to remove the key from the agent without closing the terminal use:
+
+`ssh-add -D ~/.ssh/id_rsa`
+
+If you want to change the password on the key use:
+
+`ssh-keygen -p -f ~/.ssh/id_rsa`
+
+----------------------------------------------------------------
+
+### Using keys with Putty
 
 If you want to connect from a Windows computer with Putty I have a blog with a tutorial on how to create keys and connect using putty/puttygen - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html).
 
@@ -704,6 +750,9 @@ Note that IOS XE only allows two keys in the key-chain.
 You can see in the ouput the user's secret is hashed as type 9. In Cisco speak that is scrypt. Scrypt is a `memory` hard hash so having hardware GPUs doesn't speed up reversing the hash. To create a users with scrypt:
 
 `username thubbard privilege 15 algorithm-type scrypt secret Sup3rS3cr3t`
+
+
+----------------------------------------------------------------
 
 ## Using the keys with a JunOS switch
 
@@ -1001,6 +1050,7 @@ References:
 - [How to delete a UFW firewall rule on Ubuntu](https://www.cyberciti.biz/faq/how-to-delete-a-ufw-firewall-rule-on-ubuntu-debian-linux/)
 
 ----------------------------------------------------------------
+
 ## Yubico Authenticator
 
 Yubico is one of the companies that makes Physical Security keys. These allow you to copy your private key to the Yubico and have access no matter what laptop you are on with just one key. It's beyond the scope of this guide but here are links to Yubico.
@@ -1008,7 +1058,9 @@ Yubico is one of the companies that makes Physical Security keys. These allow yo
 - [Highest assurance authentication that’s fast and easy](https://www.yubico.com/products/yubikey-5-overview/)
 - [Securing SSH Authentication with FIDO2](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html)
 
-## Reference
+----------------------------------------------------------------
+
+## References
 
 - [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
