@@ -55,7 +55,7 @@ ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256
 ssh maximum-auth-attempts 3
 ```
 
-The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#References - SSH History) in the references below for the exact algorithms.
+The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#references-ssh-history) in the references below for the exact algorithms.
 
 Cisco IOS
 
@@ -92,7 +92,7 @@ set system services ssh hostkey-algorithm ssh-ed25519
 
 ----------------------------------------------------------------
 
-### References - SSH History
+### References SSH History
 
 - [Secure Shell Wikipedia](https://en.wikipedia.org/wiki/Secure_Shell)
 - [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
