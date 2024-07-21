@@ -5,7 +5,7 @@
 - Ubuntu has the latest version of the OpenSSH client installed by default.
 - All the tools needed to secure and customize the SSH daemon are built in.
 - You can use terminal tools like tmux and screen to log into devices and manage SSH sessions.
-- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/) and putty. See [ssh GUI clients](SSH.md###Using a wildcard in the config file)
+- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/) and putty. See [ssh GUI clients](SSH.md#SSh-GUI-Clients)
 
 ----------------------------------------------------------------
 
@@ -351,6 +351,10 @@ Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
 For new deployments you should take the time to remove legacy crypto in the switch configuration that you build. Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
 
 If you have written permission from the network owner, you can use this script to do a quick cipher suite assessment of the existing network devices. I have a python script that creates a menu of nmap scripts for security testing. You can find it [here](https://github.com/rikosintie/nmap-python). The script is easy to use has a lot of nmap goodness for a network engineer.
+
+----------------------------------------------------------------
+
+## SSh GUI Clients
 
 ----------------------------------------------------------------
 
