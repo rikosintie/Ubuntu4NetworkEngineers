@@ -55,6 +55,8 @@ ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256
 ssh maximum-auth-attempts 3
 ```
 
+The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#References - SSH History) in the references below for the exact algorithms.
+
 Cisco IOS
 
 ```bash
@@ -87,8 +89,6 @@ set system services ssh macs hmac-sha2-256
 set system services ssh macs hmac-sha2-512
 set system services ssh hostkey-algorithm ssh-ed25519
 ```
-
-The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the link in the references below for the exact algorithms.
 
 ----------------------------------------------------------------
 
