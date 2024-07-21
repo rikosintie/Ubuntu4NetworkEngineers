@@ -96,32 +96,6 @@ To use a specific key on the fly:
 I have run across network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms=+ssh-rsa,ssh-dss`
 
-Here is the complete configuration and debug to log into the Cisco 3850:
-
-```bash
-gnome-text-editor ~/.ssh/config
-Host 192.168.10.253
-        Protocol 2
-        HostKeyAlgorithms +ssh-rsa,ssh-dss
-        MACs hmac-sha2-512,hmac-sha2-256
-        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-        PubkeyAcceptedKeyTypes +ssh-rsa
-        IdentityFile ~/.ssh/id_rsa
-
-ssh -vvvv mhubbard@192.168.10.253
-Next authentication method: publickey
-Offering public key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
-send packet: type 50
-we sent a publickey packet, wait for reply
-receive packet: type 60
-Server accepts key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
-sign_and_send_pubkey: using publickey with RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
-sign_and_send_pubkey: signing using ssh-rsa SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
-send packet: type 50
-receive packet: type 52
-Authenticated to 192.168.10.253 ([192.168.10.253]:22) using "publickey".
-```
-
 ### Using a wildcard in the config file
 
 If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
@@ -671,6 +645,32 @@ Continuing in the theme of network devices having crap crypto, you will have to 
 Remember that you can add -vvvv to the command to get verbose debugging. I had to do that because the key was failing. In the debugs I saw `send_pubkey_test: no mutual signature algorithm` which reminded me to add  `PubkeyAcceptedKeyTypes +ssh-rsa` to the config file for this host.
 
 You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. I prefer to explicitly call the key, but it doesn't matter if you don't.
+
+Here is the complete configuration and debug to log into the Cisco 3850 using the id_rsa key:
+
+```bash
+gnome-text-editor ~/.ssh/config
+Host 192.168.10.253
+        Protocol 2
+        HostKeyAlgorithms +ssh-rsa,ssh-dss
+        MACs hmac-sha2-512,hmac-sha2-256
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        PubkeyAcceptedKeyTypes +ssh-rsa
+        IdentityFile ~/.ssh/id_rsa
+
+ssh -vvvv mhubbard@192.168.10.253
+Next authentication method: publickey
+Offering public key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
+send packet: type 50
+we sent a publickey packet, wait for reply
+receive packet: type 60
+Server accepts key: /home/mhubbard/.ssh/id_rsa.pub RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E explicit agent
+sign_and_send_pubkey: using publickey with RSA SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
+sign_and_send_pubkey: signing using ssh-rsa SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E
+send packet: type 50
+receive packet: type 52
+Authenticated to 192.168.10.253 ([192.168.10.253]:22) using "publickey".
+```
 
 If you want to connect from a Windows computer with Putty I have a blog with a tutorial on how to create keys and connect using putty/puttygen - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html).
 
