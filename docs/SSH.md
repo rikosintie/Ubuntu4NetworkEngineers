@@ -1,12 +1,20 @@
 # SSH
 
+:arrow_forward: KEY TAKEAWAYS
+
+- Ubuntu has the latest version of the OpenSSH client installed by default.
+- All the tools needed to secure and customize the SSH daemon are built in.
+- You can use tools like tmux and screen to log into devices and manage SSH sessions.
+
+----------------------------------------------------------------
+
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/).
 
 When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit is that you have an SSH client and server that can be used from the terminal without installing proprietary software.
 
 ## History of SSH
 
-Secure Shell (SSH) has always been an open source project. It was originally released in 1995 by a Finnish computer scientist Tatu Ylönen. Before SSH telnet was the most popular remote access protocol but it doesn't support encryption.
+Secure Shell (SSH) has always been an open source project. It was originally released in 1995 by a Finnish computer scientist Tatu Ylönen. Before SSH, telnet was the most popular remote access protocol but it doesn't support encryption.
 
 OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/OpenBSD) project. Most network devices supports SSH V1 and V2. V1 has been deprecated and V2 was released in 2006. On network devices if you do a `show ip ssh` command you might see `SSH Enabled - version 1.99` which means both V1 and V2 are enabled. What you want to see is `SSH Enabled - version 2.0` meaning V1 is disabled.
 
@@ -15,8 +23,8 @@ OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/Open
 Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. Asking which ciphers are secure is like asking "Is Mac better than Windows?" to a group of Enterprise IT members. But here are some general guidelines:
 
 - Don't use any encryption with CBC in the name. For example aes128-cbc. The CBC means `cipher block chaining` and PCI will fail you if it finds it.
-- DO use encryption with CTR in the name. For example aes256-ctr.
-- Don't use a MAC with SHA1 in the name if possible. For example mac hmac-sha1
+- Do use encryption with CTR in the name. For example aes256-ctr.
+- Don't use a MAC with SHA1 in the name if possible. For example hmac-sha1
 - Do use a MAC with SHA2 in the name. For example hmac-sha2-256 or hmac-sha2-512
 - Don't use a Key Exchange Algorithm (KEX) with SHA1 in the name if possible. For example diffie-hellman-group1-sha1
 
@@ -25,12 +33,50 @@ You can do a search on the Internet for current algorithms. But, you will find t
 - Aruba CX version 10.07 and newer
 - Juniper Junos version 18.2R1.9 or higher
 - Cisco IOS version 15.2(7)E2 or higher
+- Cisco IOS-XE 17.2.x or later
 
 ----------------------------------------------------------------
 
 ### How to configure the algorithms
 
 This is not an exhaustive tutorial. It's here to give you an idea of how to configure the algorithms.
+
+Aruba CX
+
+```bash
+ssh ciphers chacha20-poly1305@openssh.com aes256-ctr aes256-cbc
+ssh host-key ed25519
+ssh host-key-algorithms ssh-rsa ssh-ed25519 ecdsa-sha2-nistp521
+ssh key-exchange-algorithms ecdh-sha2-nistp256 curve25519-sha256
+ diffie-hellman-group-exchange-sha256
+ssh macs hmac-sha2-256 hmac-sha2-512
+ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256
+ssh maximum-auth-attempts 3
+```
+
+Cisco IOS
+
+```bash
+ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
+ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
+no ip ssh server algorithm mac hmac-sha1
+no ip ssh server algorithm mac hmac-sha1-96
+ip ssh version 2
+```
+
+Ciscco IOS XE
+
+```bash
+crypto key generate rsa modulus 4096 label RSA4096_SSH_KEY
+ip ssh rsa keypair-name RSA4096_SSH_KEY
+ip ssh version 2
+ip ssh server algorithm authentication keyboard
+ip ssh server algorithm mac hmac-sha2-512 hmac-sha2-256
+ip ssh server algorithm encryption aes256-gcm aes256-ctr
+ip ssh server algorithm kex ecdh-sha2-nistp521 ecdh-sha2-nistp384
+ip ssh server algorithm hostkey rsa-sha2-512 rsa-sha2-256
+ip ssh server algorithm publickey ecdsa-sha2-nistp521 ecdsa-sha2-nistp384
+```
 
 Juniper
 
@@ -41,26 +87,16 @@ set system services ssh macs hmac-sha2-512
 set system services ssh hostkey-algorithm ssh-ed25519
 ```
 
-Cisco IOS
-
-```bash
-ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
-ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
-no ip ssh server algorithm mac hmac-sha1
-no ip ssh server algorithm mac hmac-sha1-96
-```
-
-Aruba CX
-
 The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the link in the references below for the exact algorithms.
 
 ----------------------------------------------------------------
 
-### References
+### References - SSH History
 
 - [Secure Shell Wikipedia](https://en.wikipedia.org/wiki/Secure_Shell)
 - [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
 - [Aruba CX SSH ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.13/HTML/security_83xx-8400-9300-10000/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm)
+- [IOS-XE SSH Best Practices](https://mrncciew.com/2023/08/28/ios-xe-ssh-best-practices/)
 
 ----------------------------------------------------------------
 
@@ -439,6 +475,7 @@ This private key will be ignored.
 Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 ```
 
+
 ----------------------------------------------------------------
 
 ## Using the SSH keys
@@ -608,12 +645,13 @@ show ntp association
 
 ### Add a Domain Name, create the key, set SSH v2
 
-To use ssh on the switch you have to create an SSH key pair. I used EC instead of RSA to enable SSH, but the key used to authenticate to the IOS XE device must be rsa. Again, most network devices have crap for crypto ciphers.
+To enable ssh on the switch you have to create an SSH key pair. I used a modulus of 4096, the maximum. It took 113 seconds to generate!  We will copy our RSA public key to the switch's pubkey-chain in the next section. That public key will be used with our private key to secure the SSH session.
 
 ```bash
 ip domain name pu.pri
-crypto key generate ec keysize 384 exportable label EC-SSH-Key
+crypto key generate rsa modulus 4096 exportable label RSA-SSH-Key
 ip ssh version 2
+ip ssh rsa keypair-name RSSA-SSH-Key !associate keys to SSH
 ```
 
 Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
@@ -623,18 +661,32 @@ Note the "exportable" parameter. This isn't required but I wanted to point that 
 #### Display the key
 
 ```bash
-show crypto key mypubkey ec EC-SSH-Key
-% Key pair was generated at: 13:41:45 PDT Jul 11 2024
-Key name: EC-SSH-Key
-Key type: EC KEYS
- Storage Device: private-config
- Usage: Signature Key
+show crypto key mypubkey rsa RSA-SSH-Key
+% Key pair was generated at: 14:15:39 PDT Jul 21 2024
+Key name: RSA-SSH-Key
+Key type: RSA KEYS
+ Storage Device: not specified
+ Usage: General Purpose Key
  Key is exportable. Redundancy enabled.
  Key Data:
-  30763010 06072A86 48CE3D02 0106052B 81040022 03620004 B1EB5A86 1C06FB4B
-  4BE9C828 38A03D4C EF8BF634 EC796891 E6BD4082 7E47F9E2 B92AE813 464AC0B9
-  588B716F 93866092 D8F097B0 984D5E98 36816223 57FB8FCC D06F7378 8218FFB0
-  7FC83A93 718D4C08 400EE244 98045041 74F15237 02742339
+  30820222 300D0609 2A864886 F70D0101 01050003 82020F00 3082020A 02820201
+  009EB39F 14DF98CA 96D74597 E3056C4B A1DD37B3 71019ADC D8FD0AD7 81335E21
+  D14CC267 79409A66 FD687EA3 312D65A5 E6D14A22 0EE598BC 0991E5FB 91261101
+  B29BDF85 05058257 8373F9B6 83093E65 ABBCF25C 422965EB 5D84A07D 9E97F8D1
+  E834BE4B 74970547 42F5C48C BFA3A968 00569467 FA65080B A0F5F8DC 27AFC43C
+  B00FBAE6 899C8B5C 3B5F6A6A 9F8EC065 C7A50455 6B5D4345 F3CD9B74 C55D0180
+  F8870094 55A86FDF A514C4BA 74FC2E21 B7F3D7F4 1924847C B420BF2C 4FD14250
+  C7D40209 914F3FF6 67F2EEEA F4674BDF FF692E36 C73BC4DF 597261D2 80B7FFC3
+  DAF6E93C C167F196 D1A3B7AE A4B8EFC3 1FB3DA2C 681C1A9F 601F096E 1E73534F
+  CCE25F9E DC753531 98DADDB1 C6C127E9 033EF061 7EB1DD44 33186410 15D23500
+  A5569BE0 B1FB1C5F 83C017C2 8C223DD5 C07B3759 816E84B7 D9D6E503 C0A3DDD3
+  5B3323AE 485744F9 B131422F 45E8DAED CF595280 F8ACE13A E2DFF9BE A75EA8ED
+  78AB6DB3 52FC940C 40D4AC25 CF976D72 47E51F67 6EC05E8F CB6BEE99 53318C0D
+  076880F0 A6AE0FD6 950AE9ED B17C5CCE D95209EA CA74B09B 83B103A9 510357CB
+  D5514EA8 DD71BFC4 C57E7FD6 8EFE80E1 FA6CAADD 751EA11B 7D179394 791CE1BC
+  71660659 E59E9FA0 9D0A3A0C 078C569D FF3CCB4D 4D6191E6 1A627C1E 64BC9649
+  C25476B0 610EA0BC 1A124B93 FD6B61BC F5B09D38 427019FD D8D7B5D8 AB0AF723
+  B5020301 0001
 ```
 
 ----------------------------------------------------------------
@@ -642,22 +694,79 @@ Key type: EC KEYS
 #### Export the Key
 
 ```bash
-(config)#crypto key export ec EC-SSH-Key pem terminal 3des Sup3rS3crt
-% Key name: EC-SSH-Key
-   Usage: Signature Key
+(config)#crypto key export rsa RSA-SSH-Key pem terminal 3des Sup3rS3crt
+% Key name: RSA-SSH-Key
+   Usage: General Purpose Key
    Key data:
 -----BEGIN PUBLIC KEY-----
-MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEsetahhwG+0tL6cgoOKA9TO+L9jTseWiR
-5r1Agn5H+eK5KugTRkrAuViLcW+ThmCS2PCXsJhNXpg2gWIjV/uPzNBvc3iCGP+w
-f8g6k3GNTAhADuJEmARQQXTxUjcCdCM5
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnrOfFN+YypbXRZfjBWxL
+od03s3EBmtzY/QrXgTNeIdFMwmd5QJpm/Wh+ozEtZaXm0UoiDuWYvAmR5fuRJhEB
+spvfhQUFgleDc/m2gwk+Zau88lxCKWXrXYSgfZ6X+NHoNL5LdJcFR0L1xIy/o6lo
+AFaUZ/plCAug9fjcJ6/EPLAPuuaJnItcO19qap+OwGXHpQRVa11DRfPNm3TFXQGA
++IcAlFWob9+lFMS6dPwuIbfz1/QZJIR8tCC/LE/RQlDH1AIJkU8/9mfy7ur0Z0vf
+/2kuNsc7xN9ZcmHSgLf/w9r26TzBZ/GW0aO3rqS478Mfs9osaBwan2AfCW4ec1NP
+zOJfntx1NTGY2t2xxsEn6QM+8GF+sd1EMxhkEBXSNQClVpvgsfscX4PAF8KMIj3V
+wHs3WYFuhLfZ1uUDwKPd01szI65IV0T5sTFCL0Xo2u3PWVKA+KzhOuLf+b6nXqjt
+eKtts1L8lAxA1Kwlz5dtckflH2duwF6Py2vumVMxjA0HaIDwpq4P1pUK6e2xfFzO
+2VIJ6sp0sJuDsQOpUQNXy9VRTqjdcb/ExX5/1o7+gOH6bKrddR6hG30Xk5R5HOG8
+cWYGWeWen6CdCjoMB4xWnf88y01NYZHmGmJ8HmS8lknCVHawYQ6gvBoSS5P9a2G8
+9bCdOEJwGf3Y17XYqwr3I7UCAwEAAQ==
 -----END PUBLIC KEY-----
------BEGIN EC PRIVATE KEY-----
+-----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
-DEK-Info: DES-CBC,F9622ABF564FFE99
+DEK-Info: DES-EDE3-CBC,067C3CC2D69C7213
 
-vSH9tLuZsR1pAWGN/ojaa5x7Xguk/4IcQqOH5eVHJoCMZ7vAKTbFsnlmFqbS7zNS
-YUn/cKmH59qFWvPjcQBqqQ1HF/gMEfCr3l8PBZ42nW0=
------END EC PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----
+
 ```
 
 Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a file and store it in a secure place.
@@ -729,18 +838,19 @@ Make sure to press `enter` after `key-string` before you paste the key in. You h
 ```bash
 show run | sec ssh
 ip ssh source-interface Vlan10
-ip ssh rsa keypair-name SSH-KEYS
+ip ssh rsa keypair-name RSA-SSH-Key
+ip ssh logging events
 ip ssh version 2
 ip ssh dh min size 4096
 ip ssh pubkey-chain
   username mhubbard
    key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB
+   key-hash ssh-rsa CCA79DBB37A7EA060C781DA2767509C0
 ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
 ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
 ip ssh server algorithm kex diffie-hellman-group14-sha1
  transport input ssh
  transport output ssh
-
 ```
 
 Note - You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB`.
@@ -1127,7 +1237,7 @@ Jul 15 13:37:02 1S1K-G5-5587 systemd[1]: ssh.service: Deactivated successfully.
 Jul 15 13:37:02 1S1K-G5-5587 systemd[1]: Stopped ssh.service - OpenBSD Secure Shell server.
 ```
 
-References:
+### References - OpenSSH Server
 
 - [How to Set Up and Use SSH in Linux](https://www.maketecheasier.com/setup-enable-ssh-ubuntu/)
 - [How to open ssh 22/TCP port using ufw on Ubuntu](https://www.cyberciti.biz/faq/ufw-allow-incoming-ssh-connections-from-a-specific-ip-address-subnet-on-ubuntu-debian/)
@@ -1144,7 +1254,7 @@ Yubico is one of the companies that makes Physical Security keys. These allow yo
 
 ----------------------------------------------------------------
 
-## References
+## General SSH  References
 
 - [Upgrade your SSH keys!](https://blog.g3rt.nl/upgrade-your-ssh-keys.html) - In this post I'll demonstrate how to transition to an Ed25519 type of key smoothly, why you would want this and show some tips and tricks on the way there.
 - [Authenticating to Cisco devices using SSH and your RSA Public Key](https://mwhubbard.blogspot.com/2015/07/authenticating-to-cisco-devices-using_92.html) - Here is a blog post I did on setting up the network device to use ssh keys.
@@ -1154,3 +1264,4 @@ Yubico is one of the companies that makes Physical Security keys. These allow yo
 - [Aruba CX ssh ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.07/HTML/5200-7837/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm) - The Aruba CX platform supports state of the art crypto!
 - [Arch wiki on ssh server](https://wiki.archlinux.org/title/OpenSSH) Good information on OpenSSH including configuring Google Authenticator
 - [Arch wiki on ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
+- [The Ultimate Guide to SSH - Setting Up SSH Keys](https://www.freecodecamp.org/news/the-ultimate-guide-to-ssh-setting-up-ssh-keys/)
