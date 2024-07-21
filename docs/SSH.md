@@ -5,7 +5,7 @@
 - Ubuntu has the latest version of the OpenSSH client installed by default.
 - All the tools needed to secure and customize the SSH daemon are built in.
 - You can use terminal tools like tmux and screen to log into devices and manage SSH sessions.
-- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/) and putty. See [ssh GUI clients](SSH.md#Using a wildcard in the config file)
+- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/) and putty. See [ssh GUI clients](SSH.md###Using a wildcard in the config file)
 
 ----------------------------------------------------------------
 
