@@ -4,6 +4,64 @@ I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael
 
 When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit is that you have an SSH client and server that can be used from the terminal without installing proprietary software.
 
+## History of SSH
+
+Secure Shell (SSH) has always been an open source project. It was originally released in 1995 by a Finnish computer scientist Tatu Ylönen. Before SSH telnet was the most popular remote access protocol but it doesn't support encryption.
+
+OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/OpenBSD) project. Most network devices supports SSH V1 and V2. V1 has been deprecated and V2 was released in 2006. On network devices if you do a `show ip ssh` command you might see `SSH Enabled - version 1.99` which means both V1 and V2 are enabled. What you want to see is `SSH Enabled - version 2.0` meaning V1 is disabled.
+
+### What Cryptographic Algorithms Should I use
+
+Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. Asking which ciphers are secure is like asking "Is Mac better than Windows?" to a group of Enterprise IT members. But here are some general guidelines:
+
+- Don't use any encryption with CBC in the name. For example aes128-cbc. The CBC means `cipher block chaining` and PCI will fail you if it finds it.
+- DO use encryption with CTR in the name. For example aes256-ctr.
+- Don't use a MAC with SHA1 in the name if possible. For example mac hmac-sha1
+- Do use a MAC with SHA2 in the name. For example hmac-sha2-256 or hmac-sha2-512
+- Don't use a Key Exchange Algorithm (KEX) with SHA1 in the name if possible. For example diffie-hellman-group1-sha1
+
+You can do a search on the Internet for current algorithms. But, you will find that a lot of network devices don't support modern cryptographic algorithms. Some notable exceptions are:
+
+- Aruba CX version 10.07 and newer
+- Juniper Junos version 18.2R1.9 or higher
+- Cisco IOS version 15.2(7)E2 or higher
+
+----------------------------------------------------------------
+
+### How to configure the algorithms
+
+This is not an exhaustive tutorial. It's here to give you an idea of how to configure the algorithms.
+
+Juniper
+
+```bash
+set system services ssh ciphers aes256-ctr
+set system services ssh macs hmac-sha2-256
+set system services ssh macs hmac-sha2-512
+set system services ssh hostkey-algorithm ssh-ed25519
+```
+
+Cisco IOS
+
+```bash
+ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
+ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
+no ip ssh server algorithm mac hmac-sha1
+no ip ssh server algorithm mac hmac-sha1-96
+```
+
+Aruba CX
+
+The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the link in the references below for the exact algorithms.
+
+----------------------------------------------------------------
+
+### References
+
+- [Secure Shell Wikipedia](https://en.wikipedia.org/wiki/Secure_Shell)
+- [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
+- [Aruba CX SSH ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.13/HTML/security_83xx-8400-9300-10000/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm)
+
 ----------------------------------------------------------------
 
 ## Connecting to Network Devices
@@ -255,9 +313,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
 
 For new deployments you should take the time to remove legacy crypto in the switch configuration that you build. Once you decide on the best setup, add it to your base template. This is a best practice and will save you some embarrassment if the customer has a security team. Don't ask me how I know this.
 
-If you have written permission from the network owner, you can use these scripts to do a quick security assessment of the existing network devices. I have a python script that creates a menu of nmap commands for security testing. You can find it [here](https://github.com/rikosintie/nmap-python).
-
-THe script is easy to use has a lot of nmap goodness for a network engineer.
+If you have written permission from the network owner, you can use this script to do a quick cipher suite assessment of the existing network devices. I have a python script that creates a menu of nmap scripts for security testing. You can find it [here](https://github.com/rikosintie/nmap-python). The script is easy to use has a lot of nmap goodness for a network engineer.
 
 ----------------------------------------------------------------
 
@@ -265,7 +321,7 @@ THe script is easy to use has a lot of nmap goodness for a network engineer.
 
 The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer.
 
-My current recommended public-key signing algorithm is Bruce Schneier's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
+My current recommended public-key signing algorithm is Dan Bernstein's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
 `ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519`
 
@@ -277,7 +333,7 @@ My current recommended public-key signing algorithm is Bruce Schneier's ED25519.
 
 dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018. The keys with -sk at the end are for use with `physical security keys`. See the "Yubico" topic later in this section for more information.
 
--C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file.
+-C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file. This is optional.
 
 Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
 
@@ -354,7 +410,7 @@ for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfil
 /home/mhubbard/.ssh/id_rsa.pub
 2048 SHA256:YRwfm94a26cfCQZK6mT3SO29XaLoAHWJgnixN2OZDM0 mhubbard@1S1K-G5-5587 (RSA)
 /home/mhubbard/.ssh/id_rsa_pub_2096.pub
-
+```
 
 ### SSH Key permissions
 
@@ -389,10 +445,12 @@ Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 
 :arrow_forward: KEY TAKEAWAYS
 
-- Keys use Public Key Infrastructure (PKI) instead of usernames/passwords. Keys are more challenging to brute force than passwords.
-- Linux servers are very easy to configure to use ssh keys on.
+- SSH Keys use Public Key Infrastructure (PKI) instead of usernames/passwords. Keys are more challenging to brute force than passwords.
+- Linux servers are very easy to configure to use ssh keys on. The `ssh-copy-id -i ~/.ssh/id_rsa.pub <Server_IP>` command copies the public key to the server in one step.
 - Hardware Security devices such as Yubico [Yubikey](https://www.yubico.com/products/security-key/) and the Google [Titan Security Key](https://store.google.com/product/titan_security_key?hl=en-US&pli=1) allow you to store your keys securely and login from any laptop or desktop.
-- Many Network Devices (Cisco, Aruba, Jumiper, Arista, Ubiquiti) support ssh key authentication.
+- Many Network Devices (Cisco, Aruba, Juniper, Arista, Ubiquiti) support ssh key authentication.
+
+----------------------------------------------------------------
 
 Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
 
