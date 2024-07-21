@@ -25,6 +25,8 @@ When I switched to Linux my only experience with SSH was Putty. There is so much
 
 Change the username and IP address to fit your device.
 
+----------------------------------------------------------------
+
 ### Run network commands remotely
 
 You can also run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
@@ -60,6 +62,8 @@ ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
 ip ssh server algorithm kex diffie-hellman-group14-sha1
 Connection to 192.168.10.253 closed by remote host.
 ```
+
+----------------------------------------------------------------
 
 ### Network Devices with legacy ciphers
 
@@ -98,6 +102,8 @@ To use a specific key on the fly:
 I have run across network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms=+ssh-rsa,ssh-dss`
 
+----------------------------------------------------------------
+
 ### Using a wildcard in the config file
 
 If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
@@ -115,9 +121,13 @@ Host *
 
 Add any settings that are common to your devices.
 
+----------------------------------------------------------------
+
 ### Debugging SSH connections
 
 You can use the -v switch to debug the SSH connection. You can repeat the v up to 4 times - -vvvv. Each extra v adds more details to the output.
+
+----------------------------------------------------------------
 
 ### What crypto does my device support?
 
@@ -152,6 +162,8 @@ mUQP9U8lIxCCw3MvmafZx2XvbPPENzYdIVO1nfIkAC/1QeK47Jh+HJMGZQbsfoTA4Gz3REKUXiU2eLRV
 uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd%
 
 ```
+
+----------------------------------------------------------------
 
 ### Checking ciphers with nmap
 
@@ -304,6 +316,8 @@ cat id_custom_25519.pub
 
 You can see my username, hostname and date at the end.
 
+----------------------------------------------------------------
+
 ### Display the existing keys on Ubuntu
 
 Note: I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
@@ -369,11 +383,22 @@ This private key will be ignored.
 Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 ```
 
+----------------------------------------------------------------
+
 ## Using the SSH keys
+
+:arrow_forward: KEY TAKEAWAYS
+
+- Keys use Public Key Infrastructure (PKI) instead of usernames/passwords. Keys are more challenging to brute force than passwords.
+- Linux servers are very easy to configure to use ssh keys on.
+- Hardware Security devices such as Yubico [Yubikey](https://www.yubico.com/products/security-key/) and the Google [Titan Security Key](https://store.google.com/product/titan_security_key?hl=en-US&pli=1) allow you to store your keys securely and login from any laptop or desktop.
+- Many Network Devices (Cisco, Aruba, Jumiper, Arista, Ubiquiti) support ssh key authentication.
 
 Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
 
 Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
+
+----------------------------------------------------------------
 
 ### SSH Keys with a Linux server
 
@@ -405,6 +430,8 @@ Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
 Since we created a passphrase for key we are prompted for the passphrase, then logged in.
 
 If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+
+----------------------------------------------------------------
 
 ### SSH Keys with github
 
@@ -750,7 +777,6 @@ Note that IOS XE only allows two keys in the key-chain.
 You can see in the ouput the user's secret is hashed as type 9. In Cisco speak that is scrypt. Scrypt is a `memory` hard hash so having hardware GPUs doesn't speed up reversing the hash. To create a users with scrypt:
 
 `username thubbard privilege 15 algorithm-type scrypt secret Sup3rS3cr3t`
-
 
 ----------------------------------------------------------------
 
