@@ -5,7 +5,7 @@
 - Ubuntu has the latest version of the OpenSSH client installed by default.
 - All the tools needed to secure and customize the SSH daemon are built in.
 - You can use terminal tools like tmux and screen to log into devices and manage SSH sessions.
-- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/) and putty. See [SSH GUI clients](#ssh-gui-clients)
+- You can use GUI tools like [SecureCRT](https://www.vandyke.com/products/securecrt/), [Termius](https://termius.com/), and putty. See [SSH GUI clients](#ssh-gui-clients)
 
 ----------------------------------------------------------------
 
@@ -355,6 +355,76 @@ If you have written permission from the network owner, you can use this script t
 ----------------------------------------------------------------
 
 ## SSH GUI Clients
+
+Here are three different GUI SSH clients for Linux.
+
+### Putty
+
+If you are coming from Windows you have probably used Putty. There is a Linux version of putty that is free to use.
+
+#### Installation
+
+You can install putty using the Ubuntu package manager:
+
+`sudo apt-get install -y putty`
+
+```bash
+ sudo apt-get install -y putty
+[sudo] password for mhubbard:
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  putty-tools
+Suggested packages:
+  putty-doc
+The following NEW packages will be installed:
+  putty putty-tools
+0 upgraded, 2 newly installed, 0 to remove and 6 not upgraded.
+Need to get 1,240 kB of archives.
+
+putty --version
+putty --version
+PuTTY: Release 0.78
+Build platform: 64-bit Unix (GTK + X11)
+Compiler: gcc 13.2.0
+Compiled against GTK version 3.24.38
+Source commit: 4ff82ab29a22936b78510c68f544a99e677efed3
+```
+
+Notice that it's a fairly old version. Tap the Super key and type `putty` to run it.
+
+I would not install it, instead use ssh from terminator or purchase Termius/SecureCRT.
+
+### Termius
+
+Termius is a modern SSH client and terminal that works on:
+
+- Windows
+- Mac OS
+- Linux
+- IOS
+- Android
+
+WHich makes it a great option. I personally use it on all of those except Windows. It syncs to the cloud so no matter what device I am on I have all of my hosts, keys, etc. It also has color coding for most network devices and a lot of themes.
+
+I bought it years ago when it was in beta. It's now a $10.00 per month subscription. I think it's worth $10 per month but you will have to decide for yourself.
+
+#### Installation
+
+go to [download](https://termius.com/download/windows) and select `Download .DEB` then open a terminal and run `sudo dpkg -i Termius.deb`
+
+----------------------------------------------------------------
+
+### SecureCRT
+
+This is the 800lb Gorilla of SSH clients. If your company pays for a license for Windows users, you should be able jump on that plan. If not it's $209 for a three year subscription or $129 for a 1 year subscription.
+
+I have never used SecureCRT so I am just going to put a link to the download here and you can research it yourself.
+
+#### Installation
+
+[SecureCRT Downloads](https://www.vandyke.com/cgi-bin/releases.php?product=securecrt)
 
 ----------------------------------------------------------------
 
