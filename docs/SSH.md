@@ -392,9 +392,7 @@ Compiled against GTK version 3.24.38
 Source commit: 4ff82ab29a22936b78510c68f544a99e677efed3
 ```
 
-Notice that it's a fairly old version. Tap the Super key and type `putty` to run it.
-
-I would not install it, instead use ssh from terminator or purchase Termius/SecureCRT.
+Notice that it's a fairly old version. Tap the Super key and type `putty` to run it. I would not install it, instead use ssh from terminator or purchase Termius/SecureCRT.
 
 ### Termius
 
@@ -410,7 +408,7 @@ WHich makes it a great option. I personally use it on all of those except Window
 
 I bought it years ago when it was in beta. It's now a $10.00 per month subscription. I think it's worth $10 per month but you will have to decide for yourself.
 
-#### Installation
+#### Installation Termius
 
 go to [download](https://termius.com/download/windows) and select `Download .DEB` then open a terminal and run `sudo dpkg -i Termius.deb`
 
@@ -422,7 +420,7 @@ This is the 800lb Gorilla of SSH clients. If your company pays for a license for
 
 I have never used SecureCRT so I am just going to put a link to the download here and you can research it yourself.
 
-#### Installation
+#### Installation SecureCRT
 
 [SecureCRT Downloads](https://www.vandyke.com/cgi-bin/releases.php?product=securecrt)
 
