@@ -205,16 +205,36 @@ If you have 100s or 1000s of devices with legacy crypto it gets painful to creat
 
 This is not the best solution because it can lead to a downgrade attack on a device that supports modern ciphers and legacy ciphers. But if you want to take the risk here is how to do it:
 
+If you have a dedicated management network, for example, 192.168.10.0/24:
+
 ```bash
-nano ~/.ssh/config
-Host *
-        Protocol 2
-        HostKeyAlgorithms ssh-rsa,ssh-dss
-        MACs hmac-sha2-512,hmac-sha2-256
-        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+Host 192.168.10.*
+    Protocol 2
+    KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
+    HostKeyAlgorithms +ssh-rsa
+    MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
+    PubkeyAcceptedKeyTypes +ssh-rsa
 ```
 
-Add any settings that are common to your devices.
+The `+` sign adds the legacy ciphers but leaves the new ciphers in place. So a device that only has legacy ciphers can connect but a new device should still negotiate new ciphers.
+
+You can also use `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
+
+If you have devices on many subnets you can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it.
+
+```bash
+gnome-text-editor ~/.ssh/config
+Host *
+    Protocol 2
+    KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
+    HostKeyAlgorithms +ssh-rsa
+    MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
+    PubkeyAcceptedKeyTypes +ssh-rsa
+```
+
+### REferences Wild Cards
+
+[SSH config wildcard on expanded Hostname](https://superuser.com/questions/469329/ssh-config-wildcard-on-expanded-hostname)
 
 ----------------------------------------------------------------
 
