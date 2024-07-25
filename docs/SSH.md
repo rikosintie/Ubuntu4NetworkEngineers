@@ -232,7 +232,7 @@ Host *
     PubkeyAcceptedKeyTypes +ssh-rsa
 ```
 
-### REferences Wild Cards
+### References Wild Cards
 
 [SSH config wildcard on expanded Hostname](https://superuser.com/questions/469329/ssh-config-wildcard-on-expanded-hostname)
 
@@ -424,7 +424,7 @@ Termius is a modern SSH client and terminal that works on:
 - IOS
 - Android
 
-WHich makes it a great option. I personally use it on all of those except Windows. It syncs to the cloud so no matter what device I am on I have all of my hosts, keys, etc. It also has color coding for most network devices and a lot of themes.
+Which makes it a great option. I personally use it on all of those except Windows. It syncs to the cloud so no matter what device I am on I have all of my hosts, keys, etc. It also has color coding for most network devices and a lot of themes.
 
 I bought it years ago when it was in beta. It's now a $10.00 per month subscription. I think it's worth $10 per month but you will have to decide for yourself.
 
@@ -452,17 +452,46 @@ The OpenSSH client allows you to create custom SSH keys. You can create as many 
 
 My current recommended public-key signing algorithm is Dan Bernstein's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
-`ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519`
+`ssh-keygen -a 100-f id_custom_25519  -o  -t ed25519 -C "$(whoami)@$(uname -n)-$(date -I)"`
 
 -o Use the new RFC4716 key format and the use of a modern key derivation function powered by bcrypt.
 
--a 100 Use 100 rounds of pbkdf2 (password based key derivation 2)
+-a 100 Use 100 rounds of pbkdf2 (password based key derivation function 2).
 
--t Specifies the type of key to create. The choices are dsa | ecdsa | ecdsa‐sk | ed25519 | ed25519‐sk | rsa
+-f name for the key pair.
 
-dsa and rsa are not good choices. DSA was deprecated in 2016 and RSA in 2018. The keys with -sk at the end are for use with `physical security keys`. See the "Yubico" topic later in this section for more information.
+-o Use the new RFC4716 key format and the use of a modern key derivation function powered by bcrypt.
 
--C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file. This is optional.
+-t Specifies the type of key to create. The options are:
+
+- dsa
+- ecdsa
+- ecdsa‐sk
+- ed25519
+- ed25519‐sk
+- rsa
+
+dsa and rsa are not good choices as they are deprecated. The keys with -sk at the end are for use with physical Security Keys. See the [Yubico](#yubico-authenticator) topic later in this section for more information.
+
+-C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file. This is optional. In the example:
+
+- whoami - The username
+- uname -n - The device hostname
+- date -I - The year-month-day
+
+Here is the comment generated
+`mhubbard@1S1K-G5-5587-2024-07-11`
+
+You can replace any of the variables between the starting `"` and ending `"`. For example instead of hostname you could use `key-4-cisco`:
+
+`"$(whoami)-key4cisco-$(date -I)"`
+
+```bash
+ssh-keygen -a 100 -f id_custom_25519  -o  -t ed25519 -C "$(whoami)-key4cisco-$(date -I)"
+
+The key fingerprint is:
+SHA256:nDm2hRdFrE7xLV3UxKh1DHEOS1C5Ftm0l/Wtqvb6OgI mhubbard-key4cisco-2024-07-24
+```
 
 Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
 
@@ -476,7 +505,7 @@ Enter same passphrase again:
 Your identification has been saved in id_custom_25519
 Your public key has been saved in id_custom_25519.pub
 The key fingerprint is:
-SHA256:4alqMRHMO/O91aJjlON2NLOUVcwZ5WLBVpcIaOFKylw mhubbard@HP8600-2328.local-2024-07-08
+SHA256:4alqMRHMO/O91aJjlON2NLOUVcwZ5WLBVpcIaOFKylw mhubbard@1S1K-G5-5587-2024-07-11
 The key's randomart image is:
 +--[ED25519 256]--+
 |   o     .o..++==|
@@ -496,10 +525,10 @@ Here is what the public key looks like with the comment:
 ```bash
 cat id_custom_25519.pub
        │ File: id_custom_25519.pub
-       │ ssh-ed25519·AAAAC3NzaC1lZDI1NTE5AAAAINCnTz475PiCydfW10kXIwPqpRpufeeuicoY9NLUndbt·mhubbard@HP8600.local-2024-07-08
+       │ ssh-ed25519·AAAAC3NzaC1lZDI1NTE5AAAAINCnTz475PiCydfW10kXIwPqpRpufeeuicoY9NLUndbt·mhubbard@1S1K-G5-5587-2024-07-11
 ```
 
-You can see my username, hostname and date at the end.
+You can see my username (mhubbard), hostname (1S1K-G5-5587) and date at the end.
 
 ----------------------------------------------------------------
 
