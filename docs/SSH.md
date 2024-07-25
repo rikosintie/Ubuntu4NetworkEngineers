@@ -452,9 +452,7 @@ The OpenSSH client allows you to create custom SSH keys. You can create as many 
 
 My current recommended public-key signing algorithm is Dan Bernstein's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
-`ssh-keygen -a 100-f id_custom_25519  -o  -t ed25519 -C "$(whoami)@$(uname -n)-$(date -I)"`
-
--o Use the new RFC4716 key format and the use of a modern key derivation function powered by bcrypt.
+`ssh-keygen -a 100 -f id_custom_25519 -o -t ed25519 -C "$(whoami)@$(uname -n)-$(date -I)"`
 
 -a 100 Use 100 rounds of pbkdf2 (password based key derivation function 2).
 
