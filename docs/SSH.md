@@ -471,25 +471,11 @@ My current recommended public-key signing algorithm is Dan Bernstein's ED25519. 
 
 dsa and rsa are not good choices as they are deprecated. The keys with -sk at the end are for use with physical Security Keys. See the [Yubico](#yubico-authenticator) topic later in this section for more information.
 
--C Specifies a comment to be added to the public key to make it easier to identify the key in the known_hosts file. This is optional. In the example:
+-C Specifies a comment to be added to the public key to make it easier to identify the key in the authorized_keys file of the server you connect to. This is optional. In the example:
 
 - whoami - The username
 - uname -n - The device hostname
 - date -I - The year-month-day
-
-Here is the comment generated
-`mhubbard@1S1K-G5-5587-2024-07-11`
-
-You can replace any of the variables between the starting `"` and ending `"`. For example instead of hostname you could use `key-4-cisco`:
-
-`"$(whoami)-key4cisco-$(date -I)"`
-
-```bash
-ssh-keygen -a 100 -f id_custom_25519  -o  -t ed25519 -C "$(whoami)-key4cisco-$(date -I)"
-
-The key fingerprint is:
-SHA256:nDm2hRdFrE7xLV3UxKh1DHEOS1C5Ftm0l/Wtqvb6OgI mhubbard-key4cisco-2024-07-24
-```
 
 Specify a strong passphrase when prompted. The passphrase is required anytime you use the key. If you don’t password protect the key, and an attacker gets access to the keys, they can log into any server you used them on.
 
@@ -527,6 +513,17 @@ cat id_custom_25519.pub
 ```
 
 You can see my username (mhubbard), hostname (1S1K-G5-5587) and date at the end.
+
+You can replace any of the variables between the starting `"` and ending `"`. For example instead of hostname you could use `key-4-cisco`:
+
+`"$(whoami)-key4cisco-$(date -I)"`
+
+```bash
+ssh-keygen -a 100 -f id_custom_25519  -o  -t ed25519 -C "$(whoami)-key4cisco-$(date -I)"
+
+The key fingerprint is:
+SHA256:nDm2hRdFrE7xLV3UxKh1DHEOS1C5Ftm0l/Wtqvb6OgI mhubbard-key4cisco-2024-07-24
+```
 
 ----------------------------------------------------------------
 
