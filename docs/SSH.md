@@ -636,7 +636,12 @@ and check to make sure that only the key(s) you wanted were added.
 ~/.ssh ⌚ 13:19:05
 $ ssh '192.168.10.223'
 Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
+╭─mhubbard@ubuntu-server ~
+╰─$ cat ~/.ssh/authorized_keys
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrwMtnnQo0kfjQVwcWOKx72SgsTB7Qj8FPTyyVwduxn mhubbard@1S1K-G5-5587-2024-07-08
 ```
+
+You can see how the comment makes the key easy to identify in the authorized_keys file.
 
 Since we created a passphrase for key we are prompted for the passphrase, then logged in.
 
