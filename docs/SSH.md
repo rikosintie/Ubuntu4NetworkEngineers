@@ -568,7 +568,6 @@ This private key will be ignored.
 Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 ```
 
-
 ----------------------------------------------------------------
 
 ## Using the SSH keys
@@ -618,6 +617,22 @@ Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
 Since we created a passphrase for key we are prompted for the passphrase, then logged in.
 
 If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+
+### I get an error when trying to use the key
+
+If you see a debug message `sign_and_send_pubkey: signing failed: agent refused operation` the first time you use the key enter the following:
+
+`ssh-add`
+
+This will add all the private keys in ~/.ssh/ to the ssh agent. You can view the keys in the agent using:
+
+```bash
+ssh-add -l
+4096 SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E mhubbard@1S1K-G5-5587-2024-07-11 (RSA)
+4096 SHA256:569SKPB/kLsw1DqVlSV4J+bE+NYUDfY/LHNbvjvRs+o mhubbard@vectorusa.com (RSA)
+```
+
+For the first key you can see the size, 4096 bits, the fingerprint, the label we used when creating the key and the type (RSA).
 
 ----------------------------------------------------------------
 
