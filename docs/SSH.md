@@ -253,12 +253,19 @@ Host 192.168.10.*
     MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
     PubkeyAcceptedKeyTypes +ssh-rsa
     User vector
+```
 
-User on my laptop
+Now list the username on my laptop
+
+```bash
 ~/.ssh ⌚ 16:55:40
 $ who
 mhubbard seat0        2024-07-18 12:30 (login screen)
+```
 
+Log into the switch and run who:
+
+```bash
 $ ssh 192.168.10.253
 (vector@192.168.10.253) Password:
 DECOM___MCI-KSC-SW1 line 2
@@ -270,6 +277,7 @@ DECOM___MCI-KSC-SW1#who
 
 DECOM___MCI-KSC-SW1#
 ```
+
 This is very convenient even if you are not using ssh keys.
 
 ### Display the configuration that will be used
