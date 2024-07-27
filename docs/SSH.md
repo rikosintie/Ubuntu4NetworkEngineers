@@ -445,8 +445,8 @@ This is an example of why you don't want to use the wildcard in the configuratio
 
 nmap also has a similar script for checking SSL (TLS) crypto:
 
-```bash linenums="1" hl_lines="7 19 20 21 22 23 24 25 26 27 28"
-sudo nmap --script ssl-cert,ssl-enum-ciphers -p 443,465,993,995,3389 192.168.10.253
+```bash linenums="1" hl_lines="7 21 22 23 24 25 26 27 28 29"
+sudo nmap --script ssl-cert,ssl-enum-ciphers -p 443 192.168.10.253
 Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:45 PDT
 Nmap scan report for 3850.pu.pri (192.168.10.253)
 Host is up (0.0043s latency).
@@ -475,10 +475,6 @@ PORT     STATE  SERVICE
 | Not valid after:  2030-01-01T00:00:00
 | MD5:   12d5:9652:7129:3c66:169d:1e69:2dc1:ddcc
 |_SHA-1: 9fcc:9d66:f55a:ccec:4949:4da8:a3f7:205a:046d:78b0
-465/tcp  closed smtps
-993/tcp  closed imaps
-995/tcp  closed pop3s
-3389/tcp closed ms-wbt-server
 MAC Address: F8:7B:20:34:A3:C6 (Cisco Systems)
 
 Nmap done: 1 IP address (1 host up) scanned in 1.53 seconds
@@ -601,7 +597,7 @@ Specify a strong passphrase when prompted. The passphrase is required anytime yo
 
 Here is what the output of the command should look like:
 
-```bash linenums="1" hl_lines="1 2 5 6 7"
+```bash linenums="1" hl_lines="1 5 6 7"
 ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519
 Generating public/private ed25519 key pair.
 Enter passphrase (empty for no passphrase):
@@ -638,7 +634,7 @@ You can replace any of the variables between the starting `"` and ending `"`. Fo
 
 `"$(whoami)-key4cisco-$(date -I)"`
 
-```bash
+```bash linenums="1" hl_lines="1 3"
 ssh-keygen -a 100 -f id_custom_25519  -o  -t ed25519 -C "$(whoami)-key4cisco-$(date -I)"
 
 The key fingerprint is:
@@ -735,7 +731,7 @@ Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how y
 
  Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
 
-```bash linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="1 19 22"
 ssh-copy-id -i ~/.ssh/id_custom_25519 192.168.10.223
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/mhubbard/.ssh/id_custom_25519.pub"
 The authenticity of host '192.168.10.223 (192.168.10.223)' can't be established.
@@ -775,7 +771,7 @@ If you see a debug message `sign_and_send_pubkey: signing failed: agent refused 
 
 This will add all the private keys in ~/.ssh/ to the ssh agent. You can view the keys in the agent using:
 
-```bash
+```bash linenums="1" hl_lines="1"
 ssh-add -l
 4096 SHA256:0WF9uxNBCPeeHzMAGsYJy2wrsOXNrhPxJ+3lp2PxI+E mhubbard@1S1K-G5-5587-2024-07-11 (RSA)
 4096 SHA256:569SKPB/kLsw1DqVlSV4J+bE+NYUDfY/LHNbvjvRs+o mhubbard@vectorusa.com (RSA)
@@ -789,7 +785,7 @@ For the first key you can see the size, 4096 bits, the fingerprint, the label we
 
 Github doesn't accept username/password for repositories any longer. You will need to use a key pair and configure git to use it. I created a key pair just for github named id_githb. To add it to your global git configuration:
 
-```bash
+```bash linenums="1" hl_lines="2 5"
 add the key
 git config --global user.signingkey ~/.ssh/id_github.pub
 
