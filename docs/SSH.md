@@ -171,10 +171,11 @@ This is an example trying to connect to a Cisco 3850 IOS XE switch running 16.12
 Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
 ```
 
-Here is the entry I added to ~/.ssh/config:
+Here is the entry I added to `~/.ssh/config`:
 
-```bash
-gnome-text-editor ~/.ssh/config
+Open the file using `gnome-text-editor ~/.ssh/config` and add the following:
+
+```bash linenums="1"
 Host 192.168.10.253
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
         MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512
@@ -183,7 +184,7 @@ Host 192.168.10.253
 
 You can add an SSH key file and a custom port for ssh if needed:
 
-```bash
+```bash linenums="1" bash hl_lines="5 6"
 Host 192.168.10.253
     KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
     MACs hmac-sha1,hmac-sha2-256
@@ -206,7 +207,7 @@ If you have 100s or 1000s of devices with legacy crypto it gets painful to creat
 
 If you have a dedicated management network, for example, 192.168.10.0/24:
 
-```bash
+```bash linenums="1" bash hl_lines="1"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
@@ -225,7 +226,7 @@ You can also put list multiple hosts on the same line, separated by spaces.
 
 You can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it.
 
-```bash
+```bash linenums="1" bash hl_lines="2"
 gnome-text-editor ~/.ssh/config
 Host *
     Protocol 2
@@ -257,7 +258,7 @@ Host 192.168.10.*
 
 Now list the username on my laptop
 
-```bash
+```bash linenums="1" bash hl_lines="3"
 ~/.ssh ⌚ 16:55:40
 $ who
 mhubbard seat0        2024-07-18 12:30 (login screen)
@@ -265,17 +266,13 @@ mhubbard seat0        2024-07-18 12:30 (login screen)
 
 Log into the switch and run who:
 
-```bash
+```bash linenums="1" bash hl_lines="6"
 $ ssh 192.168.10.253
 (vector@192.168.10.253) Password:
 DECOM___MCI-KSC-SW1 line 2
 DECOM___MCI-KSC-SW1#who
     Line       User       Host(s)              Idle       Location
 *  2 vty 0     vector     idle                 00:00:00 ubuntu.pu.pri
-
-  Interface    User               Mode         Idle     Peer Address
-
-DECOM___MCI-KSC-SW1#
 ```
 
 This is very convenient even if you are not using ssh keys.
@@ -322,7 +319,7 @@ A jump host is a device that you connect to and then connect to other devices. T
 
 In this example I have an Ubuntu server at 192.168.10.223:
 
-```bash
+```bash linenums="1" bash hl_lines="8"
 Host 192.168.10.* !192.168.10.223
         Protocol 2
         HostKeyAlgorithms +ssh-rsa,ssh-dss
