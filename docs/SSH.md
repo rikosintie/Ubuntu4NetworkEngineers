@@ -108,7 +108,7 @@ set system services ssh hostkey-algorithm ssh-ed25519
 - Ubuntu makes it easy to use SSH from the terminal
 - You can create custom entries in the ssh config file for each device if needed
 - You can use password authentication or public key authentication with the ssh client
-- You can easily create a jump host and secure your ssh connection even further.
+- You can easily create a jump host and secure your network devices even further.
 
 ----------------------------------------------------------------
 
@@ -125,7 +125,7 @@ Change the username and IP address to fit your device.
 
 ### Run network commands remotely
 
-You can also run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
+You can run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
 
 ```bash
 ssh 192.168.10.253 show run
@@ -174,14 +174,14 @@ Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method
 Here is the entry I added to ~/.ssh/config:
 
 ```bash
-nano ~/.ssh/config or gnome-text-editor ~/.ssh/config
+gnome-text-editor ~/.ssh/config
 Host 192.168.10.253
         KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
         MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512
         HostKeyAlgorithms ssh-rsa
 ```
 
-You can add an SSH key file if you have more than one and a custom port if needed:
+You can add an SSH key file and a custom port for ssh if needed:
 
 ```bash
 Host 192.168.10.253
@@ -202,9 +202,7 @@ I have run across network devices that required the ancient `dss` HostKeyAlgorit
 
 ### Using a wildcard in the config file
 
-If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices, not just network devices.
-
-This is not the best solution because it can lead to a downgrade attack on a device that supports modern ciphers and legacy ciphers. But if you want to take the risk here is how to do it:
+If you have 100s or 1000s of devices with legacy crypto it gets painful to create an entry in `~/.ssh/config` for every device. You can use a wildcard in the configuration file that will pass the same configuration to every connection. Keep in mind that the wildcard configuration applies to all devices that match the wildcard, not just network devices.
 
 If you have a dedicated management network, for example, 192.168.10.0/24:
 
@@ -219,13 +217,13 @@ Host 192.168.10.*
 
 The `+` sign adds the legacy ciphers but leaves the new ciphers in place. So a device that only has legacy ciphers can connect but a new device should still negotiate new ciphers.
 
-You can use `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
+You can use the `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
 
 You can also put list multiple hosts on the same line, separated by spaces.
 
 `host 192.168.10.* 172.16.1.*`
 
-You can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it. Again, I don't recommend this approach because it will cover all devices you connect to.
+You can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it.
 
 ```bash
 gnome-text-editor ~/.ssh/config
@@ -239,13 +237,15 @@ Host *
 
 ### Create an ssh config file for testing purposes
 
-You can use a different configuration if you want to test changes. Use -F option, ssh -F test-config 192.168.10.253
+You can use a different configuration if you want to test changes without modifying `~/.ssh/config`. Use `-F` option, for example:
+
+`ssh -F test-config 192.168.10.253`
 
 ### Use a different username for network access
 
-Let's say that your laptops username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
+Let's say that your laptop's username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
 
-```bash
+```bash hl_lines="8"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
