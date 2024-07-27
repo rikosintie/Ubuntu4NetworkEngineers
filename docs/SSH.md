@@ -108,6 +108,7 @@ set system services ssh hostkey-algorithm ssh-ed25519
 - Ubuntu makes it easy to use SSH from the terminal
 - You can create custom entries in the ssh config file for each device if needed
 - You can use password authentication or public key authentication with the ssh client
+- You can easily create a jump host and secure your ssh connection even further.
 
 ----------------------------------------------------------------
 
@@ -218,13 +219,13 @@ Host 192.168.10.*
 
 The `+` sign adds the legacy ciphers but leaves the new ciphers in place. So a device that only has legacy ciphers can connect but a new device should still negotiate new ciphers.
 
-You can also use `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
+You can use `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
 
 You can also put list multiple hosts on the same line, separated by spaces.
 
-`192.168.10.* 172.16.1.*`
+`host 192.168.10.* 172.16.1.*`
 
-You can also use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it. Again, I don't recommend this approach because it will cover all devices you connect to.
+You can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it. Again, I don't recommend this approach because it will cover all devices you connect to.
 
 ```bash
 gnome-text-editor ~/.ssh/config
@@ -236,7 +237,7 @@ Host *
     PubkeyAcceptedKeyTypes +ssh-rsa
 ```
 
-#### Create an ssh config file for testing purposes
+### Create an ssh config file for testing purposes
 
 You can use a different configuration if you want to test changes. Use -F option, ssh -F test-config 192.168.10.253
 
@@ -1206,6 +1207,10 @@ Last login: Fri Jul 12 14:01:28 2024 from 192.168.10.143
 --- JUNOS 18.2R1.9 Kernel 64-bit  JNPR-11.0-20180614.6c3f819_buil
 root@TEST-Router:~ #
 ```
+
+----------------------------------------------------------------
+
+## Using the keys with an HPE Procurve switch
 
 ----------------------------------------------------------------
 
