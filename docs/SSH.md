@@ -47,12 +47,12 @@ Aruba CX
 ```bash
 ssh ciphers chacha20-poly1305@openssh.com aes256-ctr aes256-cbc
 ssh host-key ed25519
-ssh host-key-algorithms ssh-rsa ssh-ed25519 ecdsa-sha2-nistp521
+ssh host-key-algorithms ssh-ed25519 ecdsa-sha2-nistp521
 ssh key-exchange-algorithms ecdh-sha2-nistp256 curve25519-sha256
  diffie-hellman-group-exchange-sha256
 ssh macs hmac-sha2-256 hmac-sha2-512
-ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256
-ssh maximum-auth-attempts 3
+ssh public-key-algorithms x509v3-ssh-rsa rsa-sha2-256
+ssh maximum-auth-attempts 5
 ```
 
 The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#references-ssh-history) in the references below for the exact algorithms.
@@ -60,25 +60,29 @@ The Aruba CX firmware has rock solid cryptographic algorithms out of the box. Se
 Cisco IOS
 
 ```bash
+ip ssh version 2
+crypto key generate rsa modulus 4096 label SSH-KEYS
+ip ssh rsa keypair-name SSH-KEYS !associate keys to SSH
 ip ssh server algorithm encryption aes256-ctr aes192-ctr aes128-ctr
 ip ssh server algorithm mac hmac-sha2-256 hmac-sha2-512
 no ip ssh server algorithm mac hmac-sha1
 no ip ssh server algorithm mac hmac-sha1-96
-ip ssh version 2
+ip ssh authentication-retries 5
 ```
 
 Ciscco IOS XE
 
 ```bash
-crypto key generate rsa modulus 4096 label RSA4096_SSH_KEY
-ip ssh rsa keypair-name RSA4096_SSH_KEY
 ip ssh version 2
+crypto key generate rsa modulus 4096 label RSA4096_SSH_KEY
+ip ssh rsa keypair-name RSA4096_SSH_KEY !associate keys to SSH
 ip ssh server algorithm authentication keyboard
 ip ssh server algorithm mac hmac-sha2-512 hmac-sha2-256
 ip ssh server algorithm encryption aes256-gcm aes256-ctr
 ip ssh server algorithm kex ecdh-sha2-nistp521 ecdh-sha2-nistp384
 ip ssh server algorithm hostkey rsa-sha2-512 rsa-sha2-256
 ip ssh server algorithm publickey ecdsa-sha2-nistp521 ecdsa-sha2-nistp384
+ssh login-attempts 5
 ```
 
 Juniper
@@ -98,6 +102,7 @@ set system services ssh hostkey-algorithm ssh-ed25519
 - [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
 - [Aruba CX SSH ciphers](https://www.arubanetworks.com/techdocs/AOS-CX/10.13/HTML/security_83xx-8400-9300-10000/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm)
 - [IOS-XE SSH Best Practices](https://mrncciew.com/2023/08/28/ios-xe-ssh-best-practices/)
+- [Configuring IOS XE for Strong Security SSH Sessions](https://community.cisco.com/t5/networking-knowledge-base/configuring-ios-xe-for-strong-security-ssh-sessions/ta-p/4556490#toc-hId--889430449)
 
 ----------------------------------------------------------------
 
