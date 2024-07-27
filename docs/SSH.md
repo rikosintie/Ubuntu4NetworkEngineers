@@ -182,18 +182,18 @@ Open the file using `gnome-text-editor ~/.ssh/config` and add the following:
 
 ```bash linenums="1"
 Host 192.168.10.253
-        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-        MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512
-        HostKeyAlgorithms ssh-rsa
+    KexAlgorithms +diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
+    HostKeyAlgorithms +ssh-rsa
 ```
 
 You can add an SSH key file and a custom port for ssh if needed:
 
 ```bash linenums="1" hl_lines="5 6"
 Host 192.168.10.253
-    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-    MACs hmac-sha1,hmac-sha2-256
-    HostKeyAlgorithms ssh-rsa
+    KexAlgorithms +diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
+    HostKeyAlgorithms +ssh-rsa
     IdentityFile ~/.ssh/id_rsa
     Port 45005
 ```
@@ -202,7 +202,7 @@ To use a specific key on the fly:
 `ssh -i ~/.ssh/customer1/id_rsa  192.168.10.253`
 
 I have run across network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
-`HostKeyAlgorithms=+ssh-rsa,ssh-dss`
+`HostKeyAlgorithms +ssh-rsa,ssh-dss`
 
 ----------------------------------------------------------------
 
@@ -225,7 +225,7 @@ The `+` sign adds the legacy ciphers but leaves the new ciphers in place. So a d
 
 You can use the `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
 
-You can also put list multiple hosts on the same line, separated by spaces.
+You can also put multiple hosts on the same line, separated by spaces.
 
 `host 192.168.10.* 172.16.1.*`
 
@@ -288,7 +288,7 @@ Using `-G` Causes ssh to print its configuration after evaluating Host and Match
 
 In this example I removed a lot of detail but you can see the key that will be used, the ciphers, and other important details. The `-G` switch will save you a lot of time preparing you config file.
 
-```bash
+```bash linenums="1" hl_lines="10 15 16 17 18 19 27"
 ssh -G 192.168.10.253
 host 192.168.10.253
 user mhubbard
