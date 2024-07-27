@@ -313,13 +313,13 @@ addkeystoagent true
 syslogfacility USER
 ```
 
-## SSH Jump hosts
+### SSH Jump hosts
 
 A jump host is a device that you connect to and then connect to other devices. This is done to limit administrative access to just the jump host. This is very easy to do with Linux. Spin up an Ubuntu server VM with a NIC that has access to the network devices, hardened per your company security policy and then add `ProxyJump` to the ssh config file.
 
 In this example I have an Ubuntu server at 192.168.10.223:
 
-```bash linenums="1" hl_lines="8"
+```bash linenums="1" hl_lines="9"
 Host 192.168.10.* !192.168.10.223
         Protocol 2
         HostKeyAlgorithms +ssh-rsa,ssh-dss
@@ -395,7 +395,7 @@ uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd
 
 For devices that don't have `show ip ssh`, like IoT devices, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
-```bash
+```bash linenums="1" hl_lines="9,16,19,22,25,28"
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
 Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
 Nmap scan report for office.pu.pri (192.168.10.50)
