@@ -395,7 +395,7 @@ uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd
 
 For devices that don't have `show ip ssh`, like IoT devices, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
-```bash linenums="1" hl_lines="9-16-19-22-25-28"
+```bash linenums="1" hl_lines="9 16 19 22 25 28"
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
 Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
 Nmap scan report for office.pu.pri (192.168.10.50)
