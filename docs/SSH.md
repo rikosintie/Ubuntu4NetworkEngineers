@@ -184,7 +184,7 @@ Host 192.168.10.253
 
 You can add an SSH key file and a custom port for ssh if needed:
 
-```bash linenums="1" bash hl_lines="5 6"
+```bash linenums="1" hl_lines="5 6"
 Host 192.168.10.253
     KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
     MACs hmac-sha1,hmac-sha2-256
@@ -207,7 +207,7 @@ If you have 100s or 1000s of devices with legacy crypto it gets painful to creat
 
 If you have a dedicated management network, for example, 192.168.10.0/24:
 
-```bash linenums="1" bash hl_lines="1"
+```bash linenums="1" hl_lines="1"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
@@ -226,7 +226,7 @@ You can also put list multiple hosts on the same line, separated by spaces.
 
 You can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it.
 
-```bash linenums="1" bash hl_lines="2"
+```bash linenums="1" hl_lines="2"
 gnome-text-editor ~/.ssh/config
 Host *
     Protocol 2
@@ -246,7 +246,7 @@ You can use a different configuration if you want to test changes without modify
 
 Let's say that your laptop's username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
 
-```bash linenums="1" bash hl_lines="7"
+```bash linenums="1" hl_lines="7"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
@@ -258,7 +258,7 @@ Host 192.168.10.*
 
 Now list the username on my laptop
 
-```bash linenums="1" bash hl_lines="3"
+```bash linenums="1" hl_lines="3"
 ~/.ssh ⌚ 16:55:40
 $ who
 mhubbard seat0        2024-07-18 12:30 (login screen)
@@ -266,7 +266,7 @@ mhubbard seat0        2024-07-18 12:30 (login screen)
 
 Log into the switch and run who:
 
-```bash linenums="1" bash hl_lines="6"
+```bash linenums="1" hl_lines="6"
 $ ssh 192.168.10.253
 (vector@192.168.10.253) Password:
 DECOM___MCI-KSC-SW1 line 2
@@ -319,7 +319,7 @@ A jump host is a device that you connect to and then connect to other devices. T
 
 In this example I have an Ubuntu server at 192.168.10.223:
 
-```bash linenums="1" bash hl_lines="8"
+```bash linenums="1" hl_lines="8"
 Host 192.168.10.* !192.168.10.223
         Protocol 2
         HostKeyAlgorithms +ssh-rsa,ssh-dss
