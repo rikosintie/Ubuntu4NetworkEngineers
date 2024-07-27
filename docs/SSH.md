@@ -245,7 +245,7 @@ You can use a different configuration if you want to test changes without modify
 
 Let's say that your laptop's username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
 
-```bash hl_lines="8"
+```bash hl_lines="7"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
