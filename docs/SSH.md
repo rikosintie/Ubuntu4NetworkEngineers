@@ -263,10 +263,10 @@ Host 192.168.10.*
 
 Now list the username on my laptop
 
-```bash linenums="1" hl_lines="3"
-~/.ssh ⌚ 16:55:40
-$ who
-mhubbard seat0        2024-07-18 12:30 (login screen)
+```bash linenums="1" hl_lines="2"
+~/.ssh ⌚ 21:33:59
+$ whoami
+mhubbard
 ```
 
 Log into the switch and run who:
@@ -564,7 +564,7 @@ The OpenSSH client allows you to create custom SSH keys. You can create as many 
 
 `~/.ssh/customer1/`
 
-See the section [Network Devices with legacy ciphers](#network-devices-with legacy-ciphers) for an example of of how to add a key to a device profile.
+See the section [Network Devices with legacy ciphers](#network-devices-with-legacy-ciphers) for an example of how to add a key to a device profile.
 
 My current recommended public-key signing algorithm is Dan Bernstein's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
@@ -578,12 +578,12 @@ My current recommended public-key signing algorithm is Dan Bernstein's ED25519. 
 
 -t Specifies the type of key to create. The options are:
 
-- dsa
+- dsa (weak)
 - ecdsa
 - ecdsa‐sk
 - ed25519
 - ed25519‐sk
-- rsa
+- rsa (weak)
 
 dsa and rsa are not good choices as they are deprecated. The keys with -sk at the end are for use with physical Security Keys. See the [Yubico](#yubico-authenticator) topic later in this section for more information.
 
@@ -634,7 +634,7 @@ You can replace any of the variables between the starting `"` and ending `"`. Fo
 
 `"$(whoami)-key4cisco-$(date -I)"`
 
-```bash linenums="1" hl_lines="1 3"
+```bash linenums="1" hl_lines="1 4"
 ssh-keygen -a 100 -f id_custom_25519  -o  -t ed25519 -C "$(whoami)-key4cisco-$(date -I)"
 
 The key fingerprint is:
@@ -669,7 +669,7 @@ You can see the comment on the first key.
 
 You can print the file name out by adding a print statement:
 
-```bash linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="1 3 5 7 9"
 for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfile}; done | uniq
 256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
 /home/mhubbard/.ssh/id_custom_25519.pub
@@ -765,7 +765,7 @@ If you need to have automated login, you can create a key without a passphrase. 
 
 ### I get an error when trying to use the key
 
-If you see a debug message `sign_and_send_pubkey: signing failed: agent refused operation` the first time you use the key enter the following:
+If the login fails, rerun the ssh command with -vvvv `ssh -vvvv 192.168.10.253`. If you see a debug message `sign_and_send_pubkey: signing failed: agent refused operation` the first time you use the key enter the following:
 
 `ssh-add`
 
