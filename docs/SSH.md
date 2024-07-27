@@ -288,7 +288,7 @@ Using `-G` Causes ssh to print its configuration after evaluating Host and Match
 
 In this example I removed a lot of detail but you can see the key that will be used, the ciphers, and other important details. The `-G` switch will save you a lot of time preparing you config file.
 
-```bash linenums="1" hl_lines="10 15 16 17 18 19 27"
+```bash linenums="1" hl_lines="10 15 16 17 18 19 21 22 23 25 26"
 ssh -G 192.168.10.253
 host 192.168.10.253
 user mhubbard
@@ -338,7 +338,7 @@ Host 192.168.10.* !192.168.10.223
 
 Now use the - J option:
 
-```bash
+```bash linenums="1" hl_lines="2"
 ~/.ssh ⌚ 17:00:00
 $ ssh -J mhubbard@192.168.10.223 mhubbard@192.168.10.253
 DECOM___MCI-KSC-SW1 line 2
@@ -366,7 +366,7 @@ On most switches you can use something like `show ip ssh` to get a list of the c
 
 Here is an example from the Cisco 3850 in my home lab:
 
-```bash
+```bash linenums="1" hl_lines="6 7 8 9 10 11 12 13 14 15"
 ssh 192.168.10.253 show ip ssh
 (mhubbard@192.168.10.253) Password:
 
@@ -445,7 +445,7 @@ This is an example of why you don't want to use the wildcard in the configuratio
 
 nmap also has a similar script for checking SSL (TLS) crypto:
 
-```bash
+```bash linenums="1" hl_lines="7 19 20 21 22 23 24 25 26 27 28"
 sudo nmap --script ssl-cert,ssl-enum-ciphers -p 443,465,993,995,3389 192.168.10.253
 Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:45 PDT
 Nmap scan report for 3850.pu.pri (192.168.10.253)
@@ -601,7 +601,7 @@ Specify a strong passphrase when prompted. The passphrase is required anytime yo
 
 Here is what the output of the command should look like:
 
-```bash
+```bash linenums="1" hl_lines="1 2 5 6 7"
 ssh-keygen -a 100 -o -C "$(whoami)@$(uname -n)-$(date -I)" -f id_custom_25519 -t ed25519
 Generating public/private ed25519 key pair.
 Enter passphrase (empty for no passphrase):
@@ -626,7 +626,7 @@ The key's randomart image is:
 
 Here is what the public key looks like with the comment:
 
-```bash
+```bash linenums="1" hl_lines="1"
 cat id_custom_25519.pub
        │ File: id_custom_25519.pub
        │ ssh-ed25519·AAAAC3NzaC1lZDI1NTE5AAAAINCnTz475PiCydfW10kXIwPqpRpufeeuicoY9NLUndbt·mhubbard@1S1K-G5-5587-2024-07-11
@@ -661,7 +661,7 @@ Note: I always start my key names wih `id_`. If you don't, you will need to modi
 
 Here is what it looked like on my laptop.
 
-```bash
+```bash linenums="1" hl_lines="1"
 for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq
 256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
 256 SHA256:2XtMiDbg64rBnUXOzcFFXqwzUbbAjAO2Y9RwrWvVTB4 michael.hubbard999@gmail.com (ED25519)
@@ -673,7 +673,7 @@ You can see the comment on the first key.
 
 You can print the file name out by adding a print statement:
 
-```bash
+```bash linenums="1" hl_lines="1"
 for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfile}; done | uniq
 256 SHA256:2uWbzS9A/4dI+ZS+bM8f5q6wTqeb8vsBvylvQi5B9dE mhubbard@1S1K-G5-5587-2024-07-08 (ED25519)
 /home/mhubbard/.ssh/id_custom_25519.pub
@@ -689,7 +689,7 @@ for keyfile in ~/.ssh/id_*.pub; do ssh-keygen -l -f "${keyfile}"; print ${keyfil
 
 The private key should have rw permission to only the user. No other users or groups should have any permissions. Use the following to view/set the permissions:
 
-```bash
+```bash linenums="1" hl_lines="1 6"
 ls -l
 -rw-------    1 mhubbard  staff   464B Jul  8 15:54 id_custom_25519
 -rw-r--r--    1 mhubbard  staff   108B Jul  8 15:54 id_custom_25519.pub
@@ -700,7 +700,7 @@ chmod 600 ~/.ssh/id_custom_25519
 
 Here is the output using keys with 0644 instead of 0600:
 
-```bash
+```bash linenums="1" hl_lines="1 6"
 ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
 Authorized access only! Violators will be violated!
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -735,7 +735,7 @@ Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how y
 
  Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
 
-```bash
+```bash linenums="1" hl_lines="1"
 ssh-copy-id -i ~/.ssh/id_custom_25519 192.168.10.223
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/mhubbard/.ssh/id_custom_25519.pub"
 The authenticity of host '192.168.10.223 (192.168.10.223)' can't be established.
