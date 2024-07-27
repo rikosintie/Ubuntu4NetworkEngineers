@@ -192,7 +192,7 @@ Host 192.168.10.253
 ```
 
 To use a specific key on the fly:
-`ssh -i ~/.ssh/id_custom_25519  192.168.10.253`
+`ssh -i ~/.ssh/customer1/id_rsa  192.168.10.253`
 
 I have run across network devices that required the ancient `dss` HostKeyAlgorithm. Add that with:
 `HostKeyAlgorithms=+ssh-rsa,ssh-dss`
@@ -220,7 +220,11 @@ The `+` sign adds the legacy ciphers but leaves the new ciphers in place. So a d
 
 You can also use `?` as wildcard placeholders. For example, `192.168.10.??` would match any host address with 2 digits.
 
-If you have devices on many subnets you can use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it.
+You can also put list multiple hosts on the same line, separated by spaces.
+
+`192.168.10.* 172.16.1.*`
+
+You can also use an `*` to cover any hosts. The `~/.ssh/config` file is read top to bottom so you can place this at the bottom and have specific devices defined above it. Again, I don't recommend this approach because it will cover all devices you connect to.
 
 ```bash
 gnome-text-editor ~/.ssh/config
@@ -231,6 +235,107 @@ Host *
     MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
     PubkeyAcceptedKeyTypes +ssh-rsa
 ```
+
+#### Create an ssh config file for testing purposes
+
+You can use a different configuration if you want to test changes. Use -F option, ssh -F test-config 192.168.10.253
+
+### Use a different username for network access
+
+Let's say that your laptops username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
+
+```bash
+Host 192.168.10.*
+    Protocol 2
+    KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
+    HostKeyAlgorithms +ssh-rsa
+    MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
+    PubkeyAcceptedKeyTypes +ssh-rsa
+    User vector
+
+User on my laptop
+~/.ssh ⌚ 16:55:40
+$ who
+mhubbard seat0        2024-07-18 12:30 (login screen)
+
+$ ssh 192.168.10.253
+(vector@192.168.10.253) Password:
+DECOM___MCI-KSC-SW1 line 2
+DECOM___MCI-KSC-SW1#who
+    Line       User       Host(s)              Idle       Location
+*  2 vty 0     vector     idle                 00:00:00 ubuntu.pu.pri
+
+  Interface    User               Mode         Idle     Peer Address
+
+DECOM___MCI-KSC-SW1#
+```
+This is very convenient even if you are not using ssh keys.
+
+### Display the configuration that will be used
+
+Using `-G` Causes ssh to print its configuration after evaluating Host and Match blocks and exit. You can review your settings to verify you’re getting what you need.
+
+In this example I removed a lot of detail but you can see the key that will be used, the ciphers, and other important details. The `-G` switch will save you a lot of time preparing you config file.
+
+```bash
+ssh -G 192.168.10.253
+host 192.168.10.253
+user mhubbard
+hostname 192.168.10.253
+port 22
+addressfamily any
+canonicalizehostname false
+fingerprinthash SHA256
+hashknownhosts yes
+pubkeyauthentication true
+stricthostkeychecking ask
+tcpkeepalive yes
+updatehostkeys true
+requiredrsasize 1024
+ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+hostkeyalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ssh-dss
+hostbasedacceptedalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+kexalgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+casignaturealgorithms ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+loglevel INFO
+macs hmac-sha2-512,hmac-sha2-256
+securitykeyprovider internal
+pubkeyacceptedalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256,ssh-rsa
+xauthlocation /usr/bin/xauth
+identityfile ~/.ssh/id_rsa
+addkeystoagent true
+syslogfacility USER
+```
+
+## SSH Jump hosts
+
+A jump host is a device that you connect to and then connect to other devices. This is done to limit administrative access to just the jump host. This is very easy to do with Linux. Spin up an Ubuntu server VM with a NIC that has access to the network devices, hardened per your company security policy and then add `ProxyJump` to the ssh config file.
+
+In this example I have an Ubuntu server at 192.168.10.223:
+
+```bash
+Host 192.168.10.* !192.168.10.223
+        Protocol 2
+        HostKeyAlgorithms +ssh-rsa,ssh-dss
+        MACs hmac-sha2-512,hmac-sha2-256
+        KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+        PubkeyAcceptedKeyTypes +ssh-rsa
+        IdentityFile ~/.ssh/id_rsa
+        AddKeysToAgent yes
+        ProxyJump 192.168.10.223
+```
+
+Now use the - J option:
+
+```bash
+~/.ssh ⌚ 17:00:00
+$ ssh -J mhubbard@192.168.10.223 mhubbard@192.168.10.253
+DECOM___MCI-KSC-SW1 line 2
+
+DECOM___MCI-KSC-SW1#
+```
+
+None of your keystrokes reach the jump host. The only thing the jump host can see is an encrypted data stream between your client and the destination server.
 
 ### References Wild Cards
 
@@ -448,7 +553,11 @@ I have never used SecureCRT so I am just going to put a link to the download her
 
 ## Creating SSH Keys
 
-The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer.
+The OpenSSH client allows you to create custom SSH keys. You can create as many keys as you need. You should think about your security requirements and create SSH keys to fit the requirements. For example, if you work for a VAR or MSP, you may want to create unique keys for each customer. You can create subdirectories for different customers. For example:
+
+`~/.ssh/customer1/`
+
+See the section [Network Devices with legacy ciphers](#network-devices-with legacy-ciphers) for an example of of how to add a key to a device profile.
 
 My current recommended public-key signing algorithm is Dan Bernstein's ED25519. To create a set of keys using ed25519, run the following in the terminal from the ~/.ssh directory:
 
@@ -1004,7 +1113,7 @@ no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
 
 ### Login using the SSH Keys
 
-Continuing in the theme of network devices having crap crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the `~/.ssh/config` file for the host. Maybe by 2030 the network vendors will have decent crypto. But, by 2030, the current crypto will be deprecated!
+Continuing in the theme of network devices having legacy crypto, you will have to add `PubkeyAcceptedKeyTypes +ssh-rsa` to the `~/.ssh/config` file for the host.
 
 `ssh -i ~/.ssh/id_rsa.pub 192.168.10.253`
 
@@ -1388,6 +1497,35 @@ Yubico is one of the companies that makes Physical Security keys. These allow yo
 
 - [Highest assurance authentication that’s fast and easy](https://www.yubico.com/products/yubikey-5-overview/)
 - [Securing SSH Authentication with FIDO2](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html)
+
+----------------------------------------------------------------
+
+## Brute Forcing SSH
+
+I mentioned in the creating ssh keys section that usernames and passwords are easier to brute-force than keys are. You can use nmap to brute force ssh. In this example I created a file name users.lst and a file named pass.lst with valid user and passwords for the switch. Obviously an attacker would be using a breach list or a social engineered list of names and passwords. But for demo purposes I don't want to spend hours. I have a list of all the passwords that customers have given me over the years that I use in real situations.
+
+I have had to use this method more than once at small school districts and other customers that don't have ISE or Clearpass and have use local creds. I also had to use this once at a Community College that had the network team arrested!
+
+This should make it clear that you should set a limit on the number of login attempts!
+
+```bash
+nmap -p 22 --script ssh-brute --script-args userdb=./users.lst,passdb=./pass.lst 192.168.10.253
+Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-24 23:36 PDT
+NSE: [ssh-brute] Trying username/password pair: mhubbard:R00tIsTheG0al
+NSE: [ssh-brute] Trying username/password pair: thubbard:Sup3rS3cr3t
+Nmap scan report for 3850.pu.pri (192.168.10.253)
+Host is up (0.0046s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh-brute:
+|   Accounts:
+|     mhubbard:R00tIsTheG0al - Valid credentials
+|     thubbard:Sup3rS3cr3t - Valid credentials
+|_  Statistics: Performed 4 guesses in 9 seconds, average tps: 0.4
+
+Nmap done: 1 IP address (1 host up) scanned in 11.07 seconds
+```
 
 ----------------------------------------------------------------
 
