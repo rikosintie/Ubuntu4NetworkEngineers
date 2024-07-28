@@ -1143,7 +1143,7 @@ Note - You can use the HASH instead of the key for the next devices you setup. I
 
 If you need to remove a key use the `no` keyword with the key-hash keyword. I needed to remove the old 2096 bit RSA key after I changed the `ip ssh dh min key size` to 4096.
 
-```bash
+```bash linenums="1" hl_lines="3"
 ip ssh pubkey-chain
 username mhubbard
 no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
