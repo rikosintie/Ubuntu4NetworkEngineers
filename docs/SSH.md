@@ -1063,10 +1063,10 @@ Copy the key stating at `BEGIN PUBLIC KEY` until `END PRIVATE KEY`, save it to a
 
 The aaa new-model command causes the local username and password on the router to be used in the absence of other AAA statements. Once you enter "aaa new-model" you will not be able to enter "login local" on vty line configuration. If you had login local configured it will be removed.
 
-When you create the username be sure to include a secret. I you don't anyone will be able to login with just the username. As always, create a strong secret and use a password manager to store it.
+When you create the username be sure to include a secret. If you don't, anyone will be able to login with just the username. As always, create a strong secret and use a password manager to store it.
 
 ```bash
-(config)#username mhubbard privilege 15 secret ^8(nn-!#who
+(config)#username mhubbard privilege 15 algorithm-type scrypt secret ^8(nn-!#who
 (config)#aaa new-model
 (config)#aaa authentication login default local
 (config)#aaa authorization exec default local
@@ -1087,9 +1087,9 @@ When you create the username be sure to include a secret. I you don't anyone wil
 
 ### Add your PUBLIC key to the device
 
-Open the public key file you created earlier in text editor. Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
+Open the public key file you created earlier in a text editor (not a word processor). Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
-```bash
+```bash  linenums="1" hl_lines="1"
 gnome-text-editor id_rsa.pub
 break the lines into lengths of 100 characters
 copy the text after ssh-rsa till the comment begins.
@@ -1098,7 +1098,7 @@ close the key file but do not save it
 
 **Paste the key into the device**
 
-```bash
+```bash  linenums="1" hl_lines="1 2 3 6 7"
 (config)#ip ssh pubkey-chain
 (conf-ssh-pubkey)#username mhubbard
 (conf-ssh-pubkey-user)#key-string
@@ -1121,7 +1121,7 @@ Make sure to press `enter` after `key-string` before you paste the key in. You h
 
 ### Verify the ssh configuration
 
-```bash
+```bash  linenums="1" hl_lines="1"
 show run | sec ssh
 ip ssh source-interface Vlan10
 ip ssh rsa keypair-name RSA-SSH-Key
@@ -1163,7 +1163,7 @@ You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. 
 
 Here is the complete configuration and debug to log into the Cisco 3850 using the id_rsa key:
 
-```bash
+```bash linenums="1" hl_lines="1 10"
 gnome-text-editor ~/.ssh/config
 Host 192.168.10.253
         Protocol 2
@@ -1205,7 +1205,7 @@ If you want to connect from a Windows computer with Putty I have a blog with a t
 
 Yes, the key-chain must be configured for each user.
 
-```bash
+```bash linenums="1" hl_lines="1"
 sh run | sec pubkey
 ip ssh pubkey-chain
   username mhubbard
@@ -1215,7 +1215,7 @@ ip ssh pubkey-chain
 
 Here are the users I have configured on this switch:
 
-```bash
+```bash linenums="1" hl_lines="1"
 show run | sec user
 username thubbard privilege 15 secret 9 $9$95tTO1OC4HNmIE$bt1Z4.7aw/EBUQHl3NmLUNMacw4hRPI.742Kbs2r4jA
 username mhubbard privilege 15 secret 9 $9$y4j0lAgHcDtV3.$sH6LI79G3qmdpVdICokss8dzjGUC3u7we4.wcPnwNQ.
