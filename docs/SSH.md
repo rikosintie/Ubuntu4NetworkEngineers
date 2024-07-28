@@ -1491,7 +1491,7 @@ Status: active
 
 ### An alias to stop ssh and remove the ufw rule
 
-```bash linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="2"
 # stop the ssh daemon and display the status
 alias mw-ssh-stop='sudo systemctl stop ssh && sudo ufw delete allow 22/tcp && sudo systemctl status ssh && sudo ufw status numbered'
 ```
