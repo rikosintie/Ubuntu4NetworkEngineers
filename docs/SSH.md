@@ -1098,7 +1098,7 @@ close the key file but do not save it
 
 **Paste the key into the device**
 
-```bash  linenums="1" hl_lines="1 2 3 6 7"
+```bash  linenums="1" hl_lines="1 2 3 12 13"
 (config)#ip ssh pubkey-chain
 (conf-ssh-pubkey)#username mhubbard
 (conf-ssh-pubkey-user)#key-string
@@ -1163,7 +1163,7 @@ You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. 
 
 Here is the complete configuration and debug to log into the Cisco 3850 using the id_rsa key:
 
-```bash linenums="1" hl_lines="1 10"
+```bash linenums="1" hl_lines="1 10 16"
 gnome-text-editor ~/.ssh/config
 Host 192.168.10.253
         Protocol 2
