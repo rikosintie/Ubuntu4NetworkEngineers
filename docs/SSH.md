@@ -717,13 +717,15 @@ Load key "/home/mhubbard/.ssh/juniper_ed25519_key": bad permissions
 - SSH Keys use Public Key Infrastructure (PKI) instead of usernames/passwords. Keys are more challenging to brute force than passwords.
 - Linux servers are very easy to configure to use ssh keys on. The `ssh-copy-id -i ~/.ssh/id_rsa.pub <Server_IP>` command copies the public key to the server in one step.
 - Hardware Security devices such as Yubico [Yubikey](https://www.yubico.com/products/security-key/) and the Google [Titan Security Key](https://store.google.com/product/titan_security_key?hl=en-US&pli=1) allow you to store your keys securely and login from any laptop or desktop.
-- Many Network Devices (Cisco, Aruba, Juniper, Arista, Ubiquiti) support ssh key authentication.
+- Many Network Devices (Cisco, Aruba, Juniper, Arista, Ubiquiti, etc.) support ssh key authentication.
 
 ----------------------------------------------------------------
 
-Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes.
+Once you have keys created what do you do with them? If you support Linux servers it's very easy to copy the public key to the server. Using a Public/Private key pair instead of a password to authenticate an SSH session is popular on Linux/Unix boxes. If you spin up a Virtual Private server on Digital Ocean or Linode you will want to use keys instead of a username and password.
 
 Digital Ocean, a Virtual Private Server (VPS) provider, has this advice on how you should log into their Droplets:  "you should use public key authentication instead of passwords, if at all possible. This is because SSH keys provide a more secure way of logging in compared to using a password alone. While a password can eventually be cracked with a brute-force attack, SSH keys are nearly impossible to decipher by brute force alone." Plus, it means you never have to type C!$c0 again!
+
+See [Brute Forcing SSH](#brute-forcing-ssh) below for an example of brute forcing ssh with nmap.
 
 ----------------------------------------------------------------
 
@@ -750,7 +752,7 @@ and check to make sure that only the key(s) you wanted were added.
 
 
 ~/.ssh ⌚ 13:19:05
-$ ssh '192.168.10.223'
+$ ssh 192.168.10.223
 Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-35-generic x86_64)
 ╭─mhubbard@ubuntu-server ~
 ╰─$ cat ~/.ssh/authorized_keys
@@ -759,17 +761,42 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrwMtnnQo0kfjQVwcWOKx72SgsTB7Qj8FPTyyVwduxn
 
 You can see how the comment makes the key easy to identify in the authorized_keys file.
 
-Since we created a passphrase for key we are prompted for the passphrase, then logged in.
+Since we created a passphrase for the key we are prompted for the passphrase, then logged in.
 
-If you need to have automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+### Automatic logins
+
+If you need to have an automated login, you can create a key without a passphrase. The actual connection is still secure, but if you lose control of the private key anyone can use it. It's one of those religious arguments that exit in security circles.
+
+Alternatively, you can add the ssh private key to the ssh agent using the following command:
+
+`ssh-add ~/.ssh/id_custom_ed25519`
+
+You will be prompted for the passphrase.
+
+#### ssh-add switches
+
+You can find all switches using `man ssh-add`. Here I'm listing the more common switches.
+
+- D Deletes all identities from the agent.
+- d Deletes the given identities from the agent. The private key files for the identities to be deleted should be listed on the command line.
+- K Load resident keys from a FIDO authenticator.
+- k When loading keys into or deleting keys from the agent, process plain private keys only, skipping certificates.
+- L Lists public key parameters of all identities currently represented by the agent.
+- l Lists fingerprints of all identities currently represented by the agent.
+- X Unlocks the agent. This asks for a password to unlock.
+- x Locks the agent. This asks for a password; the password is required for unlocking the agent. When the agent is locked, it cannot be used for authentication.
+
+Be sure to ask your security team if using the ssh-agent is permitted.
 
 ### I get an error when trying to use the key
 
 If the login fails, rerun the ssh command with -vvvv `ssh -vvvv 192.168.10.253`. If you see a debug message `sign_and_send_pubkey: signing failed: agent refused operation` the first time you use the key enter the following:
 
-`ssh-add`
+`ssh-add` to add the default private keys to the ssh agent and
 
-This will add all the private keys in ~/.ssh/ to the ssh agent. You can view the keys in the agent using:
+`ssh-add ~/.ssh/id_custom_ed25519` to add our custom key.
+
+You can view the keys in the agent using:
 
 ```bash linenums="1" hl_lines="1"
 ssh-add -l
@@ -779,11 +806,15 @@ ssh-add -l
 
 For the first key you can see the size, 4096 bits, the fingerprint, the label we used when creating the key and the type (RSA).
 
+### References ssh-add
+
+- [SSH Keys for SSO: Usage, ssh-add Command, ssh-agent](https://www.ssh.com/academy/ssh/add-command)
+
 ----------------------------------------------------------------
 
 ### SSH Keys with github
 
-Github doesn't accept username/password for repositories any longer. You will need to use a key pair and configure git to use it. I created a key pair just for github named id_githb. To add it to your global git configuration:
+Github doesn't accept username/password for repositories any longer. You will need to use a key pair and configure git to use it. I created a key pair just for github named id_github. To add it to your global git configuration:
 
 ```bash linenums="1" hl_lines="2 5"
 add the key
@@ -804,9 +835,11 @@ Once you have the key configured in the ~/.gitconfig file you will need log into
 
 First off why would you want to use ssh keys on switches/routers/etc? With large customers you typically use Cisco ISE, Aruba Clearpass or Microsoft Network Policy Server (NPS) and authenticate to Microsoft AD.
 
-But with smaller customers you may not have these infrastructure services available. Using SSH keys on switches/routers/etc when ISE, Clearpass or NPS isn't available is better than using local users and passwords. In this situation, over time,  the customer will usually have several different usernames and passwords across different switches and it can be a nightmare to log into all the switches. They may not even have the credentials for all devices.
+But with smaller customers you may not have these infrastructure services available. Using SSH keys on switches/routers/etc when ISE, Clearpass or NPS isn't available is better than using local users and passwords. In this situation, over time,  the customer will usually have several different usernames and passwords across different switches and it can be a nightmare to log into all the switches.
 
-If you add your public key to the network devices before deploying, at least you will be able to log in efficiently without wasting time trying different passwords. You can give the private key to the customer and they can import it into Putty.
+They may not even have the credentials for all devices. In that case, you may want to use the nmap ssh-brute script. See [Brute Forcing SSH](#brute-forcing-ssh) below for an example of brute forcing ssh with nmap.
+
+If you add your public key to the network devices before deploying, at least you will be able to log in efficiently without wasting time trying different passwords. You can also give the private key to the customer and they can import it into Putty.
 
 ----------------------------------------------------------------
 
