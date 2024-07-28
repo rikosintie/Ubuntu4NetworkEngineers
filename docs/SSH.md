@@ -1146,7 +1146,7 @@ If you need to remove a key use the `no` keyword with the key-hash keyword. I ne
 ```bash linenums="1" hl_lines="3"
 ip ssh pubkey-chain
 username mhubbard
-no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C`
+no key-hash ssh-rsa 4682578A0267D583568FCDCD1229B62C
 ```
 
 ----------------------------------------------------------------
@@ -1280,7 +1280,7 @@ sudo apt install openssh-server
 
 Example with OpenSSH installed but not started:
 
-```bash
+```bash linenums="1" hl_lines="1"
  systemctl status ssh
 ○ ssh.service - OpenBSD Secure Shell server
      Loaded: loaded (/lib/systemd/system/ssh.service; disabled; preset: enabled)
@@ -1296,7 +1296,7 @@ Notice the Active status is `inactive (dead)`.
 
 Example with OpenSSH installed and started:
 
-```bash
+```bash linenums="1" hl_lines="1 3"
 sudo systemctl start ssh
 
 systemctl status ssh
@@ -1343,7 +1343,7 @@ or
 
 To check the version of the OpenSSH daemon installed:
 
-```bash
+```bash linenums="1" hl_lines="1"
 sshd -V
 OpenSSH_9.3, OpenSSL 3.0.10 1 Aug 2023
 ```
@@ -1368,7 +1368,7 @@ sudo ufw allow from 192.168.20.0/24 to any port 22 proto tcp
 
 ### Verify the UFW firewall configuration
 
-```bash
+```bash linenums="1" hl_lines="1"
 sudo ufw status numbered
 [sudo] password for mhubbard:
 Status: active
@@ -1385,7 +1385,7 @@ Status: active
 
 You can see that I have an IPv6 stack running. I use IPv6 in my home lab. I also have the syslog daemon installed on port 514 and I use GSConnect to communicate with my iPhone and Android phone on ports 1716-1764. Obviously I don't have a rule for SSH so let's add a UFW rule allowing SSH from any address.
 
-```bash
+```bash linenums="1" hl_lines="1 5"
 sudo ufw allow 22/tcp comment 'Open ssh tcp port 22'
 Rule added
 Rule added (v6)
@@ -1413,7 +1413,7 @@ You can either disable SSH and remove the rule or just disable SSH if you use it
 
 From the output above ssh is on lines 4 and 8. Once rule 4 is deleted, rule 8 will become rule 7!
 
-```bash
+```bash linenums="1" hl_lines="1 7 13"
 sudo ufw delete 4
 Deleting:
  allow 22/tcp comment 'Open port ssh tcp port 22'
@@ -1443,14 +1443,14 @@ Status: active
 
 ### An alias to start ssh and add the UFW rule
 
-```bash
+```bash linenums="1" hl_lines="2"
 # start the ssh daemon and display the status
 alias mw-ssh='sudo systemctl start ssh && sudo ufw allow 22/tcp comment "Open ssh tcp port 22" && sudo systemctl status ssh && sudo ufw status numbered'
 ```
 
 Here is the output of the alias command:
 
-```bash
+```bash linenums="1" hl_lines="1"
 mw-ssh
 Rule updated
 Rule updated (v6)
@@ -1491,14 +1491,14 @@ Status: active
 
 ### An alias to stop ssh and remove the ufw rule
 
-```bash
+```bash linenums="1" hl_lines="1"
 # stop the ssh daemon and display the status
 alias mw-ssh-stop='sudo systemctl stop ssh && sudo ufw delete allow 22/tcp && sudo systemctl status ssh && sudo ufw status numbered'
 ```
 
 Here is the output of the alias command:
 
-```bash
+```bash linenums="1" hl_lines="1"
 mw-ssh-stop
 Warning: Stopping ssh.service, but it can still be activated by:
   ssh.socket
@@ -1552,7 +1552,7 @@ I have had to use this method more than once at small school districts and other
 
 This should make it clear that you should set a limit on the number of login attempts!
 
-```bash
+```bash linenums="1" hl_lines="1"
 nmap -p 22 --script ssh-brute --script-args userdb=./users.lst,passdb=./pass.lst 192.168.10.253
 Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-24 23:36 PDT
 NSE: [ssh-brute] Trying username/password pair: mhubbard:R00tIsTheG0al
