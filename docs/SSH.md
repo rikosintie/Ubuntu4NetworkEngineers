@@ -21,7 +21,9 @@ OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/Open
 
 ### What Cryptographic Algorithms Should I use
 
-Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. Asking which ciphers are secure is like asking "Is Mac better than Windows?" to a group of Enterprise IT members. But here are some general guidelines:
+When building a configuration template for a deployment you should remove as many legacy ciphers as possible. As the US CISA pushes for more secure IT infrastructure you will find more customers running security scans after you deploy. It's better to pass a security scan than have to answer questions about why your refresh failed a basic security audit.
+
+Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. Asking which ciphers are secure is like asking "Is Mac better than Windows?". But here are some general guidelines:
 
 - Don't use any encryption with CBC in the name. For example aes128-cbc. The CBC means `cipher block chaining` and PCI will fail you if it finds it.
 - Do use encryption with CTR in the name. For example aes256-ctr.
@@ -40,7 +42,7 @@ You can do a search on the Internet for current algorithms. But, you will find t
 
 ### How to configure the algorithms
 
-This is not an exhaustive tutorial. It's here to give you an idea of how to configure the algorithms.
+This is not an exhaustive tutorial. It's here to give you an idea of how to configure ssh algorithms for your base template.
 
 Aruba CX
 
@@ -82,7 +84,7 @@ ip ssh server algorithm encryption aes256-gcm aes256-ctr
 ip ssh server algorithm kex ecdh-sha2-nistp521 ecdh-sha2-nistp384
 ip ssh server algorithm hostkey rsa-sha2-512 rsa-sha2-256
 ip ssh server algorithm publickey ecdsa-sha2-nistp521 ecdsa-sha2-nistp384
-ssh login-attempts 5
+ip ssh authentication-retries 5
 ```
 
 Juniper
@@ -132,7 +134,7 @@ Change the username and IP address to fit your device.
 
 You can run commands remotely on the network device using ssh. For example, to execute `show running-configuration` use:
 
-```bash
+```c# linenums="1" hl_lines="1"
 ssh 192.168.10.253 show run
 (mhubbard@192.168.10.253) Password:
 DECOM___MCI-KSC-SW1 line 2
@@ -151,7 +153,7 @@ end
 
 You can also use shell commands to get just what you need. For example, let's say I want to know what `ip ssh` commands are in the running configuration.
 
-```bash
+```c# linenums="1" hl_lines="1"
 ssh 192.168.10.253 show run | grep "ip ssh"
 (mhubbard@192.168.10.253) Password:
 ip ssh source-interface Vlan10
@@ -172,7 +174,7 @@ One problem for a network engineer is that newer versions of the OpenSSH client 
 
 This is an example trying to connect to a Cisco 3850 IOS XE switch running 16.12.3a:
 
-```bash
+```c#
 Unable to negotiate with 192.168.10.253 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1
 ```
 
@@ -180,7 +182,7 @@ Here is the entry I added to `~/.ssh/config`:
 
 Open the file using `gnome-text-editor ~/.ssh/config` and add the following:
 
-```bash linenums="1"
+```c# linenums="1"
 Host 192.168.10.253
     KexAlgorithms +diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
     MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
@@ -189,7 +191,7 @@ Host 192.168.10.253
 
 You can add an SSH key file and a custom port for ssh if needed:
 
-```bash linenums="1" hl_lines="5 6"
+```c# linenums="1" hl_lines="5 6"
 Host 192.168.10.253
     KexAlgorithms +diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
     MACs +hmac-sha1,hmac-sha2-256,hmac-sha2-512
@@ -212,7 +214,7 @@ If you have 100s or 1000s of devices with legacy crypto it gets painful to creat
 
 If you have a dedicated management network, for example, 192.168.10.0/24:
 
-```bash linenums="1" hl_lines="1"
+```c# linenums="1" hl_lines="1"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
@@ -251,7 +253,7 @@ You can use a different configuration if you want to test changes without modify
 
 Let's say that your laptop's username is `mhubbard` but the customer uses `vector` on all network devices. You can add the username to your config file:
 
-```bash linenums="1" hl_lines="7"
+```c# linenums="1" hl_lines="7"
 Host 192.168.10.*
     Protocol 2
     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
@@ -271,7 +273,7 @@ mhubbard
 
 Log into the switch and run who:
 
-```bash linenums="1" hl_lines="6"
+```c# linenums="1" hl_lines="6"
 $ ssh 192.168.10.253
 (vector@192.168.10.253) Password:
 DECOM___MCI-KSC-SW1 line 2
@@ -288,7 +290,7 @@ Using `-G` Causes ssh to print its configuration after evaluating Host and Match
 
 In this example I removed a lot of detail but you can see the key that will be used, the ciphers, and other important details. The `-G` switch will save you a lot of time preparing you config file.
 
-```bash linenums="1" hl_lines="10 15 16 17 18 19 21 22 23 25 26"
+```C# linenums="1" hl_lines="10 15 16 17 18 19 21 22 23 25 26"
 ssh -G 192.168.10.253
 host 192.168.10.253
 user mhubbard
@@ -324,7 +326,7 @@ A jump host is a device that you connect to and then connect to other devices. T
 
 In this example I have an Ubuntu server at 192.168.10.223:
 
-```bash linenums="1" hl_lines="9"
+```c# linenums="1" hl_lines="9"
 Host 192.168.10.* !192.168.10.223
         Protocol 2
         HostKeyAlgorithms +ssh-rsa,ssh-dss
@@ -338,7 +340,7 @@ Host 192.168.10.* !192.168.10.223
 
 Now use the - J option:
 
-```bash linenums="1" hl_lines="2"
+```c# linenums="1" hl_lines="2"
 ~/.ssh ⌚ 17:00:00
 $ ssh -J mhubbard@192.168.10.223 mhubbard@192.168.10.253
 DECOM___MCI-KSC-SW1 line 2
@@ -366,7 +368,7 @@ On most switches you can use something like `show ip ssh` to get a list of the c
 
 Here is an example from the Cisco 3850 in my home lab:
 
-```bash linenums="1" hl_lines="6 7 8 9 10 11 12 13 14 15"
+```c# linenums="1" hl_lines="6 7 8 9 10 11 12 13 14 15"
 ssh 192.168.10.253 show ip ssh
 (mhubbard@192.168.10.253) Password:
 
@@ -400,7 +402,7 @@ uWp6C0y9Zb2GUDgoazWp09gqEjNH2vnefIJvFvR7oRjGgSyYdyBm4z9PGEyRg//asR8+rkNi5jXaqzUd
 
 For devices that don't have `show ip ssh`, like IoT devices, you can use nmap with the built in `ssh-enum-algos` script. This is from the Ubiquiti Nano Station in my home lab.
 
-```bash linenums="1" hl_lines="9 16 19 22 25"
+```c linenums="1" hl_lines="9 16 19 22 25"
 sudo nmap -sV --script ssh2-enum-algos 192.168.10.50
 Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-08 16:36 PDT
 Nmap scan report for office.pu.pri (192.168.10.50)
@@ -445,7 +447,7 @@ This is an example of why you don't want to use the wildcard in the configuratio
 
 nmap also has a similar script for checking SSL (TLS) crypto:
 
-```bash linenums="1" hl_lines="7 21 22 23 24 25 26 27 28 29"
+```c linenums="1" hl_lines="7 21 22 23 24 25 26 27 28 29"
 sudo nmap --script ssl-cert,ssl-enum-ciphers -p 443 192.168.10.253
 Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:45 PDT
 Nmap scan report for 3850.pu.pri (192.168.10.253)
@@ -733,7 +735,7 @@ See [Brute Forcing SSH](#brute-forcing-ssh) below for an example of brute forcin
 
  Following along with our `id_custom_25519` example and an Ubuntu server at 192.168.10.223:
 
-```bash linenums="1" hl_lines="1 19 22"
+```c# linenums="1" hl_lines="1 19 22"
 ssh-copy-id -i ~/.ssh/id_custom_25519 192.168.10.223
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/mhubbard/.ssh/id_custom_25519.pub"
 The authenticity of host '192.168.10.223 (192.168.10.223)' can't be established.
@@ -1337,6 +1339,14 @@ The OpenSSH server configuration file is located at `/etc/ssh/ssh_config`. To ed
 or
 `sudo gnome-text-editor /etc/ssh/ssh_config` if you want a GUI
 
+Tip:
+Before editing the configuration file, you should make a copy of the original /etc/ssh/sshd_config file and protect it from writing so you will have the original settings as a reference and to reuse as necessary. You can do this with the following commands:
+
+```bash
+    sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+    sudo chmod a-w /etc/ssh/sshd_config.original
+```
+
 ----------------------------------------------------------------
 
 ### Check the OpenSSH server version
@@ -1546,9 +1556,11 @@ Yubico is one of the companies that makes Physical Security keys. These allow yo
 
 ## Brute Forcing SSH
 
-I mentioned in the creating ssh keys section that usernames and passwords are easier to brute-force than keys are. You can use nmap to brute force ssh. In this example I created a file name users.lst and a file named pass.lst with valid user and passwords for the switch. Obviously an attacker would be using a breach list or a social engineered list of names and passwords. But for demo purposes I don't want to spend hours. I have a list of all the passwords that customers have given me over the years that I use in real situations.
+I mentioned in the creating ssh keys section that usernames and passwords are easier to brute-force than keys are. You can use nmap to brute force ssh. In this example I created a file named users.lst and a file named pass.lst with valid user and passwords for the switch.
 
-I have had to use this method more than once at small school districts and other customers that don't have ISE or Clearpass and have use local creds. I also had to use this once at a Community College that had the network team arrested!
+Obviously an attacker would be using a breach list or a social engineered list of names and passwords. But for demo purposes I didn't want to spend hours running nmap. I have a list of all the passwords that customers have given me over the years that I use in real situations.
+
+I have had to use this method more than once at small school districts and other customers that don't have ISE or Clearpass and have used local creds. I also had to use this once at a Community College that had the network team arrested!
 
 This should make it clear that you should set a limit on the number of login attempts!
 
