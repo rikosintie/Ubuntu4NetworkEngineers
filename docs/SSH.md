@@ -1163,7 +1163,7 @@ You can also use `ssh 192.168.10.253` and the SSH client will try all the keys. 
 
 Here is the complete configuration and debug to log into the Cisco 3850 using the id_rsa key:
 
-```bash linenums="1" hl_lines="1 10 16"
+```c# linenums="1" hl_lines="1 10 16"
 gnome-text-editor ~/.ssh/config
 Host 192.168.10.253
         Protocol 2
@@ -1238,7 +1238,7 @@ You can see in the ouput the user's secret is hashed as type 9. In Cisco speak t
 
 Setting up the JunOS switch is similar to setting up the Cisco switch.
 
-```bash
+```c# linenums="1" hl_lines="1"
 ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
 Authorized access only! Violators will be violated!
 Enter passphrase for key '/home/mhubbard/.ssh/juniper_ed25519_key':
@@ -1343,7 +1343,7 @@ or
 
 To check the version of the OpenSSH daemon installed:
 
-```bash linenums="1" hl_lines="1"
+```text linenums="1" hl_lines="1"
 sshd -V
 OpenSSH_9.3, OpenSSL 3.0.10 1 Aug 2023
 ```
@@ -1359,7 +1359,7 @@ The following command will allow SSH through the firewall from any IP address.
 
 If you want to lock down to a specific IP and subnet, in this example the host 192.168.10.100 and subnet 192.168.20.0/24:
 
-```bash
+```c#
 sudo ufw allow from 192.168.10.100 to any port 22
 sudo ufw allow from 192.168.20.0/24 to any port 22 proto tcp
 ```
@@ -1450,7 +1450,7 @@ alias mw-ssh='sudo systemctl start ssh && sudo ufw allow 22/tcp comment "Open ss
 
 Here is the output of the alias command:
 
-```bash linenums="1" hl_lines="1"
+```text linenums="1" hl_lines="1"
 mw-ssh
 Rule updated
 Rule updated (v6)
@@ -1498,7 +1498,7 @@ alias mw-ssh-stop='sudo systemctl stop ssh && sudo ufw delete allow 22/tcp && su
 
 Here is the output of the alias command:
 
-```bash linenums="1" hl_lines="1"
+```text linenums="1" hl_lines="1"
 mw-ssh-stop
 Warning: Stopping ssh.service, but it can still be activated by:
   ssh.socket
@@ -1552,7 +1552,7 @@ I have had to use this method more than once at small school districts and other
 
 This should make it clear that you should set a limit on the number of login attempts!
 
-```bash linenums="1" hl_lines="1"
+```c# linenums="1" hl_lines="1"
 nmap -p 22 --script ssh-brute --script-args userdb=./users.lst,passdb=./pass.lst 192.168.10.253
 Starting Nmap 7.95 ( https://nmap.org ) at 2024-07-24 23:36 PDT
 NSE: [ssh-brute] Trying username/password pair: mhubbard:R00tIsTheG0al
