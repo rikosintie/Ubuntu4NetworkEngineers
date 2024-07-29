@@ -855,7 +855,7 @@ I'm using a WS-C3850-48U running 16.12.3a CAT3K_CAA-UNIVERSALK9 for this example
 
 Accurate time is required to use ssh keys. The first step is to configure a time server.
 
-```bash
+```c#
 no ntp allow mode control 3
 ntp server ip time-b.nist.gov
 ntp server 192.168.10.222 prefer
@@ -869,7 +869,7 @@ The `no ntp allow mode control 3` is a Cisco recommended best practice to preven
 
 nmap has two built in scripts for checking the NTP server configuration.
 
-```bash
+```c#
 sudo nmap -sU -p 123 -n --script=ntp-monlist  192.168.10.253
 sudo nmap -sU -p 123 --script ntp-info 192.168.10.253
 ```
