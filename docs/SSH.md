@@ -876,7 +876,7 @@ sudo nmap -sU -p 123 --script ntp-info 192.168.10.253
 
 The first one is for verifying that your ntp server doesn't support the "Monitor List" command that led to serious DDoS attacks back in 2014. Here I ran it against the ntp server on the Cisco 3850:
 
-```bash
+```c# linenums="1" hl_lines="1"
 sudo nmap -sU -p 123 -n --script=ntp-monlist  192.168.10.253
 Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:50 PDT
 Nmap scan report for 192.168.10.253
@@ -1065,7 +1065,7 @@ The aaa new-model command causes the local username and password on the router t
 
 When you create the username be sure to include a secret. If you don't, anyone will be able to login with just the username. As always, create a strong secret and use a password manager to store it.
 
-```bash
+```c#
 (config)#username mhubbard privilege 15 algorithm-type scrypt secret ^8(nn-!#who
 (config)#aaa new-model
 (config)#aaa authentication login default local
@@ -1089,7 +1089,7 @@ When you create the username be sure to include a secret. If you don't, anyone w
 
 Open the public key file you created earlier in a text editor (not a word processor). Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
-```bash  linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="1"
 gnome-text-editor id_rsa.pub
 break the lines into lengths of 100 characters
 copy the text after ssh-rsa till the comment begins.
