@@ -893,7 +893,7 @@ Notice the only output is that the port is open. If the switch supported "monito
 
 The second is very useful when you are having time issues. You can run it against the configured time server and see if you get response. I have an alias setup for this script:
 
-```bash
+```c# linenums="1" hl_lines="2"
 #Run the nmap ntp-info script. $1 is the ip of the ntp server.
 alias mw-ntp='(){sudo nmap -sU -p 123 --script ntp-info $1}'
 mw-ntp 192.168.10.253
@@ -901,7 +901,7 @@ mw-ntp 192.168.10.253
 
 Here I ran it against my Cisco 3850 after I configured it for time.
 
-```bash
+```c# linenums="1" hl_lines="1"
 sudo nmap -sU -p 123 --script ntp-info 192.168.10.253
 Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-12 13:50 PDT
 Nmap scan report for 3850.pu.pri (192.168.10.253)
@@ -918,7 +918,7 @@ Nmap done: 1 IP address (1 host up) scanned in 10.35 seconds
 
 To verify that the switch is syncing with the ntp server I configured:
 
-```bash
+```c# linenums="1" hl_lines="1"
 show ntp association
 
   address         ref clock       st   when   poll reach  delay  offset   disp
@@ -937,7 +937,7 @@ To enable ssh on the switch you have to create an SSH key pair. I used a modulus
 ip domain name pu.pri
 crypto key generate rsa modulus 4096 exportable label RSA-SSH-Key
 ip ssh version 2
-ip ssh rsa keypair-name RSSA-SSH-Key !associate keys to SSH
+ip ssh rsa keypair-name RSA-SSH-Key !associate keys to SSH
 ```
 
 Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
@@ -1089,7 +1089,7 @@ When you create the username be sure to include a secret. If you don't, anyone w
 
 Open the public key file you created earlier in a text editor (not a word processor). Copy the text between the comments. If you generated a 2048/4096 bit key you will need to break it into smaller pieces or you may see "%SSH: Failed to decode the Key Value" when you exit. I break it into 100 characters per line.
 
-```bash linenums="1" hl_lines="1"
+```text linenums="1" hl_lines="1"
 gnome-text-editor id_rsa.pub
 break the lines into lengths of 100 characters
 copy the text after ssh-rsa till the comment begins.
