@@ -338,6 +338,8 @@ Host 192.168.10.* !192.168.10.223
         ProxyJump 192.168.10.223
 ```
 
+The `!192.168.10.223` parameter means `not 192.168.10.223`. Without this entry there would be a loop and the jump would fail.
+
 Now use the - J option:
 
 ```c# linenums="1" hl_lines="2"
