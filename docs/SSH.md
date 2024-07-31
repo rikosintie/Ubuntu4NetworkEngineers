@@ -11,7 +11,11 @@
 
 I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/).
 
-When I switched to Linux my only experience with SSH was Putty. There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit is that you have an SSH client and server that can be used from the terminal without installing proprietary software.
+When I switched to Linux my only experience with SSH was Putty. Basically just opening putty, putting in an ip address and connecting. I knew  that Putty had a separate program, puttygen, to create ssh keys and other functionality but I really just used it to do a simple ssh connection.
+
+There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit of Ubuntu is that you have an SSH client and server that can be used from the terminal without installing proprietary software. It gets updated automatically when Ubuntu is updated.
+
+As I moved more and more to NetDevOps and started working with Linux servers in the cloud I started to appreciate the benefits of having an ssh client and server integrated with the operating system.
 
 ## History of SSH
 
@@ -1254,6 +1258,37 @@ root@TEST-Router:~ #
 ----------------------------------------------------------------
 
 ## Using the keys with an HPE Procurve switch
+
+----------------------------------------------------------------
+
+## Colorizing the ssh output
+
+There is a github project called chromaterm that allows you to colorize the linux screen command which allows you to use a USB serial cable with color. Unfortunately that project was discontinued in 2022. It is still available on github if you want to try it out [chromaterm](https://github.com/hSaria/ChromaTerm)
+
+Luckily a new project is available called chromaterm-- and works great with the latest version of Ubuntu. Here is the link [chromaterm--](https://github.com/Houseman303/ChromaTerm--)
+
+On macos, it's available from brew using `brew install hSaria/tap/chromaterm`
+
+For Ubuntu we will clone the repository and install it. I have a directory 04_tools that I use for networking tools. You should make a directory for tools, cd into it and then run:
+
+```bash
+git clone https://github.com/hSaria/ChromaTerm--.git
+cd ChromaTerm--/src/
+./configure
+sudo make install
+```
+
+Copy the chromatermrc config file into ~/.chromatermrc. The configuration is written in Perl Compatable Regular Expression v2. You can test new regexes using [Regex101](https://regex101.com/). Set the FLAVOUR to PCRE2 (PHP >=7.3).
+
+I found a good starting configuration file [here](https://gist.github.com/vista-/88c90110dd320be4c78da4f55783b41a) and then added several Cisco IOS XE regexes.
+
+My config file is at [Ubuntu4NetworkEngineers](https://github.com/rikosintie/Ubuntu4NetworkEngineers). You can click on the file, select RAW, and copy it. Save it to `~/.chromatermrc`
+
+You can use chromaterm with a lot of Linux commands, to use it with ssh simply pipe the output to ct.
+
+`ssh 192.168.10.253 | ct`
+
+Here is an [asciinema recording](https://asciinema.org/a/670211) of chromaterm-- in action.
 
 ----------------------------------------------------------------
 
