@@ -173,7 +173,7 @@ HIGHLIGHT {(?<=[\W\s]|^)(%GLDP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%CRYPTO\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%NHRP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%SNMP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
-HIGHLIGHT {(?<=[\W\s]|^)(%CP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900} 
+HIGHLIGHT {(?<=[\W\s]|^)(%CP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%HA_EM\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%TCP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
 HIGHLIGHT {(?<=[\W\s]|^)(%IP\-\d\-\w*)(?=[\W\s]|$)} {bold yellow} {900}
