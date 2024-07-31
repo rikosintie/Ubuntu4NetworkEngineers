@@ -1282,7 +1282,7 @@ Copy the chromatermrc config file into ~/.chromatermrc. The configuration is wri
 
 I found a good starting configuration file [here](https://gist.github.com/vista-/88c90110dd320be4c78da4f55783b41a) and then added several Cisco IOS XE regexes.
 
-My config file is at [Ubuntu4NetworkEngineers](https://github.com/rikosintie/Ubuntu4NetworkEngineers). You can click on the file, select RAW, and copy it. Save it to `~/.chromatermrc`
+My config file is at [Ubuntu4NetworkEngineers](https://raw.githubusercontent.com/rikosintie/Ubuntu4NetworkEngineers/main/.chromatermrc). You can click on the file, select RAW, and copy it. Save it to `~/.chromatermrc`
 
 You can use chromaterm with a lot of Linux commands, to use it with ssh simply pipe the output to ct.
 
