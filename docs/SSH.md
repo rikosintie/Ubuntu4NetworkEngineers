@@ -1280,9 +1280,11 @@ sudo make install
 
 Copy the chromatermrc config file into ~/.chromatermrc. The configuration is written in Perl Compatable Regular Expression v2. You can test new regexes using [Regex101](https://regex101.com/). Set the FLAVOUR to PCRE2 (PHP >=7.3).
 
+You can also use chatGPT to help you create new regexes. Just tell it you need PCRE v2 regexes and it will create a regex. It will probably be an interative deal to get the regex just right.
+
 I found a good starting configuration file [here](https://gist.github.com/vista-/88c90110dd320be4c78da4f55783b41a) and then added several Cisco IOS XE regexes.
 
-My config file is at [Ubuntu4NetworkEngineers](https://raw.githubusercontent.com/rikosintie/Ubuntu4NetworkEngineers/main/.chromatermrc). You can click on the file, select RAW, and copy it. Save it to `~/.chromatermrc`
+My config file is at [Ubuntu4NetworkEngineers](https://raw.githubusercontent.com/rikosintie/Ubuntu4NetworkEngineers/main/.chromatermrc). You can click on the linnk, and copy it. Save it to `~/.chromatermrc`
 
 You can use chromaterm with a lot of Linux commands, to use it with ssh simply pipe the output to ct.
 
