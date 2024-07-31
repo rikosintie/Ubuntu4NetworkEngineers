@@ -1263,7 +1263,7 @@ root@TEST-Router:~ #
 
 ## Colorizing the ssh output
 
-There is a github project called chromaterm that allows you to colorize the linux screen command which allows you to use a USB serial cable with color. Unfortunately that project was discontinued in 2022. It is still available on github if you want to try it out [chromaterm](https://github.com/hSaria/ChromaTerm)
+There is a github project called chromaterm that allows you to colorize the linux `screen` command which allows you to use a USB serial cable with color. Unfortunately that project was discontinued in 2022. It is still available on github if you want to try it out [chromaterm](https://github.com/hSaria/ChromaTerm)
 
 Luckily a new project is available called chromaterm-- and works great with the latest version of Ubuntu. Here is the link [chromaterm--](https://github.com/Houseman303/ChromaTerm--)
 
