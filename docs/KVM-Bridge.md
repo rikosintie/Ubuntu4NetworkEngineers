@@ -1,22 +1,25 @@
 # Create a KVM Bridge
 
-[VM Networking ( Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw)
-[add static ip](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
-[How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
+- [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
+- [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
+- [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
 
 I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04.
 
-**From the Tecmint link above
-"A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more."
+**From the Tecmint link above**
+
+A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.
+
+## LAN Information
 
 - LAN Network 192.168.10.0/24
 - Ubuntu workstation NIC - `eno1`
 
-## Install the bridge-utils package
+### Install the bridge-utils package
 
 `sudo apt-get install bridge-utils`
 
-Create the Netplan yaml file
+### Create the Netplan yaml file
 
 `sudo touch etc/netplan/01-netcfg.yaml`
 `sudo subl etc/netplan/01-netcfg.yaml`
@@ -54,14 +57,15 @@ network:
 Save the file, then change the permissions
 `sudo chmod 600 etc/netplan/01-netcfg.yaml`
 
-then run
+### Activate the bridge
+
 `sudo netplan apply`
 
 Fix any errors.
 
 This creates a bridge named br0 mastered to eno1.
 
-This is what "ip a" looks like after the bridge is up:
+Use `ip a` to view the interfaces:
 
 `eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UP group default qlen 1000`
 
