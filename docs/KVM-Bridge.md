@@ -1,5 +1,7 @@
 # Create a KVM Bridge
 
+**Reference Links**
+
 - [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
 - [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
 - [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
@@ -55,9 +57,10 @@ network:
 ```
 
 Save the file, then change the permissions
+
 `sudo chmod 600 etc/netplan/01-netcfg.yaml`
 
-### Activate the bridge
+### Activate the bridge status
 
 `sudo netplan apply`
 
@@ -88,7 +91,7 @@ br0         8000.e6b5f8a09bc5  yes          eno1
 
 The Window server is at 192.168.10.231 and the Windows 10 guest is at 192.168.10.232
 
-```c# linenums="1" hl_lines="2 10"
+```c# linenums="1" hl_lines="2 8"
 ┌─[mhubbard@HP-Z420] - [~] - [375]
 └─[$] ping 192.168.10.231
 PING 192.168.10.231 (192.168.10.231) 56(84) bytes of data.
@@ -122,11 +125,11 @@ end
 
 ## Virt Commands
 
-- virsh dumpxml win2k16 | grep -i 'bridge'  - show bridge config for a host named win2k16
-- virsh list --all - List all vms including those not running
-- virsh list - List all running vms
-- virsh net-dhcp-leases default - show dhcp leases on network default.
-- virsh net-dhcp-leases host-bridge - show dhcp leases on network host-bridge.
+- virsh dumpxml win2k16 | grep -i 'bridge' show bridge config for a host named win2k16
+- virsh list --all List all vms including those not running
+- virsh list List all running vms
+- virsh net-dhcp-leases default show dhcp leases on network default.
+- virsh net-dhcp-leases host-bridge show dhcp leases on network host-bridge.
 
 In the yaml file we disabled dhcp with `dhcp4: false` so there are no leases.
 
