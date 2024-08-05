@@ -1,12 +1,6 @@
-# Create a KVM Bridge
+# Creating a KVM Bridge
 
-**Reference Links**
-
-- [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
-- [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
-- [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
-
-I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04.
+I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I need create a bridge?
 
 **From the Tecmint link above**
 
@@ -23,8 +17,8 @@ A typical use case of software network bridging is in a virtualization environme
 
 ### Create the Netplan yaml file
 
-`sudo touch etc/netplan/01-netcfg.yaml`
-`sudo subl etc/netplan/01-netcfg.yaml`
+- `sudo touch etc/netplan/01-netcfg.yaml`
+- `sudo gnome-text-editor etc/netplan/01-netcfg.yaml`
 
 ```c#
 # This file describes the network interfaces available on your system
@@ -142,3 +136,11 @@ sudo ip address add 192.168.10.250/16 brd 192.168.10.255
 ```
 
 But I don't think that will survive a reboot.
+
+## Reference Links
+
+- [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
+- [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
+- [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
+- [Error in network definition: bond0: interface not defined](https://askubuntu.com/questions/1257461/error-in-network-definition-bond0-interface-eno2-is-not-defined)
+- [use the stable VirtIO ISO, download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) - Virtio drivers for Windows guests
