@@ -7,6 +7,7 @@ In BIOS, or UEFI, make sure virtualization is enabled. The easiest way to find o
 To verify that virtualization is enabled in BIOS, run:
 
 `egrep -c '(vmx|svm)' /proc/cpuinfo`
+
 48
 
 This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a number in the output. In my case I have a 24 core Xeon processor that provides 48 cores of virtual CPUs.
@@ -18,7 +19,7 @@ This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a 
 This is a optional package. From the Debian site:
 "There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."
 
-```bash linenums="1"
+```bash linenums="1" hl_lines="1 10"
 kvm-ok
 INFO: /dev/kvm exists
 KVM acceleration can be used
@@ -26,7 +27,7 @@ KVM acceleration can be used
 
 ### Use lscpu
 
-lscpu is a built in tool to view cpu information:
+lscpu is a built in tool to view cpu information. You can see on line 10 that the virtualization is VT-x:
 
 ```bash linenums="1" hl_lines="1"
 lscpu | egrep -i 'Model name|Socket|Thread|NUMA|CPU\(s\)|virtual'
@@ -76,7 +77,7 @@ I prefer to do one package at time so that I can watch each package but either w
 
 ### Configure the groups
 
-```bash linenums="1" hl_lines="1"
+```bash linenums="1"
 sudo usermod -aG kvm $USER
 sudo usermod -aG libvirt $USER
 ```
@@ -96,7 +97,7 @@ sudo systemctl start libvirtd
 sudo systemctl status libvirtd
 ```
 
-### If you make changes and need to restart the daemon
+#### If you make changes and need to restart the daemon
 
 `sudo systemctl restart libvirtd`
 
@@ -155,7 +156,7 @@ This will open the virt-manager GUI. Now we can create our first virtual machine
 
 Click on teh "New Virtual Machine" Icon.
 
-![screenshot](img/virt-manager-new.jpg)
+![screenshot](img/virt-manager-new.png)
 
 virt-viewer - open the VM's GUI console
 
