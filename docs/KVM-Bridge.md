@@ -2,7 +2,7 @@
 
 I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I need create a bridge?
 
-**From the Tecmint link above**
+**From the Tecmint link in the reference section below**
 
 A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.
 
@@ -19,6 +19,7 @@ A typical use case of software network bridging is in a virtualization environme
 
 - `sudo touch etc/netplan/01-netcfg.yaml`
 - `sudo gnome-text-editor etc/netplan/01-netcfg.yaml`
+- Paste the following into the yaml file. Change IP addresses and interfaces to match your machine.
 
 ```c#
 # This file describes the network interfaces available on your system
@@ -54,11 +55,11 @@ Save the file, then change the permissions
 
 `sudo chmod 600 etc/netplan/01-netcfg.yaml`
 
-### Activate the bridge status
+### Activate the bridge
 
 `sudo netplan apply`
 
-Fix any errors.
+Fix any errors. Yaml is a pain to work with. You will probably have some errors in the beginning!
 
 This creates a bridge named br0 mastered to eno1.
 
@@ -80,6 +81,10 @@ br0         8000.e6b5f8a09bc5  yes          eno1
                                             vnet3
                                             vnet5
 ```
+
+### Check the netplan configuration
+
+`sudo netplan get`
 
 ## Ping the hosts on the bridge
 
