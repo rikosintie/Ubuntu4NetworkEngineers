@@ -133,7 +133,7 @@ View saved configuration
 
 Start/stop a virtual machine
 
-- `sudo virsh win2k16` start Start a virtual machine named win2k16
+- `sudo virsh win2k16 start` Start a virtual machine named win2k16
 - `sudo virsh shutdown win2k16` Send an ACPI shutdown signal to the virtual machine
 - `sudo virsh destroy win2k16` Power off the VM without signalling it. Data loss can occur
 - `sudo virsh reboot` win2k16 Does not signal the VM. Data loss can occur
@@ -170,7 +170,7 @@ sudo ip link set eno1 master br0
 sudo ip address add 192.168.10.250/16 brd 192.168.10.255
 ```
 
-But I don't think that will survive a reboot.
+THis method will not survive a reboot but it's quick for testing.
 
 ## Reference Links
 
@@ -182,3 +182,4 @@ But I don't think that will survive a reboot.
 - [The Essential KVM Cheat Sheet for System Administrators](https://tuxcare.com/blog/the-essential-kvm-cheat-sheet-for-system-administrators/)
 - [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)
 - [Windows 10 guest best practices](https://pve.proxmox.com/wiki/Windows_10_guest_best_practices) - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.
+- [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
