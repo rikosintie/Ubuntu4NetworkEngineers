@@ -1,4 +1,165 @@
-# Creating a KVM Bridge
+# KVM Install
+
+In BIOS, or UEFI, make sure virtualization is enabled. The easiest way to find out what virtualization is called on your PC is to google the CPU model.
+
+## Verifying virtualization
+
+To verify that virtualization is enabled in BIOS, run:
+
+`egrep -c '(vmx|svm)' /proc/cpuinfo`
+48
+
+This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a number in the output. In my case I have a 24 core Xeon processor that provides 48 cores of virtual CPUs.
+
+### Install cpu-checker
+
+`sudo apt install cpu-checker -y`
+
+This is a optional package. From the Debian site:
+"There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."
+
+```bash linenums="1"
+kvm-ok
+INFO: /dev/kvm exists
+KVM acceleration can be used
+```
+
+### Use lscpu
+
+lscpu is a built in tool to view cpu information:
+
+```bash linenums="1" hl_lines="1"
+lscpu | egrep -i 'Model name|Socket|Thread|NUMA|CPU\(s\)|virtual'
+Address sizes:                        46 bits physical, 48 bits virtual
+CPU(s):                               24
+On-line CPU(s) list:                  0-23
+Model name:                           Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz
+Thread(s) per core:                   2
+Core(s) per socket:                   12
+Socket(s):                            1
+CPU(s) scaling MHz:                   48%
+Virtualization:                       VT-x
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-23
+```
+
+## Installing the packages for KVM
+
+ If you want to verify the version of Ubuntu run:
+
+`cat /etc/os-release`
+
+Now make sure Ubuntu is up to date.
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+### Install the packages
+
+```bash linenums="1"
+sudo apt install libvirt-daemon
+sudo apt install virt-manager
+sudo apt install qemu-kvm
+sudo apt install virtinst
+sudo apt install libvirt-clients
+sudo apt install bridge-utils
+```
+
+or you can use this to install all at once:
+
+```bash linenums="1"
+sudo apt install libvirt-daemon virt-manager qemu-kvm virtinst libvirt-clients bridge-utils
+```
+
+I prefer to do one package at time so that I can watch each package but either works. All packages are about 200MB.
+
+### Configure the groups
+
+```bash linenums="1" hl_lines="1"
+sudo usermod -aG kvm $USER
+sudo usermod -aG libvirt $USER
+```
+
+### Verify the groups have your user
+
+```bash linenums="1" hl_lines="1"
+groups $USER
+mhubbard : mhubbard adm cdrom sudo dip plugdev users kvm lpadmin libvirt wireshark
+```
+
+### Enable the virt daemon
+
+```bash linenums="1"
+sudo systemctl enable --now libvirtd
+sudo systemctl start libvirtd
+sudo systemctl status libvirtd
+```
+
+### If you make changes and need to restart the daemon
+
+`sudo systemctl restart libvirtd`
+
+### Where are the virt files
+
+The qemu files are located in /etc/libvirt. You can list the files using:
+
+```bash linenums="1" hl_lines="1"
+ls -l /etc/libvirt
+total 126K
+drwxr-xr-x 2 root root    2 2024-05-06 06:12 hooks/
+-rw-r--r-- 1 root root  450 2024-01-15 01:58 libvirt-admin.conf
+-rw-r--r-- 1 root root  547 2024-01-15 01:58 libvirt.conf
+-rw-r--r-- 1 root root  18K 2024-05-06 06:12 libvirtd.conf
+-rw-r--r-- 1 root root 2.3K 2024-01-15 01:58 libxl.conf
+-rw-r--r-- 1 root root 2.2K 2024-05-06 06:12 libxl-lockd.conf
+-rw-r--r-- 1 root root 2.5K 2024-05-06 06:12 libxl-sanlock.conf
+-rw-r--r-- 1 root root 1.2K 2024-01-15 01:58 lxc.conf
+drwxr-xr-x 2 root root   26 2024-05-07 19:47 nwfilter/
+drwxr-xr-x 4 root root    8 2024-08-02 16:44 qemu/
+-rw------- 1 root root  38K 2024-05-20 16:17 qemu.conf
+-rw------- 1 root root  38K 2024-05-20 16:15 qemu.conf.bak
+-rw-r--r-- 1 root root 2.2K 2024-05-06 06:12 qemu-lockd.conf
+-rw-r--r-- 1 root root 2.5K 2024-05-06 06:12 qemu-sanlock.conf
+drwx------ 2 root root    2 2024-05-07 19:47 secrets/
+drwxr-xr-x 3 root root    5 2024-05-08 21:36 storage/
+-rw-r--r-- 1 root root 3.0K 2024-01-15 01:58 virtlockd.conf
+-rw-r--r-- 1 root root 4.0K 2024-01-15 01:58 virtlogd.conf
+```
+
+If you want to make any changes to the qemu.conf file I recommend making a backup first using:
+
+`sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak`
+
+Run the following to view the backup:
+
+```bash linenums="1" hl_lines="1"
+sudo ls -l /etc/libvirt/qemu.conf*
+-rw------- 1 root root 38439 May 20 16:17 /etc/libvirt/qemu.conf
+-rw------- 1 root root 38407 May 20 16:15 /etc/libvirt/qemu.conf.bak
+```
+
+To list the qemu.conf file:
+
+`sudo cat etc/libvirt/qemu.conf`
+
+To edit the qemu.conf file:
+
+`sudo gnome-text-editor /etc/libvirt/qemu.conf`
+
+## Start virt-manager
+
+`virt-manager`
+
+This will open the virt-manager GUI. Now we can create our first virtual machine!
+
+Click on teh "New Virtual Machine" Icon.
+
+![screenshot](img/virt-manager-new.jpg)
+
+virt-viewer - open the VM's GUI console
+
+## Creating a KVM Bridge
 
 I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I need create a bridge?
 
@@ -6,7 +167,7 @@ I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I
 
 A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.
 
-## LAN Information
+### LAN Information
 
 - LAN Network 192.168.10.0/24
 - Ubuntu workstation NIC - `eno1`
@@ -88,7 +249,7 @@ The following displays the system wide network configuration
 
 `sudo netplan get`
 
-## Ping the hosts on the bridge
+### Ping the hosts on the bridge
 
 The Window server is at 192.168.10.231 and the Windows 10 guest is at 192.168.10.232
 
@@ -104,6 +265,10 @@ PING 192.168.10.231 (192.168.10.231) 56(84) bytes of data.
 PING 192.168.10.232 (192.168.10.232) 56(84) bytes of data.
 64 bytes from 192.168.10.232: icmp_seq=1 ttl=128 time=0.657 ms
 ```
+
+### list out the xml config files
+
+`l -la /etc/libvirt/qemu/networks`
 
 ## Verify the network switch settings
 
@@ -183,3 +348,4 @@ THis method will not survive a reboot but it's quick for testing.
 - [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)
 - [Windows 10 guest best practices](https://pve.proxmox.com/wiki/Windows_10_guest_best_practices) - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.
 - [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
+- [How to Install KVM on Ubuntu 24.04 Step-by-Step](https://www.youtube.com/watch?v=qCUmf5gyOYY)
