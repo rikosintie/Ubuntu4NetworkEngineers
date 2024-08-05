@@ -82,7 +82,9 @@ br0         8000.e6b5f8a09bc5  yes          eno1
                                             vnet5
 ```
 
-### Check the netplan configuration
+### Display the netplan configuration
+
+The following displays the system wide network configuration
 
 `sudo netplan get`
 
@@ -124,11 +126,39 @@ end
 
 ## Virt Commands
 
-- virsh dumpxml win2k16 | grep -i 'bridge' show bridge config for a host named win2k16
-- virsh list --all List all vms including those not running
-- virsh list List all running vms
-- virsh net-dhcp-leases default show dhcp leases on network default.
-- virsh net-dhcp-leases host-bridge show dhcp leases on network host-bridge.
+View saved configuration
+
+- `virsh dumpxml win2k16 | grep -i 'bridge'` show bridge config for a host named win2k16
+- `virsh dumpxml win2k16 > ~/win2k16.xml` Save the configuration for a host named win2k16
+
+Start/stop a virtual machine
+
+- `sudo virsh win2k16` start Start a virtual machine named win2k16
+- `sudo virsh shutdown win2k16` Send an ACPI shutdown signal to the virtual machine
+- `sudo virsh destroy win2k16` Power off the VM without signalling it. Data loss can occur
+- `sudo virsh reboot` win2k16 Does not signal the VM. Data loss can occur
+
+View VM Details
+
+- `virsh dominfo win2k16` Show detailed information
+
+Check Virtual Machine status
+
+- `virsh domstate win2k16`
+
+List virtual machines
+
+- `virsh list --all` List all vms including those not running
+- `virsh list` List all running vms
+
+Connect to VM Console
+
+- `sudo virsh console win2k16` See [How to enable KVM virsh console access]([#how-to-enable-kvm-virsh-console-access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)) for a detailed article on how to setup console access
+
+View DHCP leases
+
+- `virsh net-dhcp-leases default` show dhcp leases on network default.
+- `virsh net-dhcp-leases host-bridge` show dhcp leases on network host-bridge.
 
 In the yaml file we disabled dhcp with `dhcp4: false` so there are no leases.
 
@@ -149,3 +179,5 @@ But I don't think that will survive a reboot.
 - [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
 - [Error in network definition: bond0: interface not defined](https://askubuntu.com/questions/1257461/error-in-network-definition-bond0-interface-eno2-is-not-defined)
 - [use the stable VirtIO ISO, download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) - Virtio drivers for Windows guests
+- [The Essential KVM Cheat Sheet for System Administrators](https://tuxcare.com/blog/the-essential-kvm-cheat-sheet-for-system-administrators/)
+- [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)
