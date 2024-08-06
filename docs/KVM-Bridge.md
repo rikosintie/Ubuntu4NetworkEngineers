@@ -192,7 +192,23 @@ NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) sectio
 
 Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
-virt-viewer - open the VM's GUI console
+### virt-viewer
+
+From the terminal you can open the VM's GUI console using
+
+`virt-viewer`
+
+![screenshot](img/virt-viewer.png)
+
+Select the Win11 virtual machine anc click connect.
+
+The GUI console will open:
+
+![screenshot](img/virt-manager-running.png)
+
+Click the icon on the top left and select `Ctrl+Alt+Delete`.
+
+![screenshot](img/virt-manager-ctrl+alt+Del.png)
 
 ## Creating a KVM Bridge
 
