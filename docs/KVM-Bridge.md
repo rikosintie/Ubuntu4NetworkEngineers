@@ -266,7 +266,7 @@ Click the icon on the top left and select `Ctrl+Alt+Delete`.
 
 Note: The VM says it's Windows 11 but it is actually Windows 10!
 
-![screenshot](img/virt-manager-win10.png)
+![screenshot](img/virt-manager-Win10.png)
 
 ## Creating a KVM Bridge
 
