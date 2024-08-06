@@ -73,7 +73,7 @@ NUMA node0 CPU(s):                    0-23
 
  If you want to verify the version of Ubuntu you are on run:
 
-```bash linenums="1" hl_lines="1 10"
+```bash linenums="1" hl_lines="1"
 cat /etc/os-release
 ───────┬────────────────────────────────────────────────────────────────────────────────
        │ File: /etc/os-release
