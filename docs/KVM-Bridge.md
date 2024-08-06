@@ -200,7 +200,7 @@ To edit the qemu.conf file:
 
 Linux can't ship Windows drivers so you have to download the `virtio` package first. [download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) and save it to your downloads directory.
 
-You do not need to virtio ISO if you are creating a Linux virtual machine.
+You do not need the virtio ISO if you are creating a Linux virtual machine.
 
 You will need the Windows ISO also. You can download it using this link - [Windows 10 2023 Update | Version 22H2](https://www.microsoft.com/en-us/software-download/windows10ISO)
 
@@ -211,10 +211,6 @@ Open the terminal and enter:
 Or hit the super key and type virt to bring up the virtual machine icon.
 
 This will open the virt-manager GUI.
-
-### Create a Windows virtual machine
-
-Now we can create our first virtual machine! For this example I am creating a Windows 10 Virtual Machine.
 
 Click on the "New Virtual Machine" Icon.
 
@@ -236,17 +232,19 @@ Set the disk size. Since this is a throw away virtual machine I set it to 20GB.
 
 ![screenshot](img/virt-manager-disksize.png)
 
-On this screen click on "Select or create custom storage". Click "Manage..." and select the virtio ISO that you downloaded earlier.
+Click on "Select or create custom storage". Click "Manage..." and select the virtio ISO that you downloaded earlier.
 
 ![screenshot](img/virt-manager-virtio.png)
 
-CLick Forward, this is the "ready to begin installation" dialog. Click "Customize before install".
+Click Forward, this is the "ready to begin installation" dialog. Click "Customize before install".
 
 Click forward and select the NIC
 
 ![screenshot](img/virt-manager-bridge.png)
 
-NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
+NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine. If you need a bridge, leave the NIC at NAT, finish creating the virtual machine.
+
+Then follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0.
 
 Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
