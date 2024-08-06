@@ -1,5 +1,9 @@
 # KVM Install
 
+KVM is the Linux Kernel-mode Virtual Machine tool It's free and easy to install on Ubuntu. WIth all the uncertainty around VMware workstation it's worth knowing how to use KVM!
+
+You must have virtualization enabled at the BIOS level.
+
 In BIOS, or UEFI, make sure virtualization is enabled. The easiest way to find out what virtualization is called on your PC is to google the CPU model.
 
 ## Verifying virtualization
@@ -156,7 +160,11 @@ Open the terminal and enter:
 
 Or hit the super key and type virt to bring up the virtual machine icon.
 
-This will open the virt-manager GUI. Now we can create our first virtual machine! For this example I am creating a Windows 10 Virtual Machine.
+This will open the virt-manager GUI.
+
+### Create a Windows virtual machine
+
+Now we can create our first virtual machine! For this example I am creating a Windows 10 Virtual Machine.
 
 Click on the "New Virtual Machine" Icon.
 
@@ -192,7 +200,7 @@ NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) sectio
 
 Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
-### virt-viewer
+## virt-viewer
 
 From the terminal you can open the VM's GUI console using
 
