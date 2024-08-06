@@ -1,16 +1,24 @@
 # KVM Install
 
-KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. WIth all the uncertainty around VMware workstation it's worth knowing how to use KVM!
+KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM!
 
-You must have virtualization enabled at the BIOS level.
+Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from [vmwware host modules](https://github.com/mkubecek/vmware-host-modules) after you update Ubuntu. It's an ugly situation.
 
-In BIOS, or UEFI, make sure virtualization is enabled. The easiest way to find out what virtualization is called on your PC is to google the CPU model.
+To run KVM, you must have virtualization enabled at the BIOS level.
+
+In BIOS, or UEFI, make sure virtualization is enabled. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.
 
 ## Verifying virtualization
 
+Once you have enabled virtualization in the BIOS, you should verify that it is seen by the CPU.
+
+### Using egrep
+
 To verify that virtualization is enabled in BIOS, run:
 
-`egrep -c '(vmx|svm)' /proc/cpuinfo`
+```bash
+egrep -c '(vmx|svm)' /proc/cpuinfo
+```
 
 48
 
@@ -18,7 +26,9 @@ This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a 
 
 ### Install cpu-checker
 
-`sudo apt install cpu-checker -y`
+```bash
+sudo apt install cpu-checker -y
+```
 
 This is a optional package. From the Debian site:
 "There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."
@@ -35,17 +45,21 @@ from `man kvm-ok` page:
 
 ```text
 DESCRIPTION
-    kvm-ok is a program that will determine if the system can host hardware accelerated KVM virtual machines.
+    kvm-ok is a program that will determine if the system
+    can host hardware accelerated KVM virtual machines.
 
-    The program will first determine if `/proc/cpuinfo` contains the flags indicating that the CPU has the
+    The program will first determine if `/proc/cpuinfo`
+    contains the flags indicating that the CPU has the
     Virtualization Technology (VT) capability.
 
     Next, it will check if the /dev/kvm device exists.
 
-    If running as root, it will check your CPU's MSRs to see if VT is disabled in the BIOS.
+    If running as root, it will check your CPU's MSRs
+    to see if VT is disabled in the BIOS.
 
-    In some failure cases, kvm-ok provides hints on how you might go about enabling KVM on a system where
-    it is arbitrarily disabled.
+    In some failure cases, kvm-ok provides hints on
+    how you might go about enabling KVM on a system
+    where it is arbitrarily disabled.
 
     If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
 ```
@@ -73,7 +87,7 @@ NUMA node0 CPU(s):                    0-23
 
 ### Verify the Ubuntu Version
 
-If you want to verify the version of Ubuntu you using run:
+While  not technically necessary, you can verify the version of Ubuntu you have installed with:
 
 ```bash linenums="1" hl_lines="1"
 cat /etc/os-release
@@ -96,7 +110,7 @@ cat /etc/os-release
 ───────┴────────────────────────────────────────────────────────────────────────────────
 ```
 
-Now make sure Ubuntu is up to date.
+### Make sure Ubuntu is up to date
 
 ```bash
 sudo apt update && sudo apt upgrade
@@ -137,7 +151,7 @@ groups $USER
 mhubbard : mhubbard adm cdrom sudo dip plugdev users kvm lpadmin libvirt wireshark
 ```
 
-### Enable the virt daemon
+## Enable the virt daemon
 
 ```bash linenums="1"
 sudo systemctl enable --now libvirtd
@@ -145,11 +159,13 @@ sudo systemctl start libvirtd
 sudo systemctl status libvirtd
 ```
 
-#### If you make changes and need to restart the daemon
+### If you make changes and need to restart the daemon
 
-`sudo systemctl restart libvirtd`
+```bash
+sudo systemctl restart libvirtd
+```
 
-### Where are the virt files
+### Where are the virt files stored
 
 The qemu files are located in /etc/libvirt. You can list the files using:
 
@@ -176,11 +192,15 @@ drwxr-xr-x 3 root root    5 2024-05-08 21:36 storage/
 -rw-r--r-- 1 root root 4.0K 2024-01-15 01:58 virtlogd.conf
 ```
 
+### Back up qemu.conf
+
 If you want to make any changes to the qemu.conf file I recommend making a backup first using:
 
-`sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak`
+```bash
+sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak
+````
 
-Run the following to view the backup:
+Run the following to show the backup:
 
 ```bash linenums="1" hl_lines="1"
 sudo ls -l /etc/libvirt/qemu.conf*
@@ -190,15 +210,19 @@ sudo ls -l /etc/libvirt/qemu.conf*
 
 To list the qemu.conf file:
 
-`sudo cat etc/libvirt/qemu.conf`
+```bash
+sudo cat etc/libvirt/qemu.conf
+````
 
 To edit the qemu.conf file:
 
-`sudo gnome-text-editor /etc/libvirt/qemu.conf`
+```bash
+sudo gnome-text-editor /etc/libvirt/qemu.conf
+````
 
 ## Create a Windows 10 virtual machine
 
-Linux can't ship Windows drivers so you have to download the `virtio` package first. [download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) and save it to your downloads directory.
+Linux can't ship Windows drivers so you have to download the `virtio` package first. The Fedora People host the ISO [here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso). Save it to your `Downloads` directory.
 
 You do not need the virtio ISO if you are creating a Linux virtual machine.
 
@@ -206,9 +230,11 @@ You will need the Windows ISO also. You can download it using this link - [Windo
 
 Open the terminal and enter:
 
-`virt-manager`
+```bash
+virt-manager
+```
 
-Or hit the super key and type virt to bring up the virtual machine icon.
+Or hit the super key and type `virt` to bring up the virtual machine icon.
 
 This will open the virt-manager GUI.
 
@@ -220,7 +246,7 @@ Select "local install media (ISO image or CD-ROM)" and click forward.
 
 ![screenshot](img/virt-manager-new-VM.png)
 
-On this screen click "Browse" and select the Windows ISO and click "Forward":
+On this screen click "Browse" and select the Windows ISO and click "Forward". Notice that KVM identifies the ISO as Windows 11.
 
 ![screenshot](img/virt-manager-pick-ISO.png)
 
@@ -242,7 +268,9 @@ Click forward and select the NIC
 
 ![screenshot](img/virt-manager-bridge.png)
 
-NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine. If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0.
+NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
+
+If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0 using the Edit, Virtual Machine Details menu.
 
 Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
@@ -267,6 +295,8 @@ Click the icon on the top left and select `Ctrl+Alt+Delete`.
 Note: The VM says it's Windows 11 but it is actually Windows 10!
 
 ![screenshot](img/virt-manager-Win10.png)
+
+Congratulations, you now have a Windows virtual machine up and running on Linux with KVM!
 
 ## Creating a KVM Bridge
 
