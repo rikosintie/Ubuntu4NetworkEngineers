@@ -242,15 +242,13 @@ Click forward and select the NIC
 
 ![screenshot](img/virt-manager-bridge.png)
 
-NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine. If you need a bridge, leave the NIC at NAT, finish creating the virtual machine.
-
-Then follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0.
+NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine. If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0.
 
 Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
-## virt-viewer
+## Start the virtual machine
 
-From the terminal you can open the VM's GUI console using
+From the terminal you can open the Virtual Machine's GUI console using
 
 `virt-viewer`
 
@@ -273,6 +271,8 @@ I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I
 **From the Tecmint link in the reference section below**
 
 A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.
+
+See the link [Introduction to Linux interfaces for virtual networking]([Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) for a detail tutorial on all the virtual interfaces that Linux supports. The list is impressive!
 
 ### LAN Information
 
