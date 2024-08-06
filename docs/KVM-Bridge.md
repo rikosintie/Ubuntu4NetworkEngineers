@@ -35,18 +35,16 @@ from `man kvm-ok` page:
 
 ```text
 DESCRIPTION
-    kvm-ok is a program that will determine if the locate system can
-    host hardware accelerated KVM virtual machines.
+    kvm-ok is a program that will determine if the system can host hardware accelerated KVM virtual machines.
 
-    The program will first determine if `/proc/cpuinfo` contains
-    the flags indicating that the CPU has the Virtualization Technology (VT) capability.
+    The program will first determine if `/proc/cpuinfo` contains the flags indicating that the CPU has the Virtualization Technology (VT) capability.
 
     Next, it will check if the /dev/kvm device exists.
 
     If running as root, it will check your CPU's MSRs to see if VT is disabled in the BIOS.
 
-    In some failure cases, kvm-ok provides hints on how you might
-    go about enabling KVM on a system where it is arbitrarily disabled.
+    In some failure cases, kvm-ok provides hints on how you might go about enabling KVM on a system where
+    it is arbitrarily disabled.
 
     If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
 ```
@@ -55,7 +53,7 @@ DESCRIPTION
 
 lscpu is a built in tool to view cpu information. You can see on line 10 that the virtualization is VT-x:
 
-```bash linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="1 10"
 lscpu | egrep -i 'Model name|Socket|Thread|NUMA|CPU\(s\)|virtual'
 Address sizes:                        46 bits physical, 48 bits virtual
 CPU(s):                               24
