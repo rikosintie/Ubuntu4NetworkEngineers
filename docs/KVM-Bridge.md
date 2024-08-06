@@ -1,6 +1,6 @@
 # KVM Install
 
-KVM is the Linux Kernel-mode Virtual Machine tool It's free and easy to install on Ubuntu. WIth all the uncertainty around VMware workstation it's worth knowing how to use KVM!
+KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. WIth all the uncertainty around VMware workstation it's worth knowing how to use KVM!
 
 You must have virtualization enabled at the BIOS level.
 
@@ -24,9 +24,26 @@ This is a optional package. From the Debian site:
 "There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."
 
 ```bash linenums="1" hl_lines="1 10"
-kvm-ok
+sudo kvm-ok
 INFO: /dev/kvm exists
 KVM acceleration can be used
+```
+
+from `man kvm-ok` page:
+
+```text
+DESCRIPTION
+       kvm-ok is a program that will determine if the locate system can host hardware accelerated KVM virtual machines.
+
+       The program will first determine if `/proc/cpuinfo` contains the flags  indicating that the CPU has the Virtualization Technology (VT) capability.
+
+       Next, it will check if the /dev/kvm device exists.
+
+       If running as root, it will check your CPU's MSRs to see if VT is disabled in the BIOS.
+
+       In some failure cases, kvm-ok provides hints on how you  might  go  about enabling KVM on a system where it is arbitrarily disabled.
+
+       If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
 ```
 
 ### Use lscpu
