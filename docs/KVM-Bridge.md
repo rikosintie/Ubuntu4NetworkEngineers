@@ -23,6 +23,8 @@ This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a 
 This is a optional package. From the Debian site:
 "There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."
 
+The tools is run using `kvm-ok` even though it's installed with `cpu-checker` for some reason. One advantage it has over grepping the /proc/cpuinfo file is that in some failure cases it will provide hints on what to do.
+
 ```bash linenums="1" hl_lines="1 10"
 sudo kvm-ok
 INFO: /dev/kvm exists
@@ -33,17 +35,20 @@ from `man kvm-ok` page:
 
 ```text
 DESCRIPTION
-       kvm-ok is a program that will determine if the locate system can host hardware accelerated KVM virtual machines.
+    kvm-ok is a program that will determine if the locate system can
+    host hardware accelerated KVM virtual machines.
 
-       The program will first determine if `/proc/cpuinfo` contains the flags  indicating that the CPU has the Virtualization Technology (VT) capability.
+    The program will first determine if `/proc/cpuinfo` contains
+    the flags indicating that the CPU has the Virtualization Technology (VT) capability.
 
-       Next, it will check if the /dev/kvm device exists.
+    Next, it will check if the /dev/kvm device exists.
 
-       If running as root, it will check your CPU's MSRs to see if VT is disabled in the BIOS.
+    If running as root, it will check your CPU's MSRs to see if VT is disabled in the BIOS.
 
-       In some failure cases, kvm-ok provides hints on how you  might  go  about enabling KVM on a system where it is arbitrarily disabled.
+    In some failure cases, kvm-ok provides hints on how you might
+    go about enabling KVM on a system where it is arbitrarily disabled.
 
-       If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
+    If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
 ```
 
 ### Use lscpu
