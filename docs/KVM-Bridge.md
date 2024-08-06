@@ -164,6 +164,10 @@ Click forward and select "local install media (ISO image or CD-ROM)" and click f
 
 On this screen click "Browse" and select the Windows ISO and click "Forward":
 
+![screenshot](img/virt-manager-pick-ISO.png)
+
+Click forward and set the Memory and CPU sizes
+
 ![screenshot](img/virt-manager-memory.png)
 
 Click forward and set the disk size. Since this is a throw away virtual machine I set it to 20GB.
@@ -171,8 +175,6 @@ Click forward and set the disk size. Since this is a throw away virtual machine 
 ![screenshot](img/virt-manager-disksize.png)
 
 On this screen click on "Add Hardware", and select Storage, CDROM Device. Click "Manage..." and select the virtio ISO that you downloaded earlier.
-
-Click forward and set the Memory and CPU sizes
 
 ![screenshot](img/virt-manager-pick-ISO.png)
 
