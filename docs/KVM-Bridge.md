@@ -37,7 +37,8 @@ from `man kvm-ok` page:
 DESCRIPTION
     kvm-ok is a program that will determine if the system can host hardware accelerated KVM virtual machines.
 
-    The program will first determine if `/proc/cpuinfo` contains the flags indicating that the CPU has the Virtualization Technology (VT) capability.
+    The program will first determine if `/proc/cpuinfo` contains the flags indicating that the CPU has the
+    Virtualization Technology (VT) capability.
 
     Next, it will check if the /dev/kvm device exists.
 
@@ -70,9 +71,29 @@ NUMA node0 CPU(s):                    0-23
 
 ## Installing the packages for KVM
 
- If you want to verify the version of Ubuntu run:
+ If you want to verify the version of Ubuntu you are on run:
 
-`cat /etc/os-release`
+````bash linenums="1" hl_lines="1 10"
+cat /etc/os-release
+───────┬────────────────────────────────────────────────────────────────────────────────
+       │ File: /etc/os-release
+───────┼────────────────────────────────────────────────────────────────────────────────
+   1   │ PRETTY_NAME="Ubuntu 24.04 LTS"
+   2   │ NAME="Ubuntu"
+   3   │ VERSION_ID="24.04"
+   4   │ VERSION="24.04 LTS (Noble Numbat)"
+   5   │ VERSION_CODENAME=noble
+   6   │ ID=ubuntu
+   7   │ ID_LIKE=debian
+   8   │ HOME_URL="https://www.ubuntu.com/"
+   9   │ SUPPORT_URL="https://help.ubuntu.com/"
+  10   │ BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+  11   │ PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-pol
+       │ icy"
+  12   │ UBUNTU_CODENAME=noble
+  13   │ LOGO=ubuntu-logo
+───────┴────────────────────────────────────────────────────────────────────────────────
+```
 
 Now make sure Ubuntu is up to date.
 
