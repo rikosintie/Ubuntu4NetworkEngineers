@@ -71,7 +71,9 @@ NUMA node0 CPU(s):                    0-23
 
 ## Installing the packages for KVM
 
- If you want to verify the version of Ubuntu you are on run:
+### Verify the Ubuntu Version
+
+If you want to verify the version of Ubuntu you using run:
 
 ```bash linenums="1" hl_lines="1"
 cat /etc/os-release
@@ -88,8 +90,7 @@ cat /etc/os-release
    8   │ HOME_URL="https://www.ubuntu.com/"
    9   │ SUPPORT_URL="https://help.ubuntu.com/"
   10   │ BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
-  11   │ PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-pol
-       │ icy"
+  11   │ PRI_POL_URL="https://www.ubuntu.com/terms-and-policies/privacy-policy"
   12   │ UBUNTU_CODENAME=noble
   13   │ LOGO=ubuntu-logo
 ───────┴────────────────────────────────────────────────────────────────────────────────
@@ -121,6 +122,8 @@ sudo apt install libvirt-daemon virt-manager qemu-kvm virtinst libvirt-clients b
 I prefer to do one package at time so that I can watch each package but either works. All packages are about 200MB.
 
 ### Configure the groups
+
+Your user has to be in the following groups
 
 ```bash linenums="1"
 sudo usermod -aG kvm $USER
@@ -193,7 +196,13 @@ To edit the qemu.conf file:
 
 `sudo gnome-text-editor /etc/libvirt/qemu.conf`
 
-## Start virt-manager
+## Create a Windows 10 virtual machine
+
+Linux can't ship Windows drivers so you have to download the `virtio` package first. [download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) and save it to your downloads directory.
+
+You do not need to virtio ISO if you are creating a Linux virtual machine.
+
+You will need the Windows ISO also. You can download it using this link - [Windows 10 2023 Update | Version 22H2](https://www.microsoft.com/en-us/software-download/windows10ISO)
 
 Open the terminal and enter:
 
