@@ -152,11 +152,39 @@ To edit the qemu.conf file:
 
 `virt-manager`
 
-This will open the virt-manager GUI. Now we can create our first virtual machine!
+This will open the virt-manager GUI. Now we can create our first virtual machine! For this example I am creating a Windows 10 Virtual Machine.
 
-Click on teh "New Virtual Machine" Icon.
+Click on the "New Virtual Machine" Icon.
 
 ![screenshot](img/virt-manager-new.png)
+
+Click forward and select "local install media (ISO image or CD-ROM)" and click forward.
+
+![screenshot](img/virt-manager-new-VM.png)
+
+On this screen click "Browse" and select the Windows ISO and click "Forward":
+
+![screenshot](img/virt-manager-memory.png)
+
+Click forward and set the disk size. Since this is a throw away virtual machine I set it to 20GB.
+
+![screenshot](img/virt-manager-disksize.png)
+
+On this screen click on "Add Hardware", and select Storage, CDROM Device. Click "Manage..." and select the virtio ISO that you downloaded earlier.
+
+Click forward and set the Memory and CPU sizes
+
+![screenshot](img/virt-manager-pick-ISO.png)
+
+CLick Forward, this is the "ready to begin installation" dialog. Click "Customize before install".
+
+Click forward and select the NIC
+
+![screenshot](img/virt-manager-bridge.png)
+
+NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first.
+
+Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
 
 virt-viewer - open the VM's GUI console
 
