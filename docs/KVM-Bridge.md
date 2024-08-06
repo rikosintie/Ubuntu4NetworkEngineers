@@ -272,7 +272,7 @@ I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I
 
 A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.
 
-See the link [Introduction to Linux interfaces for virtual networking]([Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) for a detail tutorial on all the virtual interfaces that Linux supports. The list is impressive!
+See the link [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) for a detailed tutorial on all the virtual interfaces that Linux supports. The list is impressive!
 
 ### LAN Information
 
