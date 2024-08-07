@@ -218,7 +218,7 @@ To edit the qemu.conf file:
 
 ```bash
 sudo gnome-text-editor /etc/libvirt/qemu.conf
-````
+```
 
 ## Creating a KVM Bridge
 
