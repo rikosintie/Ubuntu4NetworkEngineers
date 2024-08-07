@@ -218,87 +218,9 @@ To edit the qemu.conf file:
 sudo gnome-text-editor /etc/libvirt/qemu.conf
 ````
 
-## Create a Windows 10 virtual machine
-
-Linux can't ship Windows drivers so you have to download the `virtio` package first. The Fedora People host the ISO [here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso). Save it to your `Downloads` directory.
-
-You do not need the virtio ISO if you are creating a Linux virtual machine.
-
-You will need the Windows ISO also. You can download it using this link - [Windows 10 2023 Update | Version 22H2](https://www.microsoft.com/en-us/software-download/windows10ISO)
-
-Open the terminal and enter:
-
-```bash
-virt-manager
-```
-
-Or hit the super key and type `virt` to bring up the virtual machine icon.
-
-This will open the virt-manager GUI.
-
-Click on the "New Virtual Machine" Icon.
-
-![screenshot](img/virt-manager-new.png)
-
-Select "local install media (ISO image or CD-ROM)" and click forward.
-
-![screenshot](img/virt-manager-new-VM.png)
-
-On this screen click "Browse" and select the Windows ISO and click "Forward". Notice that KVM identifies the ISO as Windows 11.
-
-![screenshot](img/virt-manager-pick-ISO.png)
-
-Set the Memory and CPU sizes, click forward
-
-![screenshot](img/virt-manager-memory.png)
-
-Set the disk size. Since this is a throw away virtual machine I set it to 20GB.
-
-![screenshot](img/virt-manager-disksize.png)
-
-Click on "Select or create custom storage". Click "Manage..." and select the virtio ISO that you downloaded earlier.
-
-![screenshot](img/virt-manager-virtio.png)
-
-Click Forward, this is the "ready to begin installation" dialog. Click "Customize before install".
-
-Click forward and select the NIC
-
-![screenshot](img/virt-manager-bridge.png)
-
-NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
-
-If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0 using the Edit, Virtual Machine Details menu.
-
-Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
-
-## Start the virtual machine
-
-From the terminal you can open the Virtual Machine's GUI console using
-
-`virt-viewer`
-
-![screenshot](img/virt-viewer.png)
-
-Select the Win11 virtual machine anc click connect.
-
-The GUI console will open:
-
-![screenshot](img/virt-manager-running.png)
-
-Click the icon on the top left and select `Ctrl+Alt+Delete`.
-
-![screenshot](img/virt-manager-ctrl+alt+Del.png)
-
-Note: The VM says it's Windows 11 but it is actually Windows 10!
-
-![screenshot](img/virt-manager-Win10.png)
-
-Congratulations, you now have a Windows virtual machine up and running on Linux with KVM!
-
 ## Creating a KVM Bridge
 
-I built a KVM based lab on my HP z420 workstation running Ubuntu 24.04. Why do I need create a bridge?
+Why do I need create a bridge?
 
 **From the Tecmint link in the reference section below**
 
@@ -306,12 +228,18 @@ A typical use case of software network bridging is in a virtualization environme
 
 See the link [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) for a detailed tutorial on all the virtual interfaces that Linux supports. The list is impressive!
 
-### LAN Information
+If you just need a virtual machine that is isolated on the host you can use the NAT interface that is built into KVM. Each guest will get an IP address in the range `192.16810.2 - 192.168.10.254`.
+
+If you need a static address on the default network see [KVM libvirt assign static guest IP addresses using DHCP on the virtual machine](https://www.cyberciti.biz/faq/linux-kvm-libvirt-dnsmasq-dhcp-static-ip-address-configuration-for-guest-os/)
+
+### The LAN Information
 
 - LAN Network 192.168.10.0/24
 - Ubuntu workstation NIC - `eno1`
 
 ### Install the bridge-utils package
+
+If you installed the `bridge-utils` package earlier you can skip this step.
 
 `sudo apt-get install bridge-utils`
 
@@ -430,41 +358,58 @@ end
 
 ## Virt Commands
 
-View saved configuration
+### View saved configuration
 
 - `virsh dumpxml win2k16 | grep -i 'bridge'` show bridge config for a host named win2k16
 - `virsh dumpxml win2k16 > ~/win2k16.xml` Save the configuration for a host named win2k16
 
-Start/stop a virtual machine
+### Start/stop a virtual machine
 
 - `sudo virsh win2k16 start` Start a virtual machine named win2k16
 - `sudo virsh shutdown win2k16` Send an ACPI shutdown signal to the virtual machine
 - `sudo virsh destroy win2k16` Power off the VM without signalling it. Data loss can occur
 - `sudo virsh reboot` win2k16 Does not signal the VM. Data loss can occur
 
-View VM Details
+### View VM Details
 
 - `virsh dominfo win2k16` Show detailed information
 
-Check Virtual Machine status
+### Check Virtual Machine status
 
 - `virsh domstate win2k16`
 
-List virtual machines
+### List virtual machines
 
 - `virsh list --all` List all vms including those not running
 - `virsh list` List all running vms
 
-Connect to VM Console
+### Connect to VM Console
 
 - `sudo virsh console win2k16` See [How to enable KVM virsh console access]([#how-to-enable-kvm-virsh-console-access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)) for a detailed article on how to setup console access
 
-View DHCP leases
+### View DHCP leases
 
 - `virsh net-dhcp-leases default` show dhcp leases on network default.
 - `virsh net-dhcp-leases host-bridge` show dhcp leases on network host-bridge.
 
 In the yaml file we disabled dhcp with `dhcp4: false` so there are no leases.
+
+### View the network yaml files
+
+- virsh netdumpxml default Show the configuration of the network named default
+- virsh netdumpxml host-bridge Show the configuration of the network named host-bridge
+
+### Edit the network yaml files
+
+- virsh net-edit default Open the yaml configuration file of the  network `default` in the system editor
+- virsh net-edit host-bridge Open the yaml configuration file of the network `host-bridge` in the system editor
+
+### Start/Stop networks
+
+- virsh net-destroy default Stop the network `default`
+- virsh net-start default Start the network `default`
+
+## Manually create the bridge configuration
 
 You can manually create the bridge and link it to eno1 from the terminal
 
@@ -474,7 +419,85 @@ sudo ip link set eno1 master br0
 sudo ip address add 192.168.10.250/16 brd 192.168.10.255
 ```
 
-THis method will not survive a reboot but it's quick for testing.
+This method will not survive a reboot but it's quick for testing.
+
+## Create a Windows 10 virtual machine
+
+Linux can't ship Windows drivers so you have to download the `virtio` package first. The Fedora People host the ISO [here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso). Save it to your `Downloads` directory.
+
+You do not need the virtio ISO if you are creating a Linux virtual machine.
+
+You will need the Windows ISO also. You can download it using this link - [Windows 10 2023 Update | Version 22H2](https://www.microsoft.com/en-us/software-download/windows10ISO)
+
+Open the terminal and enter:
+
+```bash
+virt-manager
+```
+
+Or hit the super key and type `virt` to bring up the virtual machine icon.
+
+This will open the virt-manager GUI.
+
+Click on the "New Virtual Machine" Icon.
+
+![screenshot](img/virt-manager-new.png)
+
+Select "local install media (ISO image or CD-ROM)" and click forward.
+
+![screenshot](img/virt-manager-new-VM.png)
+
+On this screen click "Browse" and select the Windows ISO and click "Forward". Notice that KVM identifies the ISO as Windows 11.
+
+![screenshot](img/virt-manager-pick-ISO.png)
+
+Set the Memory and CPU sizes, click forward
+
+![screenshot](img/virt-manager-memory.png)
+
+Set the disk size. Since this is a throw away virtual machine I set it to 20GB.
+
+![screenshot](img/virt-manager-disksize.png)
+
+Click on "Select or create custom storage". Click "Manage..." and select the virtio ISO that you downloaded earlier.
+
+![screenshot](img/virt-manager-virtio.png)
+
+Click Forward, this is the "ready to begin installation" dialog. Click "Customize before install".
+
+Click forward and select the NIC
+
+![screenshot](img/virt-manager-bridge.png)
+
+NOTE: you must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
+
+If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0 using the Edit, Virtual Machine Details menu.
+
+Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.
+
+## Start the virtual machine
+
+From the terminal you can open the Virtual Machine's GUI console using
+
+`virt-viewer`
+
+![screenshot](img/virt-viewer.png)
+
+Select the Win11 virtual machine anc click connect.
+
+The GUI console will open:
+
+![screenshot](img/virt-manager-running.png)
+
+Click the icon on the top left and select `Ctrl+Alt+Delete`.
+
+![screenshot](img/virt-manager-ctrl+alt+Del.png)
+
+Note: The VM says it's Windows 11 but it is actually Windows 10!
+
+![screenshot](img/virt-manager-Win10.png)
+
+Congratulations, you now have a bridged Windows virtual machine up and running on Linux with KVM!
 
 ## Reference Links
 
