@@ -4,6 +4,8 @@ KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install
 
 Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from [vmwware host modules](https://github.com/mkubecek/vmware-host-modules) after you update Ubuntu. It's an ugly situation.
 
+Like everything else with Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days and create few virtual machines I think you will like it.
+
 To run KVM, you must have virtualization enabled at the BIOS level. It can be a challenge to find virtualization in the BIOS because different manufacturers call it different things. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.
 
 ## Verifying virtualization
