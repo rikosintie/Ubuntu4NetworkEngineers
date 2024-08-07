@@ -1,10 +1,21 @@
 # KVM Install
 
+:arrow_forward: KEY TAKEAWAYS
+
+- Ubuntu supports KVM virtualization on the desktop and server
+- KVM supports NATed and bridged interfaces just like VMware Fusion or workstation.
+- You create/manage KVM virtual machines with a GUI (virt-manager) or from the terminal (virsh commands)
+- KVM is updated automatically by Ubuntu so there are never package mismatches with the kernel.
+
 KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM!
 
 Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from [vmwware host modules](https://github.com/mkubecek/vmware-host-modules) after you update Ubuntu. It's an ugly situation.
 
 Like everything else with Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days and create few virtual machines I think you will like it.
+
+By default KVM creates virtual machines on a NATed interface with a dhcp address in the range of 192.168.122.2-.254. You can change the DHCP network if need. See [virsh commands](#edit-the-network-yaml-files) for instructions. The virtual machine with have access just like a VMwareE Workstation VM, NATed to the ip of the host.
+
+As with VMware, you can create a bridge interface so that the virtual machine has an ip address on the same network as the host. Creating a bridge interface is explained [below](#creating-a-kvm-bridge).
 
 To run KVM, you must have virtualization enabled at the BIOS level. It can be a challenge to find virtualization in the BIOS because different manufacturers call it different things. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.
 
