@@ -1,0 +1,1521 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Michael Hubbard (rikosintie)">
+      
+      
+      
+        <link rel="prev" href="../CH02-Install-Tools/">
+      
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>KVM - Ubuntu for Network Engineers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="KVM - Ubuntu for Network Engineers" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="./assets/images/social/KVM-Bridge.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="KVM - Ubuntu for Network Engineers" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/KVM-Bridge.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kvm-install" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-header__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ubuntu for Network Engineers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KVM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Introduction/" class="md-tabs__link">
+        
+  
+    
+  
+  Intro
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Ch01-Using-Ubuntu/" class="md-tabs__link">
+        
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SSH/" class="md-tabs__link">
+        
+  
+    
+  
+  SSH
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../CH02-Install-Tools/" class="md-tabs__link">
+        
+  
+    
+  
+  Tools
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  KVM
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-nav__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Ubuntu for Network Engineers
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ch01-Using-Ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SSH/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CH02-Install-Tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    KVM
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    KVM
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-kvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing KVM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing KVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verifying-virtualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifying virtualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-egrep" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using egrep
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-cpu-checker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install cpu-checker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-lscpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use lscpu
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-packages-for-kvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing the packages for KVM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing the packages for KVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-ubuntu-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the Ubuntu Version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-ubuntu-is-up-to-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make sure Ubuntu is up to date
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-the-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install the packages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-the-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure the groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-groups-have-your-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the groups have your user
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enable-the-virt-daemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable the virt daemon
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enable the virt daemon">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-you-make-changes-and-need-to-restart-the-daemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      If you make changes and need to restart the daemon
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-are-the-virt-files-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where are the virt files stored
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#back-up-qemuconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Back up qemu.conf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-kvm-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a KVM Bridge
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a KVM Bridge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-lan-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      The LAN Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-the-bridge-utils-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install the bridge-utils package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-netplan-yaml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the Netplan yaml file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activate-the-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activate the bridge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-the-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display the bridge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-the-netplan-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display the netplan configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping-the-hosts-on-the-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ping the hosts on the bridge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-out-the-xml-config-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      list out the xml config files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-the-network-switch-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the network switch settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#virt-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virt Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Virt Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#view-saved-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      View saved configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startstop-a-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start/stop a virtual machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-vm-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      View VM Details
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-virtual-machine-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check Virtual Machine status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-virtual-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      List virtual machines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-vm-console" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to VM Console
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-dhcp-leases" class="md-nav__link">
+    <span class="md-ellipsis">
+      View DHCP leases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-the-network-yaml-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      View the network yaml files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-the-network-yaml-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit the network yaml files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startstop-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start/Stop networks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manually-create-the-bridge-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manually create the bridge configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-windows-10-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a Windows 10 virtual machine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the virtual machine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Links
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="kvm-install">KVM Install</h1>
+<p><img alt="▶" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/25b6.svg" title=":arrow_forward:" /> KEY TAKEAWAYS</p>
+<ul>
+<li>Ubuntu supports KVM virtualization on the desktop and server</li>
+<li>KVM supports NATed and bridged interfaces just like VMware Fusion or workstation.</li>
+<li>You create/manage KVM virtual machines with a GUI (virt-manager) or from the terminal (virsh commands)</li>
+<li>KVM is updated automatically by Ubuntu so there are never package mismatches with the kernel.</li>
+</ul>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM! Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.</p>
+<p>Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from <a href="https://github.com/mkubecek/vmware-host-modules">vmwware host modules</a> after you update Ubuntu. It's an ugly situation.</p>
+<p>By default KVM creates virtual machines on a NATed interface with a dhcp address in the range of 192.168.122.2-.254. The linux package dnsmasq is used to provide the DNS/DHCP services. NAT enables connected guests to use the host physical machine IP address for communication to any external network.</p>
+<p>The <code>default</code> network interface is <code>virbr0</code> and using <code>ip address device show virbr0</code> looks like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="hll">ip<span class="w"> </span>address<span class="w"> </span>show<span class="w"> </span>device<span class="w"> </span>virbr0
+</span><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="m">20</span>:<span class="w"> </span>virbr0:<span class="w"> </span>&lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt;<span class="w"> </span>mtu<span class="w"> </span><span class="m">1500</span><span class="w"> </span>qdisc<span class="w"> </span>noqueue<span class="w"> </span>state<span class="w"> </span>DOWN<span class="w"> </span>group<span class="w"> </span>default<span class="w"> </span>qlen<span class="w"> </span><span class="m">1000</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span>link/ether<span class="w"> </span><span class="m">52</span>:54:00:b5:48:b1<span class="w"> </span>brd<span class="w"> </span>ff:ff:ff:ff:ff:ff
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span>inet<span class="w"> </span><span class="m">192</span>.168.122.1/24<span class="w"> </span>brd<span class="w"> </span><span class="m">192</span>.168.122.255<span class="w"> </span>scope<span class="w"> </span>global<span class="w"> </span>virbr0
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">       </span>valid_lft<span class="w"> </span>forever<span class="w"> </span>preferred_lft<span class="w"> </span>forever
+</code></pre></div></td></tr></table></div>
+<hr />
+<p><img alt="screenshot" src="../img/host-with-nat-switch.png" /></p>
+<hr />
+<p>As with VMware, you can create a bridge interface so that the virtual machine has an ip address on the same network as the host. Creating a bridge interface is explained <a href="#creating-a-kvm-bridge">below</a>. A network engineer will probably need a bridge interface.</p>
+<hr />
+<p><img alt="screenshot" src="../img/bridged-Mode.png" /></p>
+<hr />
+<p>The Redhat links in the <a href="#reference-links">references</a> section have a lot of information on creating interfaces.</p>
+<hr />
+<h2 id="installing-kvm">Installing KVM</h2>
+<p>To run KVM, you must have virtualization enabled at the BIOS level. It can be a challenge to find virtualization in the BIOS because different manufacturers call it different things. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.</p>
+<h3 id="verifying-virtualization">Verifying virtualization</h3>
+<p>Once you have enabled virtualization in the BIOS, you should verify that it is seen by the CPU.</p>
+<h3 id="using-egrep">Using egrep</h3>
+<p>To verify that virtualization is enabled in BIOS, run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>egrep<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;(vmx|svm)&#39;</span><span class="w"> </span>/proc/cpuinfo
+</code></pre></div>
+<p>48</p>
+<p>This greps the /proc/cpuinfo file,  vmx is Intel, svm is AMD. You need to see a number in the output. In my case I have a 24 core Xeon processor that provides 48 cores of virtual CPUs.</p>
+<h3 id="install-cpu-checker">Install cpu-checker</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>cpu-checker<span class="w"> </span>-y
+</code></pre></div>
+<p>This is a optional package. From the Debian site:
+"There are some CPU features that are filtered or disabled by system BIOSes. This set of tools seeks to help identify when certain features are in this state, based on kernel values, CPU flags and other conditions. Supported feature tests are NX/XD and VMX/SVM."</p>
+<p>The tools is run using <code>kvm-ok</code> even though it's installed with <code>cpu-checker</code> for some reason. One advantage it has over grepping the /proc/cpuinfo file is that in some failure cases it will provide hints on what to do.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="hll">sudo<span class="w"> </span>kvm-ok
+</span><a id="__codelineno-3-2" name="__codelineno-3-2"></a>INFO:<span class="w"> </span>/dev/kvm<span class="w"> </span>exists
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>KVM<span class="w"> </span>acceleration<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>used
+</code></pre></div></td></tr></table></div>
+<p>from <code>man kvm-ok</code> page:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>DESCRIPTION
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    kvm-ok is a program that will determine if the system
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    can host hardware accelerated KVM virtual machines.
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    The program will first determine if `/proc/cpuinfo`
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    contains the flags indicating that the CPU has the
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    Virtualization Technology (VT) capability.
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    Next, it will check if the /dev/kvm device exists.
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    If running as root, it will check your CPU&#39;s MSRs
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    to see if VT is disabled in the BIOS.
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    In some failure cases, kvm-ok provides hints on
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    how you might go about enabling KVM on a system
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    where it is arbitrarily disabled.
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    If KVM can be used, this script will exit 0, otherwise it will exit non-zero.
+</code></pre></div>
+<h3 id="use-lscpu">Use lscpu</h3>
+<p>lscpu is a built in tool to view cpu information. You can see on line 10 that the virtualization is VT-x:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="hll">lscpu<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;Model name|Socket|Thread|NUMA|CPU\(s\)|virtual&#39;</span>
+</span><a id="__codelineno-5-2" name="__codelineno-5-2"></a>Address<span class="w"> </span>sizes:<span class="w">                        </span><span class="m">46</span><span class="w"> </span>bits<span class="w"> </span>physical,<span class="w"> </span><span class="m">48</span><span class="w"> </span>bits<span class="w"> </span>virtual
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>CPU<span class="o">(</span>s<span class="o">)</span>:<span class="w">                               </span><span class="m">24</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>On-line<span class="w"> </span>CPU<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>list:<span class="w">                  </span><span class="m">0</span>-23
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>Model<span class="w"> </span>name:<span class="w">                           </span>Intel<span class="o">(</span>R<span class="o">)</span><span class="w"> </span>Xeon<span class="o">(</span>R<span class="o">)</span><span class="w"> </span>CPU<span class="w"> </span>E5-2697<span class="w"> </span>v2<span class="w"> </span>@<span class="w"> </span><span class="m">2</span>.70GHz
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>Thread<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>per<span class="w"> </span>core:<span class="w">                   </span><span class="m">2</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>Core<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>per<span class="w"> </span>socket:<span class="w">                   </span><span class="m">12</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>Socket<span class="o">(</span>s<span class="o">)</span>:<span class="w">                            </span><span class="m">1</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>CPU<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>scaling<span class="w"> </span>MHz:<span class="w">                   </span><span class="m">48</span>%
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="hll">Virtualization:<span class="w">                       </span>VT-x
+</span><a id="__codelineno-5-11" name="__codelineno-5-11"></a>NUMA<span class="w"> </span>node<span class="o">(</span>s<span class="o">)</span>:<span class="w">                         </span><span class="m">1</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>NUMA<span class="w"> </span>node0<span class="w"> </span>CPU<span class="o">(</span>s<span class="o">)</span>:<span class="w">                    </span><span class="m">0</span>-23
+</code></pre></div></td></tr></table></div>
+<h2 id="installing-the-packages-for-kvm">Installing the packages for KVM</h2>
+<h3 id="verify-the-ubuntu-version">Verify the Ubuntu Version</h3>
+<p>While  not technically necessary, you can verify the version of Ubuntu you have installed with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="hll">cat<span class="w"> </span>/etc/os-release
+</span><a id="__codelineno-6-2" name="__codelineno-6-2"></a>───────┬────────────────────────────────────────────────────────────────────────────────
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">       </span>│<span class="w"> </span>File:<span class="w"> </span>/etc/os-release
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>───────┼────────────────────────────────────────────────────────────────────────────────
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">   </span><span class="m">1</span><span class="w">   </span>│<span class="w"> </span><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&quot;Ubuntu 24.04 LTS&quot;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">   </span><span class="m">2</span><span class="w">   </span>│<span class="w"> </span><span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;Ubuntu&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">   </span><span class="m">3</span><span class="w">   </span>│<span class="w"> </span><span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&quot;24.04&quot;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">   </span><span class="m">4</span><span class="w">   </span>│<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&quot;24.04 LTS (Noble Numbat)&quot;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">   </span><span class="m">5</span><span class="w">   </span>│<span class="w"> </span><span class="nv">VERSION_CODENAME</span><span class="o">=</span>noble
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">   </span><span class="m">6</span><span class="w">   </span>│<span class="w"> </span><span class="nv">ID</span><span class="o">=</span>ubuntu
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">   </span><span class="m">7</span><span class="w">   </span>│<span class="w"> </span><span class="nv">ID_LIKE</span><span class="o">=</span>debian
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">   </span><span class="m">8</span><span class="w">   </span>│<span class="w"> </span><span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&quot;https://www.ubuntu.com/&quot;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">   </span><span class="m">9</span><span class="w">   </span>│<span class="w"> </span><span class="nv">SUPPORT_URL</span><span class="o">=</span><span class="s2">&quot;https://help.ubuntu.com/&quot;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">  </span><span class="m">10</span><span class="w">   </span>│<span class="w"> </span><span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&quot;https://bugs.launchpad.net/ubuntu/&quot;</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">  </span><span class="m">11</span><span class="w">   </span>│<span class="w"> </span><span class="nv">PRI_POL_URL</span><span class="o">=</span><span class="s2">&quot;https://www.ubuntu.com/terms-and-policies/privacy-policy&quot;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">  </span><span class="m">12</span><span class="w">   </span>│<span class="w"> </span><span class="nv">UBUNTU_CODENAME</span><span class="o">=</span>noble
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">  </span><span class="m">13</span><span class="w">   </span>│<span class="w"> </span><span class="nv">LOGO</span><span class="o">=</span>ubuntu-logo
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>───────┴────────────────────────────────────────────────────────────────────────────────
+</code></pre></div></td></tr></table></div>
+<h3 id="make-sure-ubuntu-is-up-to-date">Make sure Ubuntu is up to date</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade
+</code></pre></div>
+<h3 id="install-the-packages">Install the packages</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libvirt-daemon
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>virt-manager
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-kvm
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>virtinst
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libvirt-clients
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>bridge-utils
+</code></pre></div></td></tr></table></div>
+<p>or you can use this to install all at once:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libvirt-daemon<span class="w"> </span>virt-manager<span class="w"> </span>qemu-kvm<span class="w"> </span>virtinst<span class="w"> </span>libvirt-clients<span class="w"> </span>bridge-utils
+</code></pre></div></td></tr></table></div>
+<p>I prefer to do one package at time so that I can watch each package but either works. All packages are about 200MB.</p>
+<h3 id="configure-the-groups">Configure the groups</h3>
+<p>Your user has to be in the following groups</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>kvm<span class="w"> </span><span class="nv">$USER</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>libvirt<span class="w"> </span><span class="nv">$USER</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="verify-the-groups-have-your-user">Verify the groups have your user</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="hll">groups<span class="w"> </span><span class="nv">$USER</span>
+</span><a id="__codelineno-11-2" name="__codelineno-11-2"></a>mhubbard<span class="w"> </span>:<span class="w"> </span>mhubbard<span class="w"> </span>adm<span class="w"> </span>cdrom<span class="w"> </span>sudo<span class="w"> </span>dip<span class="w"> </span>plugdev<span class="w"> </span>users<span class="w"> </span>kvm<span class="w"> </span>lpadmin<span class="w"> </span>libvirt<span class="w"> </span>wireshark
+</code></pre></div></td></tr></table></div>
+<h2 id="enable-the-virt-daemon">Enable the virt daemon</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>libvirtd
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>libvirtd
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>libvirtd
+</code></pre></div></td></tr></table></div>
+<h3 id="if-you-make-changes-and-need-to-restart-the-daemon">If you make changes and need to restart the daemon</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>libvirtd
+</code></pre></div>
+<h3 id="where-are-the-virt-files-stored">Where are the virt files stored</h3>
+<p>The qemu files are located in /etc/libvirt. You can list the files using:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="hll">ls<span class="w"> </span>-l<span class="w"> </span>/etc/libvirt
+</span><a id="__codelineno-14-2" name="__codelineno-14-2"></a>total<span class="w"> </span>126K
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>drwxr-xr-x<span class="w"> </span><span class="m">2</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">    </span><span class="m">2</span><span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>hooks/
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">450</span><span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>libvirt-admin.conf
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">547</span><span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>libvirt.conf
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span>18K<span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>libvirtd.conf
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">2</span>.3K<span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>libxl.conf
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">2</span>.2K<span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>libxl-lockd.conf
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">2</span>.5K<span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>libxl-sanlock.conf
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">1</span>.2K<span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>lxc.conf
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a>drwxr-xr-x<span class="w"> </span><span class="m">2</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">   </span><span class="m">26</span><span class="w"> </span><span class="m">2024</span>-05-07<span class="w"> </span><span class="m">19</span>:47<span class="w"> </span>nwfilter/
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a>drwxr-xr-x<span class="w"> </span><span class="m">4</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">    </span><span class="m">8</span><span class="w"> </span><span class="m">2024</span>-08-02<span class="w"> </span><span class="m">16</span>:44<span class="w"> </span>qemu/
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a>-rw-------<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span>38K<span class="w"> </span><span class="m">2024</span>-05-20<span class="w"> </span><span class="m">16</span>:17<span class="w"> </span>qemu.conf
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a>-rw-------<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span>38K<span class="w"> </span><span class="m">2024</span>-05-20<span class="w"> </span><span class="m">16</span>:15<span class="w"> </span>qemu.conf.bak
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">2</span>.2K<span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>qemu-lockd.conf
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">2</span>.5K<span class="w"> </span><span class="m">2024</span>-05-06<span class="w"> </span><span class="m">06</span>:12<span class="w"> </span>qemu-sanlock.conf
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a>drwx------<span class="w"> </span><span class="m">2</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">    </span><span class="m">2</span><span class="w"> </span><span class="m">2024</span>-05-07<span class="w"> </span><span class="m">19</span>:47<span class="w"> </span>secrets/
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a>drwxr-xr-x<span class="w"> </span><span class="m">3</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">    </span><span class="m">5</span><span class="w"> </span><span class="m">2024</span>-05-08<span class="w"> </span><span class="m">21</span>:36<span class="w"> </span>storage/
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">3</span>.0K<span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>virtlockd.conf
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">4</span>.0K<span class="w"> </span><span class="m">2024</span>-01-15<span class="w"> </span><span class="m">01</span>:58<span class="w"> </span>virtlogd.conf
+</code></pre></div></td></tr></table></div>
+<h3 id="back-up-qemuconf">Back up qemu.conf</h3>
+<p>If you want to make any changes to the qemu.conf file I recommend making a backup first using:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/libvirt/qemu.conf<span class="w"> </span>/etc/libvirt/qemu.conf.bak
+</code></pre></div>
+<p>Run the following to show the backup:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="hll">sudo<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/etc/libvirt/qemu.conf*
+</span><a id="__codelineno-16-2" name="__codelineno-16-2"></a>-rw-------<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">38439</span><span class="w"> </span>May<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">16</span>:17<span class="w"> </span>/etc/libvirt/qemu.conf
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>-rw-------<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">38407</span><span class="w"> </span>May<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">16</span>:15<span class="w"> </span>/etc/libvirt/qemu.conf.bak
+</code></pre></div></td></tr></table></div>
+<p>To list the qemu.conf file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>cat<span class="w"> </span>etc/libvirt/qemu.conf
+</code></pre></div>
+<p>To edit the qemu.conf file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>gnome-text-editor<span class="w"> </span>/etc/libvirt/qemu.conf
+</code></pre></div>
+<hr />
+<h2 id="creating-a-kvm-bridge">Creating a KVM Bridge</h2>
+<p>Why do I need create a bridge?</p>
+<p><strong>From the Tecmint link in the reference section below</strong></p>
+<p>A typical use case of software network bridging is in a virtualization environment to connect virtual machines (VMs) directly to the host server network. This way, the VMs are deployed on the same subnet as the host and can access services such as DHCP and much more.</p>
+<p>See the link <a href="https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking">Introduction to Linux interfaces for virtual networking</a> for a detailed tutorial on all the virtual interfaces that Linux supports. The list is impressive!</p>
+<p>If you just need a virtual machine that is isolated on the host you can use the NAT interface that is built into KVM. Each guest will get an IP address in the range <code>192.16810.2 - 192.168.10.254</code>.</p>
+<p>If you need a static address on the default network see <a href="https://www.cyberciti.biz/faq/linux-kvm-libvirt-dnsmasq-dhcp-static-ip-address-configuration-for-guest-os/">KVM libvirt assign static guest IP addresses using DHCP on the virtual machine</a></p>
+<h3 id="the-lan-information">The LAN Information</h3>
+<ul>
+<li>LAN Network 192.168.10.0/24</li>
+<li>Ubuntu workstation NIC - <code>eno1</code></li>
+</ul>
+<h3 id="install-the-bridge-utils-package">Install the bridge-utils package</h3>
+<p>If you installed the <code>bridge-utils</code> package earlier you can skip this step.</p>
+<p><code>sudo apt-get install bridge-utils</code></p>
+<p>If you can't remember just run the command again. APT will tell you that the lastest version is installed and exit.</p>
+<h3 id="create-the-netplan-yaml-file">Create the Netplan yaml file</h3>
+<ul>
+<li><code>sudo touch etc/netplan/01-netcfg.yaml</code></li>
+<li><code>sudo gnome-text-editor etc/netplan/01-netcfg.yaml</code></li>
+<li>Paste the following into the yaml file. Change IP addresses and interfaces to match your machine.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="err">#</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">describes</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="n">interfaces</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">system</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">#</span><span class="w"> </span><span class="n">For</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">information</span><span class="p">,</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">netplan</span><span class="p">(</span><span class="m">5</span><span class="p">).</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">network</span><span class="p">:</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">  </span><span class="n">renderer</span><span class="p">:</span><span class="w"> </span><span class="n">networkd</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">  </span><span class="n">ethernets</span><span class="p">:</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">      </span><span class="n">eno1</span><span class="p">:</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">          </span><span class="n">addresses</span><span class="p">:</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">              </span><span class="o">-</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.235</span><span class="o">/</span><span class="m">24</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">  </span><span class="n">bridges</span><span class="p">:</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">    </span><span class="n">br0</span><span class="p">:</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">      </span><span class="n">interfaces</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">eno1</span><span class="w"> </span><span class="p">]</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">      </span><span class="n">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="k">false</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">      </span><span class="n">addresses</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="m">192.168</span><span class="p">.</span><span class="m">10.250</span><span class="o">/</span><span class="m">24</span><span class="p">]</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="w">      </span><span class="n">routes</span><span class="p">:</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="k">default</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">        </span><span class="n">via</span><span class="p">:</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.253</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">        </span><span class="n">metric</span><span class="p">:</span><span class="w"> </span><span class="m">100</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">        </span><span class="k">on</span><span class="o">-</span><span class="n">link</span><span class="p">:</span><span class="w"> </span><span class="k">true</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">      </span><span class="n">nameservers</span><span class="p">:</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="w">        </span><span class="n">addresses</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="m">1.1</span><span class="p">.</span><span class="m">1.1</span><span class="p">]</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="w">      </span><span class="n">dhcp6</span><span class="p">:</span><span class="w"> </span><span class="n">yes</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">      </span><span class="n">link</span><span class="o">-</span><span class="n">local</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">      </span><span class="n">parameters</span><span class="p">:</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">        </span><span class="n">stp</span><span class="p">:</span><span class="w"> </span><span class="k">true</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">        </span><span class="n">forward</span><span class="o">-</span><span class="n">delay</span><span class="p">:</span><span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<p>Save the file, then change the permissions</p>
+<p><code>sudo chmod 600 etc/netplan/01-netcfg.yaml</code></p>
+<h3 id="activate-the-bridge">Activate the bridge</h3>
+<p><code>sudo netplan apply</code></p>
+<p>Fix any errors. Yaml is a pain to work with. You will probably have some errors in the beginning!</p>
+<p>This creates a bridge named br0 mastered to eno1.</p>
+<p>Use <code>ip a</code> to view the interfaces:</p>
+<p><code>eno1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast master br0 state UP group default qlen 1000</code></p>
+<p><code>br0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether e6:b5:f8:a0:9b:c5 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.250/24 brd 192.168.10.255 scope global noprefixroute br0
+       valid_lft forever preferred_lft forever</code></p>
+<h3 id="display-the-bridge">Display the bridge</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span>
+<span class="normal"><a href="#__codelineno-20-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="hll"><span class="n">sudo</span><span class="w"> </span><span class="n">brctl</span><span class="w"> </span><span class="n">show</span>
+</span><a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="n">bridge</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">bridge</span><span class="w"> </span><span class="n">id</span><span class="w">          </span><span class="n">STP</span><span class="w"> </span><span class="n">enabled</span><span class="w">  </span><span class="n">interfaces</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="n">br0</span><span class="w">         </span><span class="m">8000.</span><span class="n">e6b5f8a09bc5</span><span class="w">  </span><span class="n">yes</span><span class="w">          </span><span class="n">eno1</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="w">                                            </span><span class="n">vnet3</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="w">                                            </span><span class="n">vnet5</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="display-the-netplan-configuration">Display the netplan configuration</h3>
+<p>The following displays the system wide network configuration</p>
+<p><code>sudo netplan get</code></p>
+<h3 id="ping-the-hosts-on-the-bridge">Ping the hosts on the bridge</h3>
+<p>The Window server is at 192.168.10.231 and the Windows 10 guest is at 192.168.10.232</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="err">┌─</span><span class="p">[</span><span class="n">mhubbard@HP</span><span class="o">-</span><span class="n">Z420</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="m">375</span><span class="p">]</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="hll"><span class="err">└─</span><span class="p">[</span><span class="err">$</span><span class="p">]</span><span class="w"> </span><span class="n">ping</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.231</span>
+</span><a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="n">PING</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.231</span><span class="w"> </span><span class="p">(</span><span class="m">192.168</span><span class="p">.</span><span class="m">10.231</span><span class="p">)</span><span class="w"> </span><span class="m">56</span><span class="p">(</span><span class="m">84</span><span class="p">)</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="p">.</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="m">64</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.231</span><span class="p">:</span><span class="w"> </span><span class="n">icmp_seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="n">ttl</span><span class="o">=</span><span class="m">128</span><span class="w"> </span><span class="n">time</span><span class="o">=</span><span class="m">0.358</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="m">64</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.231</span><span class="p">:</span><span class="w"> </span><span class="n">icmp_seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="n">ttl</span><span class="o">=</span><span class="m">128</span><span class="w"> </span><span class="n">time</span><span class="o">=</span><span class="m">0.390</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="err">┌─</span><span class="p">[</span><span class="n">mhubbard@HP</span><span class="o">-</span><span class="n">Z420</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="m">376</span><span class="p">]</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a><span class="hll"><span class="err">└─</span><span class="p">[</span><span class="err">$</span><span class="p">]</span><span class="w"> </span><span class="n">ping</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.232</span>
+</span><a id="__codelineno-21-9" name="__codelineno-21-9"></a><span class="n">PING</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.232</span><span class="w"> </span><span class="p">(</span><span class="m">192.168</span><span class="p">.</span><span class="m">10.232</span><span class="p">)</span><span class="w"> </span><span class="m">56</span><span class="p">(</span><span class="m">84</span><span class="p">)</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">data</span><span class="p">.</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a><span class="m">64</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.232</span><span class="p">:</span><span class="w"> </span><span class="n">icmp_seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="n">ttl</span><span class="o">=</span><span class="m">128</span><span class="w"> </span><span class="n">time</span><span class="o">=</span><span class="m">0.657</span><span class="w"> </span><span class="n">ms</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="list-out-the-xml-config-files">list out the xml config files</h3>
+<p><code>l -la /etc/libvirt/qemu/networks</code></p>
+<h2 id="verify-the-network-switch-settings">Verify the network switch settings</h2>
+<p>Make sure that the switchport of the physical network switch doesn't have bpdu-guard enabled! Once the bridge comes up it sends bpdu frames.</p>
+<p>I was connected to a Cisco 3850 on an access port. The switch had <code>spanning-tree portfast bpduguard default</code> in global configuration. The port went into err-disabled when the bridge came up. It took me a while  to figure out why the bridge wasn't working!</p>
+<p>I changed the port to a trunk with native vlan 10 to match the configuration that had been on the acces port.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span>
+<span class="normal"><a href="#__codelineno-22-6">6</a></span>
+<span class="normal"><a href="#__codelineno-22-7">7</a></span>
+<span class="normal"><a href="#__codelineno-22-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">interface</span><span class="w"> </span><span class="n">GigabitEthernet1</span><span class="o">/</span><span class="m">0</span><span class="o">/</span><span class="m">6</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">HP</span><span class="w"> </span><span class="n">z420</span><span class="w"> </span><span class="o">&gt;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="w"> </span><span class="n">switchport</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">vlan</span><span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="w"> </span><span class="n">switchport</span><span class="w"> </span><span class="n">trunk</span><span class="w"> </span><span class="n">native</span><span class="w"> </span><span class="n">vlan</span><span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="w"> </span><span class="n">switchport</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="n">trunk</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a><span class="w"> </span><span class="n">storm</span><span class="o">-</span><span class="n">control</span><span class="w"> </span><span class="n">broadcast</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="m">1.00</span><span class="w"> </span><span class="m">0.50</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a><span class="w"> </span><span class="n">storm</span><span class="o">-</span><span class="n">control</span><span class="w"> </span><span class="n">multicast</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="m">1.00</span><span class="w"> </span><span class="m">0.50</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="n">end</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="virt-commands">Virt Commands</h2>
+<h3 id="view-saved-configuration">View saved configuration</h3>
+<ul>
+<li><code>virsh dumpxml win2k16 | grep -i 'bridge'</code> show bridge config for a host named win2k16</li>
+<li><code>virsh dumpxml win2k16 &gt; ~/win2k16.xml</code> Save the configuration for a host named win2k16</li>
+</ul>
+<h3 id="startstop-a-virtual-machine">Start/stop a virtual machine</h3>
+<ul>
+<li><code>sudo virsh win2k16 start</code> Start a virtual machine named win2k16</li>
+<li><code>sudo virsh shutdown win2k16</code> Send an ACPI shutdown signal to the virtual machine</li>
+<li><code>sudo virsh destroy win2k16</code> Power off the VM without signalling it. Data loss can occur</li>
+<li><code>sudo virsh reboot</code> win2k16 Does not signal the VM. Data loss can occur</li>
+</ul>
+<h3 id="view-vm-details">View VM Details</h3>
+<ul>
+<li><code>virsh dominfo win2k16</code> Show detailed information</li>
+</ul>
+<h3 id="check-virtual-machine-status">Check Virtual Machine status</h3>
+<ul>
+<li><code>virsh domstate win2k16</code></li>
+</ul>
+<h3 id="list-virtual-machines">List virtual machines</h3>
+<ul>
+<li><code>virsh list --all</code> List all vms including those not running</li>
+<li><code>virsh list</code> List all running vms</li>
+</ul>
+<h3 id="connect-to-vm-console">Connect to VM Console</h3>
+<ul>
+<li><code>sudo virsh console win2k16</code> See <a href="[#how-to-enable-kvm-virsh-console-access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)">How to enable KVM virsh console access</a> for a detailed article on how to setup console access</li>
+</ul>
+<h3 id="view-dhcp-leases">View DHCP leases</h3>
+<ul>
+<li><code>virsh net-dhcp-leases default</code> show dhcp leases on network default.</li>
+<li><code>virsh net-dhcp-leases host-bridge</code> show dhcp leases on network host-bridge.</li>
+</ul>
+<p>In the yaml file we disabled dhcp with <code>dhcp4: false</code> so there are no leases.</p>
+<h3 id="view-the-network-yaml-files">View the network yaml files</h3>
+<ul>
+<li>virsh netdumpxml default Show the configuration of the network named default</li>
+<li>virsh netdumpxml host-bridge Show the configuration of the network named host-bridge</li>
+</ul>
+<h3 id="edit-the-network-yaml-files">Edit the network yaml files</h3>
+<ul>
+<li>virsh net-edit default Open the yaml configuration file of the  network <code>default</code> in the system editor</li>
+<li>virsh net-edit host-bridge Open the yaml configuration file of the network <code>host-bridge</code> in the system editor</li>
+</ul>
+<h3 id="startstop-networks">Start/Stop networks</h3>
+<ul>
+<li>virsh net-destroy default Stop the network <code>default</code></li>
+<li>virsh net-start default Start the network <code>default</code></li>
+</ul>
+<h2 id="manually-create-the-bridge-configuration">Manually create the bridge configuration</h2>
+<p>You can manually create the bridge and link it to eno1 from the terminal</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="n">sudo</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">br0</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">bridge</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="n">sudo</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">eno1</span><span class="w"> </span><span class="n">master</span><span class="w"> </span><span class="n">br0</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="n">sudo</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.250</span><span class="o">/</span><span class="m">16</span><span class="w"> </span><span class="n">brd</span><span class="w"> </span><span class="m">192.168</span><span class="p">.</span><span class="m">10.255</span>
+</code></pre></div></td></tr></table></div>
+<p>This method will not survive a reboot but it's quick for testing.</p>
+<hr />
+<h2 id="create-a-windows-10-virtual-machine">Create a Windows 10 virtual machine</h2>
+<p>Linux can't ship Windows drivers so you have to download the <code>virtio</code> package first. The Fedora People host the ISO <a href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso">here</a>. Save it to your <code>Downloads</code> directory.</p>
+<p>You do not need the virtio ISO if you are creating a Linux virtual machine.</p>
+<p>You will need the Windows ISO also. You can download it using this link - <a href="https://www.microsoft.com/en-us/software-download/windows10ISO">Windows 10 2023 Update | Version 22H2</a></p>
+<p>Open the terminal and enter:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>virt-manager
+</code></pre></div>
+<p>Or hit the super key and type <code>virt</code> to bring up the virtual machine icon.</p>
+<p>This will open the virt-manager GUI.</p>
+<p>Click on the "New Virtual Machine" Icon.</p>
+<p><img alt="screenshot" src="../img/virt-manager-new.png" /></p>
+<p>Select "local install media (ISO image or CD-ROM)" and click forward.</p>
+<p><img alt="screenshot" src="../img/virt-manager-new-VM.png" /></p>
+<p>On this screen click "Browse" and select the Windows ISO and click "Forward". Notice that KVM identifies the ISO as Windows 11.</p>
+<p><img alt="screenshot" src="../img/virt-manager-pick-ISO.png" /></p>
+<p>Set the Memory and CPU sizes, click forward</p>
+<p><img alt="screenshot" src="../img/virt-manager-memory.png" /></p>
+<p>Set the disk size. Since this is a throw away virtual machine I set it to 20GB.</p>
+<p><img alt="screenshot" src="../img/virt-manager-disksize.png" /></p>
+<p>Click on "Select or create custom storage". Click "Manage..." and select the virtio ISO that you downloaded earlier.</p>
+<p><img alt="screenshot" src="../img/virt-manager-virtio.png" /></p>
+<p>Click Forward, this is the "ready to begin installation" dialog. Click "Customize before install".</p>
+<p>Click forward and select the NIC</p>
+<p><img alt="screenshot" src="../img/virt-manager-bridge.png" /></p>
+<p>NOTE: you must follow the <a href="#creating-a-kvm-bridge">Creating a KVM Bridge</a> section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.</p>
+<p>If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0 using the Edit, Virtual Machine Details menu.</p>
+<p>Click finish and the GUI based installation of Windows will begin. It's different than a Windows install on bare metal and you will see an image of the virtio drivers installing before the windows installation starts.</p>
+<h2 id="start-the-virtual-machine">Start the virtual machine</h2>
+<p>From the terminal you can open the Virtual Machine's GUI console using</p>
+<p><code>virt-viewer</code></p>
+<p><img alt="screenshot" src="../img/virt-viewer.png" /></p>
+<p>Select the Win11 virtual machine anc click connect.</p>
+<p>The GUI console will open:</p>
+<p><img alt="screenshot" src="../img/virt-manager-running.png" /></p>
+<p>Click the icon on the top left and select <code>Ctrl+Alt+Delete</code>.</p>
+<p><img alt="screenshot" src="../img/virt-manager-ctrl%2Balt%2BDel.png" /></p>
+<p>Note: The VM says it's Windows 11 but it is actually Windows 10!</p>
+<p><img alt="screenshot" src="../img/virt-manager-Win10.png" /></p>
+<p>Congratulations, you now have a bridged Windows virtual machine up and running on Linux with KVM!</p>
+<h2 id="reference-links">Reference Links</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=6435eNKpyYw">VM Networking Libvirt / Bridge</a> - A youtube video</li>
+<li><a href="https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0">How to add a static IP in Ubuntu 22.04 Server</a></li>
+<li><a href="https://www.tecmint.com/create-network-bridge-in-ubuntu/">How to Configure Network Bridge in Ubuntu</a></li>
+<li><a href="https://askubuntu.com/questions/1257461/error-in-network-definition-bond0-interface-eno2-is-not-defined">Error in network definition: bond0: interface not defined</a></li>
+<li><a href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso">use the stable VirtIO ISO, download it from here</a> - Virtio drivers for Windows guests</li>
+<li><a href="https://tuxcare.com/blog/the-essential-kvm-cheat-sheet-for-system-administrators/">The Essential KVM Cheat Sheet for System Administrators</a></li>
+<li><a href="https://ravada.readthedocs.io/en/latest/docs/config_console.html">How to enable KVM virsh console access</a></li>
+<li><a href="https://pve.proxmox.com/wiki/Windows_10_guest_best_practices">Windows 10 guest best practices</a> - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.</li>
+<li><a href="https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking">Introduction to Linux interfaces for virtual networking</a> - A great article by Redhat. It discusses every type of Linux interface that you can create.</li>
+<li><a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-networking_protocols-routed_mode#sect-Networking_protocols-Routed_mode">Redhat Virtualization Deployment Guide</a> - A great article by Redhat on deploying KVM.</li>
+<li><a href="https://www.youtube.com/watch?v=qCUmf5gyOYY">How to Install KVM on Ubuntu 24.04 Step-by-Step</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2024 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rikosintie" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/rikosintie" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/mwhubbard/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
