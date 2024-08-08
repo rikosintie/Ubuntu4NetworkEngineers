@@ -240,7 +240,7 @@ If you want to make any changes to the qemu.conf file I recommend making a backu
 
 ```bash
 sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak
-````
+```
 
 Run the following to show the backup:
 
@@ -254,7 +254,7 @@ To list the qemu.conf file:
 
 ```bash
 sudo cat etc/libvirt/qemu.conf
-````
+```
 
 To edit the qemu.conf file:
 
