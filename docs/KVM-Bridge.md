@@ -19,12 +19,13 @@ By default KVM creates virtual machines on a NATed interface with a dhcp address
 
 The `default` network interface is `virbr0` and using `ip address device show virbr0` looks like this:
 
-```bash numlines="1" hl_lines="1"
+```bash linenums="1" hl_lines="1"
 ip address show device virbr0
 20: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether 52:54:00:b5:48:b1 brd ff:ff:ff:ff:ff:ff
     inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
        valid_lft forever preferred_lft forever
+
 ```
 
 ![screenshot](img/host-with-nat-switch.png)
