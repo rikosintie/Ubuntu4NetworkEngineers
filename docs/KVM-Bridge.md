@@ -7,15 +7,41 @@
 - You create/manage KVM virtual machines with a GUI (virt-manager) or from the terminal (virsh commands)
 - KVM is updated automatically by Ubuntu so there are never package mismatches with the kernel.
 
+----------------------------------------------------------------
+
 KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM!
+
+Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.
 
 Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from [vmwware host modules](https://github.com/mkubecek/vmware-host-modules) after you update Ubuntu. It's an ugly situation.
 
-Like everything else with Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days and create few virtual machines I think you will like it.
+By default KVM creates virtual machines on a NATed interface with a dhcp address in the range of 192.168.122.2-.254. The linux package dnsmasq is used to provide the DNS/DHCP services. NAT enables connected guests to use the host physical machine IP address for communication to any external network.
 
-By default KVM creates virtual machines on a NATed interface with a dhcp address in the range of 192.168.122.2-.254. You can change the DHCP network if need. See [virsh commands](#edit-the-network-yaml-files) for instructions. The virtual machine with have access just like a VMwareE Workstation VM, NATed to the ip of the host.
+The `default` network interface is `virbr0` and using `ip address device show virbr0` looks like this:
 
-As with VMware, you can create a bridge interface so that the virtual machine has an ip address on the same network as the host. Creating a bridge interface is explained [below](#creating-a-kvm-bridge).
+```bash numlines="1" hl_lines="1"
+ip address show device virbr0
+20: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:b5:48:b1 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
+       valid_lft forever preferred_lft forever
+```
+
+![screenshot](img/host-with-nat-switch.png)
+
+----------------------------------------------------------------
+
+As with VMware, you can create a bridge interface so that the virtual machine has an ip address on the same network as the host. Creating a bridge interface is explained [below](#creating-a-kvm-bridge). A network engineer will probably need a bridge interface.
+
+----------------------------------------------------------------
+
+![screenshot](img/bridged-Mode.png)
+
+----------------------------------------------------------------
+
+The Redhat links in the [references](#reference-links) section have a lot of information on creating interfaces.
+
+----------------------------------------------------------------
 
 To run KVM, you must have virtualization enabled at the BIOS level. It can be a challenge to find virtualization in the BIOS because different manufacturers call it different things. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.
 
@@ -231,6 +257,8 @@ To edit the qemu.conf file:
 sudo gnome-text-editor /etc/libvirt/qemu.conf
 ```
 
+----------------------------------------------------------------
+
 ## Creating a KVM Bridge
 
 Why do I need create a bridge?
@@ -434,6 +462,8 @@ sudo ip address add 192.168.10.250/16 brd 192.168.10.255
 
 This method will not survive a reboot but it's quick for testing.
 
+----------------------------------------------------------------
+
 ## Create a Windows 10 virtual machine
 
 Linux can't ship Windows drivers so you have to download the `virtio` package first. The Fedora People host the ISO [here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso). Save it to your `Downloads` directory.
@@ -523,4 +553,5 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 - [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)
 - [Windows 10 guest best practices](https://pve.proxmox.com/wiki/Windows_10_guest_best_practices) - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.
 - [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
+- [Redhat Virtualization Deployment Guide](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-networking_protocols-routed_mode#sect-Networking_protocols-Routed_mode) - A great article by Redhat on deploying KVM.
 - [How to Install KVM on Ubuntu 24.04 Step-by-Step](https://www.youtube.com/watch?v=qCUmf5gyOYY)
