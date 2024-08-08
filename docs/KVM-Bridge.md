@@ -8,6 +8,7 @@
 - KVM is updated automatically by Ubuntu so there are never package mismatches with the kernel.
 
 ----------------------------------------------------------------
+
 ## Introduction
 
 KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM! Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.
