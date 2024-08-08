@@ -8,10 +8,9 @@
 - KVM is updated automatically by Ubuntu so there are never package mismatches with the kernel.
 
 ----------------------------------------------------------------
+## Introduction
 
-KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM!
-
-Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.
+KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM! Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.
 
 Plus, VMware is always way behind the Linux kernel so you have to resort to running the updates from [vmwware host modules](https://github.com/mkubecek/vmware-host-modules) after you update Ubuntu. It's an ugly situation.
 
@@ -27,6 +26,8 @@ ip address show device virbr0
        valid_lft forever preferred_lft forever
 
 ```
+
+----------------------------------------------------------------
 
 ![screenshot](img/host-with-nat-switch.png)
 
@@ -44,9 +45,11 @@ The Redhat links in the [references](#reference-links) section have a lot of inf
 
 ----------------------------------------------------------------
 
+## Installing KVM
+
 To run KVM, you must have virtualization enabled at the BIOS level. It can be a challenge to find virtualization in the BIOS because different manufacturers call it different things. The easiest way to find out what virtualization is called on your PC is to google your motherboard model.
 
-## Verifying virtualization
+### Verifying virtualization
 
 Once you have enabled virtualization in the BIOS, you should verify that it is seen by the CPU.
 
