@@ -289,7 +289,7 @@ If you installed the `bridge-utils` package earlier you can skip this step.
 
 `sudo apt-get install bridge-utils`
 
-If you can't remmeber just run the command again. APT will tell you that the lastest version is installed and exit.
+If you can't remember just run the command again. APT will tell you that the lastest version is installed and exit.
 
 ### Create the Netplan yaml file
 
