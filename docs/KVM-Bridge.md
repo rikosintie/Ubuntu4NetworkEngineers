@@ -553,7 +553,7 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 
 ## Bridged interface with vlans
 
-```python linenum="1" hl_lines="1"
+```python linenums="1" hl_lines="1"
 ip -d link show dev eno1-vlan41 | grep 'master \| vlan pro'
 84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br41 state UP mode DEFAULT group default qlen 1000
     vlan protocol 802.1Q id 41 <REORDER_HDR>
