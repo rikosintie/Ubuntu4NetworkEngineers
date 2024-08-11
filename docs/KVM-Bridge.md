@@ -549,6 +549,8 @@ Note: The VM says it's Windows 11 but it is actually Windows 10!
 
 Congratulations, you now have a bridged Windows virtual machine up and running on Linux with KVM!
 
+----------------------------------------------------------------
+
 ## Bridged interface with vlans
 
 ```python linenum="1" hl_lines="1"
