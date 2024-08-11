@@ -294,10 +294,10 @@ If you can't remember just run the command again. APT will tell you that the lat
 ### Create the Netplan yaml file
 
 - `sudo touch etc/netplan/01-netcfg.yaml`
-- `sudo gnome-text-editor etc/netplan/01-netcfg.yaml`
+- `sudo gnome-text-editor /etc/netplan/01-netcfg.yaml`
 - Paste the following into the yaml file. Change IP addresses and interfaces to match your machine.
 
-```yaml numlines="1"
+```YAML title="/etc/netplan/01-netcfg.yaml" numlines="1"
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
@@ -558,6 +558,8 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br41 state UP mode DEFAULT group default qlen 1000
     vlan protocol 802.1Q id 41 <REORDER_HDR>
 ```
+
+Note the `master br41` in line 2. That tells you that this interface is mastered to bridge br41. Line 3 show the vlan tagging is `id 41` or vlan 41.
 
 ## Reference Links
 
