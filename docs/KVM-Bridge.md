@@ -19,7 +19,6 @@ By default KVM creates virtual machines on a NATed interface with a dhcp address
 
 The `default` network interface is `virbr0` and using `ip address device show virbr0` looks like this:
 
-```bash linenums="1" hl_lines="1"
 ip address show device virbr0
 20: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether 52:54:00:b5:48:b1 brd ff:ff:ff:ff:ff:ff
@@ -297,7 +296,7 @@ If you can't remember just run the command again. APT will tell you that the lat
 - `sudo gnome-text-editor /etc/netplan/01-netcfg.yaml`
 - Paste the following into the yaml file. Change IP addresses and interfaces to match your machine.
 
-```YAML title="/etc/netplan/01-netcfg.yaml" linenums="1"
+```YAML title='/etc/netplan/01-netcfg.yaml' linenums='1'
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
