@@ -549,6 +549,14 @@ Note: The VM says it's Windows 11 but it is actually Windows 10!
 
 Congratulations, you now have a bridged Windows virtual machine up and running on Linux with KVM!
 
+## Bridged interface with vlans
+
+```bash numlines="1" hl_lines="1"
+ip -d link show dev eno1-vlan41 | grep 'master \| vlan pro'
+84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br41 state UP mode DEFAULT group default qlen 1000
+    vlan protocol 802.1Q id 41 <REORDER_HDR>
+```
+
 ## Reference Links
 
 - [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
