@@ -551,10 +551,13 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 
 ## Bridged interface with vlans
 
-```markdown linenums="1" hl_lines="1"
-ip -d link show dev eno1-vlan41 | grep 'master \| vlan pro'
-84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue **`<span style="color: red;">master br41</span>`** state UP mode DEFAULT group default qlen 1000
-    vlan protocol 802.1Q id 41 <REORDER_HDR>
+```markdown linenum="1" hl_lines="1"
+!!! note ""
+
+    ip -d link show dev eno1-vlan41 | grep 'master \| vlan pro'
+    84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue **`<span style="color: red;">master</span>`** br41 state UP mode DEFAULT group default qlen 1000
+        vlan protocol 802.1Q id 41 <REORDER_HDR>
+
 ```
 
 ## Reference Links
