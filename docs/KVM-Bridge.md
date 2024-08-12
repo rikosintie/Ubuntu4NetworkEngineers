@@ -682,6 +682,26 @@ If no errors occur, press `enter` to accept the network settings.
 sudo netplan apply
 ```
 
+### Verify an yaml file before modifying production
+
+The yaml files that Netplan executes can be in these directories:
+
+```bash linenums='1'
+/etc/netplan
+/run/netplan
+/lib/netplan
+```
+
+Netplan searches in that order.
+
+You can use the following command to test a yaml file that isn't in one of these locations.
+
+```bash linenums='1'
+sudo netplan try --config-file /tmp/60-static-ip.yaml
+```
+
+Once you are happy with the configuration, copy the configuration file to `/etc/netplan/` and run `sudo netplan apply`.
+
 ### Configure virtual networks using virsh
 
 The next step is to configure virtual networks defined for virsh domains. This is not necessary, but it makes VM deployment and management easier.
@@ -746,7 +766,7 @@ Define the bridge interface, br0-vlan40, for VLAN40 by creating the /mnt/vmstore
 <network>
     <name>br0-vlan40</name>
     <forward mode="bridge" />
-    <bridge name="br0-vlan40" />
+    <bridge name="br40" />
 </network>
 ```
 
@@ -756,7 +776,7 @@ Define the bridge interface, br0-vlan41, for VLAN41 by creating the /mnt/vmstore
 <network>
     <name>br0-vlan41</name>
     <forward mode="bridge" />
-    <bridge name="br0-vlan41" />
+    <bridge name="br41" />
 </network>
 ```
 
@@ -793,7 +813,7 @@ virsh net-list --all
 
 ### Viewing the configuration
 
-You can use the following command to view the links. I have piped the output to grep and used the `or` operator `\|` to filter on `master` and `vlan protocol`.
+You can use the following command to view the links. I have piped the output to `grep` and used the `or` operator `\|` to filter on `master` and `vlan protocol`.
 
 Untagged br0
 
@@ -810,6 +830,8 @@ ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 40 <REORDER_HDR>
 ```
 
+Note the `master br40` in line 2. That tells you that this interface is mastered to bridge br40. Line 3 show the vlan tagging is `id 40` or vlan 41.
+
 Tagged vlan 41
 
 ```bash linenums="1" hl_lines="1"
@@ -819,6 +841,73 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 ```
 
 Note the `master br41` in line 2. That tells you that this interface is mastered to bridge br41. Line 3 show the vlan tagging is `id 41` or vlan 41.
+
+### Display the bridge interfaces
+
+```bash linenums='1' hl_lines='1'
+sudo bridge link
+4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+75: vnet18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br40 state forwarding priority 32 cost 2
+149: eno1-vlan40@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br40 state forwarding priority 32 cost 100
+150: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br41 state forwarding priority 32 cost 100
+```
+
+You can add at `-d` flag for more details:
+
+```bash linenums='1'
+sudo bridge -d link
+4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off Vlan_tunnel off isolated off locked off
+83: eno1-vlan40@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br40 state forwarding priority 32 cost 100
+    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off Vlan_tunnel off isolated off locked off
+84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br41 state forwarding priority 32 cost 100
+    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off Vlan_tunnel off isolated off locked off
+```
+
+### Display the ipv6 multicast groups
+
+I have ipv6 running on br0. To view the ipv6 multicast groups that it has joined:
+
+```bash linenums='1' hl_lines='1'
+sudo bridge -d mdb
+dev br0 port eno1 grp ff02::1:ffe0:a4db temp proto kernel
+dev br0 port eno1 grp ff02::fb temp proto kernel
+```
+
+### Monitor devices
+
+From the `man bridge` page
+
+```bash
+ The bridge utility can monitor the state of devices and addresses continuously. This option has a slightly different format. Namely, the monitor command is the first in the command line and then the object list follows:
+
+       bridge monitor [ all | OBJECT-LIST ]
+
+       OBJECT-LIST is the list of object types that we want to monitor.
+       It may contain link, fdb, vlan and mdb.  If no file argument is
+       given, bridge opens RTNETLINK, listens on it and dumps state
+       changes in the format described in previous sections.
+
+       If a file name is given, it does not listen on RTNETLINK, but
+       opens the file containing RTNETLINK messages saved in binary
+       format and dumps them.
+```
+
+With no object given:
+
+```bash linenums='1' hl_lines='1'
+sudo bridge -d monitor
+Deleted dc:cd:2f:3c:85:57 dev eno1 master br0 stale
+Deleted 00:e0:b3:34:56:2f dev eno1 master br0 stale
+Deleted d8:d4:3c:65:1b:3e dev eno1 master br0 stale
+00:e0:b3:34:56:2f dev eno1 master br0
+Deleted 06:8b:73:5b:10:e7 dev eno1 master br0 stale
+Deleted dev br0 port eno1 grp ff02::fb temp proto kernel
+dev br0 port eno1 grp ff02::fb temp proto kernel
+```
+
+**NOTE**
+This output is after I connected the Ubuntu VM to `br0-vlan40`. That is why there is the `vnet18`entry. The `vnet` is the virtual interface in the VM.
 
 ### Attach a VM to vlan 40
 
@@ -861,16 +950,40 @@ The route hit interface vlan 40 on the switch and then the inter vlan routing se
 
 It looks like we have successfully created a bridged interface with 3 vlans.
 
+### brctl options
+
+```bash linenums='1' hl_lines='1'
+sudo brctl
+Usage: brctl [commands]
+commands:
+    addbr          <bridge>                 add bridge
+    delbr          <bridge>                 delete bridge
+    addif          <bridge> <device>        add interface to bridge
+    delif          <bridge> <device>        delete interface from bridge
+    hairpin        <bridge> <port> {on|off} turn hairpin on/off
+    setageing      <bridge> <time>          set ageing time
+    setbridgeprio  <bridge> <prio>          set bridge priority
+    setfd          <bridge> <time>          set bridge forward delay
+    sethello       <bridge> <time>          set hello time
+    setmaxage      <bridge> <time>          set max message age
+    setpathcost    <bridge> <port> <cost>   set path cost
+    setportprio    <bridge> <port> <prio>   set port priority
+    show           [ <bridge> ]             show a list of bridges
+    showmacs       <bridge>                 show a list of mac addrs
+    showstp        <bridge>                 show bridge stp info
+    stp            <bridge> {on|off}        turn stp on/off
+```
+
 ## Reference Links
 
+- [Netplan documentation](https://netplan.readthedocs.io) - Offical documentation for Netplan. Tutorials, How to Guides, References
 - [VM Networking Libvirt / Bridge](https://www.youtube.com/watch?v=6435eNKpyYw) - A youtube video
-- [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0)
-- [How to Configure Network Bridge in Ubuntu](https://www.tecmint.com/create-network-bridge-in-ubuntu/)
-- [Error in network definition: bond0: interface not defined](https://askubuntu.com/questions/1257461/error-in-network-definition-bond0-interface-eno2-is-not-defined)
-- [use the stable VirtIO ISO, download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) - Virtio drivers for Windows guests
+- [How to add a static IP in Ubuntu 22.04 Server](https://gist.github.com/devantler/6d8bea11f73cc80d00be1502a9437ff0) - A simple example of a Netplan file for a static address
+- [Error in network definition: bond0: interface not defined](https://askubuntu.com/questions/1257461/error-in-network-definition-bond0-interface-eno2-is-not-defined) - An example of creating a bond in Netplan.
+- [use the stable VirtIO ISO, download it from here](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) - Download the Virtio drivers for Windows guests here
 - [The Essential KVM Cheat Sheet for System Administrators](https://tuxcare.com/blog/the-essential-kvm-cheat-sheet-for-system-administrators/)
-- [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)
+- [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html) - Create a serial interface on a Linux VM
 - [Windows 10 guest best practices](https://pve.proxmox.com/wiki/Windows_10_guest_best_practices) - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.
 - [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
 - [Redhat Virtualization Deployment Guide](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-networking_protocols-routed_mode#sect-Networking_protocols-Routed_mode) - A great article by Redhat on deploying KVM.
-- [How to Install KVM on Ubuntu 24.04 Step-by-Step](https://www.youtube.com/watch?v=qCUmf5gyOYY)
+- [How to Install KVM on Ubuntu 24.04 Step-by-Step](https://www.youtube.com/watch?v=qCUmf5gyOYY) - A 25 minute youtube video on installing KVM on Ubuntu.
