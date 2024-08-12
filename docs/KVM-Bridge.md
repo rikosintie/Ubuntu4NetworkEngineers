@@ -884,11 +884,9 @@ dev br0 port eno1 grp ff02::fb temp proto kernel
 
 From the `man bridge` page
 
-```text
-The bridge utility can monitor the state of devices and addresses continuously.
-This option has a slightly different format. Namely, the monitor command is the first in the command line
-and then the object list follows:
+The bridge utility can monitor the state of devices and addresses continuously This option has a slightly different format. Namely, the monitor command is the first in the command line and then the object list follows:
 
+```text
        bridge monitor [ all | OBJECT-LIST ]
 
        OBJECT-LIST is the list of object types that we want to monitor.
