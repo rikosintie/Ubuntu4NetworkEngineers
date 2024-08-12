@@ -332,9 +332,15 @@ Save the file, then change the permissions
 
 ### Activate the bridge
 
+You can use `sudo netplan try` to test the changes to 01-netcfg.yaml. If there are no errors just press `enter` to accept the changes.
+
+Yaml is a pain to work with. You will probably have some errors in the beginning!
+
+If you are sure that the yaml is correct you can use:
+
 `sudo netplan apply`
 
-Fix any errors. Yaml is a pain to work with. You will probably have some errors in the beginning!
+to activate the file without testing. I recommend using `sudo netplan try` all the time.
 
 This creates a bridge named br0 mastered to eno1.
 
@@ -384,7 +390,7 @@ PING 192.168.10.232 (192.168.10.232) 56(84) bytes of data.
 
 `l -la /etc/libvirt/qemu/networks`
 
-## Verify the network switch settings
+## Verify the physical network switchport settings
 
 Make sure that the switchport of the physical network switch doesn't have bpdu-guard enabled! Once the bridge comes up it sends bpdu frames.
 
@@ -552,6 +558,124 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 
 ## Bridged interface with vlans
 
+:arrow_forward: KEY TAKEAWAYS
+
+- Ubuntu supports vlans by default on the desktop and server
+- KVM supports bridge interfaces with vlan tagging
+- The bridge interface uses STP by default
+- brctl has a rich set of tools for working with bridge interfaces
+- KVM supports [Open vSwitch](https://www.ppenvswitch.org)
+
+### The VLAN Information
+
+- LAN (untagged) Network 192.168.10.0/24
+- vlan 40 Surveillance 192.168.40.0/24
+- vlan 41 IoT 192.168.41.0/24
+- Ubuntu workstation NIC - `eno1`
+
+A Cisco switch is connected to `eno1` on port Gi1/0/6. The port has the following configuration:
+
+```bash linenums='1' hl_lines='1'
+interface GigabitEthernet1/0/6
+ description < HP z420 >
+ switchport access vlan 10
+ switchport trunk native vlan 10
+ switchport trunk allowed vlan 10,40,41
+ switchport mode trunk
+ storm-control broadcast level 1.00 0.50
+ storm-control multicast level 1.00 0.50
+end
+```
+
+Inter vlan routing is enabled and L3 interfaces are configured:
+- vlan 40 - 192.168.10.235
+- vlan 41 - 192.168.41.235
+
+### Disable netfilter for bridged interfaces
+
+To allow communication between the host server, its virtual machines, and the devices in the local VLANs, disable netfilter for bridged interfaces:
+
+```bash title='/etc/systemctl.conf' linenums='1' hl_lines='1'
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-arptables = 0
+```
+
+Apply the changes immediately, without rebooting the host.
+
+```bash
+sysctl -p /etc/sysctl.conf
+```
+
+### Netplan configuration
+
+- Disable dhcp on the NIC
+- Create vlans 40, 41
+- Create three bridge interfaces, and assign IPv4 addresses to them:
+  - br0: bridge on the untagged VLAN1 and the management interface of the server
+  - br40: bridge on vlan40
+  - br41: bridge on vlan41
+
+### Create the yaml file
+
+```yaml title='/etc/netplan/01-ntecfg.yaml'linenums='1'
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+# eno1 - untagged vlan1
+# eno1-vlan40 - Vlan interface to connect to tagged vlan40
+# eno1-vlan41 - Vlan interface to connect to tagged vlan41
+# br0 - bridge for interface eno1 on untagged vlan1
+# br40 - bridge tagged on vlan40
+# br41 - bridge tagged on vlan41
+# switch IPs
+# untagged 192.168.10.235
+# Vlan 40 192.168.40.235
+# Vlan 41 192.168.41.235
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:
+      dhcp4: false
+  vlans:
+    eno1-vlan40:
+      id: 40
+      link: eno1
+    eno1-vlan41:
+      id: 41
+      link: eno1
+    eno1-vlan42:
+      id: 42
+      link: eno1
+  bridges:
+    br0:
+      interfaces: [eno1]
+      dhcp4: no
+      addresses: [192.168.10.235/24]
+    br40:
+      interfaces: [eno1-vlan40]
+      dhcp4: no
+      addresses: [192.168.40.254/24]
+    br41:
+      interfaces: [eno1-vlan41]
+      dhcp4: no
+      addresses: [192.168.41.254/24]
+```
+
+### Test the new network settings
+
+```bash linenums='1' hl_lines='1'
+sudo netplan try
+```
+
+If no errors occur, press `enter` to accept the network settings.
+
+### Apply the configuration
+
+```bash linenums='1' hl_lines='1'
+sudo netplan accept
+```
+
 ```bash linenums="1" hl_lines="1"
 ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br41 state UP mode DEFAULT group default qlen 1000
@@ -559,6 +683,8 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 ```
 
 Note the `master br41` in line 2. That tells you that this interface is mastered to bridge br41. Line 3 show the vlan tagging is `id 41` or vlan 41.
+
+brctl showmacs br0 shows the MAC addresses of the bridge
 
 ## Reference Links
 
