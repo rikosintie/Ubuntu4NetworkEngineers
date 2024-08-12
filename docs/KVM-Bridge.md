@@ -28,7 +28,6 @@ ip address show device virbr0
 ```
 
 ----------------------------------------------------------------
-
 ![screenshot](img/host-with-nat-switch.png)
 
 ----------------------------------------------------------------
@@ -566,6 +565,10 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 - brctl has a rich set of tools for working with bridge interfaces
 - KVM supports [Open vSwitch](https://www.ppenvswitch.org)
 
+Why would you want to create a bridge interface with vlans? On the laptop that you carry around you probably wouldn't have a need to. But if you have an Ubuntu server setup in your lab you almost certainly will want to be able to segment your services.
+
+This tutorial is based of of the official Ubuntu documentation for [netplan](https://netplan.readthedocs.io/en/latest/single-nic-vm-host-with-vlans/). I modified the tutorial to fit my lab server.
+
 ### The VLAN Information
 
 - LAN (untagged) Network 192.168.10.0/24
@@ -662,6 +665,8 @@ network:
       dhcp4: false
       addresses: [192.168.41.254/24]
 ```
+
+It's very easy to make mistakes when creating a Yaml file. You can use the site [YAML Validator](https://jsonformatter.org/yaml-validator) to validate your yaml file.
 
 ### Test the new network settings
 
@@ -773,6 +778,29 @@ virsh net-autostart br0-vlan40
 virsh net-autostart br0-vlan41
 ```
 
+At this point you should have a bridge interface configured with the vlans 40, 41 up and running.
+
+### Viewing the configuration
+
+You can use the following command to view the links. I have piped the output to grep and used the `or` operator `\|` to filter on `master` and `vlan protocol`.
+
+Untagged br0
+
+```bash linenums='1' hl_lines='1'
+ip -d link show dev eno1  | grep 'master \| vlan protocol'
+4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UP mode DEFAULT group default qlen 1000
+```
+
+Tagged vlan 40
+
+```bash linenums='1' hl_lines='1'
+ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
+137: eno1-vlan40@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br40 state UP mode DEFAULT group default qlen 1000
+    vlan protocol 802.1Q id 40 <REORDER_HDR>
+```
+
+Tagged vlan 41
+
 ```bash linenums="1" hl_lines="1"
 ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 84: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br41 state UP mode DEFAULT group default qlen 1000
@@ -781,7 +809,46 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
 
 Note the `master br41` in line 2. That tells you that this interface is mastered to bridge br41. Line 3 show the vlan tagging is `id 41` or vlan 41.
 
-brctl showmacs br0 shows the MAC addresses of the bridge
+### Attach a VM to vlan 40
+
+In virt-manager, double click on a VM, select View, Details. Click on NIC on the left and then select `Virtual network 'br0-vlan40' from the dropdown list.
+
+![screenshot](img/BR40-VM-Interface.png)
+
+Click apply.
+
+Click view, console to open the Ubuntu VM. I don't have a DHCP server on vlan 40 so I manually set `192.168.40.200` as the address.
+
+From the terminal on the VM run `ip address` to find the MAC address.
+
+```bash linenums='1'
+2: enp8s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 52:54:00:75:21:34 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.40.200/24 brd 192.168.40.255 scope global noprefixroute enp8s0
+```
+
+Now back on the host run:
+
+```bash linenums='1' hl_lines='1'
+brctl showmacs br40
+port no  mac addr           is local?  ageing timer
+ 2   52:54:00:75:21:34      no            0.29
+```
+
+The Ubuntu VM's MAC is on the bridge in vlan 40!
+
+### traceroute to a device on vlan 1
+
+```bash linenums='1' hl_lines='1'
+traceroute 192.168.10.222
+traceroute to 192.168.10.222 (192.168.10.222), 64 hops max
+  1   192.168.40.235  3.288ms  1.321ms  1.186ms
+  2   192.168.10.222  0.373ms  0.400ms  1.894ms
+```
+
+The route hit interface vlan 40 on the switch and then the inter vlan routing sent it to the device at 192.168.10.222.
+
+It looks like we have successfully created a bridged interface with 3 vlans.
 
 ## Reference Links
 
