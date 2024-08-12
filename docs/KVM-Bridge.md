@@ -25,10 +25,10 @@ ip address show device virbr0
     link/ether 52:54:00:b5:48:b1 brd ff:ff:ff:ff:ff:ff
     inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
        valid_lft forever preferred_lft forever
-
 ```
 
 ----------------------------------------------------------------
+
 ![screenshot](img/host-with-nat-switch.png)
 
 ----------------------------------------------------------------
@@ -261,6 +261,8 @@ To edit the qemu.conf file:
 sudo gnome-text-editor /etc/libvirt/qemu.conf
 ```
 
+I didn't need to change the qemu.conf file for anything in this post. It's unlikely that you will need to but I wanted to show how to backup a file in the /etc/ directory.
+
 ----------------------------------------------------------------
 
 ## Creating a KVM Bridge
@@ -390,13 +392,13 @@ PING 192.168.10.232 (192.168.10.232) 56(84) bytes of data.
 
 `l -la /etc/libvirt/qemu/networks`
 
-## Verify the physical network switchport settings
+### Verify the physical network switchport settings
 
 Make sure that the switchport of the physical network switch doesn't have bpdu-guard enabled! Once the bridge comes up it sends bpdu frames.
 
 I was connected to a Cisco 3850 on an access port. The switch had `spanning-tree portfast bpduguard default` in global configuration. The port went into err-disabled when the bridge came up. It took me a while  to figure out why the bridge wasn't working!
 
-I changed the port to a trunk with native vlan 10 to match the configuration that had been on the acces port.
+I changed the port to a trunk with native vlan 10 to match the configuration that had been on the access port.
 
 ```c# linenums="1"
 interface GigabitEthernet1/0/6
@@ -409,7 +411,7 @@ interface GigabitEthernet1/0/6
 end
 ```
 
-## Virt Commands
+## Virsh Commands
 
 ### View saved configuration
 
@@ -693,7 +695,7 @@ The yaml files that Netplan executes can be in these directories:
 /lib/netplan
 ```
 
-Netplan searches in that order.
+Netplan searches directories in that order. You can have as many yaml files as needed. They are processed numerically so a file that starts with 00 will be processed first.
 
 You can use the following command to test a yaml file that isn't in one of these locations.
 
@@ -707,7 +709,7 @@ Once you are happy with the configuration, copy the configuration file to `/etc/
 
 The next step is to configure virtual networks defined for virsh domains. This is not necessary, but it makes VM deployment and management easier.
 
-#### Check networking and delete the default network
+### Check networking and delete the default network
 
 Check existing virtual networks:
 
