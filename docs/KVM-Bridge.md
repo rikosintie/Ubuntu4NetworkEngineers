@@ -852,6 +852,9 @@ sudo bridge link
 150: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br41 state forwarding priority 32 cost 100
 ```
 
+**NOTE**
+This output is after I connected the Ubuntu VM to `br0-vlan40`. That is why there is the `vnet18`entry. The `vnet` is the virtual interface in the VM.
+
 You can add at `-d` flag for more details:
 
 ```bash linenums='1'
@@ -879,8 +882,9 @@ dev br0 port eno1 grp ff02::fb temp proto kernel
 From the `man bridge` page
 
 ```text
-The bridge utility can monitor the state of devices and addresses continuously. This option has a slightly
-different format. Namely, the monitor command is the first in the command line and then the object list follows:
+The bridge utility can monitor the state of devices and addresses continuously.
+This option has a slightly different format. Namely, the monitor command is the first in the command line
+and then the object list follows:
 
        bridge monitor [ all | OBJECT-LIST ]
 
@@ -906,9 +910,6 @@ Deleted 06:8b:73:5b:10:e7 dev eno1 master br0 stale
 Deleted dev br0 port eno1 grp ff02::fb temp proto kernel
 dev br0 port eno1 grp ff02::fb temp proto kernel
 ```
-
-**NOTE**
-This output is after I connected the Ubuntu VM to `br0-vlan40`. That is why there is the `vnet18`entry. The `vnet` is the virtual interface in the VM.
 
 ### Attach a VM to vlan 40
 
