@@ -977,6 +977,26 @@ commands:
     stp            <bridge> {on|off}        turn stp on/off
 ```
 
+## Getting NetworkManager debug logs
+
+By default, the NetworkManager log level is set to info. You can use nmcli to modify the logging level:
+
+```bash
+sudo nmcli general logging level DEBUG domains ALL
+```
+
+You do not need to restart NetworkManager to begin seeing debug messages logged to journalctl. You can watch the NetworkManager logs:
+
+```bash
+sudo journalctl -f -u NetworkManager
+```
+
+### Set logging back to info
+
+```bash
+sudo nmcli general logging level INFO domains ALL
+```
+
 ## Reference Links
 
 - [Netplan documentation](https://netplan.readthedocs.io) - Offical documentation for Netplan. Tutorials, How to Guides, References
