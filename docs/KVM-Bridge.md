@@ -679,7 +679,7 @@ If no errors occur, press `enter` to accept the network settings.
 ### Apply the configuration
 
 ```bash linenums='1' hl_lines='1'
-sudo netplan accept
+sudo netplan apply
 ```
 
 ### Configure virtual networks using virsh
@@ -779,6 +779,17 @@ virsh net-autostart br0-vlan41
 ```
 
 At this point you should have a bridge interface configured with the vlans 40, 41 up and running.
+
+### Verify the networks
+
+```bash linenums='1' hl_lines='1'
+virsh net-list --all
+ Name         State    Autostart   Persistent
+-----------------------------------------------
+ br0          active   yes         yes
+ br0-vlan40   active   yes         yes
+ br0-vlan41   active   yes         yes
+```
 
 ### Viewing the configuration
 
