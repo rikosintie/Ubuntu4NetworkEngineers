@@ -19,6 +19,7 @@ By default KVM creates virtual machines on a NATed interface with a dhcp address
 
 The `default` network interface is `virbr0` and using `ip address device show virbr0` looks like this:
 
+```bash
 ip address show device virbr0
 20: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether 52:54:00:b5:48:b1 brd ff:ff:ff:ff:ff:ff
@@ -40,7 +41,7 @@ As with VMware, you can create a bridge interface so that the virtual machine ha
 
 ----------------------------------------------------------------
 
-The Redhat links in the [references](#reference-links) section have a lot of information on creating interfaces.
+The two Redhat links in the [references](#reference-links) section have a lot of information on creating interfaces.
 
 ----------------------------------------------------------------
 
@@ -986,6 +987,6 @@ commands:
 - [The Essential KVM Cheat Sheet for System Administrators](https://tuxcare.com/blog/the-essential-kvm-cheat-sheet-for-system-administrators/)
 - [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html) - Create a serial interface on a Linux VM
 - [Windows 10 guest best practices](https://pve.proxmox.com/wiki/Windows_10_guest_best_practices) - This video is for ProxMox but the section on installing the virtio drives for the Windows NIC works on KVM with virt manager.
-- [Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
+- [Redhat Introduction to Linux interfaces for virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking) - A great article by Redhat. It discusses every type of Linux interface that you can create.
 - [Redhat Virtualization Deployment Guide](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-networking_protocols-routed_mode#sect-Networking_protocols-Routed_mode) - A great article by Redhat on deploying KVM.
 - [How to Install KVM on Ubuntu 24.04 Step-by-Step](https://www.youtube.com/watch?v=qCUmf5gyOYY) - A 25 minute youtube video on installing KVM on Ubuntu.
