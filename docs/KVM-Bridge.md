@@ -573,7 +573,7 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 - vlan 41 IoT 192.168.41.0/24
 - Ubuntu workstation NIC - `eno1`
 
-A Cisco switch is connected to `eno1` on port Gi1/0/6. The port has the following configuration:
+Interface `eno1` is connected to a Cisco switch on port Gi1/0/6. The port has the following configuration:
 
 ```bash linenums='1' hl_lines='1'
 interface GigabitEthernet1/0/6
@@ -588,6 +588,7 @@ end
 ```
 
 Inter vlan routing is enabled and L3 interfaces are configured:
+
 - vlan 40 - 192.168.10.235
 - vlan 41 - 192.168.41.235
 
@@ -618,7 +619,7 @@ sysctl -p /etc/sysctl.conf
 
 ### Create the yaml file
 
-```yaml title='/etc/netplan/01-ntecfg.yaml'linenums='1'
+```yaml title='/etc/netplan/01-netcfg.yaml'linenums='1'
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 # eno1 - untagged vlan1
@@ -650,15 +651,15 @@ network:
   bridges:
     br0:
       interfaces: [eno1]
-      dhcp4: no
+      dhcp4: false
       addresses: [192.168.10.235/24]
     br40:
       interfaces: [eno1-vlan40]
-      dhcp4: no
+      dhcp4: false
       addresses: [192.168.40.254/24]
     br41:
       interfaces: [eno1-vlan41]
-      dhcp4: no
+      dhcp4: false
       addresses: [192.168.41.254/24]
 ```
 
@@ -674,6 +675,102 @@ If no errors occur, press `enter` to accept the network settings.
 
 ```bash linenums='1' hl_lines='1'
 sudo netplan accept
+```
+
+### Configure virtual networks using virsh
+
+The next step is to configure virtual networks defined for virsh domains. This is not necessary, but it makes VM deployment and management easier.
+
+#### Check networking and delete the default network
+
+Check existing virtual networks:
+
+```bash
+virsh net-list --all
+```
+
+There should be one default network as in this example:
+
+```bash linenums='1'
+Name      State    Autostart   Persistent
+--------------------------------------------
+default   active   yes         yes
+```
+
+If needed, use the net-info command to gather more details about the default network:
+
+```bash linenums='1'
+virsh net-info default
+```
+
+Remove the default network:
+
+```bash linenums='1'
+virsh net-destroy default
+virsh net-undefine default
+```
+
+Check network list to confirm the changes have been applied. There should no networks defined now:
+
+```bash linenums='1'
+virsh net-list --all
+```
+
+### Create bridged networks
+
+Create a directory for VM data. For example:
+
+```bash linenums='1'
+sudo mkdir /mnt/vmstore/
+cd /mnt/vmstore/
+```
+
+Define the bridge interface, br0, for VLAN1 by creating the /mnt/vmstore/net-br0.xml file with the following contents:
+
+```xml title='/mnt/vmstore/net-br0.xml' linenums='1'
+<network>
+    <name>br0</name>
+    <forward mode="bridge" />
+    <bridge name="br0" />
+</network>
+```
+
+Define the bridge interface, br0-vlan40, for VLAN40 by creating the /mnt/vmstore/net-br0-vlan40.xml file with the following contents:
+
+```xml title='/mnt/vmstore/net-br0-vlan40.xml ' linenums='1'
+<network>
+    <name>br0-vlan40</name>
+    <forward mode="bridge" />
+    <bridge name="br0-vlan40" />
+</network>
+```
+
+Define the bridge interface, br0-vlan41, for VLAN41 by creating the /mnt/vmstore/net-br0-vlan41.xml file with the following contents:
+
+```xml title='/mnt/vmstore/net-br0-vlan41.xml' linenums='1' hl_lines='1'
+<network>
+    <name>br0-vlan41</name>
+    <forward mode="bridge" />
+    <bridge name="br0-vlan41" />
+</network>
+```
+
+Enable the virtual (bridged) networks. This consists of three steps (performed for each of the networks):
+
+- Define the network
+- Start the network.
+- Set the network to autostart.
+
+```bash linenums='1'
+virsh net-define net-br0.xml
+virsh net-define net-br0-vlan40.xml
+virsh net-define net-br0-vlan41.xml
+virsh net-start br0
+virsh net-start br0-vlan40
+virsh net-start br0-vlan41
+virsh net-autostart br0
+virsh net-autostart br0-vlan40
+virsh net-autostart br0-vlan41
 ```
 
 ```bash linenums="1" hl_lines="1"
