@@ -945,8 +945,8 @@ The Ubuntu VM's MAC is on the bridge in vlan 40!
 
 On the Cisco switch:
 
-```text linenums='1' hl_lines='1'
-show mac address-table int g1/0/6
+```text linenums='1' hl_lines='1 9 11'
+show mac address-table interface Gi1/0/6
           Mac Address Table
 -------------------------------------------
 
@@ -956,7 +956,7 @@ Vlan    Mac Address       Type        Ports
   10    e6b5.f8a0.9bc5    DYNAMIC     Gi1/0/6
   40    7e3a.69b5.0656    DYNAMIC     Gi1/0/6
   40    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
-  41    5254.0075.2134    DYNAMIC     Gi1/0/6
+  40    5254.0075.2134    DYNAMIC     Gi1/0/6
   41    6622.e1b0.951b    DYNAMIC     Gi1/0/6
   41    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
 Total Mac Addresses for this criterion: 7
