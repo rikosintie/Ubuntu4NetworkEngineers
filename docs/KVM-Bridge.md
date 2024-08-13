@@ -744,7 +744,7 @@ Check network list to confirm the changes have been applied. There should no net
 virsh net-list --all
 ```
 
-### Create bridged networks
+### Create the networks
 
 Create a directory for VM data. For example:
 
@@ -783,7 +783,9 @@ Define the bridge interface, br0-vlan41, for VLAN41 by creating the /mnt/vmstore
 </network>
 ```
 
-Enable the virtual (bridged) networks. This consists of three steps (performed for each of the networks):
+### Enable the networks
+
+This consists of three steps (performed for each of the networks):
 
 - Define the network
 - Start the network.
@@ -803,7 +805,11 @@ virsh net-autostart br0-vlan41
 
 At this point you should have a bridge interface configured with the vlans 40, 41 up and running.
 
-### Verify the networks
+## Verify the networks
+
+KVM/Virsh provides a rich set of terminal commands for verifying the network and viewing vlans, MAC addresses and ohter network information.
+
+### Use net-list
 
 ```bash linenums='1' hl_lines='1'
 virsh net-list --all
@@ -814,7 +820,7 @@ virsh net-list --all
  br0-vlan41   active   yes         yes
 ```
 
-### Viewing the configuration
+### Viewing the links
 
 You can use the following command to view the links. I have piped the output to `grep` and used the `or` operator `\|` to filter on `master` and `vlan protocol`.
 
@@ -886,16 +892,16 @@ From the `man bridge` page
 The bridge utility can monitor the state of devices and addresses continuously This option has a slightly different format. Namely, the monitor command is the first in the command line and then the object list follows:
 
 ```text
-       bridge monitor [ all | OBJECT-LIST ]
+     bridge monitor [ all | OBJECT-LIST ]
 
-       OBJECT-LIST is the list of object types that we want to monitor.
-       It may contain link, fdb, vlan and mdb.  If no file argument is
-       given, bridge opens RTNETLINK, listens on it and dumps state
-       changes in the format described in previous sections.
+     OBJECT-LIST is the list of object types that we want to monitor.
+     It may contain link, fdb, vlan and mdb.  If no file argument is
+     given, bridge opens RTNETLINK, listens on it and dumps state
+     changes in the format described in previous sections.
 
-       If a file name is given, it does not listen on RTNETLINK, but
-       opens the file containing RTNETLINK messages saved in binary
-       format and dumps them.
+     If a file name is given, it does not listen on RTNETLINK, but
+     opens the file containing RTNETLINK messages saved in binary
+     format and dumps them.
 ```
 
 With no object given:
@@ -937,7 +943,26 @@ port no  mac addr           is local?  ageing timer
 
 The Ubuntu VM's MAC is on the bridge in vlan 40!
 
-### traceroute to a device on vlan 1
+On the Cisco switch:
+
+```text linenums='1' hl_lines='1'
+show mac address-table int g1/0/6
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+  10    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
+  10    e6b5.f8a0.9bc5    DYNAMIC     Gi1/0/6
+  40    7e3a.69b5.0656    DYNAMIC     Gi1/0/6
+  40    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
+  41    5254.0075.2134    DYNAMIC     Gi1/0/6
+  41    6622.e1b0.951b    DYNAMIC     Gi1/0/6
+  41    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
+Total Mac Addresses for this criterion: 7
+```
+
+### traceroute to vlan 10
 
 ```bash linenums='1' hl_lines='1'
 traceroute 192.168.10.222
@@ -974,7 +999,7 @@ commands:
     stp            <bridge> {on|off}        turn stp on/off
 ```
 
-## Getting NetworkManager debug logs
+## NetworkManager debug logs
 
 By default, the NetworkManager log level is set to info. You can use nmcli to modify the logging level:
 
