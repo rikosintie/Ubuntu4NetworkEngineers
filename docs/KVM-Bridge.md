@@ -823,7 +823,6 @@ Untagged br0
 ```yaml linenums='1' hl_lines='1'
 ip -d link show dev eno1  | grep 'master \| vlan protocol'
 4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UP mode DEFAULT group default qlen 1000
-1. **master**
 ```
 
 Tagged vlan 40
@@ -834,7 +833,7 @@ ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 40 <REORDER_HDR>
 ```
 
-Note the `master br40` in line 2. That tells you that this interface is mastered to bridge br40. Line 3 show the vlan tagging is `id 40` or vlan 41.
+:man_raising_hand: The `master br40` in line 2. That tells you that this interface is mastered to bridge br40. Line 3 show the vlan tagging is `id 40` or vlan 41.
 
 Tagged vlan 41
 
