@@ -673,7 +673,7 @@ It's very easy to make mistakes when creating a Yaml file. You can use the site 
 
 ### Test the new network settings
 
-```bash linenums='1' hl_lines='1'
+```bash
 sudo netplan try
 ```
 
@@ -681,7 +681,7 @@ If no errors occur, press `enter` to accept the network settings.
 
 ### Apply the configuration
 
-```bash linenums='1' hl_lines='1'
+```bash
 sudo netplan apply
 ```
 
@@ -699,7 +699,7 @@ Netplan searches directories in that order. You can have as many yaml files as n
 
 You can use the following command to test a yaml file that isn't in one of these locations.
 
-```bash linenums='1'
+```bash
 sudo netplan try --config-file /tmp/60-static-ip.yaml
 ```
 
@@ -719,7 +719,7 @@ virsh net-list --all
 
 There should be one default network as in this example:
 
-```bash linenums='1'
+```bash
 Name      State    Autostart   Persistent
 --------------------------------------------
 default   active   yes         yes
@@ -727,20 +727,20 @@ default   active   yes         yes
 
 If needed, use the net-info command to gather more details about the default network:
 
-```bash linenums='1'
+```bash
 virsh net-info default
 ```
 
 Remove the default network:
 
-```bash linenums='1'
+```bash
 virsh net-destroy default
 virsh net-undefine default
 ```
 
 Check network list to confirm the changes have been applied. There should no networks defined now:
 
-```bash linenums='1'
+```bash
 virsh net-list --all
 ```
 
@@ -775,7 +775,7 @@ Define the bridge interface, br0-vlan40, for VLAN40 by creating the /mnt/vmstore
 
 Define the bridge interface, br0-vlan41, for VLAN41 by creating the /mnt/vmstore/net-br0-vlan41.xml file with the following contents:
 
-```xml title='/mnt/vmstore/net-br0-vlan41.xml' linenums='1' hl_lines='1'
+```xml title='/mnt/vmstore/net-br0-vlan41.xml' linenums='1'
 <network>
     <name>br0-vlan41</name>
     <forward mode="bridge" />
@@ -855,12 +855,11 @@ sudo bridge link
 150: eno1-vlan41@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br41 state forwarding priority 32 cost 100
 ```
 
-**NOTE**
-This output is after I connected the Ubuntu VM to `br0-vlan40`. That is why there is the `vnet18`entry. The `vnet` is the virtual interface in the VM.
+:arrow_right:  This output is after I connected the Ubuntu VM to `br0-vlan40`. That is why there is the `vnet18`entry. The `vnet` is the virtual interface in the VM.
 
 You can add at `-d` flag for more details:
 
-```bash linenums='1'
+```bash linenums='1' hl_lines="1"
 sudo bridge -d link
 4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
     hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off Vlan_tunnel off isolated off locked off
@@ -914,11 +913,9 @@ dev br0 port eno1 grp ff02::fb temp proto kernel
 
 ### Attach a VM to vlan 40
 
-In virt-manager, double click on a VM, select View, Details. Click on NIC on the left and then select `Virtual network 'br0-vlan40' from the dropdown list.
+In virt-manager, double click on a VM, select View, Details. Click on NIC on the left and then select `Virtual network 'br0-vlan40' from the dropdown list. Click apply to save the configuration.
 
 ![screenshot](img/BR40-VM-Interface.png)
-
-Click apply.
 
 Click view, console to open the Ubuntu VM. I don't have a DHCP server on vlan 40 so I manually set `192.168.40.200` as the address.
 
