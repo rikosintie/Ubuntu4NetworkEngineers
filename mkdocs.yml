@@ -19,6 +19,7 @@ theme:
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
+    - content.code.annotate
   language: en
   favicon: img/favicon.ico
   palette:
