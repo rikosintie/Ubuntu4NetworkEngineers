@@ -933,15 +933,24 @@ From the terminal on the VM run `ip address` to find the MAC address.
     inet 192.168.40.200/24 brd 192.168.40.255 scope global noprefixroute enp8s0
 ```
 
-Now back on the host run:
+Now back on the host run
+
+```bash linenums='1' hl_lines='1'
+ip a show dev eno1-vlan40
+149: eno1-vlan40@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br40 state UP group default qlen 1000
+    link/ether c4:34:6b:65:b6:d0 brd ff:ff:ff:ff:ff:ff
+```
+
+The vlan 40 interface has a MAC address of `c4:34:6b:65:b6:d0`
 
 ```bash linenums='1' hl_lines='1'
 brctl showmacs br40
 port no  mac addr           is local?  ageing timer
+ 1   c4:34:6b:65:b6:d0      yes           0.00
  2   52:54:00:75:21:34      no            0.29
 ```
 
-The Ubuntu VM's MAC is on the bridge in vlan 40!
+The Ubuntu VM's MAC and the vlan 40 mac are on the bridge `br40`!
 
 On the Cisco switch:
 
@@ -961,6 +970,8 @@ Vlan    Mac Address       Type        Ports
   41    c434.6b65.b6d0    DYNAMIC     Gi1/0/6
 Total Mac Addresses for this criterion: 7
 ```
+
+You can see the `br40` MAC address on line 9 and the VM's MAC address on line 11. So we have verified that the bridge works and the vlan tagging works!
 
 ### traceroute to vlan 10
 
