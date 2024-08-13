@@ -820,9 +820,10 @@ You can use the following command to view the links. I have piped the output to 
 
 Untagged br0
 
-```bash linenums='1' hl_lines='1'
+```yaml linenums='1' hl_lines='1'
 ip -d link show dev eno1  | grep 'master \| vlan protocol'
 4: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UP mode DEFAULT group default qlen 1000
+1. **master**
 ```
 
 Tagged vlan 40
