@@ -833,7 +833,7 @@ ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 40 <REORDER_HDR>
 ```
 
-:small_red_triangle: The `master br40` in line 2 tells you that this interface is mastered to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 41.
+:small_red_triangle: The `master br40` in line 2 tells you that this interface is **mastered** to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 41.
 
 Tagged vlan 41
 
@@ -843,7 +843,7 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 41 <REORDER_HDR>
 ```
 
-:heavy_exclamation_mark: The `master br41` in line 2 tells you that this interface is **mastered** to bridge br41. Line 3 shows the vlan tagging is `id 41` or vlan 41.
+:small_red_triangle: The `master br41` in line 2 tells you that this interface is **mastered** to bridge br41. Line 3 shows the vlan tagging is `id 41` or vlan 41.
 
 ### Display the bridge interfaces
 
