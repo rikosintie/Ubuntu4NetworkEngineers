@@ -943,7 +943,7 @@ ip a show dev eno1-vlan40
 
 The vlan 40 interface has a MAC address of `c4:34:6b:65:b6:d0`
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 brctl showmacs br40
 port no  mac addr           is local?  ageing timer
  1   c4:34:6b:65:b6:d0      yes           0.00
