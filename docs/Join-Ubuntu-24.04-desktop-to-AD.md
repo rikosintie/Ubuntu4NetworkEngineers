@@ -167,6 +167,12 @@ NTP=192.168.10.222
 FallbackNTP=time-b.nist.gov
 ```
 
+### Restart the daemons
+
+```bash
+mhubbard@z420VM-2404:~$ systemctl daemon-reload
+```
+
 Verify that the time on the DC matches the time on the Ubuntu box
 
 On the DC
@@ -191,10 +197,9 @@ System clock synchronized: yes
           RTC in local TZ: no
 ```
 
-### Install the packages
+### Install the packages needed to join AD
 
 ```bash linenums='1'
-mhubbard@z420VM-2404:~$ systemctl daemon-reload
 sudo apt update
 sudo apt install sssd-ad sssd-tools realmd adcli
 ```
