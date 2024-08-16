@@ -520,14 +520,17 @@ mhubbard@pu.pri : domain users@pu.pri denied rodc password replication group@pu.
 ### Display user information
 
 ```text linenums='1' hl_lines='1'
-mhubbard@z420VM-2404:~$ getent passwd z420VM-2404@pu.pri
-z420VM-2404@pu.pri:*:1242401603:1242400513:Hubbard, Michael:/home/z420VM-2404@pu.pri:/bin/bash
+mhubbard@z420VM-2404:~$ getent passwd mhubbard@pu.pri
+mhubbard@pu.pri:*:1242401104:1242400513:Hubbard, Michael:/home/mhubbard@pu.pri:/bin/bash
 ```
 
-The numeric values after the domain name are:
+The values:
 
-- User ID Number `uidNumber 1242401603`
-- group ID Number `gidNumber 1242400513`
+- User ID Number (uidNumber):   `1242401603`
+- group ID Number (gidNumber):  `1242400513`
+- User:                         `Hubbard, Michael`
+- Home Directory:               `/home/mhubbard@pu.pri`
+- Shell:                        `/bin/bash`
 
 ## References
 
