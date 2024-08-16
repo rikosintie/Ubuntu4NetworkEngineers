@@ -161,15 +161,16 @@ sudo nano /etc/systemd/timesyncd.conf
 
 Set the DC as the NTP server
 
-```bash linenums='1'
+```text linenums='1'
 [Time]
 NTP=192.168.10.222
 FallbackNTP=time-b.nist.gov
 ```
 
-Verify that the time matches the DC
+Verify that the time on the DC matches the time on the Ubuntu box
 
-- On the DC:
+On the DC
+
 - Open a cmd window
 
 ```bash linenums='1' hl_lines='1'
