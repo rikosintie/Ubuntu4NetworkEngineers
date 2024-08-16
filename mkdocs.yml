@@ -7,6 +7,8 @@ nav:
   - SSH: SSH.md
   - Tools: CH02-Install-Tools.md
   - KVM: KVM-Bridge.md
+  - Add to AD: Join-Ubuntu-24.04-desktop-to-AD.md
+
 theme:
   name: material
   features:
