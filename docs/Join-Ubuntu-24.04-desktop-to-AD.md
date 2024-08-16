@@ -71,7 +71,7 @@ The `host` command may return 127.0.1.1 as the ip address. This will still work 
 
 If the `host` command returns 127.0.1.1 as the ip address then use the `ip address` command to find the network ip address. In this example the `@` is used to pick a specific DNS server. If you don't use it the host will use the loopback IP address.
 
-```bash linenums='1' hl_lines='1 6 12'
+```bash linenums='1' hl_lines='1 6 12 15'
 mhubbard@z420VM-2404:~$ dig @192.168.10.222 -x 192.168.10.105
 
 ; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 -x 192.168.10.105
@@ -107,7 +107,7 @@ dig @192.168.10.222 -x 192.168.10.105 | grep -B 2 z420
 
 ## Use dig with the hostname
 
-```bash linenums='1' hl_lines='1 6 12'
+```bash linenums='1' hl_lines='1 6 12 15'
 mhubbard@z420VM-2404:~$ dig @192.168.10.222 z420VM-2404.pu.pri
 
 ; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 z420VM-2404.pu.pri
@@ -133,7 +133,7 @@ z420VM-2404.pu.pri.    3600     IN    A    192.168.10.105
 
 ### Verify that a DC (192.168.10.222) is the DNS resolver
 
-```bash linenums='1' hl_lines='1 11 12'
+```text linenums='1' hl_lines='1 11 12'
 mhubbard@z420VM-2404:~$ resolvectl status
 Global
          Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -157,7 +157,7 @@ If you see `#NTP` then you will need to edit the `/etc/systemd/timesyncd.conf fi
 
 ```bash
 sudo nano /etc/systemd/timesyncd.conf
-````
+```
 
 Set the DC as the NTP server
 
