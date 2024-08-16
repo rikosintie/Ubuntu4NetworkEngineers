@@ -2,6 +2,15 @@
 
 Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages.
 
+I am assuming that a working Active Directory domain is already configured and you have access to the credentials to join a machine to that domain.
+
+The domain controller is:
+
+- Acting as an authoritative DNS server for the domain.
+- The primary DNS resolver (check with systemd-resolve --status).
+- System time is correct and in sync, maintained via a service like chrony or ntp.
+- The domain used in this example is pu.pri.
+
 ## Check the current host configuration
 
 ```bash
@@ -124,7 +133,7 @@ z420VM-2404.pu.pri.    3600     IN    A    192.168.10.105
 
 ### Verify that a DC (192.168.10.222) is the DNS resolver
 
-```bash
+```bash linenums='1' hl_lines='1 11 12'
 mhubbard@z420VM-2404:~$ resolvectl status
 Global
          Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -140,19 +149,34 @@ Current DNS Server: 192.168.10.222
 
 ### Display the NTP server
 
-`cat /etc/systemd/timesyncd.conf`
+```bash
+cat /etc/systemd/timesyncd.conf
+```
 
 If you see `#NTP` then you will need to edit the `/etc/systemd/timesyncd.conf file.
 
-`sudo nano /etc/systemd/timesyncd.conf`
+```bash
+sudo nano /etc/systemd/timesyncd.conf
+````
 
 Set the DC as the NTP server
+
+```bash linenums='1'
 [Time]
 NTP=192.168.10.222
 FallbackNTP=time-b.nist.gov
+```
 
 Verify that the time matches the DC.
-On the DC, cmd, time
+On the DC:
+Open a cmd window
+
+```bash linenums='1' hl_lines='1`
+C:\Windows\system32>time
+The current time is: 14:57:02.37
+```
+
+```bash linenums='1' hl_lines='1`
 mhubbard@z420VM-2404:~$ timedatectl status
                Local time: Thu 2024-05-30 14:58:08 PDT
            Universal time: Thu 2024-05-30 21:58:08 UTC
@@ -161,13 +185,19 @@ mhubbard@z420VM-2404:~$ timedatectl status
 System clock synchronized: yes
               NTP service: active
           RTC in local TZ: no
+```
 
+### Install the packages
+
+```bash linenums='1'
 mhubbard@z420VM-2404:~$ systemctl daemon-reload
-
 sudo apt update
-
 sudo apt install sssd-ad sssd-tools realmd adcli
+```
 
+### Verify that the host can find AD
+
+```bash linenums='1' hl_lines='1 4 8 10'
 mhubbard@z420VM-2404:~$ realm -v discover pu.pri
  * Resolving: _ldap._tcp.pu.pri
  * Performing LDAP DSE lookup on: 192.168.10.222
@@ -185,7 +215,11 @@ pu.pri
   required-package: libpam-sss
   required-package: adcli
   required-package: samba-common-bin
+```
 
+### Create the Kerberos file
+
+```bash linenums='1' hl_lines='1 3 8'
 mhubbard@z420VM-2404:~$ sudo touch /etc/krb5.conf
 
 mhubbard@z420VM-2404:~$ sudo nano /etc/krb5.conf
@@ -197,7 +231,13 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/krb5.conf
 [libdefaults]
     default_realm = PU.PRI
     rdns = false
+```
 
+### Review the installed packages
+
+This is optional but I wanted to show you how to use `apt` to display versions
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ apt policy sssd-ad sssd-tools realmd adcli
 sssd-ad:
   Installed: 2.9.4-1.1ubuntu6
@@ -227,7 +267,11 @@ adcli:
  *** 0.9.2-1ubuntu2 500
         500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
         100 /var/lib/dpkg/status
+```
 
+### Verify that hte DC is discoverable
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ realm discover randc02.pu.pri
 pu.pri
   type: kerberos
@@ -242,6 +286,10 @@ pu.pri
   required-package: libpam-sss
   required-package: adcli
   required-package: samba-common-bin
+
+### Join the Domain
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ realm join randc02.pu.pri
 Password for Administrator:
 mhubbard@z420VM-2404:~$ realm discover randc02.pu.pri
@@ -260,7 +308,11 @@ pu.pri
   required-package: samba-common-bin
   login-formats: %U@pu.pri
   login-policy: allow-realm-logins
+```
 
+### Display the sssd.conf file
+
+```bash linenums='1' hl_lines='1 5'
 mhubbard@z420VM-2404:~$ sudo ls -l /etc/sssd
 total 8
 drwxr-xr-x 2 root root 4096 Apr 16 02:55 conf.d
@@ -285,7 +337,22 @@ ad_domain = pu.pri
 use_fully_qualified_names = True
 ldap_id_mapping = True
 access_provider = ad
+```
 
+Note:
+Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
+
+Some key things from this config file:
+
+- cache_credentials: This allows logins when the AD server is unreachable
+- fallback_homedir: The home directory. By default, /home/<user>@<domain>. For example, the AD user john will have a home directory of /home/john@ad1.example.com.
+- use_fully_qualified_names: Users will be of the form user@domain, not just user. This should only be changed if you are certain no other domains will ever join the AD forest, via one of the several possible trust relationships.
+
+## Display the PAN configuration file
+
+In Linux Pluggable Authentication Modules (PAM) are used to extend authentication to new services.
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ sudo cat /etc/pam.d/common-session
 #
 # /etc/pam.d/common-session - session-related modules common to all services
@@ -334,25 +401,29 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/pam.d/common-session
 # pam-auth-update(8) for details.
 
 # here are the per-package modules (the "Primary" block)
-session	[default=1]			pam_permit.so
+session [default=1]          pam_permit.so
 # here's the fallback if no module succeeds
-session	requisite			pam_deny.so
+session requisite            pam_deny.so
 # prime the stack with a positive return value if there isn't one already;
 # this avoids us returning an error just because nothing sets a success code
 # since the modules above will each just jump around
-session	required			pam_permit.so
+session required             pam_permit.so
 # The pam_umask module will set the umask according to the system default in
 # /etc/login.defs and user settings, solving the problem of different
 # umask settings with different shells, display managers, remote sessions etc.
 # See "man pam_umask".
-session optional			pam_umask.so
+session optional             pam_umask.so
 # and here are more per-package modules (the "Additional" block)
-session	required	pam_unix.so
-session	optional			pam_sss.so
-session	optional	pam_systemd.so
-session	optional			pam_mkhomedir.so
+session required    pam_unix.so
+session optional    pam_sss.so
+session optional    pam_systemd.so
+session optional    pam_mkhomedir.so
 # end of pam-auth-update config
+```
 
+### Display the realm
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ realm list
 pu.pri
   type: kerberos
@@ -369,7 +440,11 @@ pu.pri
   required-package: samba-common-bin
   login-formats: %U@pu.pri
   login-policy: allow-realm-logins
+```
 
+### Display AD Status
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ sudo sssctl domain-status pu.pri
 Online status: Online
 
@@ -382,25 +457,29 @@ Discovered AD Global Catalog servers:
 
 Discovered AD Domain Controller servers:
 - randc02.pu.pri
+```
 
-sudo sssctl user-checks ubuntu@pu.pri
-user: ubuntu@pu.pri
+### Display a specific user
+
+```bash linenums='1' hl_lines='1'
+sudo sssctl user-checks mhubbard@pu.pri
+user: mhubbard@pu.pri
 action: acct
 service: system-auth
 
 SSSD nss user lookup result:
- - user name: ubuntu@pu.pri
- - user id: 1242401603
+ - user name: mhubbard@pu.pri
+ - user id: 1242401104
  - group id: 1242400513
- - gecos: ubuntu
- - home directory: /home/ubuntu@pu.pri
+ - gecos: Hubbard, Michael
+ - home directory: /home/mhubbard@pu.pri
  - shell: /bin/bash
 
 SSSD InfoPipe user lookup result:
- - name: ubuntu@pu.pri
- - uidNumber: 1242401603
+ - name: mhubbard@pu.pri
+ - uidNumber: 1242401104
  - gidNumber: 1242400513
- - gecos: ubuntu
+ - gecos: Hubbard, Michael
  - homeDirectory: not set
  - loginShell: not set
 
@@ -410,9 +489,28 @@ pam_acct_mgmt: Permission denied
 
 PAM Environment:
  - no env -
+```
 
+### Display the "Domain Users" group
+
+```bash linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ getent group "domain users"@pu.pri
-domain users@pu.pri:*:1242400513:ubuntu@pu.pri
+domain users@pu.pri:*:1242400513:z420VM-2404@pu.pri
+```
 
-mhubbard@z420VM-2404:~$ getent passwd ubuntu@pu.pri
-ubuntu@pu.pri:*:1242401603:1242400513:ubuntu:/home/ubuntu@pu.pri:/bin/bash
+### Display a user's groups
+
+```bash linenums='1' hl_lines='1'
+groups mhubbard@pu.pri
+mhubbard@pu.pri : domain users@pu.pri denied rodc password replication group@pu.pri cisco admins@pu.pri enterprise admins@pu.pri sonicwall-nps@pu.pri domain admins@pu.pri schema admins@pu.pri
+```
+
+
+```bash linenums='1' hl_lines='1'
+mhubbard@z420VM-2404:~$ getent passwd z420VM-2404@pu.pri
+z420VM-2404@pu.pri:*:1242401603:1242400513:ubuntu:/home/z420VM-2404@pu.pri:/bin/bash
+```
+
+## References
+
+[How to set up SSSD with Active Directory](https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory)
