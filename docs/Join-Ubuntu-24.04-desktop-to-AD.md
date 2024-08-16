@@ -299,7 +299,7 @@ pu.pri
 
 ### Join the Domain
 
-```bash linenums='1' hl_lines='1 4'
+```bash linenums='1' hl_lines='1 48 18'
 mhubbard@z420VM-2404:~$ realm join randc02.pu.pri
 Password for Administrator:
 
@@ -323,11 +323,12 @@ pu.pri
 
 ### Display the sssd.conf file
 
-```bash linenums='1' hl_lines='1 5'
+```bash linenums='1' hl_lines='1 6'
 mhubbard@z420VM-2404:~$ sudo ls -l /etc/sssd
 total 8
 drwxr-xr-x 2 root root 4096 Apr 16 02:55 conf.d
 -rw------- 1 root root  414 May 30 15:57 sssd.conf
+
 mhubbard@z420VM-2404:~$ sudo cat /etc/sssd/sssd.conf
 
 [sssd]
@@ -359,7 +360,7 @@ Some key things from this config file:
 - fallback_homedir: The home directory. By default, /home/<user>@<domain>. For example, the AD user john will have a home directory of /home/john@ad1.example.com.
 - use_fully_qualified_names: Users will be of the form user@domain, not just user. This should only be changed if you are certain no other domains will ever join the AD forest, via one of the several possible trust relationships.
 
-## Display the PAN configuration file
+## Display the PAM configuration file
 
 In Linux Pluggable Authentication Modules (PAM) are used to extend authentication to new services.
 
@@ -379,22 +380,22 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/pam.d/common-session
 # pam-auth-update(8) for details.
 
 # here are the per-package modules (the "Primary" block)
-session	[default=1]			pam_permit.so
+session [default=1]         pam_permit.so
 # here's the fallback if no module succeeds
-session	requisite			pam_deny.so
+session requisite           pam_deny.so
 # prime the stack with a positive return value if there isn't one already;
 # this avoids us returning an error just because nothing sets a success code
 # since the modules above will each just jump around
-session	required			pam_permit.so
+session required            pam_permit.so
 # The pam_umask module will set the umask according to the system default in
 # /etc/login.defs and user settings, solving the problem of different
 # umask settings with different shells, display managers, remote sessions etc.
 # See "man pam_umask".
-session optional			pam_umask.so
+session optional            pam_umask.so
 # and here are more per-package modules (the "Additional" block)
-session	required	pam_unix.so
-session	optional			pam_sss.so
-session	optional	pam_systemd.so
+session required    pam_unix.so
+session optional    pam_sss.so
+session optional    pam_systemd.so
 # end of pam-auth-update config
 mhubbard@z420VM-2404:~$ sudo pam-auth-update --enable mkhomedir
 mhubbard@z420VM-2404:~$ sudo cat /etc/pam.d/common-session
@@ -434,7 +435,7 @@ session optional    pam_mkhomedir.so
 
 ### Display the realm
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 4 6 7 15'
 mhubbard@z420VM-2404:~$ realm list
 pu.pri
   type: kerberos
@@ -455,7 +456,7 @@ pu.pri
 
 ### Display AD Status
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 6 9 12'
 mhubbard@z420VM-2404:~$ sudo sssctl domain-status pu.pri
 Online status: Online
 
@@ -472,7 +473,7 @@ Discovered AD Domain Controller servers:
 
 ### Display a specific user
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 2 7 8 9 11'
 sudo sssctl user-checks mhubbard@pu.pri
 user: mhubbard@pu.pri
 action: acct
@@ -516,11 +517,17 @@ groups mhubbard@pu.pri
 mhubbard@pu.pri : domain users@pu.pri denied rodc password replication group@pu.pri cisco admins@pu.pri enterprise admins@pu.pri sonicwall-nps@pu.pri domain admins@pu.pri schema admins@pu.pri
 ```
 
+### Display user information
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ getent passwd z420VM-2404@pu.pri
-z420VM-2404@pu.pri:*:1242401603:1242400513:ubuntu:/home/z420VM-2404@pu.pri:/bin/bash
+z420VM-2404@pu.pri:*:1242401603:1242400513:Hubbard, Michael:/home/z420VM-2404@pu.pri:/bin/bash
 ```
+
+The numeric values after the domain name are:
+
+- User ID Number `uidNumber 1242401603`
+- group ID Number `gidNumber 1242400513`
 
 ## References
 
