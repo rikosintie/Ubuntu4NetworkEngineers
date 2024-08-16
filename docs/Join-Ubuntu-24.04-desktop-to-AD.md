@@ -156,7 +156,7 @@ cat /etc/systemd/timesyncd.conf
 If you see `#NTP` then you will need to edit the `/etc/systemd/timesyncd.conf` file.
 
 ```bash
-sudo nano /etc/systemd/timesyncd.conf
+sudo gnome-text-editor /etc/systemd/timesyncd.conf
 ```
 
 Set the DC as the NTP server
@@ -231,7 +231,7 @@ pu.pri
 ```bash linenums='1' hl_lines='1 3 8'
 mhubbard@z420VM-2404:~$ sudo touch /etc/krb5.conf
 
-mhubbard@z420VM-2404:~$ sudo nano /etc/krb5.conf
+mhubbard@z420VM-2404:~$ sudo gnome-text-editor /etc/krb5.conf
 [libdefaults]
     default_realm = PU.PRI
     rdns = false
@@ -278,9 +278,9 @@ adcli:
         100 /var/lib/dpkg/status
 ```
 
-### Verify that hte DC is discoverable
+### Verify that the DC is discoverable
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 5 7'
 mhubbard@z420VM-2404:~$ realm discover randc02.pu.pri
 pu.pri
   type: kerberos
@@ -295,12 +295,14 @@ pu.pri
   required-package: libpam-sss
   required-package: adcli
   required-package: samba-common-bin
+```
 
 ### Join the Domain
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 4'
 mhubbard@z420VM-2404:~$ realm join randc02.pu.pri
 Password for Administrator:
+
 mhubbard@z420VM-2404:~$ realm discover randc02.pu.pri
 pu.pri
   type: kerberos
