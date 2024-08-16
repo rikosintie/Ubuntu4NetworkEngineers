@@ -323,7 +323,7 @@ pu.pri
 
 ### Display the sssd.conf file
 
-```bash linenums='1' hl_lines='1 6'
+```bash linenums='1' hl_lines='1 6 9 14 15 16 17 18 19 20 21 22 23'
 mhubbard@z420VM-2404:~$ sudo ls -l /etc/sssd
 total 8
 drwxr-xr-x 2 root root 4096 Apr 16 02:55 conf.d
@@ -357,7 +357,7 @@ Something very important to remember is that this file must have permissions 060
 Some key things from this config file:
 
 - cache_credentials: This allows logins when the AD server is unreachable
-- fallback_homedir: The home directory. By default, /home/<user>@<domain>. For example, the AD user john will have a home directory of /home/john@ad1.example.com.
+- fallback_homedir: The home directory. By default, /home/<user>@<domain>. For example, the AD user john will have a home directory of /home/john@pu.pri.
 - use_fully_qualified_names: Users will be of the form user@domain, not just user. This should only be changed if you are certain no other domains will ever join the AD forest, via one of the several possible trust relationships.
 
 ## Display the PAM configuration file
@@ -514,7 +514,7 @@ domain users@pu.pri:*:1242400513:z420VM-2404@pu.pri
 
 ```bash linenums='1' hl_lines='1'
 groups mhubbard@pu.pri
-mhubbard@pu.pri : domain users@pu.pri denied rodc password replication group@pu.pri cisco admins@pu.pri enterprise admins@pu.pri sonicwall-nps@pu.pri domain admins@pu.pri schema admins@pu.pri
+mhubbard@pu.pri : domain users@pu.pri denied rodc password replication group@pu.pri cisco admins@pu.pri sonicwall-nps@pu.pri domain admins@pu.pri
 ```
 
 ### Display user information
