@@ -167,16 +167,19 @@ NTP=192.168.10.222
 FallbackNTP=time-b.nist.gov
 ```
 
-Verify that the time matches the DC.
-On the DC:
-Open a cmd window
+Verify that the time matches the DC
 
-```bash linenums='1' hl_lines='1`
+- On the DC:
+- Open a cmd window
+
+```bash linenums='1' hl_lines='1'
 C:\Windows\system32>time
 The current time is: 14:57:02.37
 ```
 
-```bash linenums='1' hl_lines='1`
+On the Ubuntu box
+
+```text linenums='1' hl_lines='1'
 mhubbard@z420VM-2404:~$ timedatectl status
                Local time: Thu 2024-05-30 14:58:08 PDT
            Universal time: Thu 2024-05-30 21:58:08 UTC
