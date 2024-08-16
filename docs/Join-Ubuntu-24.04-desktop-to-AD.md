@@ -1,6 +1,6 @@
 # Join Ubuntu 24.04 desktop to AD
 
-The VM should be fully updated and running in VMware workstation
+Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages.
 
 ## Check the current host configuration
 
@@ -22,7 +22,9 @@ Firmware Version: 6.00
     Firmware Age: 3y 6month 2w 3d
 ```
 
-## If the host needs to have the FQDN configured.
+Notice that the fully qualified DNS domain `pu.pri` is appended to the hostname. That is the domain we will join. For an Ubuntu 24.04 machine to join AD it must have hostname setup correctly.
+
+## If the host needs to have the FQDN configured
 
 ```bash
 mhubbard@z420VM-2404:~$ sudo hostnamectl set-hostname z420VM-2404.pu.pri
@@ -32,64 +34,83 @@ z420VM-2404.pu.pri
 
 ## Verify that the host can be found in DNS
 
-```bash
+The `host` command with a domain name as the parameter will return DNS information about the domain name.
+
+```bash linenums='1' hl_lines='1'
+host pu.pri
+pu.pri has address 192.168.10.222
+pu.pri has IPv6 address fd24:42b2:12ce:0:a9da:b612:7d4c:7683
+```
+
+Now we know at least one DC is at `192.168.10.222`.
+
+The `host` command with a hostname will print out the hostname and ip address. Then we use the `host` command with the ip address to look up the host in DNS.
+
+```bash linenums='1' hl_lines='1 3'
 mhubbard@z420VM-2404:~$ host z420VM-2404
 z420VM-2404.pu.pri has address 192.168.10.105
 mhubbard@z420VM-2404:~$ host 192.168.10.105
-105.10.168.192.in-addr.arpa domain name pointer ubuntu.pu.pri.
+105.10.168.192.in-addr.arpa domain name pointer z420VM-2404.pu.pri.
 ```
+
+The `host` command may return 127.0.1.1 as the ip address. This will still work in the second step. The host command returned the pu.pri domain so the host can be found in DNS zone. There are two reasons I did it this way instead of just looking at the terminal prompt and pinging that name with the domain added on:
+
+- You just learned about the host command. You can use `man host` to learn more.
+- DNS is critical to AD and this method makes the DNS properties more obvious.
 
 ### Use dig to verify that DNS works
 
-```bash
-mhubbard@z420VM-2404:~$ dig -x 192.168.10.105
+If the `host` command returns 127.0.1.1 as the ip address then use the `ip address` command to find the network ip address. In this example the `@` is used to pick a specific DNS server. If you don't use it the host will use the loopback IP address.
 
-; <<>> DiG 9.18.24-0ubuntu5-Ubuntu <<>> -x 192.168.10.105
+```bash linenums='1' hl_lines='1'
+mhubbard@z420VM-2404:~$ dig @192.168.10.222 -x 192.168.10.105
+
+; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 -x 192.168.10.105
+; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46458
-;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 57352
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
 
 ;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 65494
+; EDNS: version: 0, flags:; udp: 4000
 ;; QUESTION SECTION:
-;105.10.168.192.in-addr.arpa.    IN   PTR
+;105.10.168.192.in-addr.arpa.	IN	PTR
 
-;; ANSWER SECTION:
-105.10.168.192.in-addr.arpa. 3105 IN    PTR  ubuntu.pu.pri.
+;; AUTHORITY SECTION:
+10.168.192.in-addr.arpa. 3600    IN    SOA    randc02.pu.pri. hostmaster.pu.pri. 313 900 600 86400 3600
 
-;; Query time: 1 msec
-;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
-;; WHEN: Thu May 30 14:54:19 PDT 2024
-;; MSG SIZE  rcvd: 83
+;; Query time: 2 msec
+;; SERVER: 192.168.10.222#53(192.168.10.222) (UDP)
+;; WHEN: Thu Aug 15 17:28:05 PDT 2024
+;; MSG SIZE  rcvd: 117
 ```
 
 ## Use dig with the hostname
 
 ```bash
-mhubbard@z420VM-2404:~$ dig z420VM-2404
+mhubbard@z420VM-2404:~$ dig @192.168.10.222 z420VM-2404
 
-; <<>> DiG 9.18.24-0ubuntu5-Ubuntu <<>> z420VM-2404
+; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 z420VM-2404
+; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 19658
-;; flags: qr aa rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 51799
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
 
 ;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 65494
+; EDNS: version: 0, flags:; udp: 4000
 ;; QUESTION SECTION:
-;z420VM-2404.			IN	A
+;z420VM-2404.            IN    A
 
-;; ANSWER SECTION:
-z420VM-2404.		0	IN	A	192.168.10.105
-
-;; Query time: 3 msec
-;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
-;; WHEN: Thu May 30 14:54:54 PDT 2024
-;; MSG SIZE  rcvd: 56
+;; Query time: 0 msec
+;; SERVER: 192.168.10.222#53(192.168.10.222) (UDP)
+;; WHEN: Thu Aug 15 17:22:04 PDT 2024
+;; MSG SIZE  rcvd: 40
 ```
 
 ### Verify that a DC (192.168.10.222) is the DNS resolver
+
 ```bash
 mhubbard@z420VM-2404:~$ resolvectl status
 Global
