@@ -1,5 +1,17 @@
 # Join Ubuntu 24.04 desktop to AD
 
+![screenshot](img/Add2AD.png)
+
+----------------------------------------------------------------
+
+:arrow_forward: KEY TAKEAWAYS
+
+- It's surprising easy to join Ubuntu 24.04 to Active Directory
+- All of the packages needed are in the Ubuntu package manager
+- Ubuntu has several tools for managing the AD connection
+
+----------------------------------------------------------------
+
 Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages.
 
 I am assuming that a working Active Directory domain is already configured and you have access to the credentials to join a machine to that domain.
