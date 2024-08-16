@@ -62,51 +62,64 @@ The `host` command may return 127.0.1.1 as the ip address. This will still work 
 
 If the `host` command returns 127.0.1.1 as the ip address then use the `ip address` command to find the network ip address. In this example the `@` is used to pick a specific DNS server. If you don't use it the host will use the loopback IP address.
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 6 12'
 mhubbard@z420VM-2404:~$ dig @192.168.10.222 -x 192.168.10.105
 
 ; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 -x 192.168.10.105
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 57352
-;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24053
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
 
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4000
 ;; QUESTION SECTION:
-;105.10.168.192.in-addr.arpa.	IN	PTR
+;105.10.168.192.in-addr.arpa.    IN    PTR
 
-;; AUTHORITY SECTION:
-10.168.192.in-addr.arpa. 3600    IN    SOA    randc02.pu.pri. hostmaster.pu.pri. 313 900 600 86400 3600
+;; ANSWER SECTION:
+105.10.168.192.in-addr.arpa. 3600 IN    PTR    z420VM-2404.pu.pri.
 
-;; Query time: 2 msec
+;; Query time: 0 msec
 ;; SERVER: 192.168.10.222#53(192.168.10.222) (UDP)
-;; WHEN: Thu Aug 15 17:28:05 PDT 2024
-;; MSG SIZE  rcvd: 117
+;; WHEN: Thu Aug 15 17:40:12 PDT 2024
+;; MSG SIZE  rcvd: 88
+
+```
+
+You can also use grep to just pull out the hostname section:
+
+```bash linenums='1' hl_lines='1'
+dig @192.168.10.222 -x 192.168.10.105 | grep -B 2 z420
+
+;; ANSWER SECTION:
+105.10.168.192.in-addr.arpa. 3600 IN    PTR    z420VM-2404.pu.pri.
 ```
 
 ## Use dig with the hostname
 
-```bash
-mhubbard@z420VM-2404:~$ dig @192.168.10.222 z420VM-2404
+```bash linenums='1' hl_lines='1 6 12'
+mhubbard@z420VM-2404:~$ dig @192.168.10.222 z420VM-2404.pu.pri
 
-; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 z420VM-2404
+; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 z420VM-2404.pu.pri
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 51799
-;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 3444
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
 
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4000
 ;; QUESTION SECTION:
-;z420VM-2404.            IN    A
+;z420VM-2404.pu.pri.            IN    A
+
+;; ANSWER SECTION:
+z420VM-2404.pu.pri.    3600     IN    A    192.168.10.105
 
 ;; Query time: 0 msec
 ;; SERVER: 192.168.10.222#53(192.168.10.222) (UDP)
-;; WHEN: Thu Aug 15 17:22:04 PDT 2024
-;; MSG SIZE  rcvd: 40
+;; WHEN: Thu Aug 15 17:45:48 PDT 2024
+;; MSG SIZE  rcvd: 63
 ```
 
 ### Verify that a DC (192.168.10.222) is the DNS resolver
