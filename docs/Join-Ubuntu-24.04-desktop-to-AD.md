@@ -153,7 +153,7 @@ Current DNS Server: 192.168.10.222
 cat /etc/systemd/timesyncd.conf
 ```
 
-If you see `#NTP` then you will need to edit the `/etc/systemd/timesyncd.conf file.
+If you see `#NTP` then you will need to edit the `/etc/systemd/timesyncd.conf` file.
 
 ```bash
 sudo nano /etc/systemd/timesyncd.conf
