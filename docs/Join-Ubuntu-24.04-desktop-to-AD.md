@@ -59,7 +59,7 @@ adcli:
         100 /var/lib/dpkg/status
 ```
 
-Prerequisites before joining AD:
+### Prerequisites before joining AD
 
 - A working Active Directory domain is available
 - You have access to the credentials to join a machine to that domain
