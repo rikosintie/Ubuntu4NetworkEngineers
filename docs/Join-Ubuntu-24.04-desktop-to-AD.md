@@ -12,13 +12,16 @@
 
 ----------------------------------------------------------------
 
-Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages. Use the following command to update:
+Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed.
+
+## Install the packages needed to join AD
+
+Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages. Use the following command to update and install the packages:
 
 ```bash linenums='1'
 sudo apt update && sudo apt upgrade
+sudo apt install sssd-ad sssd-tools realmd adcli
 ```
-
- and you have access to the credentials to join a machine to that domain.
 
 Prerequisites:
 
@@ -238,13 +241,6 @@ System clock synchronized: yes
           RTC in local TZ: no
 ```
 
-### Install the packages needed to join AD
-
-```bash linenums='1'
-sudo apt update
-sudo apt install sssd-ad sssd-tools realmd adcli
-```
-
 ### Verify that the host can find AD
 
 ```text linenums='1' hl_lines='1 4 8 10'
@@ -287,7 +283,7 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/krb5.conf
 
 This is optional but I wanted to show you how to use `apt` to display versions
 
-```bash linenums='1' hl_lines='1 2 9 16 23'
+```text linenums='1' hl_lines='1 2 9 16 23'
 mhubbard@z420VM-2404:~$ apt policy sssd-ad sssd-tools realmd adcli
 sssd-ad:
   Installed: 2.9.4-1.1ubuntu6
