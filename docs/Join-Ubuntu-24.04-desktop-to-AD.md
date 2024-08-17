@@ -23,7 +23,43 @@ sudo apt update && sudo apt upgrade
 sudo apt install sssd-ad sssd-tools realmd adcli
 ```
 
-Prerequisites:
+### Review the installed packages
+
+This is optional but I wanted to show you how to use `apt` to display versions
+
+```text linenums='1' hl_lines='1 2 9 16 23'
+mhubbard@z420VM-2404:~$ apt policy sssd-ad sssd-tools realmd adcli
+sssd-ad:
+  Installed: 2.9.4-1.1ubuntu6
+  Candidate: 2.9.4-1.1ubuntu6
+  Version table:
+ *** 2.9.4-1.1ubuntu6 500
+        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
+        100 /var/lib/dpkg/status
+sssd-tools:
+  Installed: 2.9.4-1.1ubuntu6
+  Candidate: 2.9.4-1.1ubuntu6
+  Version table:
+ *** 2.9.4-1.1ubuntu6 500
+        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
+        100 /var/lib/dpkg/status
+realmd:
+  Installed: 0.17.1-3build2
+  Candidate: 0.17.1-3build2
+  Version table:
+ *** 0.17.1-3build2 500
+        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
+        100 /var/lib/dpkg/status
+adcli:
+  Installed: 0.9.2-1ubuntu2
+  Candidate: 0.9.2-1ubuntu2
+  Version table:
+ *** 0.9.2-1ubuntu2 500
+        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
+        100 /var/lib/dpkg/status
+```
+
+Prerequisites before joining AD:
 
 - A working Active Directory domain is available
 - You have access to the credentials to join a machine to that domain
@@ -33,7 +69,7 @@ Prerequisites:
 - The domain used in this example is pu.pri.
 - The laptop's hostname is z420VM-2404.
 
-## Check the current host configuration
+### Check the current host configuration
 
 ```text linenums='1' hl_lines='1 2'
 mhubbard@z420VM-2404:~$ hostnamectl
@@ -277,42 +313,6 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/krb5.conf
 [libdefaults]
     default_realm = PU.PRI
     rdns = false
-```
-
-### Review the installed packages
-
-This is optional but I wanted to show you how to use `apt` to display versions
-
-```text linenums='1' hl_lines='1 2 9 16 23'
-mhubbard@z420VM-2404:~$ apt policy sssd-ad sssd-tools realmd adcli
-sssd-ad:
-  Installed: 2.9.4-1.1ubuntu6
-  Candidate: 2.9.4-1.1ubuntu6
-  Version table:
- *** 2.9.4-1.1ubuntu6 500
-        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
-        100 /var/lib/dpkg/status
-sssd-tools:
-  Installed: 2.9.4-1.1ubuntu6
-  Candidate: 2.9.4-1.1ubuntu6
-  Version table:
- *** 2.9.4-1.1ubuntu6 500
-        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
-        100 /var/lib/dpkg/status
-realmd:
-  Installed: 0.17.1-3build2
-  Candidate: 0.17.1-3build2
-  Version table:
- *** 0.17.1-3build2 500
-        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
-        100 /var/lib/dpkg/status
-adcli:
-  Installed: 0.9.2-1ubuntu2
-  Candidate: 0.9.2-1ubuntu2
-  Version table:
- *** 0.9.2-1ubuntu2 500
-        500 http://us.archive.ubuntu.com/ubuntu noble/main amd64 Packages
-        100 /var/lib/dpkg/status
 ```
 
 ### Verify that the DC is discoverable
