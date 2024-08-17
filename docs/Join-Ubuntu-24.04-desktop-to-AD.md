@@ -510,7 +510,11 @@ Discovered AD Domain Controller servers:
 
 The format at the login screen is `username@domain`. In this example, my username is mhubbard and the domain is pu.pri so the login will be `mhubbard@pu.pri`. Remember that the password is the Active Directory password.
 
+----------------------------------------------------------------
+
 ![screenshot](img/create-user-directory.png)
+
+----------------------------------------------------------------
 
 You will see a message that the /home/username@domain directory is being created.
 
