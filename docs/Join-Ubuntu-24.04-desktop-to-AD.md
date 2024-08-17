@@ -12,12 +12,18 @@
 
 ----------------------------------------------------------------
 
-Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages.
+Many companies will require that all laptops or Virtual Machines be connected to Active Directory. That is no problem with Ubuntu 24.04 as Canonical provides the packages needed. Whether it's a laptop or VM it should be fully updated before starting the installation of the Active Directory packages. Use the following command to update:
 
-I am assuming that a working Active Directory domain is already configured and you have access to the credentials to join a machine to that domain.
+```bash linenums='1'
+sudo apt update && sudo apt upgrade
+```
+
+ and you have access to the credentials to join a machine to that domain.
 
 Prerequisites:
 
+- A working Active Directory domain is available
+- You have access to the credentials to join a machine to that domain
 - The DC is acting as an authoritative DNS server for the domain.
 - The primary DNS resolver on the laptop points to a DC (check with resolvectl status).
 - System time is correct and in sync with the DC, maintained via a service like chrony or ntp.
@@ -26,7 +32,7 @@ Prerequisites:
 
 ## Check the current host configuration
 
-```bash
+```text linenums='1' hl_lines='1 2'
 mhubbard@z420VM-2404:~$ hostnamectl
  Static hostname: z420VM-2404.pu.pri
        Icon name: computer-vm
@@ -56,7 +62,7 @@ z420VM-2404.pu.pri
 
 ### Verify that a DC (192.168.10.222) is the DNS resolver
 
-```text linenums='1' hl_lines='1 11 12'
+```text linenums='1' hl_lines='1 6 9 11'
 mhubbard@z420VM-2404:~$ resolvectl status
 Global
          Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -74,7 +80,7 @@ Current DNS Server: 192.168.10.222
 
 The `host` command with a domain name as the parameter will return DNS information about the domain name.
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 host pu.pri
 pu.pri has address 192.168.10.222
 pu.pri has IPv6 address fd24:42b2:12ce:0:a9da:b612:7d4c:7683
@@ -84,14 +90,14 @@ Now we know at there is a DC is at `192.168.10.222`.
 
 The `host` command with a hostname will print out the hostname and ip address. Then we use the `host` command with the ip address to look up the host in DNS.
 
-```bash linenums='1' hl_lines='1 3'
+```text linenums='1' hl_lines='1 3'
 mhubbard@z420VM-2404:~$ host z420VM-2404
 z420VM-2404.pu.pri has address 192.168.10.105
 mhubbard@z420VM-2404:~$ host 192.168.10.105
 105.10.168.192.in-addr.arpa domain name pointer z420VM-2404.pu.pri.
 ```
 
-The `host` command may return 127.0.1.1 as the ip address. This will still work in the second step. The host command returned the pu.pri domain so the host can be found in DNS zone. There are two reasons I did it this way instead of just looking at the terminal prompt and pinging that name with the domain added on:
+The `host` command may return 127.0.1.1 as the ip address. This will still work in the second step. The host command returned the pu.pri domain so the host can be found in the DNS zone. There are two reasons I did it this way instead of just looking at the terminal prompt and pinging that name with the domain added on:
 
 - You just learned about the host command. You can use `man host` to learn more.
 - DNS is critical to AD and this method makes the DNS properties more obvious.
@@ -100,7 +106,7 @@ The `host` command may return 127.0.1.1 as the ip address. This will still work 
 
 If the `host` command returns 127.0.1.1 as the ip address then use the `ip address` command to find the network ip address. In this example the `@` is used to pick a specific DNS server. If you don't use it the host will use the loopback IP address.
 
-```bash linenums='1' hl_lines='1 6 12 15'
+```text linenums='1' hl_lines='1 6 12 15'
 mhubbard@z420VM-2404:~$ dig @192.168.10.222 -x 192.168.10.105
 
 ; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 -x 192.168.10.105
@@ -127,7 +133,7 @@ mhubbard@z420VM-2404:~$ dig @192.168.10.222 -x 192.168.10.105
 
 You can also use grep to just pull out the hostname section:
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 dig @192.168.10.222 -x 192.168.10.105 | grep -B 2 z420
 
 ;; ANSWER SECTION:
@@ -136,7 +142,7 @@ dig @192.168.10.222 -x 192.168.10.105 | grep -B 2 z420
 
 ## Use dig with the hostname
 
-```bash linenums='1' hl_lines='1 6 12 15'
+```text linenums='1' hl_lines='1 6 12 15'
 mhubbard@z420VM-2404:~$ dig @192.168.10.222 z420VM-2404.pu.pri
 
 ; <<>> DiG 9.18.28-0ubuntu0.24.04.1-Ubuntu <<>> @192.168.10.222 z420VM-2404.pu.pri
@@ -168,7 +174,7 @@ I setup Windows server DHCP to always register a DNS A record and created an AD 
 
 #### Release and renew the lease
 
-Ubuntu 24.04 has transitioned a lot of networking services to networkd from network manager. Because of this the DHclient isn't installed. Run hte following command to install it and release/renew the lease:
+Ubuntu 24.04 has transitioned a lot of networking services to networkd from network manager. Because of this dhclient isn't installed. Run the following commands to install it and release/renew the lease:
 
 ```bash linenums='1'
 sudo apt install isc-dhcp-client
@@ -178,7 +184,7 @@ sudo dhclient -v ens33
 
 The `-r` releases and the dhclient with no options renews. The `-v` means verbose and I like to use it to get more detail.
 
-### ### Troubleshooting If using static IP
+### Troubleshooting If using static IP
 
 There is no automatic way for the DNS server to register your laptop if you are using a static IP address. You will have to manually create the DNS entry. I highly recommend that you create the forward and reverse DNS entry.
 
@@ -205,7 +211,7 @@ FallbackNTP=time-b.nist.gov
 ### Restart the daemons
 
 ```bash
-mhubbard@z420VM-2404:~$ systemctl daemon-reload
+systemctl daemon-reload
 ```
 
 Verify that the time on the DC matches the time on the Ubuntu box
@@ -214,14 +220,14 @@ On the DC
 
 - Open a cmd window
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 C:\Windows\system32>time
 The current time is: 14:57:02.37
 ```
 
 On the Ubuntu box
 
-```text linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1 2 5 6 7'
 mhubbard@z420VM-2404:~$ timedatectl status
                Local time: Thu 2024-05-30 14:58:08 PDT
            Universal time: Thu 2024-05-30 21:58:08 UTC
@@ -241,7 +247,7 @@ sudo apt install sssd-ad sssd-tools realmd adcli
 
 ### Verify that the host can find AD
 
-```bash linenums='1' hl_lines='1 4 8 10'
+```text linenums='1' hl_lines='1 4 8 10'
 mhubbard@z420VM-2404:~$ realm -v discover pu.pri
  * Resolving: _ldap._tcp.pu.pri
  * Performing LDAP DSE lookup on: 192.168.10.222
@@ -281,7 +287,7 @@ mhubbard@z420VM-2404:~$ sudo cat /etc/krb5.conf
 
 This is optional but I wanted to show you how to use `apt` to display versions
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 2 9 16 23'
 mhubbard@z420VM-2404:~$ apt policy sssd-ad sssd-tools realmd adcli
 sssd-ad:
   Installed: 2.9.4-1.1ubuntu6
