@@ -16,12 +16,13 @@ Many companies will require that all laptops or Virtual Machines be connected to
 
 I am assuming that a working Active Directory domain is already configured and you have access to the credentials to join a machine to that domain.
 
-The domain controller is:
+Prerequisites:
 
-- Acting as an authoritative DNS server for the domain.
-- The primary DNS resolver (check with systemd-resolve --status).
-- System time is correct and in sync, maintained via a service like chrony or ntp.
+- The DC is acting as an authoritative DNS server for the domain.
+- The primary DNS resolver on the laptop points to a DC (check with resolvectl status).
+- System time is correct and in sync with the DC, maintained via a service like chrony or ntp.
 - The domain used in this example is pu.pri.
+- The laptop's hostname is z420VM-2404.
 
 ## Check the current host configuration
 
@@ -43,7 +44,7 @@ Firmware Version: 6.00
     Firmware Age: 3y 6month 2w 3d
 ```
 
-Notice that the fully qualified DNS domain `pu.pri` is appended to the hostname. That is the domain we will join. For an Ubuntu 24.04 machine to join AD it must have hostname setup correctly.
+Notice that the fully qualified DNS domain `pu.pri` is appended to the hostname. That is the domain we will join. For an Ubuntu 24.04 machine to join AD it must have the hostname setup correctly.
 
 ## If the host needs to have the FQDN configured
 
@@ -51,6 +52,22 @@ Notice that the fully qualified DNS domain `pu.pri` is appended to the hostname.
 mhubbard@z420VM-2404:~$ sudo hostnamectl set-hostname z420VM-2404.pu.pri
 mhubbard@z420VM-2404:~$ hostname
 z420VM-2404.pu.pri
+```
+
+### Verify that a DC (192.168.10.222) is the DNS resolver
+
+```text linenums='1' hl_lines='1 11 12'
+mhubbard@z420VM-2404:~$ resolvectl status
+Global
+         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+  resolv.conf mode: stub
+
+Link 2 (ens33)
+    Current Scopes: DNS
+         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: 192.168.10.222
+       DNS Servers: 192.168.10.222
+        DNS Domain: pu.pri
 ```
 
 ## Verify that the host can be found in DNS
@@ -63,7 +80,7 @@ pu.pri has address 192.168.10.222
 pu.pri has IPv6 address fd24:42b2:12ce:0:a9da:b612:7d4c:7683
 ```
 
-Now we know at least one DC is at `192.168.10.222`.
+Now we know at there is a DC is at `192.168.10.222`.
 
 The `host` command with a hostname will print out the hostname and ip address. Then we use the `host` command with the ip address to look up the host in DNS.
 
@@ -143,21 +160,27 @@ z420VM-2404.pu.pri.    3600     IN    A    192.168.10.105
 ;; MSG SIZE  rcvd: 63
 ```
 
-### Verify that a DC (192.168.10.222) is the DNS resolver
+### Troubleshooting If using DHCP
 
-```text linenums='1' hl_lines='1 11 12'
-mhubbard@z420VM-2404:~$ resolvectl status
-Global
-         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-  resolv.conf mode: stub
+It's critical that the host got a dhcp assigned address and that DHCP registered a DNS A record. If the above fails you have to fix it before proceeding.
 
-Link 2 (ens33)
-    Current Scopes: DNS
-         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-Current DNS Server: 192.168.10.222
-       DNS Servers: 192.168.10.222
-        DNS Domain: pu.pri
+I setup Windows server DHCP to always register a DNS A record and created an AD account for it to use.
+
+#### Release and renew the lease
+
+Ubuntu 24.04 has transitioned a lot of networking services to networkd from network manager. Because of this the DHclient isn't installed. Run hte following command to install it and release/renew the lease:
+
+```bash linenums='1'
+sudo apt install isc-dhcp-client
+sudo dhclient -r ens33
+sudo dhclient -v ens33
 ```
+
+The `-r` releases and the dhclient with no options renews. The `-v` means verbose and I like to use it to get more detail.
+
+### ### Troubleshooting If using static IP
+
+There is no automatic way for the DNS server to register your laptop if you are using a static IP address. You will have to manually create the DNS entry. I highly recommend that you create the forward and reverse DNS entry.
 
 ### Display the NTP server
 
@@ -483,6 +506,22 @@ Discovered AD Domain Controller servers:
 - randc02.pu.pri
 ```
 
+## Log into the domain
+
+The format at the login screen is `username@domain`. In this example, my username is mhubbard and the domain is pu.pri so the login will be `mhubbard@pu.pri`. Remember that the password is the Active Directory password.
+
+![screenshot](img/create-user-directory.png)
+
+You will see a message that the /home/username@domain directory is being created.
+
+### Add the AD user to the sudoers group
+
+If you company policy allows it you should add your new AD account to the sudoers group. Log in with your local account and run the following command:
+
+```bash linenums='1' hl_lines='1'
+sudo usermod -aG sudo mhubbard@pu.pri
+```
+
 ### Display a specific user
 
 ```bash linenums='1' hl_lines='1 2 7 8 9 11'
@@ -546,4 +585,6 @@ The values:
 
 ## References
 
-[How to set up SSSD with Active Directory](https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory)
+- [How to set up SSSD with Active Directory](https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory)
+- [Arch Wiki](https://wiki.archlinux.org/title/Systemd-resolved) - Configuring/troubleshooting systemd-resolved for DNS resolution.
+- [How to Add a User to Sudoers in Ubuntu 24.04](https://linuxconfig.org/how-to-add-a-user-to-sudoers-in-ubuntu-24-04)
