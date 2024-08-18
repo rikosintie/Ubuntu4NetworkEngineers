@@ -531,9 +531,19 @@ you can see the `mhubbard@pu.pri` home directory, the owner is `mhubbard@pu.pri`
 
 ----------------------------------------------------------------
 
+### Add the AD user to the sudoers group
+
+If your company policy allows it you should add your new AD account to the sudoers group. Log in with your local account (Assuming it has sudo rights) and run the following command:
+
+```bash linenums='1' hl_lines='1'
+sudo usermod -aG sudo mhubbard@pu.pri
+```
+
+----------------------------------------------------------------
+
 ### Connect to a windows share
 
-Ubuntu uses the SAMBA protocols to join and work with a Windows domain. Once the laptop is joined you can easily access Windows share resources. Open the `Files` application and click on `Other Locations` at the bottom of the left window. You will see a `connect to server` message and a `Connect` button.
+Ubuntu uses the SAMBA protocols to join and work with a Windows domain. Once the laptop is joined you can easily access Windows share resources. Open the `Files` application and click on `+ Other Locations` at the bottom of the left window. You will see a `connect to server` message and a `Connect` button.
 
 Since we are using the SAMBA protocol, the address will start with `smb://` and then the server name (IP or FQDN) and a share name. In the image below I an connecting to the DC (randc02.pru.pri) and a share named `tftp-root`.
 
@@ -542,6 +552,8 @@ Since we are using the SAMBA protocol, the address will start with `smb://` and 
 ----------------------------------------------------------------
 
 Click on `Connect` and the share will be mounted and files will open a new window with the share displayed:
+
+----------------------------------------------------------------
 
 ![screenshot](img/FIles-randc02.png)
 
@@ -563,6 +575,8 @@ total 225895
 -rwx------ 1 mhubbard@pu.pri domain users@pu.pri 16979365 Aug 17 23:21 WB_16_08_0002.swi
 -rwx------ 1 mhubbard@pu.pri domain users@pu.pri 16977864 Aug 17 23:21 WB_16_08_0003.swi
 ```
+
+### Create a mount point
 
 If you work mostly from the terminal it's probably better to create a mount point and mount the share:
 
@@ -587,14 +601,6 @@ sudo umount -l /mnt/tftp-root
 The `-l` argument means lazy. It unmounts when all processes and dependencies are released.
 
 ----------------------------------------------------------------
-
-### Add the AD user to the sudoers group
-
-If you company policy allows it you should add your new AD account to the sudoers group. Log in with your local account (Assuming it has sudo rights) and run the following command:
-
-```bash linenums='1' hl_lines='1'
-sudo usermod -aG sudo mhubbard@pu.pri
-```
 
 ### Display a specific user
 
