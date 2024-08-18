@@ -518,11 +518,79 @@ The format at the login screen is `username@domain`. In this example, my usernam
 
 ----------------------------------------------------------------
 
-You will see a message that the /home/username@domain directory is being created.
+You will see a message that the /home/username@domain directory is being created. If we open a terminal and run:
+
+```bash linenums='1' hl_lines='1'
+ls -l /home/
+total 12
+drwxr-x--- 17 mhubbard        mhubbard            4096 Aug 15 21:57  mhubbard/
+drwxr-x--- 16 mhubbard@pu.pri domain users@pu.pri 4096 Aug 16 13:28 'mhubbard@pu.pri'/
+```
+
+you can see the `mhubbard@pu.pri` home directory, the owner is `mhubbard@pu.pri`and group membership is `domain users@pu.pri`.
+
+----------------------------------------------------------------
+
+### Connect to a windows share
+
+Ubuntu uses the SAMBA protocols to join and work with a Windows domain. Once the laptop is joined you can easily access Windows share resources. Open the `Files` application and click on `Other Locations` at the bottom of the left window. You will see a `connect to server` message and a `Connect` button.
+
+Since we are using the SAMBA protocol, the address will start with `smb://` and then the server name (IP or FQDN) and a share name. In the image below I an connecting to the DC (randc02.pru.pri) and a share named `tftp-root`.
+
+![screenshot](img/connect2server.png)
+
+----------------------------------------------------------------
+
+Click on `Connect` and the share will be mounted and files will open a new window with the share displayed:
+
+![screenshot](img/FIles-randc02.png)
+
+----------------------------------------------------------------
+
+If you want to work with the files in the terminal the easiest way is to right click in the share window and select `Open in Terminal`:
+
+----------------------------------------------------------------
+
+![screenshot](img/OpenInTerm.png)
+
+----------------------------------------------------------------
+
+The path is gnarly!
+
+```bash linenums='1' hl_lines='1'
+/run/user/1242401104/gvfs/smb-share:server=randc02.pu.pri,share=tftp-root$ ls -l
+total 225895
+-rwx------ 1 mhubbard@pu.pri domain users@pu.pri 16979365 Aug 17 23:21 WB_16_08_0002.swi
+-rwx------ 1 mhubbard@pu.pri domain users@pu.pri 16977864 Aug 17 23:21 WB_16_08_0003.swi
+```
+
+If you work mostly from the terminal it's probably better to create a mount point and mount the share:
+
+```bash linenums='1' hl_lines='1 3 5 6'
+sudo mkdir /mnt/tftp-root
+
+sudo mount -t cifs -o username=mhubbard@pu.pri,password=Sup3rS3cr3t //192.168.10.222/tftp-root /mnt/tftp-root/
+
+cd /mnt/tftp-root/
+mhubbard@pu.pri@z420-2404:/mnt/tftp-root$ l -l
+total 225912
+-rwxr-xr-x 1 root root 16979365 Aug 17 23:21 WB_16_08_0002.swi*
+-rwxr-xr-x 1 root root 16977864 Aug 17 23:21 WB_16_08_0003.swi*
+```
+
+Then when you are finished, unmount the shared filesystem:
+
+```bash
+sudo umount -l /mnt/tftp-root
+```
+
+The `-l` argument means lazy. It unmounts when all processes and dependencies are released.
+
+----------------------------------------------------------------
 
 ### Add the AD user to the sudoers group
 
-If you company policy allows it you should add your new AD account to the sudoers group. Log in with your local account and run the following command:
+If you company policy allows it you should add your new AD account to the sudoers group. Log in with your local account (Assuming it has sudo rights) and run the following command:
 
 ```bash linenums='1' hl_lines='1'
 sudo usermod -aG sudo mhubbard@pu.pri
