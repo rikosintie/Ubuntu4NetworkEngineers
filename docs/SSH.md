@@ -1,5 +1,9 @@
 # SSH
 
+![screenshot](img/Tux-SSH9.jpeg)
+
+----------------------------------------------------------------
+
 :arrow_forward: KEY TAKEAWAYS
 
 - Ubuntu has the latest version of the OpenSSH client installed by default.
