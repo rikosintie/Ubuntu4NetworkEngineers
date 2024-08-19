@@ -1,18 +1,4 @@
-<p align="center">
-Advance your “Network Engineer of the future” career with the OS of the Cloud
-</p>
-
 # Introduction<!-- omit from toc -->
-
-- [Who is this guide written for?](#who-is-this-guide-written-for)
-- [Why use Ubuntu?](#why-use-ubuntu)
-  - [As a Network Engineer it Rocks](#as-a-network-engineer-it-rocks)
-- [Open source software and the community](#open-source-software-and-the-community)
-- [Open Source In Cisco Products](#open-source-in-cisco-products)
-- [NetDevOps Certifications](#netdevops-certifications)
-- [Linux Certifications](#linux-certifications)
-- [Installing Ubuntu](#installing-ubuntu)
-  - [Ubuntu Release Types](#ubuntu-release-types)
 
 ----------------------------------------------------------------
 
