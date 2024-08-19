@@ -6,9 +6,10 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- It's surprising easy to join Ubuntu 24.04 to Active Directory
-- All of the packages needed are in the Ubuntu package manager
-- Ubuntu has several tools for managing the AD connection
+- It's surprising easy switch from MS Windows to Ubuntu 24.04
+- There are no license fees to use Ubuntu
+- Ubuntu's desktop and files manager are very similar to Windows 10
+- You can customize so many things in Ubuntu that you can't customize in Windows
 
 ----------------------------------------------------------------
 
