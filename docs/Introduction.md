@@ -1,4 +1,24 @@
-# Introduction<!-- omit from toc -->
+# Introduction
+
+![screenshot](img/Tux-Usage.png)
+
+----------------------------------------------------------------
+
+:arrow_forward: KEY TAKEAWAYS
+
+- Ubuntu is Free, Open Source Software FOSS!
+- Ubuntu is a published by Canonical.
+- Ubuntu has [many flavors](https://wiki.ubuntu.com/UbuntuFlavors) and [dozens of specialized derivatives.](https://wiki.ubuntu.com/DerivativeTeam/Derivatives)
+- Ubuntu will work on Intel/AMD x64 processors and many ARM processors
+- Ubuntu works great on VMware Workstation/Fusion, KVM and VirtualBox
+
+----------------------------------------------------------------
+
+**Ubuntu Today**
+
+The first official Ubuntu release — Version 4.10, codenamed the ‘Warty Warthog’ — was launched in October 2004, and sparked dramatic global interest as thousands of free software enthusiasts and experts joined the Ubuntu community.
+
+The Ubuntu desktop is by far the world’s most widely used Linux workstation platform, powering the work of engineers across the globe. Ubuntu Core sets the standard for tiny, transactional operating systems for highly secure connected devices. Ubuntu Server is the reference operating system for the OpenStack project, and a hugely popular guest OS on AWS, Azure and Google Cloud. Ubuntu is pre-installed on computers from Dell, HP, Asus, Lenovo and other global vendors.
 
 ----------------------------------------------------------------
 
