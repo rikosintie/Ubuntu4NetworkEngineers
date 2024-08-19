@@ -1,6 +1,6 @@
 # KVM Install
 
-![screenshot](img/Tux-KVM.png)
+![screenshot](img/Tux-KVM.jpeg)
 
 ----------------------------------------------------------------
 
