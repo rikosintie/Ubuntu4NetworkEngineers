@@ -1,6 +1,6 @@
 # SSH
 
-![screenshot](img/Tux-SSH9.jpeg)
+![screenshot](img/Tux-SSH9.png)
 
 ----------------------------------------------------------------
 
