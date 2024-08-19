@@ -1,5 +1,9 @@
 # KVM Install
 
+![screenshot](img/Tux-KVM.png)
+
+----------------------------------------------------------------
+
 :arrow_forward: KEY TAKEAWAYS
 
 - Ubuntu supports KVM virtualization on the desktop and server
