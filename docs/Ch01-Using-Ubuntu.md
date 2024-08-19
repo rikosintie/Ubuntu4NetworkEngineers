@@ -1,38 +1,16 @@
-- [Using Ubuntu](#using-ubuntu)
-  - [Desktop Environments in Linux](#desktop-environments-in-linux)
-  - [Podcasts on Linux](#podcasts-on-linux)
-  - [Casting your display](#casting-your-display)
-  - [Working with Applications](#working-with-applications)
-    - [The Super Key](#the-super-key)
-    - [Search for an application](#search-for-an-application)
-    - [Switching Applications](#switching-applications)
-    - [Viewing all installed applications](#viewing-all-installed-applications)
-    - [Switching between multiple open windows in the same application](#switching-between-multiple-open-windows-in-the-same-application)
-  - [Configuring the Dock](#configuring-the-dock)
-  - [Customizing Gnome - The Tweaks Tool](#customizing-gnome---the-tweaks-tool)
-    - [Startup Applications](#startup-applications)
-  - [Using the GUI Files application](#using-the-gui-files-application)
-    - [Creating archives](#creating-archives)
-    - [Display the Full path in files](#display-the-full-path-in-files)
-    - [Easily preview files in Files](#easily-preview-files-in-files)
-    - [Search](#search)
-    - [Why do I have a red Lock on a file or folder?](#why-do-i-have-a-red-lock-on-a-file-or-folder)
-  - [Creating a bootable USB stick from an ISO image](#creating-a-bootable-usb-stick-from-an-iso-image)
-    - [Use dd to make bootable flash](#use-dd-to-make-bootable-flash)
-    - [Use the Ubuntu "Make Startup disk" tool](#use-the-ubuntu-make-startup-disk-tool)
-    - [Use qemu to test a startup disk](#use-qemu-to-test-a-startup-disk)
-  - [Working with the Linux File System](#working-with-the-linux-file-system)
-    - [LSBLK](#lsblk)
-    - [LSUSB](#lsusb)
-  - [Gnome System Tool (GUI)](#gnome-system-tool-gui)
-  - [Working with services](#working-with-services)
-  - [Viewing Log Messages](#viewing-log-messages)
-  - [Locating files from the terminal](#locating-files-from-the-terminal)
-    - [Drill - A graphical and CLI tool for searching files](#drill---a-graphical-and-cli-tool-for-searching-files)
+# Using Ubuntu
+
+![screenshot](img/Tux-Using.png)
 
 ----------------------------------------------------------------
 
-# Using Ubuntu
+:arrow_forward: KEY TAKEAWAYS
+
+- It's surprising easy to join Ubuntu 24.04 to Active Directory
+- All of the packages needed are in the Ubuntu package manager
+- Ubuntu has several tools for managing the AD connection
+
+----------------------------------------------------------------
 
 Switching from Windows to Ubuntu with the Gnome desktop is easy and hard. How can that be? It's simple, the basic operation of the desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course, Chrome or Edge work just like they do in Windows including syncing, extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.
 
