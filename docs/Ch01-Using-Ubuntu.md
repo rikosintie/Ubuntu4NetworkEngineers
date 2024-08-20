@@ -61,6 +61,24 @@ In VLC, select “Playback, Renderer” to send VLC’s output to the TV. I don�
 
 ----------------------------------------------------------------
 
+## Using RDP to share the Ubuntu desktop
+
+Ubuntu 24.04 has an RDP server built in. To enable it:
+
+- Tap the `super key` (Windows key on some laptops), type `settings` and press `enter`.
+- In the top left corner of the screen click on the magnifying glass, type rdp.
+- Click on the resulting `System`
+- Click on `Remote Desktop`, enable `Desktop Sharing` and `Remote Control`
+- Under `login details`, click on the eyeball icon so show the password
+- Add port 3389 to the firewall using `sudo ufw allow from any to any port 3389 proto tcp`
+
+You can now use Windows RDP or any RDP client to connect to your laptop!
+
+For a more detailed tutorial see [Ubuntu Remote Desktop Access from Windows 10/11](https://linuxconfig.org/ubuntu-20-04-remote-desktop-access-from-windows-10
+)
+
+----------------------------------------------------------------
+
 ## Working with Applications
 
 Like in Windows, there are many ways to open applications in Gnome.
