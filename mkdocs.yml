@@ -37,6 +37,19 @@ theme:
         name: Switch to light mode
       primary: teal
       accent: lime
+  icon:
+    admonition:
+      info: octicons/info-16
+      note: octicons/tag-16
+      tip: octicons/squirrel-16
+      warning: octicons/alert-16
+      success: octicons/check-16
+      question: octicons/question-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
 
 plugins:
     - social
@@ -60,6 +73,7 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
   - admonition
+  - pymdownx.details
   - pymdownx.arithmatex:
       generic: true
   - footnotes
