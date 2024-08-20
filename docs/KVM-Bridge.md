@@ -530,7 +530,9 @@ Click forward and select the NIC
 
 ![screenshot](img/virt-manager-bridge.png)
 
-:arrow_right:  You must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
+!!! note
+
+  You must follow the [Creating a KVM Bridge](#creating-a-kvm-bridge) section first. If you just need a NAT virtual machine, you don't need to create a bridge. But you won't be able to remote desktop into the Windows virtual machine.
 
 If you need a bridge, leave the NIC at NAT, finish creating the virtual machine, follow the instructions for creating a bridge, then go back and change the NIC to Bridge/Br0 using the Edit, Virtual Machine Details menu.
 
@@ -843,7 +845,9 @@ ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 40 <REORDER_HDR>
 ```
 
-:arrow_right:  The `master br40` in line 2 tells you that this interface is **mastered** to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 41.
+!!! note
+
+  The `master br40` in line 2 tells you that this interface is **mastered** to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 41.
 
 Tagged vlan 41
 
@@ -853,7 +857,9 @@ ip -d link show dev eno1-vlan41 | grep 'master \| vlan protocol'
     vlan protocol 802.1Q id 41 <REORDER_HDR>
 ```
 
-:arrow_right:  The `master br41` in line 2 tells you that this interface is **mastered** to bridge br41. Line 3 shows the vlan tagging is `id 41` or vlan 41.
+!!! note
+
+  The `master br41` in line 2 tells you that this interface is **mastered** to bridge br41. Line 3 shows the vlan tagging is `id 41` or vlan 41.
 
 ### Display the bridge interfaces
 
