@@ -657,7 +657,7 @@ SHA256:nDm2hRdFrE7xLV3UxKh1DHEOS1C5Ftm0l/Wtqvb6OgI mhubbard-key4cisco-2024-07-24
 
 ### Display the existing keys on Ubuntu
 
-!!! Note
+!!! Note "Tip for naming keys"
 
     I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
 
@@ -954,7 +954,7 @@ ip ssh version 2
 ip ssh rsa keypair-name RSA-SSH-Key !associate keys to SSH
 ```
 
-!!! Note
+!!! Note "Optional but informational"
 
     The "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
 
@@ -1155,7 +1155,7 @@ ip ssh server algorithm kex diffie-hellman-group14-sha1
  transport output ssh
 ```
 
-!!! Note
+!!! Note "Use the hash for setting up the rest of the switches"
 
     You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB`.
 
