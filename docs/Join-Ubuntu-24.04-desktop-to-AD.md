@@ -115,7 +115,6 @@ Current DNS Server: 192.168.10.222
         DNS Domain: pu.pri
 ```
 
-Admonition
 !!! note
 
     To clear the DNS cache use `resolvectl flush-caches`
