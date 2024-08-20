@@ -1,6 +1,6 @@
 # Join Ubuntu 24.04 desktop to AD
 
-![screenshot](img/Add2AD.png)
+![screenshot](img/Tux-Windows3.jpeg)
 
 ----------------------------------------------------------------
 
