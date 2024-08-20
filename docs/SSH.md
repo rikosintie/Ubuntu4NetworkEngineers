@@ -657,7 +657,9 @@ SHA256:nDm2hRdFrE7xLV3UxKh1DHEOS1C5Ftm0l/Wtqvb6OgI mhubbard-key4cisco-2024-07-24
 
 ### Display the existing keys on Ubuntu
 
-Note: I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
+!!! Note
+
+    I always start my key names wih `id_`. If you don't, you will need to modify the `~/.ssh/id_*` section of the next command.
 
 `for keyfile in ~/.ssh/id_*; do ssh-keygen -l -f "${keyfile}"; done | uniq`
 
@@ -952,7 +954,8 @@ ip ssh version 2
 ip ssh rsa keypair-name RSA-SSH-Key !associate keys to SSH
 ```
 
-Note the "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
+!!! Note
+   The "exportable" parameter. This isn't required but I wanted to point that out that you can make the keys exportable. It's not so important in this case but if you have setup GetVPN on a router you absolutely want to export the keys used for the tunnels. If you don't and the router fails you will have to touch EVERY tunnel once you replace the hardware. If you have exported the keys you just reload them on the new hardware and call it a day.
 
 ----------------------------------------------------------------
 
@@ -1151,7 +1154,9 @@ ip ssh server algorithm kex diffie-hellman-group14-sha1
  transport output ssh
 ```
 
-Note - You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB`.
+!!! Note
+
+    You can use the HASH instead of the key for the next devices you setup. Instead of using "Key-string" in the ip ssh pubkey-chain statement use `key-hash ssh-rsa 5D24EA1D261C1836E437F4E67E2CEBEB`.
 
 If you need to remove a key use the `no` keyword with the key-hash keyword. I needed to remove the old 2096 bit RSA key after I changed the `ip ssh dh min key size` to 4096.
 
@@ -1238,7 +1243,9 @@ username mhubbard privilege 15 secret 9 $9$y4j0lAgHcDtV3.$sH6LI79G3qmdpVdICokss8
 
 You can see that `thubbard` has to use a password but `mhubbard` can use a password or SSH keys. User `mhubbard` has two keys listed because I generated keys on my Ubuntu machine and my M1 MacBook Air. I could have copiied my private key from Ubuntu to the MacBook but I wanted to show two keys.
 
-Note that IOS XE only allows two keys in the key-chain.
+!!! Note
+
+    IOS only allows two keys in the key-chain.
 
 You can see in the ouput the user's secret is hashed as type 9. In Cisco speak that is scrypt. Scrypt is a `memory` hard hash so having hardware GPUs doesn't speed up reversing the hash. To create a users with scrypt:
 
