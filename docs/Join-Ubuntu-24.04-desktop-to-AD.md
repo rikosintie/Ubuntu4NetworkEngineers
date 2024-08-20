@@ -118,7 +118,7 @@ Current DNS Server: 192.168.10.222
 Admonition
 !!! note
 
-To clear the DNS cache use `resolvectl flush-caches`
+    To clear the DNS cache use `resolvectl flush-caches`
 
 ## Verify that the host can be found in DNS
 
