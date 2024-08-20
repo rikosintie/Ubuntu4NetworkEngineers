@@ -224,15 +224,20 @@ Sometimes you want to copy the full path to a file when working in the file mana
 
 One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.
 
+To install GNOME Sushi using Ubuntu Software, click the following link:
+
+```bash linenums='1' hl_lines='1'
+sudo apt install gnome-sushi
+```
+
+For a more detailed description see
 [How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)](https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/)
 
 ----------------------------------------------------------------
 
 ### Search
 
-**NOTE**: I said that you should use the LTS version of Ubuntu in the first chapter. And I usually do, but Ubuntu 23.10 includes Gnome 45 and I had to have some of the features. And 24.04 is out now so I will be upgrading!
-
-One of the features that I wanted was the completely new "Files" application that is amazing. Here is the announcement from the project [Introducing GNOME 45, “Rīga”](https://release.gnome.org/45/)
+The completely new "Files" application in Gnome 46 (Ubuntu 24.04) is amazing. Here is the announcement from the project [Introducing GNOME 46, “Kathmandu”](https://release.gnome.org/46/)
 
 One of the best features in Files is the new search. Just click on the magnifying glass next to the address bar and enter some text. Unlike in Windows, you can enter text that is in the middle of the filename. In the screenshot below, I entered "new" and it found "frequent-new.png" in a directory one level down.
 
@@ -263,7 +268,7 @@ Here is a screenshot of Files showing one file with a green check mark and one w
 
 ![screenshot](img/red-lock.png)
 
-To take ownership of the file open the terminal and enter:
+To take ownership of the file, open the terminal and enter:
 
 `sudo chown mhubbard testsync.txt`
 
@@ -281,11 +286,21 @@ You don't need a third-party tool to create a bootable USB stick on Linux if you
 
 ### Use dd to make bootable flash
 
-**NOTE**: Ubuntu uses a system called "snaps" to sandbox applications. The drawback to snaps is that they mount every application using a "squashfs". I use the following alias so that I don't have to see all the applications.
+!!! Note
+
+    Ubuntu uses a system called "snaps" to sandbox applications. The drawback to snaps is that they mount every application using a "squashfs". I use the following alias so that I don't have to see all the applications.
 
 `alias df="df -h --exclude=squashfs"`
 
-I will show you how to create aliases in a later section.
+To add the alisa to bash:
+
+```bash linenums='1' hl_lines='1 3'
+gnome-text-editor ~/.bashrc
+or
+gnome-text-editor ~/.zshrc
+```
+
+Depending on what your shell is. The default shell is bash. I will go over changing the shell to zsh later on.
 
 If you create the alias you can use df -h instead of including the --exclude=squashfs option.
 
@@ -295,7 +310,7 @@ If you create the alias you can use df -h instead of including the --exclude=squ
 
 Look for a new entry in the table. For example, on my laptop I have two flash drives mounted.
 
-```bash
+```bash linenums='1'
 Filesystem      Size  Used Avail Use% Mounted on
 tmpfs           3.2G  4.0M  3.1G   1% /run
 /dev/nvme0n1p2  457G  392G   43G  91% /
@@ -322,7 +337,9 @@ Enter the following:
 
 `dd if=systemrescue.iso of=/dev/sdb bs=10M status=progress && sync`
 
-**NOTE**: dd is commonly referred to as "disk destroyer", meaning that it starts as soon as you hit enter, there are no "Are you sure" prompts.
+!!! Note "Be careful if you use this method"
+
+    dd is commonly referred to as "disk destroyer", meaning that it starts as soon as you hit enter, there are no "Are you sure" prompts.
 
 MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!
 
@@ -372,7 +389,7 @@ with root at the beginning. Root is shown in the file system as /. Everything is
 
 For a quick look at block devices (hard drives, thumb drives, nvme, etc.) on the system, you can use the "list block devices" command - lsblk. Here is an lsblk listing on my Dell laptop which has an m.2 NVME drive with the OS on it and 1TB SSD for data.
 
-```bash
+```bash linenums='1' hl_lines='1'
 $ lsblk -e7
 NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 sda           8:0    0 931.5G  0 disk /media/mhubbard/Data
@@ -425,12 +442,11 @@ lsa          lsblk        LS_COLORS    lscpu        lshw         lsipc        ls
 
 ### LSUSB
 
-lsusb
 Linux makes it easy to see what USB devices are connected, who the manufacturer is and what the Product ID (PID) and Vendor ID (VID) are.
 
 In this example, I have a USB to Serial adapter connected. It uses the Future Technology Devices International (FTDI) UART. It’s connected to Bus 001, the Vendor ID is 0403, and the Product ID is 6001.
 
-```bash
+```bash linenums='1' hl_lines='1 3'
 lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 002: ID 0c45:6a08 Microdia
@@ -445,8 +461,8 @@ Another command that will help here is dmesg. This displays the system messages 
 
 If I run:
 
-```bash
-dmesg | grep FT232
+```bash linenums='1' hl_lines='1'
+sudo dmesg | grep FT232
 [83003.234941] usb 1-3: Product: FT232R USB UART
 [83003.242719] usb 1-3: Detected FT232RL
 [106493.653320] usb 1-3: Detected FT232RL
@@ -455,7 +471,7 @@ dmesg | grep FT232
 You can see that the system logged the insertion of the UART.
 To see what kernel module is loaded for the UART (Note – I am only showing the UART module. Other USB kernel modules were displayed):
 
-```bash
+```bash linenums='1'
 lsmod | grep usb
 usbserial
 49152 3 ftdi_sio
@@ -508,7 +524,7 @@ Ubuntu uses an "init system" called systemd to start and control services. At fi
 
 **Example**
 
-```bash
+```bash linenums='1' hl_lines='1'
 systemctl list-dependencies ufw
 ufw.service
 ● ├─system.slice
@@ -537,7 +553,7 @@ The difference between start and enable is that you use enable to set the servic
 
 **Example**
 
-```bash
+```bash linenums='1' hl_lines='1'
 systemctl status ufw
 ● ufw.service - Uncomplicated firewall
      Loaded: loaded (/lib/systemd/system/ufw.service; enabled; preset: enabled)
@@ -571,7 +587,7 @@ Jul 01 17:42:00 1S1K-G5-5587 systemd[1]: Finished ufw.service - Uncomplicated fi
 
 **Example**
 
-```bash
+```bash linenums='1' hl_lines='1'
 journalctl -e | grep clam
 Jul 02 19:00:01 1S1K-G5-5587 CRON[1218459]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
 Jul 02 19:10:01 1S1K-G5-5587 CRON[1226306]: (mhubbard) CMD (clamav sleep $((RANDOM % 42)); venv/bin/fangfrisch --conf /etc/fangfrisch.conf refresh)
@@ -581,10 +597,12 @@ Jul 02 19:30:01 1S1K-G5-5587 CRON[1242328]: (mhubbard) CMD (clamav sleep $((RAND
 
 ## Locating files from the terminal
 
-The locate tool allows you to search everywhere on the file system.
+The locate tool allows you to search everywhere on the file system. To install and update the database. Run the `sudo updatedb` command  periodically especially if you modify the configuration file.
 
-`sudo apt install mlocate` – Install the tool
-`sudo updatedb` - Updates the database, run this periodically especially if you modify the configuration file.
+```bash linenums='1' hl_lines='1 3'
+sudo apt install mlocate
+sudo updatedb
+```
 
 To configure locate:
 These two articles have detailed information on customizing locate.
@@ -593,7 +611,7 @@ These two articles have detailed information on customizing locate.
 
 **Example**
 
-```bash
+```bash linenums='1' hl_lines='1'
 locate apsum.py
 /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
 ```
@@ -607,7 +625,7 @@ From the website, Download Drill, you can download the GUI (.deb) and the cli (C
 
 **Example**
 
-```bash
+```bash linenums='1' hl_lines='1'
 drill-search-cli apsum.py
 /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
 ```
