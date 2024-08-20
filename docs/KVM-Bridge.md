@@ -847,7 +847,7 @@ ip -d link show dev eno1-vlan40  | grep 'master \| vlan protocol'
 
 !!! note
 
-    The `master br40` in line 2 tells you that this interface is **mastered** to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 41.
+    The `master br40` in line 2 tells you that this interface is **mastered** to bridge br40. Line 3 shows the vlan tagging is `id 40` or vlan 40.
 
 Tagged vlan 41
 
