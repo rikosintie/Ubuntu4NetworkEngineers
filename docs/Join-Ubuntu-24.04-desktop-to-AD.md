@@ -392,13 +392,14 @@ ldap_id_mapping = True
 access_provider = ad
 ```
 
-Note:
-Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
+!!! Note "Set the correct file permissions"
+
+    Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
 
 Some key things from this config file:
 
 - cache_credentials: This allows logins when the AD server is unreachable
-- fallback_homedir: The home directory. By default, /home/<user>@<domain>. For example, the AD user john will have a home directory of /home/john@pu.pri.
+- fallback_homedir: The home directory. By default, `/home/<user>@<domain>`. For example, the AD user john will have a home directory of `/home/john@pu.pri`.
 - use_fully_qualified_names: Users will be of the form user@domain, not just user. This should only be changed if you are certain no other domains will ever join the AD forest, via one of the several possible trust relationships.
 
 ## Display the PAM configuration file
