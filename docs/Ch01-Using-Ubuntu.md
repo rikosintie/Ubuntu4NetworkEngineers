@@ -1,6 +1,6 @@
 # Using Ubuntu
 
-![screenshot](img/Tux-Using.png)
+![screenshot](img/Tux-Use.png)
 
 ----------------------------------------------------------------
 
