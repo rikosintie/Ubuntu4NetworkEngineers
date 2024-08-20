@@ -113,7 +113,9 @@ My suggestion if you have never touched Linux is to install Ubuntu as a VM and g
 I have Ubuntu running on a System76 Gazelle from 2016 and a Dell G5 5587 laptop from 2018. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. The
 VM can do just about anything the bare metal can do but when I would get stuck on something I would just shut it down and go back to Windows instead of figuring it out. Running on bare metal removed the temptation to do that!
 
-There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials. Here is a link to a tutorial on installing 22.04 – [How to install Ubuntu 22.04 Jammy Jellyfish Desktop](https://linuxconfig.org/how-to-install-ubuntu-22-04-jammy-jellyfish-desktop). If you want to install Ubuntu 22.04 on bare metal the Lenovo T480 is a good choice. They are under $200 on ebay in good condition and have hardware that is certified on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
+There are a lot of good tutorials on installing Ubuntu available on the Internet so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! This Youtube video [How to Install Ubuntu 24.04 Desktop: Complete Beginner's Guide](https://www.youtube.com/watch?v=zE7OYNkuQ1w) is a great guide to installing Ubuntu 24.04.
+
+The site [linux config](https://linuxconfig.org) has a lot of great Ubuntu tutorials. Here is a link to a several tutorials on installing/configuring 24.04 tools – [Install Ubuntu 24.04 tools](https://linuxconfig.org/page/2?s=How+to+install+Ubuntu+24.04). If you want to install Ubuntu 24.04 on bare metal the Lenovo T480 or T490 are good choices. They are $200/$300 on ebay in good condition and have hardware that is certified on Ubuntu. You can also use the Ubuntu [Search Ubuntu certified hardware](https://ubuntu.com/certified?q=&limit=20&category=Desktop&category=Laptop) site to verify that the hardware you want to use will be well-supported on Ubuntu.
 
 ### Ubuntu Release Types
 
@@ -124,14 +126,6 @@ Ubuntu is released on a regular cadence. There are two types of releases:
 
 The LTS releases are rock solid but they don't get new features or the latest kernel versions. If you put Ubuntu on bare metal and use it as your daily driver I recommend that you use an LTS release.
 
-**Appendix A** covers the installation I did on a Dell G5 laptop that wasn’t 100% compatible out of the box. It took a lot more time than I expected to get everything working on the Dell and I documented the steps in the Appendix. Dell and System 76 both sell laptops with Ubuntu pre-installed.
-
-Even if you buy a System 76 or Dell laptop with Ubuntu preinstalled you may still want to take a look at the Appendix since I documented some things like customizing the Grub boot loader and running nVidia and Intel
-graphics.
-
 In this guide, I am going to document the tools that I found useful in the transition to Linux for network engineering tasks.
-
-**A note on encryption.** Ubuntu supports the Linux LUKS full disk encryption. During setup, you can select the encrypt full disk option. This is, of course, a good idea for security but if you encrypt and then decide you don’t want it you will need to decrypt the disk. Use the instructions here to decrypt the LUKS volume:
-[How to remove LUKS encryption](https://unix.stackexchange.com/questions/60971/how-to-remove-luks-encryption)
 
 ----------------------------------------------------------------
