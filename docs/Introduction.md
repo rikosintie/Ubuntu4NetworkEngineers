@@ -124,7 +124,7 @@ Ubuntu is released on a regular cadence. There are two types of releases:
 - LTS releases - Every two years on even years. So 22.04 is the long-term release from 2022. The current LTS is 24.04
 - Interim Releases - Released in October and April. So 22.10, 23.04, and 23.10 are interim releases after the LTS 22.04.
 
-The LTS releases are rock solid, but they don't get new features or the latest kernel versions. If you put Ubuntu on bare metal and use it as your daily driver I recommend that you use an LTS release.
+The LTS releases are rock solid, but they don't get new features or the latest kernel versions. If you put Ubuntu on bare metal and use it as your daily driver, I recommend that you use an LTS release.
 
 In this guide, I am going to document the tools that I found useful in the transition to Linux for network engineering tasks.
 
