@@ -6,8 +6,10 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- Ubuntu is (++**F**++)ree, **O**pen **S**ource **S**oftware - FOSS!
-- Ubuntu is published by Canonical, a private company with an estimated $175M in annual revenues.
+- Ubuntu is **F**ree, **O**pen **S**ource **S**oftware - FOSS!
+- Ubuntu is published by Canonical, a private company with an estimated $175M in annual revenues
+- Canonical Support, called Ubuntu Pro, is free for 5 personal devices
+- Ubuntu Pro is enterprise class support similar a Microsoft Enterprise Agreement
 - Ubuntu has [many flavors](https://wiki.ubuntu.com/UbuntuFlavors) and [dozens of specialized derivatives.](https://wiki.ubuntu.com/DerivativeTeam/Derivatives)
 - Ubuntu will work on Intel/AMD x64 processors and many ARM processors
 - Ubuntu works great on VMware Workstation/Fusion, KVM and VirtualBox
