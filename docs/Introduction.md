@@ -6,7 +6,7 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- Ubuntu is Free, Open Source Software FOSS!
+- Ubuntu is **F**ree, **O**pen **S**ource **S**oftware - FOSS!
 - Ubuntu is published by Canonical, a private company with an estimated $175M in annual revenues.
 - Ubuntu has [many flavors](https://wiki.ubuntu.com/UbuntuFlavors) and [dozens of specialized derivatives.](https://wiki.ubuntu.com/DerivativeTeam/Derivatives)
 - Ubuntu will work on Intel/AMD x64 processors and many ARM processors
