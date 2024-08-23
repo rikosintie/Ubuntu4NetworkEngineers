@@ -18,7 +18,7 @@
 
 **Ubuntu Today**
 
-The first official Ubuntu release — Version 4.10, codenamed the ‘Warty Warthog’ — was launched in October 2004, and sparked dramatic global interest as thousands of free software enthusiasts and experts joined the Ubuntu community.
+From Ubuntu's website, the first official Ubuntu release — Version 4.10, codenamed the ‘Warty Warthog’ — was launched in October 2004, and sparked dramatic global interest as thousands of free software enthusiasts and experts joined the Ubuntu community.
 
 The Ubuntu desktop is by far the world’s most widely used Linux workstation platform, powering the work of engineers across the globe. Ubuntu Core sets the standard for tiny, transactional operating systems for highly secure connected devices. Ubuntu Server is the reference operating system for the OpenStack project, and a hugely popular guest OS on AWS, Azure and Google Cloud. Ubuntu is pre-installed on computers from Dell, HP, Asus, Lenovo and other global vendors.
 
@@ -44,6 +44,22 @@ This guide is written assuming that you have skills in MS Windows, Putty, Networ
 I helped a college student who was studying data science switch to Ubuntu recently. Our conversations had all been over text. I had the chance to meet him in person a month or so later and I asked him if he stuck with Ubuntu. His response was an enthusiastic Yes!
 
 I have been using Linux for quite a while, so his next comment caught me off guard. He said, "I love how there are no ads and nothing pops up in the start menu." There were more comments about how "clean" the Ubuntu interface is. I didn't realize how bad Windows 10/11 home edition is with the constant ads and pushing MS software.
+
+### But I need Microsoft office
+
+In the Linux community there is a joke that "Microsoft :heart: Linux". Back in the 1990s Steve Balmer said "Linux is a cancer that attaches itself in an intellectual property sense to everything it touches." Now Microsoft supports Linux with the WSL in Windows, Linux servers in Azure and other ways.
+
+With Microsoft 365 it's not a problem to use Teams, Outlook, PowerPoint, Word, Excel, all work in a browser. I use Edge, but they also work in Chrome. For my needs they are great. If you like a real application Libre Office is better than Microsoft office in my opinion. I have had zero issue sharing Libre Office documents with Microsoft office users.
+
+Here is an immage of the Microsoft 365 launcher in Linux:
+
+----------------------------------------------------------------
+
+![screenshot](img/Microsoft365.png)
+
+----------------------------------------------------------------
+
+I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers.
 
 ### As a Network Engineer it Rocks
 
