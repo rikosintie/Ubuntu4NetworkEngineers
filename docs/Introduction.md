@@ -55,7 +55,7 @@ Here is an immage of the Microsoft 365 launcher in Linux:
 
 ----------------------------------------------------------------
 
-![screenshot](img/Microsoft365.png)
+![screenshot](img/Microsoft365-1.png)
 
 ----------------------------------------------------------------
 
