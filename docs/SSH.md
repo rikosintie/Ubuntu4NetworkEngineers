@@ -1371,6 +1371,27 @@ SSH sessions on VRF default :
         IPv6 session does not exist.
 ```
 
+### List the enabled auth methods
+
+```bash linenums='1' hl_lines='1'
+show ssh authentication-method
+ SSH publickey authentication  : Enabled
+ SSH password authentication   : Enabled
+ SSH two factor authentication : Disabled
+```
+
+### Reset cipher suites
+
+You can reset individual cipher components or run all of these to get back to factory default settings.
+
+```bash linenums='1' hl_lines='1'
+no ssh ciphers
+no host-key-algorithms
+no key-exchange-algorithms
+no ssh macs
+no ssh public-key-algorithms
+~~~
+
 ### Aruba CX SSH server commands
 
 The following commands cover everything you need to do to configure ssh.
