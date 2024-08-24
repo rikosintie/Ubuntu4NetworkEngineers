@@ -1271,7 +1271,7 @@ root@TEST-Router:~ #
 
 ## Using the keys with an Aruba CX swtich
 
-The Aruba CX switches are easy to set up for SSH and public key access. They support strong cipher suites adn it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
+The Aruba CX switches are easy to set up for SSH and public key access. They support strong cipher suites and it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
 
 ### Initial setup
 
@@ -1279,11 +1279,11 @@ In the Cisco section above we configured NTP, and the user accounts before setti
 
 You need to decide which VRF to enable the server on. In this example, we will use the mgmt vrf. Use the following command to enable the ssh server:
 
-```bash linenums='1'
+```bash
 ssh server vrf mgmt
 ```
 
-When an SSH server is enabled on a VRF for the first time, host-keys are generated.
+When an SSH server is enabled on a VRF for the first time, host-keys are generated. Keeping with the Aruba sets the standard for ssh, the default RSA key is 4096 bits!
 
 !!! note
 
@@ -1291,14 +1291,25 @@ When an SSH server is enabled on a VRF for the first time, host-keys are generat
 
 ### Viewing the host-keys
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 7'
 show ssh host-key ?
   ecdsa    Show SSH server ECDSA host-key.
   ed25519  Show SSH server ED25519 host-key.
   rsa      Show SSH server RSA host-key.
 
-  Show all keys
-  show ssh host-key
+ Show all keys
+ show ssh host-key
+
+Key Type : ECDSA     Curve : ecdsa-sha2-nistp256
+ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEcAjbbHW7bUnubX5SFZJ31Tkgs5dDSXMxyrXFFVC8P+rm48GQ75WIvxp4mPFFsmkJoi5OhuAA+rTncTXl3bAYM= root@switch
+
+
+Key Type : ED25519
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOV1JvayGmBsryg+uyR/fKwABQ5jllra6mBRnc1pwprY
+
+
+Key Type : RSA       Key Size : 4096
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpG5P1MQOp1q98++nLoVMnwwZFsYgapfB/akN44rJ+ULOusPX95+sGCDl33kBebzeA0+AbkvBNetZRWJ7J+CBihpQ9f9ms6jS4wb1GtlV/HlP9JbpYEPIfCH9HxKHThuMLd36K/UeDkaZo4B22l8DJBIJrYl5T5hVZ73VBqdf7O/UsC9gUGZSDp7nXmCFWc38x8CW6+VBNo0K7MsHHff7ajLAi6lfrlbSOOn/Xzls3eil9bX0uzL69biflyA6y7ESnMX7PFijOoYqz2hp0cxk4La0NSJbRi+efbUyyaZ/0/xYUcnrv/QXYvCPGZEfDOycyBYgtgVD942OO+OZC3NB5jRb6QtIlb+tbw43yGcDdQiFrPUi3cxZlvnUr/CCVrnSaNEj4yliQ+QF9tLG5ap+cbAxW8I6ofy/eX6xvIuNf43ycilN+E/OJbPTvW4lndTATDeyNhHeIrPae87x0Cx0x2sHEi5dXgJdl/IQlrJFNLqydJQq1DSazVSaG7Zfd12a/9XW0fm/1InS/rQ5gd9Rot4Ou/VtNO1+v7CyAG2aaPKLaYSi4jfbCB7NFrbSlqdzLP4ODVzsWZg6CNk9bqmAb/eKaMCXK2u4w0rKVPcQJ5yYWThmAb6X2SUEi3mbGZzOEko2T9uSHpPch1EOJ6gmPkJ7kt53x2fDfbpTcUoBTEw==
 ```
 
 ### Add your public key
@@ -1328,6 +1339,8 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NT...KFC8 mhubbard@HP8600-2328.local-2024-07-08
 That's all you need to do to setup pulic key login on the Aruba CX switches!
 
 ### List logged in users
+
+I logged into the switch from my Linux and Mac laptops:
 
 ```bash linenums='1' hl_lines='1'
 show ssh server sessions all-vrfs
