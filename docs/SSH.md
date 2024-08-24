@@ -1288,7 +1288,8 @@ Configuring SSH to use a set of ciphers | ssh ciphers | ssh ciphers chacha20-pol
 | Copying the client SSH public key into the key list | user authorized-key | user admin authorized-key ssh-ed25519 AAAAC3NzaC1lZD...uxn mhubbard@1S1K-G5-5587-2024-07-08 |
 | Removing SSH public keys from the key list | user authorized-key | no user admin authorized-key 2 |
 | Showing the SSH client public key list | show user | show user admin authorized-key |
-| Configuring SSH idle session timeout | cli-session | switch(config)# cli-session switch(config-cli-session)# timeout 20 |
+| Configuring SSH idle session timeout | cli-session | <ul><li>switch(config)# cli-session</li><li> switch(config-cli-session)# timeout 20</li></ul> |
+
 ----------------------------------------------------------------
 
 ## Using the keys with an HPE Procurve switch
