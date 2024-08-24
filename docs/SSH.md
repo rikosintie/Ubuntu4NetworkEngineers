@@ -65,7 +65,7 @@ ssh public-key-algorithms x509v3-ssh-rsa rsa-sha2-256
 ssh maximum-auth-attempts 5
 ```
 
-The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#references-ssh-history) in the references below for the exact algorithms.
+The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [link](#references-ssh-history) in the references below for the exact algorithms. For a table of ssh server commands, see the [Aruba CX SSH server commands](#aruba-cx-ssh-server-commands) below.
 
 Cisco IOS
 
@@ -1271,7 +1271,7 @@ root@TEST-Router:~ #
 
 ## Using the keys with an Aruba CX swtich
 
-The Aruba CX swtiches are easy to set up for SSH and public key access. They support strong cipher suites adn it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
+The Aruba CX switches are easy to set up for SSH and public key access. They support strong cipher suites adn it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
 
 ### Initial setup
 
@@ -1279,10 +1279,9 @@ In the Cisco section above we configured NTP, and the user accounts before setti
 
 You need to decide which VRF to enable the server on. In this example, we will use the mgmt vrf. Use the following command to enable the ssh server:
 
-:ba```bash linenums='1'
+```bash linenums='1'
 ssh server vrf mgmt
 ```
-
 
 When an SSH server is enabled on a VRF for the first time, host-keys are generated.
 
