@@ -1272,7 +1272,7 @@ root@TEST-Router:~ #
 ## Using the keys with an Aruba CX swtich
 
 | Task | Command | Example|
-| :-----: | :--------------: | : -----------:|
+| :----- | :-------------- | : -----------|
 | Enabling the SSH server | ssh server vrf | ssh server vrf default |
 | Disabling the SSH server | no ssh server vrf | no ssh server vrf default |
 | Clearing the list of trusted SSH servers for your user account | ssh known-host remove ssh known-host remove 192.168.10.130 |
