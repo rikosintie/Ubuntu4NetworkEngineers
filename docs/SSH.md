@@ -1283,22 +1283,23 @@ You need to decide which VRF to enable the server on. In this example, we will u
 ssh server vrf mgmt
 ```
 
-When an SSH server is enabled on a VRF for the first time, host-keys are generated. Keeping with the Aruba sets the standard for ssh, the default RSA key is 4096 bits!
+When an SSH server is enabled on a VRF for the first time, host-keys are generated. Keeping with the "Aruba sets the standard for ssh" theme, the default RSA key is 4096 bits!
 
 !!! note
 
-    If the host-key of the given type exists, a warning message is displayed with a request to overwrite the previous host-key with the new key.
+    If the host-key of the given type exists, a warning message is displayed with a request to overwrite the previous host-key with the new key. That isn't a problem as far as setting up ssh, but keep in mind that a client will complain about that the key has changed.
 
 ### Viewing the host-keys
 
-```bash linenums='1' hl_lines='1 7'
+```bash linenums='1' hl_lines='1 8'
 show ssh host-key ?
   ecdsa    Show SSH server ECDSA host-key.
   ed25519  Show SSH server ED25519 host-key.
   rsa      Show SSH server RSA host-key.
 
- Show all keys
- show ssh host-key
+To Show all keys
+
+show ssh host-key
 
 Key Type : ECDSA     Curve : ecdsa-sha2-nistp256
 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEcAjbbHW7bUnubX5SFZJ31Tkgs5dDSXMxyrXFFVC8P+rm48GQ75WIvxp4mPFFsmkJoi5OhuAA+rTncTXl3bAYM= root@switch
@@ -1336,7 +1337,7 @@ CX-10-10# show user mhubbard authorized-key
 ssh-ed25519 AAAAC3NzaC1lZDI1NT...KFC8 mhubbard@HP8600-2328.local-2024-07-08
 ```
 
-That's all you need to do to setup pulic key login on the Aruba CX switches!
+That's all that's needed to setup pulic key login on the Aruba CX switches!
 
 ### List logged in users
 
@@ -1367,7 +1368,7 @@ The following commands cover everything you need to do to configure ssh.
 | :----- | :-------------- | : -----------|
 | Enabling the SSH server | ssh server vrf | ssh server vrf default |
 | Disabling the SSH server | no ssh server vrf | no ssh server vrf default |
-| Clearing the list of trusted SSH servers for your user account | ssh known-host remove ssh known-host remove 192.168.10.130 |
+| Clearing the list of trusted SSH servers for your user account | ssh known-host remove | ssh known-host remove 192.168.10.130 |
 Configuring SSH to use a set of ciphers | ssh ciphers | ssh ciphers chacha20-poly1305@openssh.com aes256-ctr aes256-cbc |
 |Configuring SSH to use a set of host key algorithms | ssh host-key-algorithms | ssh host-key-algorithms ssh-rsa ssh-ed25519 ecdsa-sha2-nistp521 |
 | Configuring SSH to use a set of MACs | ssh macs | ssh macs hmac-sha2-256 hmac-sha2-512 |
