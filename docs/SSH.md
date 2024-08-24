@@ -1271,6 +1271,86 @@ root@TEST-Router:~ #
 
 ## Using the keys with an Aruba CX swtich
 
+The Aruba CX swtiches are easy to set up for SSH and public key access. They support strong cipher suites adn it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
+
+### Initial setup
+
+In the Cisco section above we configured NTP, and the user accounts before setting up SSH. You need to do the same for the Aruba CX.
+
+You need to decide which VRF to enable the server on. In this example, we will use the mgmt vrf. Use the following command to enable the ssh server:
+
+:ba```bash linenums='1'
+ssh server vrf mgmt
+```
+
+
+When an SSH server is enabled on a VRF for the first time, host-keys are generated.
+
+!!! note
+
+    If the host-key of the given type exists, a warning message is displayed with a request to overwrite the previous host-key with the new key.
+
+### Viewing the host-keys
+
+```bash linenums='1' hl_lines='1'
+show ssh host-key ?
+  ecdsa    Show SSH server ECDSA host-key.
+  ed25519  Show SSH server ED25519 host-key.
+  rsa      Show SSH server RSA host-key.
+
+  Show all keys
+  show ssh host-key
+```
+
+### Add your public key
+
+This is where the Aruba shines! You need to display the public key on your laptop and copy it to the clipboard. From the previous example, you can use the following commands to view the public key on your computer and copy it to the Aruba:
+
+```bash linenums='1' hl_lines='1'
+gnome-text-editor id_custom_25519.pub
+CX-10-10(config)# user mhubbard authorized-key ssh-ed25519 AAAAC3NzaC1...FC8 mhubbard@HP8600-2328.local-2024-07-08
+end
+write mem
+```
+
+### View the public key
+
+In this example, I have copied the public keys from my Linux and Mac laptops:
+
+```bash linenums='1' hl_lines='1'
+CX-10-10# show user mhubbard authorized-key
+
+1. ed25519 AAAAC3NzaC1lZDI1NTE5...uxn mhubbard@1S1K-G5-5587-2024-07-08
+
+2. Key Type : ED25519
+ssh-ed25519 AAAAC3NzaC1lZDI1NT...KFC8 mhubbard@HP8600-2328.local-2024-07-08
+```
+
+That's all you need to do to setup pulic key login on the Aruba CX switches!
+
+### List logged in users
+
+```bash linenums='1' hl_lines='1'
+show ssh server sessions all-vrfs
+
+SSH sessions on VRF default :
+    IPv4 SSH Sessions :
+        Server IP        : 192.168.10.233
+        Client IP        : 192.168.10.106
+        Client Port      : 64407
+
+        Server IP        : 192.168.10.233
+        Client IP        : 192.168.10.130
+        Client Port      : 42954
+
+    IPv6 SSH Sessions :
+        IPv6 session does not exist.
+```
+
+### Aruba CX SSH server commands
+
+The following commands cover everything you need to do to configure ssh.
+
 | Task | Command | Example|
 | :----- | :-------------- | : -----------|
 | Enabling the SSH server | ssh server vrf | ssh server vrf default |
