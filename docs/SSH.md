@@ -363,11 +363,11 @@ None of your keystrokes reach the jump host. The only thing the jump host can se
 !!! note
     Keep in mind that if the jump box is down you will not be able to log into the network devices. If you use `ssh -v` you will see these messages:
 
-    debug1: Reading configuration data /Users/mhubbard/.ssh/config
-    debug1: /Users/mhubbard/.ssh/config line 4: Skipping Host block because of negated match for 192.168.10.223
-    debug1: /Users/mhubbard/.ssh/config line 18: Applying options for *
+    - debug1: Reading configuration data /Users/mhubbard/.ssh/config
+    - debug1: /Users/mhubbard/.ssh/config line 4: Skipping Host block because of negated match for 192.168.10.223
+    - debug1: /Users/mhubbard/.ssh/config line 18: Applying options for *
 
-    You can comment out the ProxyJump 192.168.10.223 line in the configuration with a # symbol
+    You can comment out the ProxyJump 192.168.10.223 line in the configuration with a # symbol until the jump box is back online.
 
 ### References Wild Cards
 
