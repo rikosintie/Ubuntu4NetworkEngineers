@@ -1267,7 +1267,7 @@ You can see in the ouput the user's secret is hashed as type 9. In Cisco speak t
 
 Setting up the JunOS switch is similar to setting up the Cisco switch.
 
-```c# linenums="1" hl_lines="1"
+```bash linenums="1" hl_lines="1"
 ssh -i ~/.ssh/juniper_ed25519_key root@192.168.10.162
 Authorized access only! Violators will be violated!
 Enter passphrase for key '/home/mhubbard/.ssh/juniper_ed25519_key':
@@ -1354,7 +1354,7 @@ That's all that's needed to setup pulic key login on the Aruba CX switches!
 
 I logged into the switch from my Linux and Mac laptops:
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 show ssh server sessions all-vrfs
 
 SSH sessions on VRF default :
