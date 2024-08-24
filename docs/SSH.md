@@ -1269,6 +1269,28 @@ root@TEST-Router:~ #
 
 ----------------------------------------------------------------
 
+## Using the keys with an Aruba CX swtich
+
+| Task | Command | Example|
+| :-----: | :--------------: | : -----------:|
+| Enabling the SSH server | ssh server vrf | ssh server vrf default |
+| Disabling the SSH server | no ssh server vrf | no ssh server vrf default |
+| Clearing the list of trusted SSH servers for your user account | ssh known-host remove ssh known-host remove 192.168.10.130 |
+Configuring SSH to use a set of ciphers | ssh ciphers | ssh ciphers chacha20-poly1305@openssh.com aes256-ctr aes256-cbc |
+|Configuring SSH to use a set of host key algorithms | ssh host-key-algorithms | ssh host-key-algorithms ssh-rsa ssh-ed25519 ecdsa-sha2-nistp521 |
+| Configuring SSH to use a set of MACs | ssh macs | ssh macs hmac-sha2-256 hmac-sha2-512 |
+| Configuring SSH to use a set of key exchange algorithms | ssh key-exchange-algorithms | ssh key-exchange-algorithms ecdh-sha2-nistp256 |
+| Configuring SSH to use a set of public key algorithms | ssh public-key-algorithms | ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256 |
+| Showing the SSH server configuration | show ssh server | show ssh server all-vrfs |
+| Showing the active SSH sessions | show ssh server sessions | show ssh server sessions all-vrfs |
+| Showing the SSH server host keys | show ssh host-key | show ssh host-key ecdsa |
+| Show state of local password-based (for SSH) and SSH public key authentication | show ssh authentication-method | show ssh authentication-method |
+| Copying the client SSH public key into the key list | user authorized-key | user admin authorized-key ssh-ed25519 AAAAC3NzaC1lZD...uxn mhubbard@1S1K-G5-5587-2024-07-08 |
+| Removing SSH public keys from the key list | user authorized-key | no user admin authorized-key 2 |
+| Showing the SSH client public key list | show user | show user admin authorized-key |
+| Configuring SSH idle session timeout | cli-session | switch(config)# cli-session switch(config-cli-session)# timeout 20 |
+----------------------------------------------------------------
+
 ## Using the keys with an HPE Procurve switch
 
 ----------------------------------------------------------------
