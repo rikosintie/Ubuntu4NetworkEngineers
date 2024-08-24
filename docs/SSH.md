@@ -360,6 +360,15 @@ DECOM___MCI-KSC-SW1#
 
 None of your keystrokes reach the jump host. The only thing the jump host can see is an encrypted data stream between your client and the destination server.
 
+!!! note
+   Keep in mind that if the jump box is down you will not be able to log into the network devices. If you use `ssh -v` you will see these messages:
+
+   debug1: Reading configuration data /Users/mhubbard/.ssh/config
+   debug1: /Users/mhubbard/.ssh/config line 4: Skipping Host block because of negated match for 192.168.10.223
+   debug1: /Users/mhubbard/.ssh/config line 18: Applying options for *
+
+   You can comment out the ProxyJump 192.168.10.223 line in the configuration with a # symbol
+
 ### References Wild Cards
 
 [SSH config wildcard on expanded Hostname](https://superuser.com/questions/469329/ssh-config-wildcard-on-expanded-hostname)
