@@ -1390,7 +1390,7 @@ no host-key-algorithms
 no key-exchange-algorithms
 no ssh macs
 no ssh public-key-algorithms
-~~~
+```
 
 ### Aruba CX SSH server commands
 
