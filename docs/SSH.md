@@ -1288,6 +1288,7 @@ When an SSH server is enabled on a VRF for the first time, host-keys are generat
 !!! note
 
     If the host-key of the given type exists, a warning message is displayed with a request to overwrite the previous host-key with the new key.
+
     That isn't a problem as far as setting up ssh, but keep in mind that if you have connected before, the client will complain that the key has changed.
 
 ### Viewing the host-keys
