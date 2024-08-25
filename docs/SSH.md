@@ -31,7 +31,9 @@ OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/Open
 
 When building a configuration template for a deployment you should remove as many legacy ciphers as possible. As the US CISA pushes for more secure IT infrastructure you will find more customers running security scans after you deploy. It's better to pass a security scan than have to answer questions about why your refresh failed a basic security audit.
 
-Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. Asking which ciphers are secure is like asking "Is Mac better than Windows?". But here are some general guidelines:
+Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. IoT manufactures and Network devices typically have a lot of ancient ciphers. Episode 209 of the [2.5 Admins](https://2.5admins.com/2-5-admins-209/) podcast titled: Faulty Defaults is worth listening to if any of this is new to you.
+
+Asking which ciphers are secure is like asking "Is Mac better than Windows?". But here are some general guidelines:
 
 - Don't use any encryption with CBC in the name. For example aes128-cbc. The CBC means `cipher block chaining` and PCI will fail you if it finds it.
 - Do use encryption with CTR in the name. For example aes256-ctr.
@@ -1300,6 +1302,33 @@ When an SSH server is enabled on a VRF for the first time, host-keys are generat
 
     That isn't a problem as far as setting up ssh, but keep in mind that if you have connected before, the client will complain that the key has changed.
 
+If that happens you will see the following message:
+
+```bash linenums='1' hl_lines='1'
+ssh 192.168.10.233
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:fImGI4bZxLw7eRKZ1Sz5PJPLVGy...J3W4.
+Please contact your system administrator.
+Add correct host key in /home/mhubbard/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /home/mhubbard/.ssh/known_hosts:200
+  remove with:
+  ssh-keygen -f "/home/mhubbard/.ssh/known_hosts" -R "192.168.10.233"
+Host key for 192.168.10.233 has changed and you have requested strict checking.
+Host key verification failed.
+```
+
+You can cooy/paste the following into the terminal to remove the old host:
+
+```bash linenums='1'
+ssh-keygen -f "/home/mhubbard/.ssh/known_hosts" -R "192.168.10.233"
+```
+
 ### Viewing the host-keys
 
 ```bash linenums='1' hl_lines='1 8'
@@ -1326,7 +1355,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpG5P1MQOp1q98++nLoVMnwwZFsYgapfB/akN44rJ+
 
 ### Add your public key
 
-This is where the Aruba shines! You need to display the public key on your laptop and copy it to the clipboard. From the previous example, you can use the following commands to view the public key on your computer and copy it to the Aruba:
+This is where the Aruba shines! You need to display the public key on your laptop and copy it to the clipboard. In the [Creating SSH Keys](#creating-ssh-keys) section we created id_custom_25519, you can use the following commands to view that public key on your computer and copy it to the Aruba:
 
 ```bash linenums='1' hl_lines='1'
 gnome-text-editor id_custom_25519.pub
@@ -1378,6 +1407,14 @@ show ssh authentication-method
  SSH publickey authentication  : Enabled
  SSH password authentication   : Enabled
  SSH two factor authentication : Disabled
+```
+
+### Configure Key Exchange
+
+The default key exchange algorithms are good but `diffie-hellman-group14-sha1` is avaiable. Since I'm using Ubuntu 24.04 and this switch is in my lab I chagned the algorithms using the following. Notice that no comma is used betwee:
+
+```bash linenums='1' hl_lines='1'
+ssh key-exchange-algorithms curve25519-sha256 curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384`
 ```
 
 ### Reset cipher suites
