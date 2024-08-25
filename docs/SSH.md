@@ -1411,10 +1411,59 @@ show ssh authentication-method
 
 ### Configure Key Exchange
 
-The default key exchange algorithms are good but `diffie-hellman-group14-sha1` is avaiable. Since I'm using Ubuntu 24.04 and this switch is in my lab I chagned the algorithms using the following. Notice that no comma is used betwee:
+The default key exchange algorithms are good but `diffie-hellman-group14-sha1` is avaiable. Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the algorithms using the following. Notice that no comma is used between the algorithms.:
 
 ```bash linenums='1' hl_lines='1'
 ssh key-exchange-algorithms curve25519-sha256 curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384`
+```
+
+### Configure MACs
+
+MAC stands for  message authentication code. In SSH it's actually HMAC, or Hash Message Authentication code. The default MACs are good but it does include `hmac-sha1` which is weak. Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the MACs using the following. Notice that no comma is used between the macs.:
+
+```bash linenums='1' hl_lines='1'
+ssh macs hmac-sha2-256-etm@openssh.com hmac-sha2-512-etm@openssh.com hmac-sha1-etm@openssh.com hmac-sha2-256 hmac-sha2-512
+```
+
+### Configure the Public Key Algorithms
+
+Again, the default public key algorithms are good but it does include ssh-rsa with is weak.  Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the MACs using the following. I shortend the list substantially, and I really would just use the ssh-ed-25519 if I had all modern clients in my organization. Notice that no comma is used between the algorithms.:
+
+```bash linenums='1' hl_lines='1'
+ssh public-key-algorithms rsa-sha2-512 ecdsa-sha2-nistp256 ecdsa-sha2-nistp384 ecdsa-sha2-nistp521 ssh-ed25519
+```
+
+### Final SSH ciphers
+
+Here is what the final ssh server configuration looks like. Notice that Aruba doesn't even offer ssh v1, version 2 has been available since 2006. I have no ideas why Cisco and ohters still ship it.
+
+```bash linenums='1' hl_lines='1'
+CX-10-10# show ssh server
+
+SSH server configuration on VRF default :
+
+    IP Version        : IPv4 and IPv6        SSH Version          : 2.0
+    TCP Port          : 22                   Grace Timeout (sec)  : 60
+    Max Auth Attempts : 6
+
+    Ciphers:
+    chacha20-poly1305@openssh.com, aes128-ctr, aes192-ctr, aes256-ctr,
+    aes128-gcm@openssh.com, aes256-gcm@openssh.com
+
+    Host Key Algorithms:
+    ssh-ed25519, ecdsa-sha2-nistp521
+
+    Key Exchange Algorithms:
+    curve25519-sha256, curve25519-sha256@libssh.org, ecdh-sha2-nistp256,
+    ecdh-sha2-nistp384
+
+    MACs:
+    hmac-sha2-256-etm@openssh.com, hmac-sha2-512-etm@openssh.com,
+    hmac-sha1-etm@openssh.com, hmac-sha2-256, hmac-sha2-512
+
+    Public Key Algorithms:
+    rsa-sha2-512, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, ecdsa-sha2-nistp521,
+    ssh-ed25519
 ```
 
 ### Reset cipher suites
