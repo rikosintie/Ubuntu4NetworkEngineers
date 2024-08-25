@@ -13,11 +13,11 @@
 
 ----------------------------------------------------------------
 
-I highly recommend [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/).
+I highly recommend buying a copy of [SSH Mastery](https://mwl.io/nonfiction/tools#ssh) by Michael Lucas. It’s available at [SSH Mastery](https://mwlucas.gumroad.com/l/CngLH) or [Amazon](https://www.amazon.com/) as an ebook for about $10.
 
-When I switched to Linux my only experience with SSH was Putty. Basically just opening putty, putting in an ip address and connecting. I knew  that Putty had a separate program, puttygen, to create ssh keys and other functionality but I really just used it to do a simple ssh connection.
+When I switched to Linux my only experience with SSH was Putty. Basically just opening putty, putting in an ip address and connecting. I knew that Putty had a separate program, puttygen, to create ssh keys and other functionality but I really just used it to do a simple ssh connection. There is so much more to SSH and Michael explains all of it in SSH Mastery.
 
-There is so much more to SSH and Michael explains all of it. For a network engineer the biggest benefit of Ubuntu is that you have an SSH client and server that can be used from the terminal without installing proprietary software. It gets updated automatically when Ubuntu is updated.
+For a network engineer the biggest benefit of Ubuntu is that you have an SSH client and server that can be used from the terminal without installing proprietary software. It gets updated automatically when Ubuntu is updated.
 
 As I moved more and more to NetDevOps and started working with Linux servers in the cloud I started to appreciate the benefits of having an ssh client and server integrated with the operating system.
 
@@ -1253,7 +1253,7 @@ username mhubbard privilege 15 secret 9 $9$y4j0lAgHcDtV3.$sH6LI79G3qmdpVdICokss8
    key-hash ssh-rsa CCA79DBB37A7EA060C781DA2767509C0
 ```
 
-You can see that `thubbard` has to use a password but `mhubbard` can use a password or SSH keys. User `mhubbard` has two keys listed because I generated keys on my Ubuntu machine and my M1 MacBook Air. I could have copiied my private key from Ubuntu to the MacBook but I wanted to show two keys.
+You can see that `thubbard` has to use a password but `mhubbard` can use a password or SSH keys. User `mhubbard` has two keys listed because I generated keys on my Ubuntu machine and my M1 MacBook Air. I could have copied my private key from Ubuntu to the MacBook but I wanted to show two keys.
 
 !!! Note
 
@@ -1280,9 +1280,9 @@ root@TEST-Router:~ #
 
 ----------------------------------------------------------------
 
-## Using the keys with an Aruba CX swtich
+## Using the keys with an Aruba CX switch
 
-The Aruba CX switches are easy to set up for SSH and public key access. They support strong cipher suites and it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implentation should be done on network devices.
+The Aruba CX switches are easy to set up for SSH and public key access. They support strong cipher suites and it's easy to reset the cipher suite if you remove some and your client can't connect. I personally think they set the standard for how the SSH server implementation should be done on network devices.
 
 ### Initial setup
 
@@ -1323,11 +1323,13 @@ Host key for 192.168.10.233 has changed and you have requested strict checking.
 Host key verification failed.
 ```
 
-You can cooy/paste the following into the terminal to remove the old host:
+You can copy/paste the following into the terminal to remove the old host:
 
 ```bash linenums='1'
 ssh-keygen -f "/home/mhubbard/.ssh/known_hosts" -R "192.168.10.233"
 ```
+
+On macOS you don't get the command to delete the old key but it does give you the line number in the `~/.ssh/config` file that you need to delete.
 
 ### Viewing the host-keys
 
@@ -1351,6 +1353,24 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOV1JvayGmBsryg+uyR/fKwABQ5jllra6mBRnc1pwprY
 
 Key Type : RSA       Key Size : 4096
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpG5P1MQOp1q98++nLoVMnwwZFsYgapfB/akN44rJ+ULOusPX95+sGCDl33kBebzeA0+AbkvBNetZRWJ7J+CBihpQ9f9ms6jS4wb1GtlV/HlP9JbpYEPIfCH9HxKHThuMLd36K/UeDkaZo4B22l8DJBIJrYl5T5hVZ73VBqdf7O/UsC9gUGZSDp7nXmCFWc38x8CW6+VBNo0K7MsHHff7ajLAi6lfrlbSOOn/Xzls3eil9bX0uzL69biflyA6y7ESnMX7PFijOoYqz2hp0cxk4La0NSJbRi+efbUyyaZ/0/xYUcnrv/QXYvCPGZEfDOycyBYgtgVD942OO+OZC3NB5jRb6QtIlb+tbw43yGcDdQiFrPUi3cxZlvnUr/CCVrnSaNEj4yliQ+QF9tLG5ap+cbAxW8I6ofy/eX6xvIuNf43ycilN+E/OJbPTvW4lndTATDeyNhHeIrPae87x0Cx0x2sHEi5dXgJdl/IQlrJFNLqydJQq1DSazVSaG7Zfd12a/9XW0fm/1InS/rQ5gd9Rot4Ou/VtNO1+v7CyAG2aaPKLaYSi4jfbCB7NFrbSlqdzLP4ODVzsWZg6CNk9bqmAb/eKaMCXK2u4w0rKVPcQJ5yYWThmAb6X2SUEi3mbGZzOEko2T9uSHpPch1EOJ6gmPkJ7kt53x2fDfbpTcUoBTEw==
+```
+
+### List the enabled auth methods
+
+Before adding our public key check to make sure publickey authentication is enabled. Public Key Authentication is enabled by default.
+
+```bash linenums='1' hl_lines='1'
+show ssh authentication-method
+ SSH publickey authentication  : Enabled
+ SSH password authentication   : Enabled
+ SSH two factor authentication : Disabled
+```
+
+Public key authentication can be enabled/disabled using the following:
+
+```bash linenums='1' hl_lines='1'
+no ssh public-key-authentication
+ssh public-key-authentication
 ```
 
 ### Add your public key
@@ -1400,18 +1420,9 @@ SSH sessions on VRF default :
         IPv6 session does not exist.
 ```
 
-### List the enabled auth methods
-
-```bash linenums='1' hl_lines='1'
-show ssh authentication-method
- SSH publickey authentication  : Enabled
- SSH password authentication   : Enabled
- SSH two factor authentication : Disabled
-```
-
 ### Configure Key Exchange
 
-The default key exchange algorithms are good but `diffie-hellman-group14-sha1` is avaiable. Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the algorithms using the following. Notice that no comma is used between the algorithms.:
+The default key exchange algorithms are good but `diffie-hellman-group14-sha1` is available. Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the algorithms using the following. Notice that no comma is used between the algorithms.:
 
 ```bash linenums='1' hl_lines='1'
 ssh key-exchange-algorithms curve25519-sha256 curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384`
@@ -1427,7 +1438,7 @@ ssh macs hmac-sha2-256-etm@openssh.com hmac-sha2-512-etm@openssh.com hmac-sha1-e
 
 ### Configure the Public Key Algorithms
 
-Again, the default public key algorithms are good but it does include ssh-rsa with is weak.  Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the MACs using the following. I shortend the list substantially, and I really would just use the ssh-ed-25519 if I had all modern clients in my organization. Notice that no comma is used between the algorithms.:
+Again, the default public key algorithms are good but it does include ssh-rsa with is weak.  Since I'm using Ubuntu 24.04 and this switch is in my lab I changed the MACs using the following. I shortened the list substantially, and I really would just use the ssh-ed-25519 if I had all modern clients in my organization. Notice that no comma is used between the algorithms.:
 
 ```bash linenums='1' hl_lines='1'
 ssh public-key-algorithms rsa-sha2-512 ecdsa-sha2-nistp256 ecdsa-sha2-nistp384 ecdsa-sha2-nistp521 ssh-ed25519
@@ -1435,7 +1446,7 @@ ssh public-key-algorithms rsa-sha2-512 ecdsa-sha2-nistp256 ecdsa-sha2-nistp384 e
 
 ### Final SSH ciphers
 
-Here is what the final ssh server configuration looks like. Notice that Aruba doesn't even offer ssh v1, version 2 has been available since 2006. I have no ideas why Cisco and ohters still ship it.
+Here is what the final ssh server configuration looks like. Notice that Aruba doesn't even offer ssh v1, version 2 has been available since 2006. I have no ideas why Cisco and others still ship it.
 
 ```bash linenums='1' hl_lines='1'
 CX-10-10# show ssh server
@@ -1513,7 +1524,7 @@ There is a github project called chromaterm that allows you to colorize the linu
 
 Luckily a new project is available called chromaterm-- and works great with the latest version of Ubuntu. Here is the link [chromaterm--](https://github.com/Houseman303/ChromaTerm--)
 
-On macos, it's available from brew using `brew install hSaria/tap/chromaterm`
+On macOS, it's available from brew using `brew install hSaria/tap/chromaterm`
 
 For Ubuntu we will clone the repository and install it. I have a directory 04_tools that I use for networking tools. You should make a directory for tools, cd into it and then run:
 
