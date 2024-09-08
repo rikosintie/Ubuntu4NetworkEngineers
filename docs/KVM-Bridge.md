@@ -634,7 +634,8 @@ Now in the guest, open file Explorer and select the iso.
 
 Double click on the guest-agent directory, then double click on `qemu-ga-x86_64.msi`. This is a standard Windows MSI installer, follow the directions and finish the install.
 
-Verify that the guest agent is running on Windows:
+### Verify that the guest agent is running on Windows
+
 Open a PowerShell console
 
 ```bash linenums='1' hl_lines='1'
