@@ -568,13 +568,13 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 
 The qemu-guest-agent is a helper daemon installed in a virtual machine (guest) when using QEMU. It is used to exchange information between the host and guest, and can be used to properly shut down the guest. The agent passes network information, including IP addresses, from the virtual machine to the host.
 
-## Mount the ISO image
+### Mount the ISO image
 
 We need to mount the virtio-win-<version>.iso image on the host
 
-### On the Linux host
+**On the Linux host**
 
-Open a terminal
+Open a terminal and run these commands:
 
 ```bash linenums='1'
 cd /media
@@ -585,15 +585,10 @@ mount: /media/iso: WARNING: source write-protected, mounted read-only.
 
 Now the iso is mounted at /media/iso. It's read only but that's fine. We are not going to change anything.
 
-Now change to the iso directory
+Now change to the iso directory and list the files:
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 2'
 cd iso
-```
-
-list the files
-
-```bash linenums='1' hl_lines='1'
 ls -l
 total 45M
 dr-xr-xr-x 13 root root 2.0K 2023-09-18 23:17 amd64/
@@ -602,11 +597,12 @@ dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:17 cert/
 dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:17 data/
 dr-xr-xr-x 11 root root 2.0K 2023-09-18 23:17 fwcfg/
 dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:18 guest-agent/
+...
 ```
 
 The file that we will be installing is in the guest-agent folder, qemu-ga-x86_64.msi.
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='1 4'
 cd guest-agent
 
 /media/iso/guest-agent
@@ -618,7 +614,7 @@ total 20M
 
 ### Mount the iso on the Windows guest
 
-Switch to `virt-manager` and open a console to the Windows host. Above the console, click the `Virtual Machine` menu and select `Redirect USB`:
+Switch to `virt-manager` and open a console to the Windows host. Above the console, click the `Virtual Machine` menu and select `Redirect USB device`:
 
 ----------------------------------------------------------------
 
@@ -638,7 +634,24 @@ Now in the guest, open file Explorer and select the iso.
 
 Double click on the guest-agent directory, then double click on `qemu-ga-x86_64.msi`. This is a standard Windows MSI installer, follow the directions and finish the install.
 
+Verify that the guest agent is running on Windows:
+Open a PowerShell console
+
+```bash linenums='1' hl_lines='1'
+PS C:\Users\mhubbard> Get-Service QEMU-GA
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  QEMU-GA            QEMU Guest Agent
+```
+
 You will now be able to copy/paste between the guest/host and host/guest.
+
+### QEMU References
+
+- [Issue with copy/paste in QEMU Windows guest](https://bbs.archlinux.org/viewtopic.php?id=295189)
+- [Qemu-guest-agent](https://pve.proxmox.com/wiki/Qemu-guest-agent) - A ProxMox tutorial on the Guest Agent
+- [How to Mount ISO Files on Linux](https://linuxiac.com/how-to-mount-iso-files-on-linux/)
 
 ----------------------------------------------------------------
 
