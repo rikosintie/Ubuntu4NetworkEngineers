@@ -564,6 +564,84 @@ Congratulations, you now have a bridged Windows virtual machine up and running o
 
 ----------------------------------------------------------------
 
+## Install the qemu guest-agent
+
+The qemu-guest-agent is a helper daemon installed in a virtual machine (guest) when using QEMU. It is used to exchange information between the host and guest, and can be used to properly shut down the guest. The agent passes network information, including IP addresses, from the virtual machine to the host.
+
+## Mount the ISO image
+
+We need to mount the virtio-win-<version>.iso image on the host
+
+### On the Linux host
+
+Open a terminal
+
+```bash linenums='1'
+cd /media
+sudo mkdir iso
+sudo mount -o loop ~/Downloads/virtio-win-0.1.240.iso /media/iso
+mount: /media/iso: WARNING: source write-protected, mounted read-only.
+```
+
+Now the iso is mounted at /media/iso. It's read only but that's fine. We are not going to change anything.
+
+Now change to the iso directory
+
+```bash linenums='1' hl_lines='1'
+cd iso
+```
+
+list the files
+
+```bash linenums='1' hl_lines='1'
+ls -l
+total 45M
+dr-xr-xr-x 13 root root 2.0K 2023-09-18 23:17 amd64/
+dr-xr-xr-x 16 root root 2.0K 2023-09-18 23:17 Balloon/
+dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:17 cert/
+dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:17 data/
+dr-xr-xr-x 11 root root 2.0K 2023-09-18 23:17 fwcfg/
+dr-xr-xr-x  2 root root 2.0K 2023-09-18 23:18 guest-agent/
+```
+
+The file that we will be installing is in the guest-agent folder, qemu-ga-x86_64.msi.
+
+```bash linenums='1' hl_lines='1'
+cd guest-agent
+
+/media/iso/guest-agent
+$ ls -l
+total 20M
+-r--r--r-- 1 root root 9.6M 2023-07-10 23:17 qemu-ga-i386.msi
+-r--r--r-- 1 root root 9.7M 2023-07-10 23:17 qemu-ga-x86_64.msi
+```
+
+### Mount the iso on the Windows guest
+
+Switch to `virt-manager` and open a console to the Windows host. Above the console, click the `Virtual Machine` menu and select `Redirect USB`:
+
+----------------------------------------------------------------
+
+![screenshot](img/Redirect-USB.png)
+
+----------------------------------------------------------------
+
+A dialog will open, select the `Generic Mass Storage` device.
+
+----------------------------------------------------------------
+
+![screenshot](img/Select-Generic.png)
+
+----------------------------------------------------------------
+
+Now in the guest, open file Explorer and select the iso.
+
+Double click on the guest-agent directory, then double click on `qemu-ga-x86_64.msi`. This is a standard Windows MSI installer, follow the directions and finish the install.
+
+You will now be able to copy/paste between the guest/host and host/guest.
+
+----------------------------------------------------------------
+
 ## Bridged interface with vlans
 
 :arrow_forward: KEY TAKEAWAYS
