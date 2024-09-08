@@ -630,7 +630,9 @@ A dialog will open, select the `Generic Mass Storage` device.
 
 ----------------------------------------------------------------
 
-Now in the guest, open file Explorer and select the iso.
+### Install the Guest Agent
+
+In the guest, open file Explorer and select the iso.
 
 Double click on the guest-agent directory, then double click on `qemu-ga-x86_64.msi`. This is a standard Windows MSI installer, follow the directions and finish the install.
 
