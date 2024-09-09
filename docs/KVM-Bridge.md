@@ -650,6 +650,23 @@ Running  QEMU-GA            QEMU Guest Agent
 
 You will now be able to copy/paste between the guest/host and host/guest.
 
+### Clean up
+
+Now that the agent is installed, we need to eject the ISO from the guest and unmount the ISO from the host. In Files Explorer, right click over the DVD Drive: virtio-win-0.1.240 and select the `eject` option.
+
+----------------------------------------------------------------
+
+![screenshot](img/Eject.png)
+
+----------------------------------------------------------------
+
+On the host, open a terminal (you can't be in the /media/iso directory or the unmount will fail):
+
+```bash linenums='1'
+cd ~
+sudo umount /media/iso
+```
+
 ### QEMU References
 
 - [Issue with copy/paste in QEMU Windows guest](https://bbs.archlinux.org/viewtopic.php?id=295189)
