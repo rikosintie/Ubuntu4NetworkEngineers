@@ -86,6 +86,8 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
 
 copyright: |
   &copy; 2024 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
