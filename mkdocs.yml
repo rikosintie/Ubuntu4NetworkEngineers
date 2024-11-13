@@ -11,8 +11,9 @@ nav:
 
 theme:
   name: material
-  logo:
-    fontawesome/solid/U
+  icon:
+    logo:
+      fontawesome/solid/U
   features:
     - navigation.tabs
     - navigation.sections
