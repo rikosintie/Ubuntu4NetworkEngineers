@@ -11,7 +11,7 @@ nav:
 
 theme:
   name: material
-  logo: img/favicon.ico
+  logo: fontawesome/solid/W
   features:
     - navigation.tabs
     - navigation.sections
@@ -51,7 +51,6 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
-    logo: fontawesome/solid/D
 
 plugins:
     - social
