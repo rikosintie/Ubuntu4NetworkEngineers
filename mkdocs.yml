@@ -11,7 +11,7 @@ nav:
 
 theme:
   name: material
-  logo: fontawesome/solid/W
+  logo: :penguin:
   features:
     - navigation.tabs
     - navigation.sections
