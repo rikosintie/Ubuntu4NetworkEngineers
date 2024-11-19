@@ -194,11 +194,77 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
 
 Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
-and the right click menu showing “Open in Terminal”. You can see how convenient this is. On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t.
+and the right click menu showing “Open in Terminal”. You can see how convenient this is. On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
 
-Files has an extensive right click menu. Here are the options for the folder Scripts.
+If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
+
+- Sort Folders Before Files
+- Expandable Folders in List View
+
+The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicking the symbols expands the folder
+
+![screenshot](img/File-Preferences.png)
+
+----------------------------------------------------------------
+
+Files has an extensive right click menu. Here are the options for the folder `Scripts`. You can see the `>` symbol beside the folder name.
 
 ![screenshot](img/Right-Click.png)
+
+----------------------------------------------------------------
+
+I use the `list` view to list files. If you want to create a new folder, you can right click just to the left of the list of folders. See the next image:
+
+![screenshot](img/Right-Click-folder.png)
+
+----------------------------------------------------------------
+
+Notice that the dialog has options for:
+
+- New Folder - Create a new folder
+- New Document - Create a new document
+- Open With... - This is an odd one. It allows you to select an application to - open a new folder with.
+- Paste - If you have copied a file, a Paste menu will appear, otherwise it's greyed out.
+- Paste as link - Similar to a `shortcut` on Windows
+- Select All - Selects all folders
+- Visible Columns - This opens a dialog where you can choose which columns are visible
+- Open in Terminal - Opens the Ubuntu Terminal in this folder
+- Open as Administrator - Open a new window running with root privileges.
+- Properties - Shows the size of the folder and the permissions of the folder
+
+----------------------------------------------------------------
+
+### New Document
+
+You can create templates in the `/user/home/templates` folder for the document types that you use on a regular basis. To create a template:
+
+- Open the application you want to create a template for
+- Set any options for the template
+- Save the file in the `/home/{user}/templates` folder. For example, my template folder is `/home/mhubbard/templates`
+
+For example, I wanted a plain text template so I opened `Text Editor` and saved the blank document as New Document.txt in the templates folder. Now when I right click I can select `New Document.txt` for a blank text file for any one of the LibreOffice templates I created.
+
+![screenshot](img/Right-Click-New-Doc.png)
+
+----------------------------------------------------------------
+
+### Columns
+
+There are a lot of options for which columns to display:
+
+![screenshot](img/Right-Click-Columns.png)
+
+----------------------------------------------------------------
+
+### Open as Administrator
+
+This one is very useful is you like to use GUI applications for files that require root privileges. You can also click you mouse into the address bar and type `admin:` to change the current window to root. You will be prompted for your password. Then you can open files as root.
+
+----------------------------------------------------------------
+
+### Open a new Tab
+
+You can use the keyboard shortcut `ctrl+t` to create a new tab, click the `Hamburger menu` and select New Tab, or if you mouse has a center button just click it!
 
 ----------------------------------------------------------------
 
@@ -277,6 +343,7 @@ You will be prompted to enter your password.
 **Reference**
 
 [Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
+[10 tips for Gnome Files](https://www.youtube.com/watch?v=tR5uDUlZJNA)
 
 ----------------------------------------------------------------
 
