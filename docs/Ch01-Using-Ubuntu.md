@@ -193,9 +193,6 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
 
-Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Here is a screenshot with three tabs open
-and the right click menu showing “Open in Terminal”. You can see how convenient this is. On a Mac, the Finder app has the tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
-
 If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
 
 - Sort Folders Before Files
@@ -204,6 +201,13 @@ If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`
 The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicking the symbols expands the folder
 
 ![screenshot](img/File-Preferences.png)
+
+### Tabs
+
+Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open
+and the right click menu showing “Open in Terminal”.
+
+You can see how convenient this is. On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
 
 ----------------------------------------------------------------
 
@@ -435,6 +439,10 @@ You can install qemu and create a simple virtual machine to test a startup disk.
 
 - [How do I install qemu on Ubuntu 23.10?](https://askubuntu.com/questions/1490805/how-do-i-install-qemu-on-ubuntu-23-10)
 - [Using QEMU to quickly test an ISO or bootable USB drive](https://makandracards.com/makandra/1192-using-qemu-to-quickly-test-an-iso-or-bootable-usb-drive)
+
+----------------------------------------------------------------
+
+## Add Asterisks when typing passwords
 
 ----------------------------------------------------------------
 
