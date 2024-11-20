@@ -240,19 +240,27 @@ Notice that the dialog has options for:
 
 ### New Document
 
-You can create templates in the `/user/home/templates` folder for the document types that you use on a regular basis. To create a template:
+You can create templates in the `/home/$USER/templates` folder for the document types that you use on a regular basis. To create a template:
 
 - Open the application you want to create a template for
 - Set any options for the template
-- Save the file in the `/home/{user}/templates` folder. For example, my template folder is `/home/mhubbard/templates`
+- Save the file in the `/home/$USER}/templates` folder. For example, my template folder is `/home/mhubbard/templates`
 
-For example, I wanted a plain text template so I opened `Text Editor` and saved the blank document as New Document.txt in the templates folder. Now when I right click I can select `New Document.txt` for a blank text file for any one of the LibreOffice templates I created.
+For example, I wanted a plain text template so I opened `Text Editor` and saved the blank document as New_Text_Document.txt in the templates folder. Now when I right click I can select `New_Txt_Document.txt` for a blank text file.
+
+I right clicked over the `New_Text_Document.txt` file and selected `Open With` then set VS Code as the `Always use for this type of file` option.
+
+![screenshot](img/Right-Click-Open-With.png)
+
+----------------------------------------------------------------
+
+You can also create LibreOffice templates. The templates that end in `.ott` are for LibreOffice Writer and templates that end in `.ots` are for LibreOffice Calc.
 
 ![screenshot](img/Right-Click-New-Doc.png)
 
 ----------------------------------------------------------------
 
-### Columns
+### Visible Columns
 
 There are a lot of options for which columns to display:
 
