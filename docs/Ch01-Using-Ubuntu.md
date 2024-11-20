@@ -130,6 +130,10 @@ If there are too many to display, a column of circles will appear at the bottom 
 
 ![screenshot](img/frequent-new.png)
 
+!!! note
+
+Ubuntu 24.10 has changed the icon to an Ubuntu icon instead of the dots
+
 ----------------------------------------------------------------
 
 ### Switching between multiple open windows in the same application
@@ -192,6 +196,8 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 ## Using the GUI Files application
 
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
+
+File used to be named `nautilus` and you can still launch the application from the terminal using `nautilus`. If you are having issue with Files starting, for example you get a dialog saying "Files is not responding" with a Force quit and a Wait button you so
 
 If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
 
@@ -363,7 +369,11 @@ You will be prompted to enter your password.
 
 If the file has a grey square icon with an X in it the file is read only.
 
-**References**
+![screenshot](img/grey-x.png)
+
+----------------------------------------------------------------
+
+**References for the Files app**
 
 - [Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
 - [10 tips for Gnome Files](https://www.youtube.com/watch?v=tR5uDUlZJNA) - A 10 minute video that is worth watching.
@@ -458,10 +468,6 @@ You can install qemu and create a simple virtual machine to test a startup disk.
 
 - [How do I install qemu on Ubuntu 23.10?](https://askubuntu.com/questions/1490805/how-do-i-install-qemu-on-ubuntu-23-10)
 - [Using QEMU to quickly test an ISO or bootable USB drive](https://makandracards.com/makandra/1192-using-qemu-to-quickly-test-an-iso-or-bootable-usb-drive)
-
-----------------------------------------------------------------
-
-## Add Asterisks when typing passwords
 
 ----------------------------------------------------------------
 
