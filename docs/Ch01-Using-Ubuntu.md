@@ -133,6 +133,7 @@ If there are too many to display, a column of circles will appear at the bottom 
 !!! note
 
     Ubuntu 24.10 has changed the icon to an Ubuntu icon instead of the dots.
+
     ![screenshot](img/All-Apps-New.png)
 
 ----------------------------------------------------------------
