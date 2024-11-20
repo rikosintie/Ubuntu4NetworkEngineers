@@ -343,13 +343,13 @@ Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/file
 
 ----------------------------------------------------------------
 
-### Why do I have a red Lock on a file or folder?
+### I have a red Lock icon on a file or folder
 
 Files, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
 
 If the icon has a red lock in it, you don’t have full
 permissions to the file or folder.
-Here is a screenshot of Files showing one file with a green check mark and one with a red x.
+Here is a screenshot of Files showing a file with a red x.
 
 ![screenshot](img/red-lock.png)
 
@@ -359,10 +359,14 @@ To take ownership of the file, open the terminal and enter:
 
 You will be prompted to enter your password.
 
-**Reference**
+### I have a grey X on a file or folder
 
-[Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
-[10 tips for Gnome Files](https://www.youtube.com/watch?v=tR5uDUlZJNA)
+If the file has a grey square icon with an X in it the file is read only.
+
+**References**
+
+- [Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
+- [10 tips for Gnome Files](https://www.youtube.com/watch?v=tR5uDUlZJNA) - A 10 minute video that is worth watching.
 
 ----------------------------------------------------------------
 
