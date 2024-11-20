@@ -131,8 +131,9 @@ If there are too many to display, a column of circles will appear at the bottom 
 ![screenshot](img/frequent-new.png)
 
 !!! note
+    Ubuntu 24.10 has changed the icon to an Ubuntu icon instead of the dots.
 
-    Ubuntu 24.10 has changed the icon to an Ubuntu icon instead of the dots. ![screenshot](img/All-Apps-New.png)
+    ![screenshot](img/All-Apps-New.png)
 
 ----------------------------------------------------------------
 
