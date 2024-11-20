@@ -204,10 +204,9 @@ The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicki
 
 ### Tabs
 
-Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open
-and the right click menu showing “Open in Terminal”.
+Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is.
 
-You can see how convenient this is. On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
+On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
 
 ----------------------------------------------------------------
 
@@ -217,24 +216,24 @@ Files has an extensive right click menu. Here are the options for the folder `Sc
 
 ----------------------------------------------------------------
 
-I use the `list` view to list files. If you want to create a new folder, you can right click just to the left of the list of folders. See the next image:
+I use the `list` view to list files. You can right click just to the left of the list of folders to bring up the folder options. See the next image:
 
 ![screenshot](img/Right-Click-folder.png)
 
 ----------------------------------------------------------------
 
-Notice that the dialog has options for:
+The dialog has options for:
 
-- New Folder - Create a new folder
-- New Document - Create a new document
+- New Folder - Create a new folder.
+- New Document - Create a new document based off of a template.
 - Open With... - This is an odd one. It allows you to select an application to - open a new folder with.
 - Paste - If you have copied a file, a Paste menu will appear, otherwise it's greyed out.
-- Paste as link - Similar to a `shortcut` on Windows
-- Select All - Selects all folders
-- Visible Columns - This opens a dialog where you can choose which columns are visible
-- Open in Terminal - Opens the Ubuntu Terminal in this folder
+- Paste as link - Similar to a `shortcut` on Windows.
+- Select All - Selects all folders.
+- Visible Columns - This opens a dialog where you can choose which columns are visible.
+- Open in Terminal - Opens the Ubuntu Terminal in this folder.
 - Open as Administrator - Open a new window running with root privileges.
-- Properties - Shows the size of the folder and the permissions of the folder
+- Properties - Shows the size of the folder and the permissions of the folder.
 
 ----------------------------------------------------------------
 
@@ -244,7 +243,7 @@ You can create templates in the `/home/$USER/templates` folder for the document 
 
 - Open the application you want to create a template for
 - Set any options for the template
-- Save the file in the `/home/$USER}/templates` folder. For example, my template folder is `/home/mhubbard/templates`
+- Save the file in the `/home/$USER/templates` folder. For example, my template folder is `/home/mhubbard/templates`
 
 For example, I wanted a plain text template so I opened `Text Editor` and saved the blank document as New_Text_Document.txt in the templates folder. Now when I right click I can select `New_Txt_Document.txt` for a blank text file.
 
@@ -276,7 +275,15 @@ This one is very useful is you like to use GUI applications for files that requi
 
 ### Open a new Tab
 
-You can use the keyboard shortcut `ctrl+t` to create a new tab, click the `Hamburger menu` and select New Tab, or if you mouse has a center button just click it!
+You can use the keyboard shortcut `ctrl+t` to create a new tab, click the `Hamburger menu` and select New Tab. This will open the current folder in a new tab.
+
+If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab!
+
+----------------------------------------------------------------
+
+### Keyboard shortcuts
+
+Gnome Files has a lot of keyboard shortcuts. If you click the hamburger menu or press `ctrl+?` it will open a dialog displaying the shortcuts. There are 3 pages of them!
 
 ----------------------------------------------------------------
 
