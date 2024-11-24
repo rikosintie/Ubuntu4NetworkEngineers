@@ -194,11 +194,27 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 ----------------------------------------------------------------
 
+### Display Asterisks when typing passwords
+
+By default Ubuntu doens't display anything when you type a password. This annoys some users. Here is how to add Asterisks.
+
+Ubuntu provides a terminal tool called `visudo` to modify the XXXX file. This tool is a safety blanket that will catch a lot of mistakes. If you bork the file bad enough the system won't log in!
+
+If you are comfortable enough to
+
+----------------------------------------------------------------
+
 ## Using the GUI Files application
 
 Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.
 
-File used to be named `nautilus` and you can still launch the application from the terminal using `nautilus`. If you are having issue with Files starting, for example you get a dialog saying "Files is not responding" with a Force quit and a Wait button you so
+File used to be named `nautilus` and you can still launch the application from the terminal using `nautilus`. If you are having an issue with Files starting, for example you get a dialog saying "Files is not responding" with a Force quit and a Wait button you, go ahead and `Force Quit` it. Then open a terminal and type `nautilus`. If it fails to open you will get detailed output that should point you in the right direction to solve the problem.
+
+I am bringing this up because I installed a bunch of Gnome extensions a while back and one of them caused nautilus to hang. I got the logs from the terminal and and found this on article on [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/nautilus/+bug/1993557) Running `systemctl mask --user --now tracker-miner-fs-3.service` fixed the issue with nautilus hanging. But searching with the word `files` would be a waste of time.
+
+----------------------------------------------------------------
+
+### Two options I always use on Gnome
 
 If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
 
@@ -209,11 +225,18 @@ The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicki
 
 ![screenshot](img/File-Preferences.png)
 
+----------------------------------------------------------------
+
 ### Tabs
 
-Files works well and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is.
+Files works great and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is.
 
-On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t. (Note: Windows 11 22H2 added tabs)
+On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t.
+
+!!! Note
+
+    from [PCWorld](https://www.pcworld.com/article/1430331/use-the-new-tabbed-file-explorer-to-simplify-your-life.html#:~:text=Remember%2C%20tabs%20within%20File%20Explorer,seen%20them%20before%2C%20that's%20fine.)
+    Remember, tabs within File Explorer were not part of the Windows 11 2022 Update (22H2) — they were added as part of a later separate update. It’s all part of the new “Moments” strategy that Microsoft has implemented to add new features at unexpected times.
 
 ----------------------------------------------------------------
 
