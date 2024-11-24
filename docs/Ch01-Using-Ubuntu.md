@@ -210,7 +210,7 @@ Files is the file manager for Gnome. The Gnome team is very creative with applic
 
 File used to be named `nautilus` and you can still launch the application from the terminal using `nautilus`. If you are having an issue with Files starting, for example you get a dialog saying "Files is not responding" with a Force quit and a Wait button you, go ahead and `Force Quit` it. Then open a terminal and type `nautilus`. If it fails to open you will get detailed output that should point you in the right direction to solve the problem.
 
-I am bringing this up because I installed a bunch of Gnome extensions a while back and one of them caused nautilus to hang. I got the logs from the terminal and and found this on article on [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/nautilus/+bug/1993557) Running `systemctl mask --user --now tracker-miner-fs-3.service` fixed the issue with nautilus hanging. But searching with the word `files` would be a waste of time.
+I am bringing this up because I installed a bunch of Gnome extensions a while back and one of them caused nautilus to hang. I got the logs from the terminal and and found this on article on [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/nautilus/+bug/1993557). Running `systemctl mask --user --now tracker-miner-fs-3.service` fixed the issue with nautilus hanging. But searching with the word `files` would be a waste of time.
 
 ----------------------------------------------------------------
 
@@ -229,16 +229,17 @@ The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicki
 
 ### Tabs
 
-Files works great and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is.
-
-On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t.
+Files works great and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is. On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t.
 
 !!! Note
 
-    from [PCWorld](https://www.pcworld.com/article/1430331/use-the-new-tabbed-file-explorer-to-simplify-your-life.html#:~:text=Remember%2C%20tabs%20within%20File%20Explorer,seen%20them%20before%2C%20that's%20fine.)
+    From [PCWorld](https://www.pcworld.com/article/1430331/use-the-new-tabbed-file-explorer-to-simplify-your-life.html#:~:text=Remember%2C%20tabs%20within%20File%20Explorer,seen%20them%20before%2C%20that's%20fine.)
+
     Remember, tabs within File Explorer were not part of the Windows 11 2022 Update (22H2) — they were added as part of a later separate update. It’s all part of the new “Moments” strategy that Microsoft has implemented to add new features at unexpected times.
 
 ----------------------------------------------------------------
+
+### The Files right Click menu
 
 Files has an extensive right click menu. Here are the options for the folder `Scripts`. You can see the `>` symbol beside the folder name.
 
@@ -246,7 +247,7 @@ Files has an extensive right click menu. Here are the options for the folder `Sc
 
 ----------------------------------------------------------------
 
-I use the `list` view to list files. You can right click just to the left of the list of folders to bring up the folder options. See the next image:
+I use the `list` view to list files. Unlike with the `Icon` view, there isn't an open space to right click on is you want to create a nw folder or paste a file. But, you can right click just to the left of the list of folders to bring up the an options menu. See the next image:
 
 ![screenshot](img/Right-Click-folder.png)
 
@@ -272,10 +273,10 @@ The dialog has options for:
 You can create templates in the `/home/$USER/templates` folder for the document types that you use on a regular basis. To create a template:
 
 - Open the application you want to create a template for
-- Set any options for the template
+- Set any options for the template or enter text if it's a document.
 - Save the file in the `/home/$USER/templates` folder. For example, my template folder is `/home/mhubbard/templates`
 
-For example, I wanted a plain text template so I opened `Text Editor` and saved the blank document as New_Text_Document.txt in the templates folder. Now when I right click I can select `New_Txt_Document.txt` for a blank text file.
+I wanted a plain text template so I opened `Text Editor` and saved the blank document as New_Text_Document.txt in the templates folder. Now when I right click I can select `New_Txt_Document.txt` for a blank text file.
 
 I right clicked over the `New_Text_Document.txt` file and selected `Open With` then set VS Code as the `Always use for this type of file` option.
 
@@ -297,23 +298,29 @@ There are a lot of options for which columns to display:
 
 ----------------------------------------------------------------
 
+I like the `detailed Type` option. Here is a screenshot of what is displayed:
+
+![screenshot](img/Detailed-Type.png)
+
+----------------------------------------------------------------
+
 ### Open as Administrator
 
-This one is very useful is you like to use GUI applications for files that require root privileges. You can also click you mouse into the address bar and type `admin:` to change the current window to root. You will be prompted for your password. Then you can open files as root.
+This one is very useful is you like to use GUI applications for files that require root privileges. You can also click your mouse into the address bar and type `admin:` to change the current window to root. You will be prompted for your password. Then you can open files as root.
 
 ----------------------------------------------------------------
 
 ### Open a new Tab
 
-You can use the keyboard shortcut `ctrl+t` to create a new tab, click the `Hamburger menu` and select New Tab. This will open the current folder in a new tab.
+You can use the keyboard shortcut `ctrl+t` to create a new tab or click the `Hamburger menu` and select New Tab. This will open the current folder in a new tab.
 
-If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab!
+If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab! That is a big time saver.
 
 ----------------------------------------------------------------
 
 ### Keyboard shortcuts
 
-Gnome Files has a lot of keyboard shortcuts. If you click the hamburger menu or press `ctrl+?` it will open a dialog displaying the shortcuts. There are 3 pages of them!
+Gnome `Files` has a lot of keyboard shortcuts. You click the hamburger menu and select `Keyboard Shortcuts` or press `ctrl+?` to open a dialog displaying the shortcuts. There are 3 pages of them!
 
 ----------------------------------------------------------------
 
@@ -329,7 +336,7 @@ From the right click menu you can select "Compress..." to create an archive. The
 
 ### Display the Full path in files
 
-Sometimes you want to copy the full path to a file when working in the file manager. Hit ctrl+l (lowercase el) and the path will change to a format that you can copy.
+Sometimes you want to copy the full path to a file when working in the file manager. Hit `ctrl+l` (lowercase el) and the path will change to a format that you can copy.
 
 ![screenshot](img/ZIP.png)
 
@@ -341,7 +348,7 @@ One thing I missed from Windows Explorer was the preview pane. In Ubuntu running
 
 To install GNOME Sushi using Ubuntu Software, click the following link:
 
-```bash linenums='1' hl_lines='1'
+```bash
 sudo apt install gnome-sushi
 ```
 
