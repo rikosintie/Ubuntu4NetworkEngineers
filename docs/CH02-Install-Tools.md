@@ -105,7 +105,7 @@ Or by tapping the `Super` key, typing flat and clicking on the Flatseal icon
 
 ----------------------------------------------------------------
 
-Gnome Disk Usage analyzer
+### Gnome Disk Usage analyzer
 
 ![screenshot](img/DiskUsage.png)
 
@@ -134,6 +134,19 @@ Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a
 I hovered over one of the large blocks and is tells me that is the secito of disk holding my Inbox.
 
 ----------------------------------------------------------------
+
+Now that we have the four management applications installed let's find some tools useful to a network engineer!
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+FreeCAD
+Draw.io
+
+----------------------------------------------------------------
+
+## The Ubuntu App store
 
 ### PacketSender
 
@@ -175,9 +188,3 @@ by sending customers a portable Packet Sender with pre-defined settings and pack
 Send SSL and then analyze the traffic log.
 
 **Installation Instructions**
-
-
-----------------------------------------------------------------
-
-
-FreeCAD
