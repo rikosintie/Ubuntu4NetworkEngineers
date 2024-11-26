@@ -151,7 +151,7 @@ Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a
 
 ![screenshot](img/DiskUsage-Graph.png)
 
-I hovered over one of the large blocks and is tells me that is the secito of disk holding my Inbox.
+I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox.
 
 ----------------------------------------------------------------
 
