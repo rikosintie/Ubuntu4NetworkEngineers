@@ -196,11 +196,56 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 ### Display Asterisks when typing passwords
 
-By default Ubuntu doens't display anything when you type a password. This annoys some users. Here is how to add Asterisks.
+By default Ubuntu doesn't display anything when you type a password. This annoys some users. Here is how to add Asterisks.
 
-Ubuntu provides a terminal tool called `visudo` to modify the XXXX file. This tool is a safety blanket that will catch a lot of mistakes. If you bork the file bad enough the system won't log in!
+Ubuntu provides a terminal tool called `visudo` to modify the `sudoers` file. This tool is a safety blanket that will catch a lot of mistakes when you try to exit. If you bork the file bad enough the system won't log in! Digital Ocean has a [tutorial](https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file) on editing the sudoers file.
 
-If you are comfortable enough to
+!!! warning
+    Warning: Never edit this file with a normal text editor! Always use the visudo command instead! Because improper syntax in the /etc/sudoers file can leave you with a broken system where it is impossible to obtain elevated privileges, it is important to use the visudo command to edit the file.
+
+The `visudo` command opens a text editor like normal, but it validates the syntax of the file upon saving. This prevents configuration errors from blocking sudo operations, which may be your only way of obtaining root privileges.
+
+Traditionally, visudo opens the /etc/sudoers file with the vi text editor. Ubuntu, however, has configured visudo to use the nano text editor instead. Before running `visudo` use the following command to verify what editor will be used:
+
+```bash
+sudo update-alternatives --config editor
+[sudo] password for mhubbard:
+There are 9 choices for the alternative editor (providing /usr/bin/editor).
+
+  Selection    Path                Priority   Status
+------------------------------------------------------------
+* 0            /usr/bin/joe         70        auto mode
+  1            /bin/ed             -100       manual mode
+  2            /bin/nano            40        manual mode
+  3            /usr/bin/jmacs       50        manual mode
+  4            /usr/bin/joe         70        manual mode
+  5            /usr/bin/jpico       50        manual mode
+  6            /usr/bin/jstar       50        manual mode
+  7            /usr/bin/rjoe        25        manual mode
+  8            /usr/bin/vim.basic   30        manual mode
+  9            /usr/bin/vim.tiny    15        manual mode
+
+Press <enter> to keep the current choice[*], or type selection number:
+```
+
+You can see that I changed the default to the `joe editor`. Joe can handle massive text files and I do a lot of password hash cracking so I need to open word lists that are 100's of MBs in length. Joe easily handles that but it uses non-standard keys for save, exit, etc.1
+
+I suggest leaving `nano` as the default if you are new to Ubuntu.
+
+***Open the sudoers file with visudo***
+
+```bash
+sudo visudo
+```
+
+Scroll down till you see `Defaults        env_reset` and add `,pwfeedback`. The end result will be `Defaults        env_reset,pwfeedback`. Press `ctrl+s` to save the file and `ctrl+x` to exit.
+
+Now you will see Asterisks when typing a password:
+
+```text hl_lines='1'
+$ sudo nmap -vv --script ssl-cert,ssl-enum-ciphers -p 443 192.168.10.253
+[sudo] password for mhubbard: ********
+```
 
 ----------------------------------------------------------------
 
