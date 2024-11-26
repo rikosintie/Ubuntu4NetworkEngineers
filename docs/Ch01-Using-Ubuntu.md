@@ -186,7 +186,7 @@ and hit [enter].
 
 ----------------------------------------------------------------
 
-### Startup Applications
+## Startup Applications
 
 Gnome Tweaks is where you set the applications that run on startup. I try to keep these to a minimum. It's easy to forget that some application you don't use anymore is automatically starting and using system resources.
 
@@ -194,7 +194,7 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 ----------------------------------------------------------------
 
-### Display Asterisks when typing passwords
+## Display Asterisks when typing passwords
 
 By default Ubuntu doesn't display anything when you type a password. This annoys some users. Here is how to add Asterisks.
 
