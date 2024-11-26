@@ -214,7 +214,7 @@ I am bringing this up because I installed a bunch of Gnome extensions a while ba
 
 ----------------------------------------------------------------
 
-### Two options I always use on Gnome
+### Two options I always use in Files
 
 If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
 
