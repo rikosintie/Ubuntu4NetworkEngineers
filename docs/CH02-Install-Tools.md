@@ -111,7 +111,7 @@ flatpak run com.github.tchx84.Flatseal
 
 Or by tapping the `Super` key, typing flat and clicking on the Flatseal icon.
 
-You will be able to see all of the flatpak applications that are installed when Flatseal opens. From the terminal you can run:
+You will be able to see all of the flatpak applications that are installed when flatseal opens. From the terminal you can run:
 
 ```bash
 flatpak list --app
