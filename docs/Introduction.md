@@ -9,10 +9,10 @@
 - Ubuntu is **F**ree, **O**pen **S**ource **S**oftware - FOSS!
 - Ubuntu is published by Canonical, a private company with an estimated $175M in annual revenues
 - Canonical Support, called Ubuntu Pro, is free for 5 personal devices
-- Ubuntu Pro is enterprise class support similar a Microsoft Enterprise Agreement
+- Ubuntu Pro is enterprise class support similar to the Microsoft Enterprise Agreement
 - Ubuntu has [many flavors](https://wiki.ubuntu.com/UbuntuFlavors) and [dozens of specialized derivatives.](https://wiki.ubuntu.com/DerivativeTeam/Derivatives)
-- Ubuntu will work on Intel/AMD x64 processors and many ARM processors
-- Ubuntu works great on VMware Workstation/Fusion, KVM and VirtualBox
+- Ubuntu will run on Intel/AMD x64 processors and many ARM processors such as Raspberry Pi, Odroid, etc.
+- Ubuntu works great on VMware Workstation/Fusion, KVM, VirtualBox, and Gnome Boxes
 
 ----------------------------------------------------------------
 
@@ -49,9 +49,9 @@ I have been using Linux for quite a while, so his next comment caught me off gua
 
 In the Linux community there is a joke that "Microsoft :heart: Linux". Back in the 1990s Steve Balmer said "Linux is a cancer that attaches itself in an intellectual property sense to everything it touches." Now Microsoft supports Linux with the WSL in Windows, Linux servers in Azure and other ways.
 
-With Microsoft 365 it's not a problem to use Teams, Outlook, PowerPoint, Word, Excel, all work in a browser. I use Edge, but they also work in Chrome. For my needs they are great. If you like a real application Libre Office is better than Microsoft office in my opinion. I have had zero issue sharing Libre Office documents with Microsoft office users.
+With Microsoft 365 it's not a problem to use Teams, Outlook, PowerPoint, Word, and Excel. All of the Microsoft Applications run in a browser. I use Edge when I’m using Microsoft applications, but they also work in Chrome. For my needs they are great. If you prefer a real application, Libre Office is better than Microsoft office in my opinion. I have had zero issue sharing Libre Office documents with Microsoft office users.
 
-Here is an immage of the Microsoft 365 launcher in Linux:
+Here is an image of the Microsoft 365 launcher in Linux:
 
 ----------------------------------------------------------------
 
@@ -59,7 +59,7 @@ Here is an immage of the Microsoft 365 launcher in Linux:
 
 ----------------------------------------------------------------
 
-I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers.
+I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an application called Draw.io that doesn't need an Internet connection to work.
 
 ### As a Network Engineer it Rocks
 
