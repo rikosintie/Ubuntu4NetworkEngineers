@@ -198,10 +198,10 @@ There are a lot of options that you can "tweak" with the tool. I don't make a lo
 
 By default Ubuntu doesn't display anything when you type a password. This annoys some users. Here is how to add Asterisks.
 
-Ubuntu provides a terminal tool called `visudo` to modify the `sudoers` file. This tool is a safety blanket that will catch a lot of mistakes when you try to exit. If you bork the file bad enough the system won't log in! Digital Ocean has a [tutorial](https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file) on editing the sudoers file.
+Ubuntu provides a terminal tool called `visudo` to modify the `/etc/sudoers` file. This tool is a safety blanket that will catch a lot of mistakes when you try to exit. If you bork the file bad enough the system won't log in! Digital Ocean has a [tutorial](https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file) on editing the sudoers file.
 
 !!! warning
-    Warning: Never edit this file with a normal text editor! Always use the visudo command instead! Because improper syntax in the /etc/sudoers file can leave you with a broken system where it is impossible to obtain elevated privileges, it is important to use the visudo command to edit the file.
+    Never edit this file with a normal text editor! Always use the visudo command instead! Because improper syntax in the /etc/sudoers file can leave you with a broken system where it is impossible to obtain elevated privileges, it is important to use the visudo command to edit the file.
 
 The `visudo` command opens a text editor like normal, but it validates the syntax of the file upon saving. This prevents configuration errors from blocking sudo operations, which may be your only way of obtaining root privileges.
 
@@ -228,7 +228,7 @@ There are 9 choices for the alternative editor (providing /usr/bin/editor).
 Press <enter> to keep the current choice[*], or type selection number:
 ```
 
-You can see that I changed the default to the `joe editor`. Joe can handle massive text files and I do a lot of password hash cracking so I need to open word lists that are 100's of MBs in length. Joe easily handles that but it uses non-standard keys for save, exit, etc.1
+You can see that I changed the default to the `joe editor`. Joe can handle massive text files and I do a lot of password hash cracking so I need to open word lists that are 100's of MBs in length. Joe easily handles that but it uses non-standard keys for save, exit, etc.
 
 I suggest leaving `nano` as the default if you are new to Ubuntu.
 
