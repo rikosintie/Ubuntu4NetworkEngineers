@@ -17,9 +17,19 @@
 
 ----------------------------------------------------------------
 
+## Snaps vs Flatpak vs Appimage
+
+For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications were called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Linux adoption back.
+
+To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+
+Most importantly for us is that Snaps were developed by Canonical, the publisher of Ubuntu so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop. This was before Ubuntu switched to the Gnome desktop. So the Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. These 4 are very similar to Windows applications.
+
+----------------------------------------------------------------
+
 ## Flatpak Applications
 
-Flatpak is a standard way to install Linux applications across distributions. The Flatpak store is located [here](https://flathub.org/). There are Thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back an donate.
+The Flatpak store is located [here](https://flathub.org/). There are Thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back and donate. Most of the applications are written by developers that don't get paid.
 
 ### Install Flatpak
 
@@ -31,9 +41,7 @@ sudo apt install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
-Unfortunately you do have to restart after running the commands.
-
-Once your system restarts we are going to install four applications for managing the system.
+Unfortunately you do have to restart after running the commands. Once your system restarts we are going to install four applications for managing the system.
 
 ----------------------------------------------------------------
 
@@ -57,7 +65,7 @@ Once installed you run `Extensions` from the terminal using:
 flatpak run org.gnome.Extensions
 ```
 
-Or by tapping the Super key, typing extens and clicking on the Extensions icon
+Or by tapping the Super key, typing extens and clicking on the Extensions icon.
 
 ----------------------------------------------------------------
 
@@ -79,7 +87,7 @@ Once installed you run `Resources` from the terminal using:
 flatpak run net.nokyan.Resources
 ```
 
-Or by tapping the `Super` key, typing res and clicking on the Resources icon
+Or by tapping the `Super` key, typing res and clicking on the Resources icon.
 
 ----------------------------------------------------------------
 
@@ -101,7 +109,19 @@ Once installed you run `Flatseal` from the terminal using:
 flatpak run com.github.tchx84.Flatseal
 ```
 
-Or by tapping the `Super` key, typing flat and clicking on the Flatseal icon
+Or by tapping the `Super` key, typing flat and clicking on the Flatseal icon.
+
+You will be able to see all of the flatpak applications that are installed when Flatseal opens. From the terminal you can run:
+
+```bash
+flatpak list --app
+```
+
+To see the same list of applications. The `--app` limits the output to just applications. If you omit it, you will see flatpak runtime applications needed to make the flatpak infrastructure work.
+
+Here is a screenshot of the extensions I have installed:
+
+ ![screenshot](img/FlatSeal-apps.png)
 
 ----------------------------------------------------------------
 
@@ -121,7 +141,7 @@ Once installed you run `Flatseal` from the terminal using:
 flatpak run org.gnome.baobab
 ```
 
-Or by tapping the `Super` key, typing disk and clicking on the disk  icon
+Or by tapping the `Super` key, typing disk and clicking on the disk icon.
 
 ```bash
 flatpak run org.gnome.baobab
@@ -142,7 +162,12 @@ Now that we have the four management applications installed let's find some tool
 ----------------------------------------------------------------
 
 FreeCAD
+
 Draw.io
+
+![screenshot](img/Draw-io.png)
+
+
 
 ----------------------------------------------------------------
 
