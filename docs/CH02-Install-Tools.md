@@ -20,7 +20,7 @@
 
 The super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results, and all the free open source projects for networking such as [My Traceroute](https://www.baeldung.com/linux/mtr-command), and [sipcalc](https://www.cyberciti.biz/tips/perform-simple-manipulation-of-ip-addresse.html).
 
-I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted to be verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that uses that dictionary and the output of `show mac address interface g1/0/1` to build a table of the:
+I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that uses that dictionary and the output of `show mac address interface g1/0/1` to build a table of the:
 
 - vlan
 - ip address
@@ -70,7 +70,7 @@ grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Ta
   42   10.50.43.159     7446.a050.ca72    dynamic    Gi9/36      HewlettP
   42   10.50.43.78      c8d9.d2b6.dbdb    dynamic    Gi9/36      HewlettP
   42   10.50.43.195     aca8.8e76.b63f    dynamic    Gi9/36      SHARP
-  ```
+```
 
 Grep is used to search for the terms, the `|` means OR and then `sort -b -k 5`  means ignore leading blanks, sort by the 5th column.
 
