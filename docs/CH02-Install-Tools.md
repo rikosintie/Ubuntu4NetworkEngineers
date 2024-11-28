@@ -20,7 +20,32 @@
 
 The super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results, and all the free open source projects for networking such as [My Traceroute](https://www.baeldung.com/linux/mtr-command), and [sipcalc](https://www.cyberciti.biz/tips/perform-simple-manipulation-of-ip-addresse.html).
 
-I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted to be verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that takes the output of `show mac address interface g1/0/1` and builds a table of the vlan, ip address, port # and manufacturer. I used grep and sort to pull out the devices that needed to be verified. Here is an example:
+I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted to be verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that uses that dictionary and the output of `show mac address interface g1/0/1` to build a table of the:
+
+- vlan
+- ip address
+- port number
+- manufacturer
+
+for each entry in the dictionary. Here is a sample of the table created:
+
+```bash
+Number of Entries: 184
+
+Device Name: Cisco-6509
+Vlan   IP Address       MAC Address       Type       Interface   Vendor
+-------------------------------------------------------------------------------
+  42   10.50.43.84      ac8b.a915.301e    dynamic    Gi3/41      Ubiquiti
+--------------------------------------------------------------------------------
+  42   10.50.43.43      0002.9908.53f0    dynamic    Gi3/43      Apex
+--------------------------------------------------------------------------------
+ 900   10.254.50.106    000b.86b7.ac5f    dynamic    Gi3/44      ArubaaHe
+--------------------------------------------------------------------------------
+  40   No-Match         84d4.7ecf.937e    dynamic    Gi3/47      ArubaaHe
+-------------------------------------------------------------------------------
+```
+
+I used grep and sort to pull out the devices that needed to be verified. Here is an example:
 
 ```bash hl_lines='1'
 grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Tanta|Bosch|Videx|Industr|WatchG|Zebra|Conte' Cisco-6509-ports.txt | sort -b -k 5
