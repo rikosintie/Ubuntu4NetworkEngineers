@@ -16,6 +16,8 @@
 
 ----------------------------------------------------------------
 
+## Introduction
+
 I the super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results.
 
 I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted to be verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that takes the output of `show mac address interface g1/0/1` and builds a table of the vlan, ip address, port # and manufacturer. I used grep and sort to pull out the devices that needed to be verified. Here is an example:
@@ -90,7 +92,6 @@ Unfortunately you do have to restart after running the commands. Once your syste
 The first application is `Gnome Extensions`
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
-
 
 I currently only use three extensions:
 
