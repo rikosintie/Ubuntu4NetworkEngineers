@@ -29,7 +29,7 @@ I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s wit
 
 for each entry in the dictionary. Here is a sample of the table created:
 
-```bash
+```text
 Number of Entries: 184
 
 Device Name: Cisco-6509
@@ -40,14 +40,12 @@ Vlan   IP Address       MAC Address       Type       Interface   Vendor
   42   10.50.43.43      0002.9908.53f0    dynamic    Gi3/43      Apex
 --------------------------------------------------------------------------------
  900   10.254.50.106    000b.86b7.ac5f    dynamic    Gi3/44      ArubaaHe
---------------------------------------------------------------------------------
-  40   No-Match         84d4.7ecf.937e    dynamic    Gi3/47      ArubaaHe
 -------------------------------------------------------------------------------
 ```
 
 I used grep and sort to pull out the devices that needed to be verified. Here is an example:
 
-```bash hl_lines='1'
+```text hl_lines='1'
 grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Tanta|Bosch|Videx|Industr|WatchG|Zebra|Conte' Cisco-6509-ports.txt | sort -b -k 5
   35   10.50.35.15      80c1.6e91.99b1    dynamic    Gi3/25      HewlettP
   35   10.50.35.23      aca8.8e51.3221    dynamic    Gi3/25      SHARP
