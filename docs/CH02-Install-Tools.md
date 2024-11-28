@@ -6,7 +6,6 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- Linux has many different tools for working with files and networks built in.
 - Ubuntu is built off of Debian Linux so any tools that are compatible with Debian will probably work on Ubuntu.
 - Ubuntu comes with the [The app store for Linux](https://snapcraft.io/) built in. Thousands of applications are available.
 - Ubuntu works with [Flat Pack](https://flathub.org/) applications.
@@ -16,6 +15,43 @@
 - Packet Pushers network maintains a list of [Open Source Networking Projects](https://packetpushers.net/blog/open-source-networking-projects/). Most work on Ubuntu.
 
 ----------------------------------------------------------------
+
+I the super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results.
+
+I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted to be verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that takes the output of `show mac address interface g1/0/1` and builds a table of the vlan, ip address, port # and manufacturer. I used grep and sort to pull out the devices that needed to be verified. Here is an example:
+
+```bash hl_lines='1'
+grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Tanta|Bosch|Videx|Industr|WatchG|Zebra|Conte' Cisco-6509-ports.txt | sort -b -k 5
+  35   10.50.35.15      80c1.6e91.99b1    dynamic    Gi3/25      HewlettP
+  35   10.50.35.23      aca8.8e51.3221    dynamic    Gi3/25      SHARP
+  40   10.50.40.96      0020.4afb.8f89    dynamic    Gi3/38      Pronet
+  42   10.50.42.198     24de.c6cc.5792    dynamic    Gi3/41      ArubaaHe
+  42   10.50.43.150     0020.4a0b.e40f    dynamic    Gi3/41      Pronet
+ 900   10.254.50.106    000b.86b7.ac5f    dynamic    Gi3/44      ArubaaHe
+  40   10.50.40.17      84d4.7ecf.937e    dynamic    Gi3/47      ArubaaHe
+ 905   10.254.50.37     001a.1e06.c0a8    dynamic    Gi4/35      ArubaaHe
+ 906   10.254.50.37     001a.1e06.c0a8    dynamic    Gi4/36      ArubaaHe
+ 901   10.254.50.106    000b.86b7.ac5f    dynamic    Gi4/37      ArubaaHe
+  42   10.50.43.251     0040.8420.700b    dynamic    Gi8/1       Honeywel
+  42   10.50.42.221     a08c.fd68.f4f5    dynamic    Gi9/10      HewlettP
+  42   10.50.42.71      001d.9608.7fe1    dynamic    Gi9/24      WatchGua
+  42   10.50.43.107     001d.9608.7fe5    dynamic    Gi9/24      WatchGua
+  42   10.50.43.113     001d.9608.7fe2    dynamic    Gi9/24      WatchGua
+  42   10.50.43.127     001d.9608.7fe0    dynamic    Gi9/24      WatchGua
+  42   10.50.43.138     001d.9608.7fe6    dynamic    Gi9/24      WatchGua
+  42   10.50.42.79      0030.6ec5.d6e6    dynamic    Gi9/36      HewlettP
+  42   10.50.43.159     7446.a050.ca72    dynamic    Gi9/36      HewlettP
+  42   10.50.43.78      c8d9.d2b6.dbdb    dynamic    Gi9/36      HewlettP
+  42   10.50.43.195     aca8.8e76.b63f    dynamic    Gi9/36      SHARP
+  ```
+
+Grep is used to search for the terms, the `|` means OR and then `sort -b -k 5`  means ignore leading blanks, sort by the 5th column.
+
+With 72 sites, an average of 4 switches per site, you can image how long it would have taken using Notepad to open 288 files and copy the data out? but with the grep/sort line it took seconds. And the interfaces are in order so it's easy to match the `running configuration` to the output.
+
+We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`, `Snaps` and `Appimages`
+
+--------------------------------------------------------------
 
 ## Snaps vs Flatpak vs Appimage
 
@@ -28,6 +64,8 @@ Most importantly for us is that Snaps were developed by Canonical, the publisher
 ----------------------------------------------------------------
 
 ## Flatpak Applications
+
+I am going to start with flatpak applications instead of the Ubuntu App Store because there are four flatpak applications that are helpful for managing the system.
 
 The Flatpak store is located [here](https://flathub.org/). There are Thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back and donate. Most of the applications are written by developers that don't get paid.
 
@@ -51,7 +89,16 @@ Unfortunately you do have to restart after running the commands. Once your syste
 
 The first application is `Gnome Extensions`
 
-Gnome Extensions handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions.
+The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
+
+
+I currently only use three extensions:
+
+- [Clibboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
+- [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
+- [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
+
+`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions.
 
 **Installation Instructions**
 
@@ -66,6 +113,10 @@ flatpak run org.gnome.Extensions
 ```
 
 Or by tapping the Super key, typing extens and clicking on the Extensions icon.
+
+Below is a screenshot of the `Gnome Extensions` application running on my laptop:
+
+![screenshot](img/Extensions-App.png)
 
 ----------------------------------------------------------------
 
@@ -118,6 +169,28 @@ flatpak list --app
 ```
 
 To see the same list of applications. The `--app` limits the output to just applications. If you omit it, you will see flatpak runtime applications needed to make the flatpak infrastructure work.
+
+### List of flatpak applications with install Instructions
+
+If you want to install the flatpak applications on a different machine:
+
+```bash linenums=1 hl_lines='1'
+flatpak list --app | sed -e "s/^[^\t]*//" -e "s/^\t/flatpak install /" -e "s/\t.*$//"
+flatpak install cc.arduino.arduinoide
+flatpak install com.github.PintaProject.Pinta
+flatpak install com.github.johnfactotum.Foliate
+flatpak install com.github.tchx84.Flatseal
+flatpak install com.jgraph.drawio.desktop
+flatpak install com.mattjakeman.ExtensionManager
+flatpak install com.usebottles.bottles
+flatpak install fr.rubet.rpn
+flatpak install io.github.cboxdoerfer.FSearch
+flatpak install io.github.flattool.Warehouse
+flatpak install net.nokyan.Resources
+flatpak install net.werwolv.ImHex
+flatpak install org.gnome.baobab
+flatpak install org.gnome.meld
+```
 
 Here is a screenshot of the extensions I have installed:
 
