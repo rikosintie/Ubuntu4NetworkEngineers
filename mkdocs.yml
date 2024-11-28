@@ -20,7 +20,6 @@ theme:
     - search.suggest
     - search.highlight
     - content.tabs.link
-    - content.code.annotation
     - content.code.copy
     - content.code.annotate # (1)!
   language: en
@@ -67,6 +66,7 @@ extra:
 
 markdown_extensions:
   - pymdownx.highlight:
+      use_pygments: true
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
