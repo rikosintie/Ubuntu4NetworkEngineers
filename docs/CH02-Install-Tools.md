@@ -281,7 +281,7 @@ To see the same list of applications. The `--app` limits the output to just appl
 
 If you want to install the flatpak applications on a different machine:
 
-```bash linenums=1 hl_lines='1'
+```bash hl_lines='1'
 flatpak list --app | sed -e "s/^[^\t]*//" -e "s/^\t/flatpak install /" -e "s/\t.*$//"
 flatpak install cc.arduino.arduinoide
 flatpak install com.github.PintaProject.Pinta
