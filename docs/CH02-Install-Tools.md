@@ -8,8 +8,8 @@
 
 - Ubuntu is built off of Debian Linux so any tools that are compatible with Debian will probably work on Ubuntu.
 - Ubuntu comes with the [The app store for Linux](https://snapcraft.io/) built in. Thousands of applications are available.
-- Ubuntu works with [Flat Pack](https://flathub.org/) applications.
-- Ubuntu works with [App Images](https://appimage.org/). Linux apps that run anywhere!
+- Ubuntu supports [Flat Pack](https://flathub.org/) applications.
+- Ubuntu Supports [App Images](https://appimage.org/). Linux apps that run anywhere!
 - If you are coming from MacOS, you can use [Homebrew](https://docs.brew.sh/Homebrew-on-Linux) to install packages.
 - Thousands of networking tools are available on [github](github.com)
 - Packet Pushers network maintains a list of [Open Source Networking Projects](https://packetpushers.net/blog/open-source-networking-projects/). Most work on Ubuntu.
@@ -20,10 +20,11 @@
 
 The super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results, and all the free open source projects for networking such as [My Traceroute](https://www.baeldung.com/linux/mtr-command), and [sipcalc](https://www.cyberciti.biz/tips/perform-simple-manipulation-of-ip-addresse.html).
 
-I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, etc. that they wanted verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. Then I have a script on [github](https://github.com/rikosintie/MAC2Manuf) that uses that dictionary and the output of `show mac address interface g1/0/1` to build a table of the:
+I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, surveillance cameras, etc. that they wanted verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. The output of that script is sent to a second script located [here](https://github.com/rikosintie/MAC2Manuf) that uses the output of `show mac address interface g1/0/1` and the dictionary to build a table of the:
 
 - vlan
 - ip address
+- MAC address
 - port number
 - manufacturer
 
@@ -76,7 +77,7 @@ With 72 sites, an average of 4 switches per site, you can image how long it woul
 
 We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`, `Snaps` and `Appimages`
 
---------------------------------------------------------------
+----------------------------------------------------------------
 
 ## Snaps vs Flatpak vs Appimage
 
@@ -116,12 +117,6 @@ The first application is `Gnome Extensions`
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
 
-I currently only use three extensions:
-
-- [Clibboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
-- [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
-- [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
-
 `Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions.
 
 **Installation Instructions**
@@ -141,6 +136,61 @@ Or by tapping the Super key, typing extens and clicking on the Extensions icon.
 Below is a screenshot of the `Gnome Extensions` application running on my laptop:
 
 ![screenshot](img/Extensions-App.png)
+
+----------------------------------------------------------------
+
+I only use three extensions:
+
+- [Clibboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
+- [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
+- [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
+
+#### Clipboard Indicator
+
+There are a lot of clipboard managers out there. I went with this one because it is a Gnmoe extension and had good ratings. Here is what it looks like in use:
+
+![screenshot](img/Clipboard.png)
+
+Clicking on `Settings` brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+
+----------------------------------------------------------------
+
+#### GSConnect
+
+If you use an Android phone this application is a must! It allows you to send/receive text messages, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.
+
+One nice feature that works on IOS and Android is `find my phone`! I always misplace my phone in a closet and with GSConnect I can quickly make it ring to locate it.
+
+**Open GSConnect Setting**
+From the Extensions application, click on the 3 dots after the slider for GSConnect and select `Settings`:
+
+![screenshot](img/GSConnect1.png)
+
+From the Settings dialog you will see all devices that have connected and their status:
+
+![screenshot](img/GSConnect2.png)
+
+I enabled the `GSConnect remains active when Gnome Shell is locked` slider so that the phone remains connected when I lock the desktop.
+
+----------------------------------------------------------------
+
+The icon for GSConnect is in the menu bar at the top right of the screen:
+
+![screenshot](img/GSConnect3.png)
+
+You can see `Find My` and `Share` in the screenshot. The `Find my phone` will keep ringing until you press the `I Found It` button on the phone.
+
+----------------------------------------------------------------
+
+![screenshot](img/GSConnect4.jpg)
+
+----------------------------------------------------------------
+
+#### Snap Manager Lite
+
+This extension allows you to install and manage snaps:
+
+![screenshot](img/SnapManagerLite1.png)
 
 ----------------------------------------------------------------
 
