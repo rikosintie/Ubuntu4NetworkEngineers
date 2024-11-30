@@ -279,7 +279,7 @@ To see the same list of applications. The `--app` limits the output to just appl
 
 #### flatpaks with Instructions
 
-If you want to install the flatpak applications on a different machine:
+If you want to install the flatpak applications on a different machine, run the following command and then copy the lines with `flatpak install` to the new machine.
 
 ```bash hl_lines='1'
 flatpak list --app | sed -e "s/^[^\t]*//" -e "s/^\t/flatpak install /" -e "s/\t.*$//"
@@ -299,7 +299,7 @@ flatpak install org.gnome.baobab
 flatpak install org.gnome.meld
 ```
 
-Here is a screenshot of the extensions I have installed:
+Here is a screenshot of the flatpak applications I have installed:
 
  ![screenshot](img/FlatSeal-apps.png)
 
