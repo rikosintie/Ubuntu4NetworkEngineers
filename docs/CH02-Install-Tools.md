@@ -131,7 +131,7 @@ Here is what it looks like in use:
 
 ![screenshot](img/Clipboard.png)
 
-Clicking on `Settings` (the three vertical dots :material-dots-vertical: in `Gnome Extensions` expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+Clicking on `Settings` (The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
 ----------------------------------------------------------------
 
@@ -140,9 +140,9 @@ Clicking on `Settings` (the three vertical dots :material-dots-vertical: in `Gno
 Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen.
 
 !!! Note
-    the shortcut keys to the lock screen are `super+l`.
+    the shortcut keys to lock screen are `super+l`. That's a lowercase `el`.
 
-Here are the settings (the three vertical dots :material-dots-vertical: in `Gnome Extensions` expose the settings menu) I use:
+Here are the settings (The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu) I use:
 
 ![screenshot](img/Customize-Clock.resized.png)
 
@@ -170,7 +170,7 @@ One nice feature that works on IOS and Android is `find my phone`! I always misp
 
 **Open GSConnect Settings**
 
-From the Gnome Extensions application, click on the 3 dots :material-dots-vertical: after the slider for GSConnect and select `Settings`:
+The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu:
 
 ![screenshot](img/GSConnect1.png)
 
