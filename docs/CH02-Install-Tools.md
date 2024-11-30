@@ -214,6 +214,12 @@ The icon for GSConnect is in the menu bar at the top right of the screen:
 
 It appears when the KDE Connect application is running on the phone and connected to GSConnect.  You can see `Find My` and `Share` in the screenshot. The `Find my phone` will keep ringing until you press the `I Found It` button on the phone.
 
+----------------------------------------------------------------
+
+![screenshot](img/GSConnect4.resized.jpg)
+
+----------------------------------------------------------------
+
 I added the following rules to UFW so that the phone can connect to GSConnect.
 
 ```bash hl_lines='1 3 4'
@@ -225,10 +231,6 @@ Added user rules (see 'ufw status' for running firewall):
 ufw allow 1716:1764/tcp
 ufw allow 1716:1764/udp
 ```
-
-----------------------------------------------------------------
-
-![screenshot](img/GSConnect4.resized.jpg)
 
 ----------------------------------------------------------------
 
