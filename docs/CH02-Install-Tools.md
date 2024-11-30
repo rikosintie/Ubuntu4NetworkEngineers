@@ -169,7 +169,7 @@ From the Gnome Extensions application, click on the 3 dots after the slider for 
 
 ----------------------------------------------------------------
 
-#### Installing the KDE application on the phone
+#### Install KDE Connect
 
 GSConnect is a Gnome port of the KDE Connect application. On the settings dialog you will see links to:
 
@@ -178,7 +178,12 @@ GSConnect is a Gnome port of the KDE Connect application. On the settings dialog
 - Sailfish OS OpenRepos
 - F-Droid
 
-Go the the appropriate store and install the KDE Connect application on your phone. Follow the instructions for connecting to GSConnect.
+Go the the appropriate store and install the KDE Connect application on your phone.
+
+!!! Note
+    On IOS you will be notified that KDE Connect is installed using a program called `TestFlight` that Apple uses for experimental Applications.
+
+Open the KDE Connect application on your phone and follow the instructions for connecting to GSConnect.
 
 From the Settings dialog you will see all devices that have connected and their status:
 
