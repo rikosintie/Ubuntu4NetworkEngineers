@@ -18,70 +18,13 @@
 
 ## Introduction
 
-The super power of Linux for a network engineer is how easy it is to create a vlan on an interface and tag it, all of the Unix tools that are built is such as `awk, grep, sed, sort` that allow you to quickly pull data out of files, change text inside files and print out results, and all the free open source projects for networking such as [My Traceroute](https://www.baeldung.com/linux/mtr-command), and [sipcalc](https://www.cyberciti.biz/tips/perform-simple-manipulation-of-ip-addresse.html).
-
-I did a refresh at a customer with 72 sites. They were replacing Cisco 3750s with HPE 2930s. There were a lot of IoT type devices like body cameras, door access controllers, surveillance cameras, etc. that they wanted verified after the cutover. I have a python script on my [github](https://github.com/rikosintie/ARP-Sort) that takes the output of `show ip arp` and creates a file with the mac address/ip address in a python dictionary. The output of that script is sent to a second script located [here](https://github.com/rikosintie/MAC2Manuf) that uses the output of `show mac address interface g1/0/1` and the dictionary to build a table of the:
-
-- vlan
-- ip address
-- MAC address
-- port number
-- manufacturer
-
-for each entry in the dictionary. Here is a sample of the table created:
-
-```text
-Number of Entries: 184
-
-Device Name: Cisco-6509
-Vlan   IP Address       MAC Address       Type       Interface   Vendor
--------------------------------------------------------------------------------
-  42   10.50.43.84      ac8b.a915.301e    dynamic    Gi3/41      Ubiquiti
---------------------------------------------------------------------------------
-  42   10.50.43.43      0002.9908.53f0    dynamic    Gi3/43      Apex
---------------------------------------------------------------------------------
- 900   10.254.50.106    000b.86b7.ac5f    dynamic    Gi3/44      ArubaaHe
--------------------------------------------------------------------------------
-```
-
-I used grep and sort to pull out the devices that needed to be verified. Here is an example:
-
-```text hl_lines='1'
-grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Tanta|Bosch|Videx|Industr|WatchG|Zebra|Conte' Cisco-6509-ports.txt | sort -b -k 5
-  35   10.50.35.15      80c1.6e91.99b1    dynamic    Gi3/25      HewlettP
-  35   10.50.35.23      aca8.8e51.3221    dynamic    Gi3/25      SHARP
-  40   10.50.40.96      0020.4afb.8f89    dynamic    Gi3/38      Pronet
-  42   10.50.42.198     24de.c6cc.5792    dynamic    Gi3/41      ArubaaHe
-  42   10.50.43.150     0020.4a0b.e40f    dynamic    Gi3/41      Pronet
- 900   10.254.50.106    000b.86b7.ac5f    dynamic    Gi3/44      ArubaaHe
-  40   10.50.40.17      84d4.7ecf.937e    dynamic    Gi3/47      ArubaaHe
- 905   10.254.50.37     001a.1e06.c0a8    dynamic    Gi4/35      ArubaaHe
- 906   10.254.50.37     001a.1e06.c0a8    dynamic    Gi4/36      ArubaaHe
- 901   10.254.50.106    000b.86b7.ac5f    dynamic    Gi4/37      ArubaaHe
-  42   10.50.43.251     0040.8420.700b    dynamic    Gi8/1       Honeywel
-  42   10.50.42.221     a08c.fd68.f4f5    dynamic    Gi9/10      HewlettP
-  42   10.50.42.71      001d.9608.7fe1    dynamic    Gi9/24      WatchGua
-  42   10.50.43.107     001d.9608.7fe5    dynamic    Gi9/24      WatchGua
-  42   10.50.43.113     001d.9608.7fe2    dynamic    Gi9/24      WatchGua
-  42   10.50.43.127     001d.9608.7fe0    dynamic    Gi9/24      WatchGua
-  42   10.50.43.138     001d.9608.7fe6    dynamic    Gi9/24      WatchGua
-  42   10.50.42.79      0030.6ec5.d6e6    dynamic    Gi9/36      HewlettP
-  42   10.50.43.159     7446.a050.ca72    dynamic    Gi9/36      HewlettP
-  42   10.50.43.78      c8d9.d2b6.dbdb    dynamic    Gi9/36      HewlettP
-  42   10.50.43.195     aca8.8e76.b63f    dynamic    Gi9/36      SHARP
-```
-
-Grep is used to search for the terms, the `|` means OR and then `sort -b -k 5`  means ignore leading blanks, sort by the 5th column.
-
-With 72 sites, an average of 4 switches per site, you can image how long it would have taken using Notepad to open 288 files and copy the data out? but with the grep/sort line it took seconds. And the interfaces are in order so it's easy to match the `running configuration` to the output.
+For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications were called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
 We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`, `Snaps` and `Appimages`
 
 ----------------------------------------------------------------
 
 ## Snaps vs Flatpak vs Appimage
-
-For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications were called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Linux adoption back.
 
 To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
@@ -139,9 +82,34 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 
 ----------------------------------------------------------------
 
-I only use three extensions:
+### Installing Extensions
 
-- [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
+You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, although it's very confusing befause it's name is `Extension Manager` and it's not written by the Gnome team. It looks just like the `Gnome Extensions` application but it has the capability to install extensions. I like better than using the Chrome browser extension.
+
+**Installation Instructions**
+
+Like all flatpak applications you search [flathub.org](https://flathub.org), click the `Install` button and copy the terminal command.
+
+```bash
+flatpak install flathub com.mattjakeman.ExtensionManager
+```
+
+Then tap the super key and enter `Extension`, click the icon:
+
+![screenshot](img/ExtensionsManager.png)
+
+Once `Extensions Manager` opens, click `Browse` at the top and you can search and install `Gnome Extensions`.
+
+![screenshot](img/ExtensionManager-Browse.png)
+
+You may ask why I installed the Gnome tool when this tool does everything the Gnome tool does and more. That is a good question. Basically I use my laptop every day and consider it a tool. I don't enjoy troubleshooting issues with the tool. Since I'm using the Gnome desktop and Gnome writes a tool to update extensions I use it for updating. Why the official Gnome tool can't do installation is beyond me.
+
+----------------------------------------------------------------
+
+I only use four extensions:
+
+- [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
+- [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
 
@@ -152,6 +120,20 @@ There are a lot of clipboard managers out there. I went with this one because it
 ![screenshot](img/Clipboard.png)
 
 Clicking on `Settings` brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+
+----------------------------------------------------------------
+
+#### Customize Clock on Lock Screen
+
+Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen. Here are the settings I use:
+
+![screenshot](img/Customize-Clock.png)
+
+----------------------------------------------------------------
+
+That puts the following text on the lock screen:
+
+![screenshot](img/Lock-Screen.png)
 
 ----------------------------------------------------------------
 
