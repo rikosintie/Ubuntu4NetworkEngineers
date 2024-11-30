@@ -127,7 +127,12 @@ Clicking on `Settings` (the three vertical dots expose the settings menu) brings
 
 #### Customize Clock on Lock Screen
 
-Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen. Here are the settings (the three vertical dots expose the settings menu) I use:
+Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen.
+
+!!! Note
+    the shortcut keys to the lock screen are `super+l`.
+
+Here are the settings (the three vertical dots expose the settings menu) I use:
 
 ![screenshot](img/Customize-Clock.resized.png)
 
