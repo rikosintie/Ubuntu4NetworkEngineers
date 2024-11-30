@@ -277,7 +277,7 @@ flatpak list --app
 
 To see the same list of applications. The `--app` limits the output to just applications. If you omit it, you will see flatpak runtime applications needed to make the flatpak infrastructure work.
 
-#### flatpak applications with Instructions
+#### flatpaks with Instructions
 
 If you want to install the flatpak applications on a different machine:
 
