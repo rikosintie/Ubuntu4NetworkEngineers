@@ -56,3 +56,58 @@ grep -E 'Uni|Axi|Aru|Chec|Sam|Sony|Hew|Honey|SHARP|Pronet|IB|Digiboar|Siemens|Ta
 Grep is used to search for the terms, the `|` means OR and then `sort -b -k 5`  means ignore leading blanks, sort by the 5th column.
 
 With 72 sites, an average of 4 switches per site, you can image how long it would have taken using Notepad to open 288 files and copy the data out? but with the grep/sort line it took seconds. And the interfaces are in order so it's easy to match the `running configuration` to the output.
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+FreeCAD
+
+Draw.io
+
+![screenshot](img/Draw-io.png)
+
+----------------------------------------------------------------
+
+## The Ubuntu App store
+
+### PacketSender
+
+![screenshot](img/PacketSender.png)
+
+A cross platform open source tool. Available for Mac, Linux, Windows.
+
+**Features**
+Packet Sender can send and receive UDP, TCP, SSL, and DTLS on the ports of your choosing. It also has a built-in HTTP client for GET/POST requests and Panel Generation for the creation of complex control systems.
+
+Common Uses
+Packet Sender was designed to be very easy to use while still providing enough features for power users.
+
+• Test automation
+Using its command line tool or hotkeys
+
+• Testing network APIs
+Using the built-in UDP/TCP/SSL/DTLS clients
+
+• Malware analysis
+using the built-in UDP/TCP/SSL/DTLS servers
+
+• Panel Generation
+Create single-button panels that trigger a series of commands for control systems.
+
+• Testing HTTP
+Single-button GET/POST requests for control systems.
+
+• Intense Traffic
+Flood at a particular rate to stress-test devices
+
+• Testing network connectivity/firewalls
+by having 2 Packet Senders talk to each other
+
+• Tech support
+by sending customers a portable Packet Sender with pre-defined settings and packets
+
+• Security research
+Send SSL and then analyze the traffic log.
+
+**Installation Instructions**
