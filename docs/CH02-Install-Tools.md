@@ -142,7 +142,7 @@ Since my laptop is at customer locations most of the time I love this extension.
 !!! Note
     the shortcut keys to the lock screen are `super+l`.
 
-Here are the settings (the three vertical dots :material-dots-vertical: expose the settings menu) I use:
+Here are the settings (the three vertical dots :material-dots-vertical: in `Gnome Extensions` expose the settings menu) I use:
 
 ![screenshot](img/Customize-Clock.resized.png)
 
@@ -170,7 +170,7 @@ One nice feature that works on IOS and Android is `find my phone`! I always misp
 
 **Open GSConnect Settings**
 
-From the Gnome Extensions application, click on the 3 dots after the slider :material-dots-vertical: for GSConnect and select `Settings`:
+From the Gnome Extensions application, click on the 3 dots :material-dots-vertical: after the slider for GSConnect and select `Settings`:
 
 ![screenshot](img/GSConnect1.png)
 
