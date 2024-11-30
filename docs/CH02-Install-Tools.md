@@ -131,7 +131,7 @@ Once installed you run `Extensions` from the terminal using:
 flatpak run org.gnome.Extensions
 ```
 
-Or by tapping the Super key, typing extens and clicking on the Extensions icon.
+Or by tapping the Super key, typing `extension` and clicking on the Extensions icon.
 
 Below is a screenshot of the `Gnome Extensions` application running on my laptop:
 
@@ -141,13 +141,13 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 
 I only use three extensions:
 
-- [Clibboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
+- [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads.
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
 
 #### Clipboard Indicator
 
-There are a lot of clipboard managers out there. I went with this one because it is a Gnmoe extension and had good ratings. Here is what it looks like in use:
+There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension (There are installable applications available) and had good ratings. Here is what it looks like in use:
 
 ![screenshot](img/Clipboard.png)
 
@@ -159,12 +159,26 @@ Clicking on `Settings` brings up a dialog with tons of options. The only option 
 
 If you use an Android phone this application is a must! It allows you to send/receive text messages, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.
 
-One nice feature that works on IOS and Android is `find my phone`! I always misplace my phone in a closet and with GSConnect I can quickly make it ring to locate it.
+One nice feature that works on IOS and Android is `find my phone`! I always misplace my phone when working in closets and with GSConnect I can quickly make it ring to locate it.
 
-**Open GSConnect Setting**
-From the Extensions application, click on the 3 dots after the slider for GSConnect and select `Settings`:
+**Open GSConnect Settings**
+
+From the Gnome Extensions application, click on the 3 dots after the slider for GSConnect and select `Settings`:
 
 ![screenshot](img/GSConnect1.png)
+
+----------------------------------------------------------------
+
+#### Installing the KDE application on the phone
+
+GSConnect is a Gnome port of the KDE Connect application. On the settings dialog you will see links to:
+
+- Android Play Store
+- Apple App Store
+- Sailfish OS OpenRepos
+- F-Droid
+
+Go the the appropriate store and install the KDE Connect application on your phone. Follow the instructions for connecting to GSConnect.
 
 From the Settings dialog you will see all devices that have connected and their status:
 
@@ -191,6 +205,20 @@ You can see `Find My` and `Share` in the screenshot. The `Find my phone` will ke
 This extension allows you to install and manage snaps:
 
 ![screenshot](img/SnapManagerLite1.png)
+
+One annoying feature of snaps is that they install as `Loop` devices. This means that when you run `lsblk` from the terminal to view your disks you seen a lot of `loop` entries. To avoid this, use this instead:
+
+```bash
+lsblk -e7
+```
+
+You could create an alias in the `.bahsrc` or `.zshrc` file using:
+
+```bash
+alias lsblk='lsblk -e7'
+```
+
+If you don't want to have to type the `-e7`.
 
 ----------------------------------------------------------------
 
