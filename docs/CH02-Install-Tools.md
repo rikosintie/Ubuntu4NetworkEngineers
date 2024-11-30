@@ -137,7 +137,7 @@ Here is what it looks like in use:
 
 ![screenshot](img/Clipboard.png)
 
-Clicking on `Settings` (The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+Clicking on `Settings` brings up a dialog with tons of options. The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
 ----------------------------------------------------------------
 
@@ -146,9 +146,9 @@ Clicking on `Settings` (The :material-dots-vertical: icon in `Gnome Extensions` 
 Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen.
 
 !!! Note
-    the shortcut keys to lock screen are `super+l`. That's a lowercase `el`.
+    The shortcut keys to lock the screen are `super+l`. That's a lowercase `el`.
 
-Here are the settings (The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu) I use:
+Here are the settings I use. The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu.
 
 ![screenshot](img/Customize-Clock.resized.png)
 
