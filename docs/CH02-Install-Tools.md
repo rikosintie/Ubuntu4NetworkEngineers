@@ -131,6 +131,14 @@ Since my laptop is at customer locations most of the time I love this extension.
 
 ![screenshot](img/Customize-Clock.resized.png)
 
+If you want to use the same settings for time:
+
+```bash
+%A %B %d, %Y %H:%M:%S (%Z) - week %V
+```
+
+The week number is very popular in Europe. After I worked in France for awhile I find that I like it. In meetings you can say "in week 48 we need to accomplish the following" and everyone knows what dates you mean. There are widgets and applications for IOS and Android to show Weeks if you want to quickly see what a week number translates to on a calendar.
+
 ----------------------------------------------------------------
 
 That puts the following text on the lock screen:
@@ -231,6 +239,25 @@ flatpak run net.nokyan.Resources
 
 Or by tapping the `Super` key, typing res and clicking on the Resources icon.
 
+Here is a screenshot of the Processes tab. Just like in the Windows Task Manager, you can right click on a process and get a menu of actions to perform:
+
+![screenshot](img/resources-kill.resized.png)
+
+Unlike the Windows Task Manager, you have a clean menu on the side where you can select the following resources:
+
+- Apps - the apps that are running
+- Processes - the processes that are running
+- Processor - The CPU AND GPU percentages
+- Memory - The amount of memory applications are using
+- GPU1 - The utilization of GPU1
+- GPU2 - The utilization of GPU2
+- Disk activity - Activity of each internal disk
+- Network - Ethernet utilization
+- WiFI - Utilization of the WiFI adapter
+- Battery - Battery usage and properties
+
+I think we can agree this is a useful tool!
+
 ----------------------------------------------------------------
 
 ### Flatseal
@@ -313,71 +340,16 @@ flatpak run org.gnome.baobab
 
 Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:
 
-![screenshot](img/DiskUsage-Graph.png)
+![screenshot](img/DiskUsage-Graph.resized.png)
 
 I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird I expanded the `.thunderbird` folder and then I could see `sent mail` and other folders.
 
 ----------------------------------------------------------------
 
-![screenshot](img/DiskUsage1.png)
+![screenshot](img/DiskUsage1.resized.png)
 
 ----------------------------------------------------------------
 
-Now that we have the four management applications installed let's find some tools useful to a network engineer!
+## Wrapping up
 
-----------------------------------------------------------------
-
-----------------------------------------------------------------
-
-FreeCAD
-
-Draw.io
-
-![screenshot](img/Draw-io.png)
-
-
-
-----------------------------------------------------------------
-
-## The Ubuntu App store
-
-### PacketSender
-
-![screenshot](img/PacketSender.png)
-
-A cross platform open source tool. Available for Mac, Linux, Windows.
-
-**Features**
-Packet Sender can send and receive UDP, TCP, SSL, and DTLS on the ports of your choosing. It also has a built-in HTTP client for GET/POST requests and Panel Generation for the creation of complex control systems.
-
-Common Uses
-Packet Sender was designed to be very easy to use while still providing enough features for power users.
-
-• Test automation
-Using its command line tool or hotkeys
-
-• Testing network APIs
-Using the built-in UDP/TCP/SSL/DTLS clients
-
-• Malware analysis
-using the built-in UDP/TCP/SSL/DTLS servers
-
-• Panel Generation
-Create single-button panels that trigger a series of commands for control systems.
-
-• Testing HTTP
-Single-button GET/POST requests for control systems.
-
-• Intense Traffic
-Flood at a particular rate to stress-test devices
-
-• Testing network connectivity/firewalls
-by having 2 Packet Senders talk to each other
-
-• Tech support
-by sending customers a portable Packet Sender with pre-defined settings and packets
-
-• Security research
-Send SSL and then analyze the traffic log.
-
-**Installation Instructions**
+Now that we have the these extensions and applications installed I hope you find Ubuntu with the Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
