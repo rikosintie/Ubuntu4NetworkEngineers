@@ -5,7 +5,7 @@ nav:
   - Intro: Introduction.md
   - Usage: Ch01-Using-Ubuntu.md
   - SSH: SSH.md
-  - Tools: CH02-Install-Tools.md
+  - Gnome: CH02-Install-Tools.md
   - KVM: KVM-Bridge.md
   - Add to AD: Join-Ubuntu-24.04-desktop-to-AD.md
 
