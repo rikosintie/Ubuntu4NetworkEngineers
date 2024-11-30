@@ -186,7 +186,7 @@ The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu
 
 #### Install KDE Connect
 
-GSConnect is a Gnome port of the KDE Connect application. On the settings dialog you will see links to:
+GSConnect is a Gnome port of the KDE Connect application. On the GSConnect settings dialog you will see links to:
 
 - Android Play Store
 - Apple App Store
@@ -200,7 +200,7 @@ Go the the appropriate store and install the KDE Connect application on your pho
 
 Open the KDE Connect application on your phone and follow the instructions for connecting to GSConnect.
 
-From the Settings dialog you will see all devices that have connected and their status:
+From the GSConnect Settings dialog you will see all devices that have connected and their status:
 
 ![screenshot](img/GSConnect2.resized.png)
 
@@ -212,7 +212,19 @@ The icon for GSConnect is in the menu bar at the top right of the screen:
 
 ![screenshot](img/GSConnect3.png)
 
-You can see `Find My` and `Share` in the screenshot. The `Find my phone` will keep ringing until you press the `I Found It` button on the phone.
+It appears when the KDE Connect application is running on the phone and connected to GSConnect.  You can see `Find My` and `Share` in the screenshot. The `Find my phone` will keep ringing until you press the `I Found It` button on the phone.
+
+I added the following rules to UFW so that the phone can connect to GSConnect.
+
+```bash hl_lines='1 3 4'
+sudo ufw allow 1716:1764/tcp
+[sudo] password for mhubbard:
+sudo ufw allow 1716:1764/udp
+sudo ufw show added
+Added user rules (see 'ufw status' for running firewall):
+ufw allow 1716:1764/tcp
+ufw allow 1716:1764/udp
+```
 
 ----------------------------------------------------------------
 
