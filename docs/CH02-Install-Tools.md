@@ -84,7 +84,7 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 
 ### Installing Extensions
 
-You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, although it's very confusing befause it's name is `Extension Manager` and it's not written by the Gnome team. It looks just like the `Gnome Extensions` application but it has the capability to install extensions. I like better than using the Chrome browser extension.
+You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, although it's very confusing befause it's name is `Extension Manager` and it's not written by the Gnome team. It looks just like the `Gnome Extensions` application but it has the capability to install extensions. I like this method better than using the Chrome browser extension.
 
 **Installation Instructions**
 
@@ -115,19 +115,21 @@ I only use four extensions:
 
 #### Clipboard Indicator
 
-There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension (There are installable applications available) and had good ratings. Here is what it looks like in use:
+There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension (There are installable applications available) and had good ratings. As always, there are security implications when using a clipboard manager. I felt that the convenience offsets the risk but you have to decide for yourself if it's worth the risk.
+
+Here is what it looks like in use:
 
 ![screenshot](img/Clipboard.png)
 
-Clicking on `Settings` brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+Clicking on `Settings` (the three vertical dots expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
 ----------------------------------------------------------------
 
 #### Customize Clock on Lock Screen
 
-Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen. Here are the settings I use:
+Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen. Here are the settings (the three vertical dots expose the settings menu) I use:
 
-![screenshot](img/Customize-Clock.png)
+![screenshot](img/Customize-Clock.resized.png)
 
 ----------------------------------------------------------------
 
@@ -169,7 +171,7 @@ Open the KDE Connect application on your phone and follow the instructions for c
 
 From the Settings dialog you will see all devices that have connected and their status:
 
-![screenshot](img/GSConnect2.png)
+![screenshot](img/GSConnect2.resized.png)
 
 I enabled the `GSConnect remains active when Gnome Shell is locked` slider so that the phone remains connected when I lock the desktop.
 
@@ -183,7 +185,7 @@ You can see `Find My` and `Share` in the screenshot. The `Find my phone` will ke
 
 ----------------------------------------------------------------
 
-![screenshot](img/GSConnect4.jpg)
+![screenshot](img/GSConnect4.resized.jpg)
 
 ----------------------------------------------------------------
 
