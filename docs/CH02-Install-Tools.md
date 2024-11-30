@@ -1,4 +1,4 @@
-# Fill the Toolbox
+# Gnome Desktop Tools
 
 ![screenshot](img/Tux-Tools.png)
 
@@ -34,9 +34,17 @@ Most importantly for us is that Snaps were developed by Canonical, the publisher
 
 ## Flatpak Applications
 
-I am going to start with flatpak applications instead of the Ubuntu App Store because there are four flatpak applications that are helpful for managing the system.
+I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
 
-The Flatpak store is located [here](https://flathub.org/). There are Thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back and donate. Most of the applications are written by developers that don't get paid.
+The Flatpak store is located [here](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back and donate. Most of the applications are written by developers that don't get paid.
+
+### Gnome Specific
+
+The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop
+
+Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand and simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally,  they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
+
+----------------------------------------------------------------
 
 ### Install Flatpak
 
@@ -60,7 +68,7 @@ The first application is `Gnome Extensions`
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
 
-`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions.
+`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser.
 
 **Installation Instructions**
 
@@ -84,7 +92,7 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 
 ### Installing Extensions
 
-You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, although it's very confusing befause it's name is `Extension Manager` and it's not written by the Gnome team. It looks just like the `Gnome Extensions` application but it has the capability to install extensions. I like this method better than using the Chrome browser extension.
+You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, `Extension Manager` even though it's not written by the Gnome team. It's confusing because it looks just like the `Gnome Extensions` application except that it has the capability to install extensions. I like this method better than using the Chrome browser extension.
 
 **Installation Instructions**
 
@@ -106,12 +114,14 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 
 ----------------------------------------------------------------
 
-I only use four extensions:
+**Below are the four extensions that I have installed:**
 
 - [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
+
+----------------------------------------------------------------
 
 #### Clipboard Indicator
 
@@ -121,7 +131,7 @@ Here is what it looks like in use:
 
 ![screenshot](img/Clipboard.png)
 
-Clicking on `Settings` (the three vertical dots expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
+Clicking on `Settings` (the three vertical dots :material-dots-vertical: in `Gnome Extensions` expose the settings menu) brings up a dialog with tons of options. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
 ----------------------------------------------------------------
 
@@ -132,7 +142,7 @@ Since my laptop is at customer locations most of the time I love this extension.
 !!! Note
     the shortcut keys to the lock screen are `super+l`.
 
-Here are the settings (the three vertical dots expose the settings menu) I use:
+Here are the settings (the three vertical dots :material-dots-vertical: expose the settings menu) I use:
 
 ![screenshot](img/Customize-Clock.resized.png)
 
@@ -160,7 +170,7 @@ One nice feature that works on IOS and Android is `find my phone`! I always misp
 
 **Open GSConnect Settings**
 
-From the Gnome Extensions application, click on the 3 dots after the slider for GSConnect and select `Settings`:
+From the Gnome Extensions application, click on the 3 dots after the slider :material-dots-vertical: for GSConnect and select `Settings`:
 
 ![screenshot](img/GSConnect1.png)
 
