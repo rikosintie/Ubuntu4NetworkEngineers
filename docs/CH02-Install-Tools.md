@@ -6,7 +6,7 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- Ubuntu is built off of Debian Linux so any tools that are compatible with Debian will probably work on Ubuntu.
+- Ubuntu is built off of Debian Linux, so any tools that are compatible with Debian will probably work on Ubuntu.
 - Ubuntu comes with the [The app store for Linux](https://snapcraft.io/) built in. Thousands of applications are available.
 - Ubuntu supports [Flat Pack](https://flathub.org/) applications.
 - Ubuntu Supports [App Images](https://appimage.org/). Linux apps that run anywhere!
@@ -26,9 +26,9 @@ We will cover terminal tools later. In this section we will learn how to install
 
 ## Snaps vs Flatpak vs Appimage
 
-To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
-Most importantly for us is that Snaps were developed by Canonical, the publisher of Ubuntu so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop. This was before Ubuntu switched to the Gnome desktop. So the Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. These 4 are very similar to Windows applications.
+Most importantly for us is that the Snap infrastructure was developed by Canonical, the publisher of Ubuntu, so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop. This was before Ubuntu switched to the Gnome desktop. So the Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. These 4 are very similar to Windows applications.
 
 ----------------------------------------------------------------
 
@@ -36,11 +36,11 @@ Most importantly for us is that Snaps were developed by Canonical, the publisher
 
 I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
 
-The Flatpak store is located [here](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful please go back and donate. Most of the applications are written by developers that don't get paid.
+The Flatpak store is located [here](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the applications are written by developers that don't get paid.
 
 ### Gnome Specific
 
-The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand and simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
+The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand, simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
 
 #### Gnome Core Apps
 
@@ -99,7 +99,7 @@ The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) 
 flatpak install flathub org.gnome.Extensions
 ```
 
-Once installed you run `Extensions` from the terminal using:
+Once installed, run `Extensions` from the terminal using:
 
 ```bash
 flatpak run org.gnome.Extensions
@@ -133,7 +133,7 @@ Once `Extensions Manager` opens, click `Browse` at the top and you can search an
 
 ![screenshot](img/ExtensionManager-Browse.png)
 
-You may ask why I installed the Gnome tool when this tool does everything the Gnome tool does and more. That is a good question. Basically I use my laptop every day and consider it a tool. I don't enjoy troubleshooting issues with the tool. Since I'm using the Gnome desktop and Gnome writes a tool to update extensions I use it for updating. Why the official Gnome tool can't do installation is beyond me.
+You may ask why I installed the Gnome tool when this tool does everything the Gnome tool does and more. That is a good question. Basically I use my laptop every day and consider it a tool. I don't enjoy troubleshooting issues with the tool. Since I'm using the Gnome desktop, and Gnome writes a tool to update extensions I use it for updating. Why the official Gnome tool can't do installation is beyond me.
 
 ----------------------------------------------------------------
 
@@ -148,7 +148,7 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 
 #### Clipboard Indicator
 
-There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension (There are installable applications available) and had good ratings. As always, there are security implications when using a clipboard manager. I felt that the convenience offsets the risk but you have to decide for yourself if it's worth the risk.
+There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension and it had good ratings. There are installable applications available but I liked the having an extension that is managed along with the other extensions I use. As always, there are security implications when using a clipboard manager. I felt that the convenience offsets the risk, you have to decide for yourself if it's worth the risk.
 
 Here is what it looks like in use:
 
@@ -160,7 +160,7 @@ Clicking on `Settings` brings up a dialog with tons of options. The :material-do
 
 #### Customize Clock on Lock Screen
 
-Since my laptop is at customer locations most of the time I love this extension. It allows me to put my name and phone number on the lock screen.
+Since my laptop is at customer locations most of the time, I love this extension. It allows me to put my name and phone number on the lock screen like macOS!
 
 !!! Note
     The shortcut keys to lock the screen are `super+l`. That's a lowercase `el`.
@@ -257,13 +257,13 @@ This extension allows you to install and manage snaps:
 
 ![screenshot](img/SnapManagerLite1.png)
 
-One annoying feature of snaps is that they install as `Loop` devices. This means that when you run `lsblk` from the terminal to view your disks you seen a lot of `loop` entries. To avoid this, use this instead:
+One annoying feature of snaps is that they install as `Loop` devices. This means that when you run `lsblk` from the terminal to view your disks you see a lot of `loop` entries. To avoid this, add the -e7 flag:
 
 ```bash
 lsblk -e7
 ```
 
-You could create an alias in the `.bahsrc` or `.zshrc` file using:
+You can add an alias in the `.bahsrc` or `.zshrc` file using:
 
 ```bash
 alias lsblk='lsblk -e7'
@@ -285,13 +285,13 @@ Gnome Resources is similar to the Windows Task Manager. Here is a [link](https:/
 flatpak install flathub net.nokyan.Resources
 ```
 
-Once installed you run `Resources` from the terminal using:
+Once installed, run `Resources` from the terminal using:
 
 ```bash
 flatpak run net.nokyan.Resources
 ```
 
-Or by tapping the `Super` key, typing res and clicking on the Resources icon.
+Or by tapping the `Super` key, typing resource and clicking on the Resources icon.
 
 Here is a screenshot of the Processes tab. Just like in the Windows Task Manager, you can right click on a process and get a menu of actions to perform:
 
@@ -318,7 +318,7 @@ I think we can agree this is a useful tool!
 
 ![screenshot](img/Flatseal.png)
 
-Flatseal is a graphical utility to review and modify permissions from your Flatpak applications. This application allows you to look at all your installed Flatpak applications and verify their permissions.
+Flatseal is a graphical utility to review and modify permissions from your Flatpak applications. This application allows you to look at all of your installed Flatpak applications and verify their permissions.
 
 **Installation Instructions**
 
@@ -326,13 +326,13 @@ Flatseal is a graphical utility to review and modify permissions from your Flatp
 flatpak install flathub com.github.tchx84.Flatseal
 ```
 
-Once installed you run `Flatseal` from the terminal using:
+Once installed, run `Flatseal` from the terminal using:
 
 ```bash
 flatpak run com.github.tchx84.Flatseal
 ```
 
-Or by tapping the `Super` key, typing flat and clicking on the Flatseal icon.
+Or by tapping the `Super` key, typing flatseal and clicking on the Flatseal icon.
 
 You will be able to see all of the flatpak applications that are installed when flatseal opens. From the terminal you can run:
 
@@ -380,7 +380,7 @@ Here is a screenshot of the flatpak applications I have installed:
 flatpak install flathub org.gnome.baobab
 ```
 
-Once installed you run `Flatseal` from the terminal using:
+Once installed, run  `Flatseal` from the terminal using:
 
 ```bash
 flatpak run org.gnome.baobab
@@ -388,15 +388,11 @@ flatpak run org.gnome.baobab
 
 Or by tapping the `Super` key, typing disk and clicking on the disk icon.
 
-```bash
-flatpak run org.gnome.baobab
-```
-
 Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:
 
 ![screenshot](img/DiskUsage-Graph.resized.png)
 
-I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird I expanded the `.thunderbird` folder and then I could see `sent mail` and other folders.
+I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird, I expanded the `.thunderbird` folder and then I could see `sent mail` and other folders. I prompted me to delete some email!
 
 ----------------------------------------------------------------
 
@@ -406,4 +402,4 @@ I hovered over one of the large blocks and it told me that is the section of dis
 
 ## Wrapping up
 
-Now that we have these extensions and applications installed I hope you find Ubuntu with the Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
+Now that we have these extensions and applications installed, I hope you find Ubuntu with Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
