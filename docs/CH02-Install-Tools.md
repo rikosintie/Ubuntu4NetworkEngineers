@@ -42,6 +42,8 @@ The Flatpak store is located [here](https://flathub.org/). There are thousands o
 
 The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand and simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
 
+#### Gnome Core Apps
+
  The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of a few of them. To open them, tap the super key and type the name of the application you want to open.
 
 - The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
@@ -51,7 +53,11 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
 ![screenshot](img/SystemMonitor.resized.png)
 
-There are several more `Core Apps` for you to check out!
+#### Gnome Circle Apps
+
+GNOME Circle champions the great software that is available for the GNOME platform. Not only do we showcase the best apps and libraries for GNOME, but we also support independent developers who are using GNOME technologies.
+
+GNOME Circle contains applications extending the GNOME ecosystem. It champions the great additional software that is available for the GNOME platform. [Learn more about GNOME Circle](https://circle.gnome.org/).
 
 ----------------------------------------------------------------
 
