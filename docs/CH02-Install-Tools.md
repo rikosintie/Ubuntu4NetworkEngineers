@@ -28,7 +28,7 @@ We will cover terminal tools later. In this section we will learn how to install
 
 To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
-Most importantly for us is that the Snap infrastructure was developed by Canonical, the publisher of Ubuntu, so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop. This was before Ubuntu switched to the Gnome desktop. So the Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. These 4 are very similar to Windows applications.
+Most importantly for us is that the Snap infrastructure was developed by Canonical, the publisher of Ubuntu, so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. The Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are very similar to the Windows applications for managing resources and disk usage.
 
 ----------------------------------------------------------------
 
