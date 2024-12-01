@@ -49,7 +49,7 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 - The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. It's very similar to the clocks app on IOS.
 - The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
 
-![screenshot](img/SystemMonitor.png)
+![screenshot](img/SystemMonitor.resized.png)
 
 There are several more `Core Apps` for you to check out!
 
