@@ -42,13 +42,16 @@ The Flatpak store is located [here](https://flathub.org/). There are thousands o
 
 The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand and simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
 
- The `Core Apps` are installed by Ubuntu and are worth looking at. The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
+ The `Core Apps` are installed by Ubuntu and are worth looking at.
 
-The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view six different faces of `Fira Code` using the Fonts application.
+- The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
+- The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view six different faces of `Fira Code` using the Fonts application.
+- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. It's very similar to the clocks app on IOS.
+- The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
 
-The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. It's very similar to the clocks app on IOS.
+![screenshot](img/SystemMonitor.png)
 
-There are several more `COre Apps` for you to check out!
+There are several more `Core Apps` for you to check out!
 
 ----------------------------------------------------------------
 
@@ -178,7 +181,7 @@ One nice feature that works on IOS and Android is `find my phone`! I always misp
 
 **Open GSConnect Settings**
 
-The :material-dots-vertical: icon in `Gnome Extensions` expose the settings menu:
+The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu:
 
 ![screenshot](img/GSConnect1.png)
 
@@ -193,14 +196,14 @@ GSConnect is a Gnome port of the KDE Connect application. On the GSConnect setti
 - Sailfish OS OpenRepos
 - F-Droid
 
-Go the the appropriate store and install the KDE Connect application on your phone.
+Go to the appropriate store for your phone and install the KDE Connect application on your phone.
 
 !!! Note
     On IOS you will be notified that KDE Connect is installed using a program called `TestFlight` that Apple uses for experimental Applications.
 
 Open the KDE Connect application on your phone and follow the instructions for connecting to GSConnect.
 
-From the GSConnect Settings dialog you will see all devices that have connected and their status:
+From the GSConnect Settings dialog you will see all devices that have ever connected and their status:
 
 ![screenshot](img/GSConnect2.resized.png)
 
@@ -260,7 +263,7 @@ If you don't want to have to type the `-e7`.
 
  ![screenshot](img/resources.png)
 
-Gnome Resources is similar to the Windows Task Manager. Here is a [link](https://apps.gnome.org/Resources/) to the homepage describing Resources.
+Gnome Resources is similar to the Windows Task Manager. Here is a [link](https://apps.gnome.org/Resources/) to the homepage describing Gnome Resources.
 
 **Installation Instructions**
 
@@ -389,4 +392,4 @@ I hovered over one of the large blocks and it told me that is the section of dis
 
 ## Wrapping up
 
-Now that we have the these extensions and applications installed I hope you find Ubuntu with the Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
+Now that we have these extensions and applications installed I hope you find Ubuntu with the Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
