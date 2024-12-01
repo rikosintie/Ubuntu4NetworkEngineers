@@ -59,6 +59,14 @@ GNOME Circle champions the great software that is available for the GNOME platfo
 
 GNOME Circle contains applications extending the GNOME ecosystem. It champions the great additional software that is available for the GNOME platform. [Learn more about GNOME Circle](https://circle.gnome.org/).
 
+One Circle application that is basically mandatory is `Impression`, an application to write ISO images to a flash drive! Simply start `Impression`, pick the image, pick the USB flash drive, click `write`.
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub io.gitlab.adhami3310.Impression
+```
+
 ----------------------------------------------------------------
 
 ### Install Flatpak
