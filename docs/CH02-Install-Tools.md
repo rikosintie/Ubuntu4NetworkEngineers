@@ -20,8 +20,6 @@
 
 For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications were called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
-We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`, `Snaps` and `Appimages`
-
 ----------------------------------------------------------------
 
 ## Snaps vs Flatpak vs Appimage
@@ -29,6 +27,8 @@ We will cover terminal tools later. In this section we will learn how to install
 To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
 Most importantly for us is that the Snap infrastructure was developed by Canonical, the publisher of Ubuntu, so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. The Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are very similar to the Windows applications for managing resources and disk usage.
+
+We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`.
 
 ----------------------------------------------------------------
 
@@ -44,11 +44,11 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
 #### Gnome Core Apps
 
- The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of a few of them. To open them, tap the super key and type the name of the application you want to open.
+ The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of a four that I find useful. To open them, tap the super key and type the name of the application you want to open.
 
 - The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
-- The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view six different faces of `Fira Code` using the Fonts application.
-- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. It's very similar to the clocks app on IOS.
+- The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view the six different faces of `Fira Code` using the Fonts application.
+- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on IOS.
 - The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
 
 ![screenshot](img/SystemMonitor.resized.png)
@@ -143,6 +143,12 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
+
+!!! Tip
+    From the terminal you can list the installed extensions
+    ```bash
+    gnome-extensions list -d --enabled | grep 'Name:' | sed 's/  Name: //'
+    ```
 
 ----------------------------------------------------------------
 
