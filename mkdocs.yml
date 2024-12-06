@@ -55,7 +55,6 @@ plugins:
     - social
     - search
     - privacy:
-      enabled: !ENV [CI, false]
       links_attr_map:
         target: _blank
 extra:
