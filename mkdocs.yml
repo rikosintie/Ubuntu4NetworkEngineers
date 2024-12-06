@@ -57,6 +57,7 @@ plugins:
     - privacy:
       links_attr_map:
         target: _blank
+
 extra:
   social:
     - icon: fontawesome/brands/github-alt
