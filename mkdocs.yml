@@ -54,7 +54,10 @@ theme:
 plugins:
     - social
     - search
-
+    - privacy:
+      links_attr_map:
+        target: _blank
+        enabled: !ENV [CI, false]
 extra:
   social:
     - icon: fontawesome/brands/github-alt
