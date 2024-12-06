@@ -55,9 +55,9 @@ plugins:
     - social
     - search
     - privacy:
+      enabled: !ENV [CI, false]
       links_attr_map:
         target: _blank
-        enabled: !ENV [CI, false]
 extra:
   social:
     - icon: fontawesome/brands/github-alt
