@@ -14,16 +14,18 @@ theme:
   name: material
   logo: img/ubuntu_icon1.png
   features:
-    - navigation.tabs
-    - navigation.sections
-    - toc.integrate
-    - navigation.top
-    - search.suggest
-    - search.highlight
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
+    - navigation.tabs
+    - navigation.top
+    - navigation.sections
     - navigation.instant
+    - navigation.instant.progress
+    - search.suggest
+    - search.highlight
+    - toc.integrate
+
   language: en
   favicon: img/favicon.ico
   palette:
