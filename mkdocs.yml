@@ -1,5 +1,6 @@
 site_name: Ubuntu for Network Engineers
 site_author: Michael Hubbard (rikosintie)
+site_url: https://rikosintie.github.io/Ubuntu4NetworkEngineers
 nav:
   - home: README.md
   - Intro: Introduction.md
@@ -22,6 +23,7 @@ theme:
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
+    - navigation.instant
   language: en
   favicon: img/favicon.ico
   palette:
