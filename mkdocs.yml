@@ -21,6 +21,7 @@ theme:
     - content.code.copy
     - content.code.annotate # (1)!
     - navigation.expand
+    - navigation.footer
     - navigation.instant
     - navigation.instant.progress
     - navigation.path
