@@ -1,6 +1,7 @@
 site_name: Ubuntu for Network Engineers
 site_author: Michael Hubbard (rikosintie)
 site_url: https://rikosintie.github.io/Ubuntu4NetworkEngineers
+repo_url: https://github.com/rikosintie/Ubuntu4NetworkEngineers
 repo_name: rikosintie/Ubuntu4NetworkEngineers
 nav:
   - home: README.md
