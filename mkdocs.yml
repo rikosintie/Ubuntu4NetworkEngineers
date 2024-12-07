@@ -17,13 +17,14 @@ theme:
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
-    - navigation.tabs
-    - navigation.top
-    - navigation.sections
+    - navigation.expand
     - navigation.instant
     - navigation.instant.progress
+    - navigation.path
+    - navigation.sections
+    - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.expand
+    - navigation.top
     - search.suggest
     - search.highlight
     - toc.integrate
