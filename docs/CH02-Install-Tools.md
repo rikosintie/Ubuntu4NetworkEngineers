@@ -314,7 +314,7 @@ ufw allow 1716:1764/udp
 
 ### Removable Drive menu
 
-On some projects I end up using flash drives quite a lot. All this extension does is puts the `Eject Drive` icon ![screenshot](img/Removable-Drive.png) in the status menu. But I find useful when I'm not in `Files` and want to eject a drive.
+On some projects I end up using flash drives quite a lot. All this extension does is puts the `Eject Drive` icon ![screenshot](img/Removable-Drive.png) in the status menu. But I find useful when I'm not in `Files` and want to work with the files on a flash drive or eject a drive.
 
 **Installation Instructions**
 
@@ -371,15 +371,15 @@ Systemd is a system and service manager for Linux operating systems. There are h
 
 **Installation Instructions**
 
-This extension isn't available using the `Extension Manager` flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed link on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.
+This extension isn't available using the `Extension Manager` flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed like on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.
 
 Click this link [Systemd Manager](https://github.com/hardpixel/systemd-manager) to download the zip file of release V17. Version 17 supports Gnome 45/46/47.
 
-Right click on the zip file and select `Extract To..`. In the Files dialog that opens search for `~/.local/share/gnome-shell/extensions` and click `Select`. This will extract the file into a folder named `systemd-manager-v17`. Locate the folder in Files and rename it to `systemd-manager@hardpixel.eu`
+Right click on the zip file and select `Extract To..`. In the Files dialog that opens search for `~/.local/share/gnome-shell/extensions` and click `Select`. This will extract the file into a folder named `systemd-manager-v17` under the `extensions` directory. Locate the folder in Files and rename it to `systemd-manager@hardpixel.eu`
 
 You will need to restart Ubuntu to activate the extension.
 
-One of files in the director is named `metadata.json` Below are the contents of the json file. You can see the shell version the extension works with and the uuid. The uuid is the name of the directory containing the extension's configuration files. I right clicked on `metadata.json` and used `Text Edit` to open the configuration file.
+One of files in the directory is named `metadata.json` Below are the contents of the json file. You can see the shell version the extension works with and the uuid. The uuid is the required name of the directory containing the extension's configuration files. I right clicked on `metadata.json` and used `Text Edit` to open the configuration file.
 
 ```json
 {
@@ -405,7 +405,7 @@ Click on the `Systemd-Manager` icon in the status menu and select `Add Service`.
 
 ----------------------------------------------------------------
 
-You type a name for the service in the `Name in menu` field and enter the service in the `Search for service` field. Click the `+ Add` button and then click the `X` at the top right corner of the dialog to close it.
+Type a name for the service in the `Name in menu` field and enter the service in the `Search for service` field. Click the `+ Add` button and then click the `X` at the top right corner of the dialog to close it.
 
 Now click the `Systemd-Manager` icon in the `status menu` and you will see the services you added.
 
