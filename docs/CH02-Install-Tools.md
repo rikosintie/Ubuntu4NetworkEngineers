@@ -79,7 +79,16 @@ sudo apt install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
-Unfortunately you do have to restart after running the commands. Once your system restarts we are going to install four applications for managing the system.
+**Explanation**
+
+- sudo apt update - This uses the `Aptitude` package manager to update the repositories that your machine uses
+- sudo apt install flatpak - This uses the `Aptitude` package manager to actually install flatpak.
+- flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
+
+!!! Note
+    Unfortunately you do have to restart after running the commands.
+
+Once your system restarts we are going to install four applications for managing the system.
 
 ----------------------------------------------------------------
 
@@ -91,7 +100,7 @@ The first application is `Gnome Extensions`
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
 
-`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser.
+`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser. For some reason, Gnome Extensions does not have the ability to install extensions. We will install the similarly named Extensions Manager that has the ability to install extensions.
 
 **Installation Instructions**
 
@@ -162,6 +171,10 @@ Here is what it looks like in use:
 
 Clicking on `Settings` brings up a dialog with tons of options. The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
+**Installation Instructions**
+
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `clipboard indicator`. Once Extension Manager finds `Clipboard Indicator` click on the `Instal...` button.
+
 ----------------------------------------------------------------
 
 #### Customize Clock on Lock Screen
@@ -191,6 +204,10 @@ If you want to use the same settings for time:
 
 The week number is very popular in Europe. After I worked in France for awhile I find that I like it. In meetings you can say "in week 48 we need to accomplish the following" and everyone knows what dates you mean. There are widgets and applications for IOS and Android to show Weeks if you want to quickly see what a week number translates to on a calendar.
 
+**Installation Instructions**
+
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `customize clock on Lock Screen`. Once Extension Manager finds `customize clock on Lock Screen` click on the `Instal...` button.
+
 ----------------------------------------------------------------
 
 #### GSConnect
@@ -198,6 +215,9 @@ The week number is very popular in Europe. After I worked in France for awhile I
 If you use an Android phone this application is a must! It allows you to send/receive text messages, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.
 
 One nice feature that works on IOS and Android is `find my phone`! I always misplace my phone when working in closets and with GSConnect I can quickly make it ring to locate it.
+
+!!! Note
+    The phone and laptop have to be connected to the same network. This usually isn't an issue but if the customer doesn't allow you to connect then `Find My Phone` will fail.
 
 **Open GSConnect Settings**
 
@@ -243,13 +263,14 @@ It appears when the KDE Connect application is running on the phone and connecte
 
 ----------------------------------------------------------------
 
-I added the following rules to UFW so that the phone can connect to GSConnect.
+I added the following rules to UFW so that the phone can connect to GSConnect. Open the terminal and paste the following commands in:
 
-```bash hl_lines='1 3 4'
+```bash hl_lines='1 2 3'
 sudo ufw allow 1716:1764/tcp
-[sudo] password for mhubbard:
 sudo ufw allow 1716:1764/udp
 sudo ufw show added
+
+[output]
 Added user rules (see 'ufw status' for running firewall):
 ufw allow 1716:1764/tcp
 ufw allow 1716:1764/udp
@@ -263,7 +284,24 @@ This extension allows you to install and manage snaps:
 
 ![screenshot](img/SnapManagerLite1.png)
 
-One annoying feature of snaps is that they install as `Loop` devices. This means that when you run `lsblk` from the terminal to view your disks you see a lot of `loop` entries. To avoid this, add the -e7 flag:
+!!! Warning
+    For some reason `Snap Manager Lite` is not available for Gnome 47/Ubuntu 24.04. It is available for 22.04, 23.10, 24.10.
+
+----------------------------------------------------------------
+
+One annoying feature of snaps is that they install as [Loop devices](https://itsfoss.com/loop-device-linux/). This means that when you run `lsblk` from the terminal to view your disks you see a lot of `loop` entries.
+
+```bash hl_lines="1"
+lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0   9.5M  1 loop /snap/asciinema/35
+loop1         7:1    0  11.6M  1 loop /snap/auto-cpufreq/146
+loop2         7:2    0  76.5M  1 loop /snap/aurora-editor/55
+loop3         7:3    0   9.4M  1 loop /snap/asciinema/32
+loop4         7:4    0  11.6M  1 loop /snap/auto-cpufreq/147
+```
+
+To avoid this, add the -e7 flag:
 
 ```bash
 lsblk -e7
