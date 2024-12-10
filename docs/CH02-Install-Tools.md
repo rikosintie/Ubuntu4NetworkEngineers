@@ -38,6 +38,31 @@ I am going to start with flatpak applications instead of the Ubuntu App Store be
 
 The Flatpak store is located [here](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the applications are written by developers that don't get paid.
 
+----------------------------------------------------------------
+
+### Install Flatpak
+
+Open a terminal (ctrl+alt+t) and run the following commands:
+
+```bash
+sudo apt update
+sudo apt install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+**Explanation**
+
+- sudo apt update - This uses the `Aptitude` package manager to update the repositories that your machine uses.
+- sudo apt install flatpak - This uses the `Aptitude` package manager to actually install flatpak.
+- flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
+
+!!! Note
+    Unfortunately you do have to restart after running the commands.
+
+Once your system restarts we are going to install four applications for managing the system.
+
+----------------------------------------------------------------
+
 ### Gnome Specific
 
 The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand, simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
@@ -61,34 +86,15 @@ GNOME Circle contains applications extending the GNOME ecosystem. It champions t
 
 One Circle application that is basically mandatory is `Impression`, an application to write ISO images to a flash drive! Simply start `Impression`, pick the image, pick the USB flash drive, click `write`.
 
+![screenshot](img/Impression.png)
+
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 ```bash
 flatpak install flathub io.gitlab.adhami3310.Impression
 ```
-
-----------------------------------------------------------------
-
-### Install Flatpak
-
-Open a terminal (ctrl+alt+t) and run the following commands:
-
-```bash
-sudo apt update
-sudo apt install flatpak
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-```
-
-**Explanation**
-
-- sudo apt update - This uses the `Aptitude` package manager to update the repositories that your machine uses
-- sudo apt install flatpak - This uses the `Aptitude` package manager to actually install flatpak.
-- flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
-
-!!! Note
-    Unfortunately you do have to restart after running the commands.
-
-Once your system restarts we are going to install four applications for managing the system.
 
 ----------------------------------------------------------------
 
