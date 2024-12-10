@@ -596,6 +596,8 @@ I hovered over one of the large blocks and it told me that is the section of dis
 
 ### Meld
 
+![screenshot](img/Meld.png)
+
 Meld is a flatpak from the Gnome project.
 
 **Compare and merge your files**
@@ -622,7 +624,9 @@ Or by tapping the `Super` key, typing `meld` and clicking on the `Meld` icon.
 
 #### Example
 
-Here is an example of comparing two configuration files. On line 2 you can see a blue highlight showing that the firmware on the left side is 14.01 and on the right it's 14.21.
+Here is an example of comparing two configuration files. On line 1 notice that there are two arrows pointing at each other. Out of view in screenshot is the firmware version. The left and right have different versions. The differences are highlighted in blue blocks.
+
+On line 2 you can see a blue highlight showing that the firmware on the left side is 14.01 and on the right it's 14.21.
 
 On line 10 you see a green highlighted line on the right side with an arrow pointing to the left. That tells you that the line `sntp server priority 1 10.124.14.5` was added to the file on the right.
 
