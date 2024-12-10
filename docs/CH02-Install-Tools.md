@@ -32,7 +32,7 @@ We will cover terminal tools later. In this section we will learn how to install
 
 ----------------------------------------------------------------
 
-## Flatpak Applications
+## Flatpak
 
 I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
 
@@ -63,7 +63,7 @@ Once your system restarts we are going to install a few flatpak applications for
 
 ----------------------------------------------------------------
 
-### Gnome Specific
+#### Gnome Specific
 
 The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind. They are easy to understand, simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are [free software](https://fsfe.org/freesoftware/) and have committed to being part of a [welcoming and friendly community](https://wiki.gnome.org/Foundation/CodeOfConduct). These apps will perfectly integrate with your GNOME Desktop.
 
@@ -118,6 +118,8 @@ In the past, you used Google Chrome or Mozilla Firefox to install Gnome extensio
 
 I prefer to use an flatpak named `Gnome Extensions` to install extensions. This is a flatpak written by the Gnome Project so I am comfortable using it. `Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser. For some reason, Gnome Extensions does not have the ability to install extensions. We will install the similarly named `Extensions Manager` that has the ability to install extensions.
 
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 ```bash
@@ -141,6 +143,8 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 ### Installing Extensions
 
 You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, `Extension Manager` even though it's not written by the Gnome team. It's confusing because it looks just like the `Gnome Extensions` application except that it has the capability to install extensions. I like this method better than using the Chrome browser extension.
+
+----------------------------------------------------------------
 
 **Installation Instructions**
 
@@ -205,6 +209,8 @@ Here is what it looks like in use:
 
 Clicking on `Settings` brings up a dialog with tons of options. The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu. The only option I changed is `Notifications, show notification on copy` so that I get a popup message when I copy something to the clipboard.
 
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `clipboard indicator`. Once Extension Manager finds `Clipboard Indicator` click on the `Install...` button.
@@ -237,6 +243,8 @@ If you want to use the same settings for time:
 ```
 
 The week number is very popular in Europe. After I worked in France for awhile I find that I like it. In meetings you can say "in week 48 we need to accomplish the following" and everyone knows what dates you mean. There are widgets and applications for IOS and Android to show Weeks if you want to quickly see what a week number translates to on a calendar.
+
+----------------------------------------------------------------
 
 **Installation Instructions**
 
@@ -285,19 +293,7 @@ I enabled the `GSConnect remains active when Gnome Shell is locked` slider so th
 
 ----------------------------------------------------------------
 
-The icon for GSConnect is in the menu bar at the top right of the screen:
-
-![screenshot](img/GSConnect3.png)
-
-It appears when the KDE Connect application is running on the phone and connected to GSConnect.  You can see `Find My` and `Share` in the screenshot. The `Find my phone` will keep ringing until you press the `I Found It` button on the phone.
-
-----------------------------------------------------------------
-
-![screenshot](img/GSConnect4.resized.jpg)
-
-----------------------------------------------------------------
-
-I added the following rules to UFW so that the phone can connect to GSConnect. Open the terminal and paste the following commands in:
+----------------------------------------------------------------phone can connect to GSConnect. Open the terminal and paste the following commands in:
 
 ```bash hl_lines='1 2 3'
 sudo ufw allow 1716:1764/tcp
@@ -315,6 +311,8 @@ ufw allow 1716:1764/udp
 ### Removable Drive menu
 
 On some projects I end up using flash drives quite a lot. All this extension does is puts the `Eject Drive` icon ![screenshot](img/Removable-Drive.png) in the status menu. But I find useful when I'm not in `Files` and want to work with the files on a flash drive or eject a drive.
+
+----------------------------------------------------------------
 
 **Installation Instructions**
 
@@ -369,6 +367,8 @@ If you don't want to have to type the `-e7`.
 
 Systemd is a system and service manager for Linux operating systems. There are hundreds of services running on the system and usually terminal commands are used to start/stop/enable and check status. There are a few services like the `UFW Firewall`, `ssh server` and `tftp server` that I turn on and off often. The `Systemd Manager` extensions lets me easily check the status from the `status menu`. The icon looks like the Gnome setting gear - ![screenshot](img/Systemd-Manager.png).
 
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 This extension isn't available using the `Extension Manager` flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed like on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.
@@ -415,13 +415,59 @@ Now click the `Systemd-Manager` icon in the `status menu` and you will see the s
 
 Simply slide the slider to the right to enable a service or to the left to disable a service. You can also restart a service by clicking the icon with the circular arrow or mask a service by clicking the icon on the right.
 
+#### Why the Red
+
+Notice that the TFTP entry is red. I wasn't sure what that meant so I ran the following command from a terminal:
+
+```bash
+sudo systemctl restart tftpd-hpa
+```
+
+And received a message that the service couldn't be started. I ran the following command to view the journal for tftpd-hpa:
+
+```bash
+journalctl -u tftpd-hpa
+```
+
+And found that tftpd-hpa had been failing since I upgraded to 24.10 on November 17th! I Googled the error message but nothing really jumped out so I did the following:
+
+```bash
+sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.bak
+sudo dpkg --purge --force-all tftpd-hpa
+sudo apt install tftpd-hpa
+sudo cp /etc/default/tftpd-hpa.bak /etc/default/tftpd-hpa
+sudo systemctl is-enabled tftpd-hpa
+sudo systemctl start tftpd-hpa
+```
+
+Those commands did the following
+
+- made a backup of the tftpd-hpa configuration file
+- removed the tftpd-hpa service and the configuration file
+- reinstalled the tftpd-hpa service
+- copied the tftpd-hpa configuration file from the backup
+- verified that the tftpd-hpa was enabled so that it could start after a reboot
+- started the tftpd-hpa service
+
+Now when I click on the Systemd-Manager icon the TFTP entry is black
+
 ----------------------------------------------------------------
+
+![screenshot](img/SystemMonitor1.png)
+
+----------------------------------------------------------------
+
+## Flatpak Applications
+
+Now that we have the Gnome Extensions installed lets move onto the Flatpak applications that I use.
 
 ### Gnome Resources
 
  ![screenshot](img/resources.png)
 
 Gnome Resources is similar to the Windows Task Manager. Here is a [link](https://apps.gnome.org/Resources/) to the homepage describing Gnome Resources.
+
+----------------------------------------------------------------
 
 **Installation Instructions**
 
@@ -463,6 +509,8 @@ I think we can agree this is a useful tool!
 ![screenshot](img/Flatseal.png)
 
 Flatseal is a graphical utility to review and modify permissions from your Flatpak applications. This application allows you to look at all of your installed Flatpak applications and verify their permissions.
+
+----------------------------------------------------------------
 
 **Installation Instructions**
 
@@ -518,6 +566,8 @@ Here is a screenshot of the flatpak applications I have installed:
 
 ![screenshot](img/DiskUsage.png)
 
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 ```bash
@@ -541,6 +591,92 @@ I hovered over one of the large blocks and it told me that is the section of dis
 ----------------------------------------------------------------
 
 ![screenshot](img/DiskUsage1.resized.png)
+
+----------------------------------------------------------------
+
+### Meld
+
+Meld is a flatpak from the Gnome project.
+
+**Compare and merge your files**
+
+Meld is a visual diff and merge tool targeted at developers. Meld helps you compare files, directories, and version controlled projects. It provides two- and three-way comparison of both files and directories, and supports many version control systems including Git, Mercurial, Bazaar and Subversion.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub org.gnome.meld
+```
+
+Once installed, run  `Meld` from the terminal using:
+
+```bash
+flatpak run org.gnome.meld
+```
+
+Or by tapping the `Super` key, typing `meld` and clicking on the `Meld` icon.
+
+----------------------------------------------------------------
+
+#### Example
+
+Here is an example of comparing two configuration files. On line 2 you can see a blue highlight showing that the firmware on the left side is 14.01 and on the right it's 14.21.
+
+On line 10 you see a green highlighted line on the right side with an arrow pointing to the left. That tells you that the line `sntp server priority 1 10.124.14.5` was added to the file on the right.
+
+Further down you can see a blue highlighted line on the right that rolls over to the left. That tells you that the name of the interface was changed.
+
+It takes a little bit of time to learn all the features of Meld but is is a great tool for a network engineer.
+
+----------------------------------------------------------------
+
+![screenshot](img/Meld1.png)
+
+----------------------------------------------------------------
+
+### Warehouse
+
+![screenshot](img/Warehouse-Icon.png)
+
+Ok, one more application for managing Flatpaks! Warehouse is relatively new and I had already been using `Gnome Extensions` and `Extension Manager` for flatpaks when I found this application. It can do everything in one place including adding non Flathub.org repositories. I have gone down that rabbit hole yet because I am happy spending time in the terminal if I'm not in VS Code.
+
+**Manage all things Flatpak**
+
+Warehouse provides a simple UI to control complex Flatpak options, all without resorting to the command line.
+
+Features:
+
+- Manage installed Flatpaks and view properties of any package
+- Change versions of a Flatpak to rollback any unwanted updates
+- Pin runtimes and mask Flatpaks
+- Filter packages and sort data, to help find anything easily
+- See current app user data, and cleanup any unused data left behind
+- Add popular Flatpak remotes with a few clicks or add custom remotes instead
+- Take snapshots of your apps' user data, saving your data
+- Install new packages from any remote, or from your system
+- Responsive UI to fit large and small screen sizes
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub io.github.flattool.Warehouse
+```
+
+Once installed, run  `Warehouse` from the terminal using:
+
+```bash
+flatpak run io.github.flattool.Warehouse
+```
+
+Or by tapping the `Super` key, typing `warehouse` and clicking on the `Warehouse` icon.
+
+----------------------------------------------------------------
+
+![screenshot](img/Warehouse1.png)
 
 ----------------------------------------------------------------
 
