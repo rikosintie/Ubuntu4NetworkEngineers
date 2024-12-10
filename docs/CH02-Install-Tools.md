@@ -69,11 +69,11 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
 #### Gnome Core Apps
 
- The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of four that I find useful. To open them, tap the super key and type the name of the application you want to open.
+ Several of the the 28 `Core Apps` are installed by Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful. To open them, tap the super key and type the name of the application you want to open.
 
 - The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
 - The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view the six different faces of `Fira Code` using the Fonts application.
-- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on IOS.
+- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on Apple IOS.
 - The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
 
 ![screenshot](img/SystemMonitor.resized.png)
@@ -94,6 +94,8 @@ GNOME Circle contains applications extending the GNOME ecosystem. It champions t
 
 One Circle application that is basically mandatory is `Impression`, an application to write ISO images to a flash drive! Simply start `Impression`, pick the image, pick the USB flash drive, click `write`.
 
+In the screenshot below, I picked the the Windows 11 image from my ~/Downloads directory and selected the Aruba flash drive to write it to. All that is left is to click on `Write` and a bootable flash drive will be created.
+
 ![screenshot](img/Impression.png)
 
 ----------------------------------------------------------------
@@ -112,7 +114,9 @@ flatpak install flathub io.gitlab.adhami3310.Impression
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
 
-`Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser. For some reason, Gnome Extensions does not have the ability to install extensions. We will install the similarly named Extensions Manager that has the ability to install extensions.
+In the past, you used Google Chrome or Mozilla Firefox to install Gnome extensions. This was a painful process I thought and you had to install a chrome or Mozilla Firefox `Connector` first.
+
+I prefer to use an flatpak named `Gnome Extensions` to install extensions. This is a flatpak written by the Gnome Project so I am comfortable using it. `Gnome Extensions` handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser. For some reason, Gnome Extensions does not have the ability to install extensions. We will install the similarly named `Extensions Manager` that has the ability to install extensions.
 
 **Installation Instructions**
 
