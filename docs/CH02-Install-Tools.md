@@ -167,13 +167,31 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 - [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
+- [Removable Drive Menu](https://extensions.gnome.org/extension/7/removable-drive-menu/) - A status menu for accessing and unmounting removable devices.
 - [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
+- [Systemd Manager](https://github.com/hardpixel/systemd-manager) - Systemd Manager is a Gnome Shell Extension which allows you to start/stop systemd services via a menu in the status area in the top panel. You can preselect which services should be shown in the extension preferences dialog.
 
 !!! Tip
     From the terminal you can list the installed extensions
     ```bash
     gnome-extensions list -d --enabled | grep 'Name:' | sed 's/  Name: //'
     ```
+
+Here is the output of the command:
+
+```bash hl_lines='1'
+gnome-extensions list -d --enabled | grep 'Name:' | sed 's/  Name: //'
+Customize Clock on Lock Screen
+Systemd Manager
+Removable Drive Menu
+Clipboard Indicator
+GSConnect
+Snap Manager Lite
+Ubuntu AppIndicators
+Ubuntu Dock
+Desktop Icons NG (DING)
+Ubuntu Tiling Assistant
+```
 
 ----------------------------------------------------------------
 
@@ -189,7 +207,7 @@ Clicking on `Settings` brings up a dialog with tons of options. The :material-do
 
 **Installation Instructions**
 
-Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `clipboard indicator`. Once Extension Manager finds `Clipboard Indicator` click on the `Instal...` button.
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `clipboard indicator`. Once Extension Manager finds `Clipboard Indicator` click on the `Install...` button.
 
 ----------------------------------------------------------------
 
@@ -222,7 +240,7 @@ The week number is very popular in Europe. After I worked in France for awhile I
 
 **Installation Instructions**
 
-Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `customize clock on Lock Screen`. Once Extension Manager finds `customize clock on Lock Screen` click on the `Instal...` button.
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `customize clock on Lock Screen`. Once Extension Manager finds `customize clock on Lock Screen` click on the `Install...` button.
 
 ----------------------------------------------------------------
 
@@ -294,6 +312,20 @@ ufw allow 1716:1764/udp
 
 ----------------------------------------------------------------
 
+### Removable Drive menu
+
+On some projects I end up using flash drives quite a lot. All this extension does is puts the `Eject Drive` icon ![screenshot](img/Removable-Drive.png) in the status menu. But I find useful when I'm not in `Files` and want to eject a drive.
+
+**Installation Instructions**
+
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `Removable Drive Menu`. Once Extension Manager finds `Removable Drive Menu` click on the `Install...` button.
+
+Now, any time a flash drive is installed, the Removable Drive icon will be in the status menu. Simply click the icon, then select the drive to eject!
+
+![screenshot](img/Removable-Drive1.png)
+
+----------------------------------------------------------------
+
 #### Snap Manager Lite
 
 This extension allows you to install and manage snaps:
@@ -301,7 +333,7 @@ This extension allows you to install and manage snaps:
 ![screenshot](img/SnapManagerLite1.png)
 
 !!! Warning
-    For some reason `Snap Manager Lite` is not available for Gnome 47/Ubuntu 24.04. It is available for 22.04, 23.10, 24.10.
+    For some reason `Snap Manager Lite` is not available for Gnome 46/Ubuntu 24.04. It is available for 22.04, 23.10, 24.10.
 
 ----------------------------------------------------------------
 
@@ -330,6 +362,58 @@ alias lsblk='lsblk -e7'
 ```
 
 If you don't want to have to type the `-e7`.
+
+----------------------------------------------------------------
+
+### Systemd Manager
+
+Systemd is a system and service manager for Linux operating systems. There are hundreds of services running on the system and usually terminal commands are used to start/stop/enable and check status. There are a few services like the `UFW Firewall`, `ssh server` and `tftp server` that I turn on and off often. The `Systemd Manager` extensions lets me easily check the status from the `status menu`. The icon looks like the Gnome setting gear - ![screenshot](img/Systemd-Manager.png).
+
+**Installation Instructions**
+
+This extension isn't available using the `Extension Manager` flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed link on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.
+
+Click this link [Systemd Manager](https://github.com/hardpixel/systemd-manager) to download the zip file of release V17. Version 17 supports Gnome 45/46/47.
+
+Right click on the zip file and select `Extract To..`. In the Files dialog that opens search for `~/.local/share/gnome-shell/extensions` and click `Select`. This will extract the file into a folder named `systemd-manager-v17`. Locate the folder in Files and rename it to `systemd-manager@hardpixel.eu`
+
+You will need to restart Ubuntu to activate the extension.
+
+One of files in the director is named `metadata.json` Below are the contents of the json file. You can see the shell version the extension works with and the uuid. The uuid is the name of the directory containing the extension's configuration files. I right clicked on `metadata.json` and used `Text Edit` to open the configuration file.
+
+```json
+{
+  "shell-version": ["45", "46", "47"],
+  "uuid": "systemd-manager@hardpixel.eu",
+  "url": "https://github.com/hardpixel/systemd-manager",
+  "settings-schema": "org.gnome.shell.extensions.systemd-manager",
+  "gettext-domain": "systemd-manager",
+  "version": 17,
+  "name": "Systemd Manager",
+  "description": "Toggle systemd services on/off from a popup menu in the top gnome panel. Can be used to start services like apache2, mysql, postgres. It uses `pkexec' to run `sytemctl'. If you want to start services without entering a password you have to polkit policy file. An example policy file can be found in the github repository.",
+  "donations": {
+    "github": "jonian"
+  }
+}
+```
+
+#### Configuration
+
+Click on the `Systemd-Manager` icon in the status menu and select `Add Service`. Here is what it will look like:
+
+![screenshot](img/Systemd-Manager-settings.png)
+
+----------------------------------------------------------------
+
+You type a name for the service in the `Name in menu` field and enter the service in the `Search for service` field. Click the `+ Add` button and then click the `X` at the top right corner of the dialog to close it.
+
+Now click the `Systemd-Manager` icon in the `status menu` and you will see the services you added.
+
+![screenshot](img/Systemd-Manager-status.png)
+
+----------------------------------------------------------------
+
+Simply slide the slider to the right to enable a service or to the left to disable a service. You can also restart a service by clicking the icon with the circular arrow or mask a service by clicking the icon on the right.
 
 ----------------------------------------------------------------
 
