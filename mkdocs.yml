@@ -18,11 +18,12 @@ theme:
   icon:
     previous: fontawesome/solid/angle-left
     next: fontawesome/solid/angle-right
-    repo: fontawesome/brands/git
+    repo: fontawesome/brands/github
   features:
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
+    - header.autohide
     - navigation.expand
     - navigation.footer
     - navigation.instant
@@ -32,8 +33,9 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.top
-    - search.suggest
     - search.highlight
+    - search.share
+    - search.suggest
     - toc.integrate
 
   language: en
@@ -68,6 +70,7 @@ theme:
 plugins:
     - social
     - search
+
 
 extra:
   social:
