@@ -57,9 +57,9 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 - flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
 
 !!! Note
-    Unfortunately you do have to restart after running the commands.
+    Unfortunately you do have to restart after running the commands. There is no "Reboot Now" message but flatpak will not be available until you reboot.
 
-Once your system restarts we are going to install four applications for managing the system.
+Once your system restarts we are going to install a few flatpak applications for managing the system and making life better!.
 
 ----------------------------------------------------------------
 
@@ -69,7 +69,7 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
 #### Gnome Core Apps
 
- The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of a four that I find useful. To open them, tap the super key and type the name of the application you want to open.
+ The 28 `Core Apps` are installed by Ubuntu and are worth looking at. Here are descriptions of four that I find useful. To open them, tap the super key and type the name of the application you want to open.
 
 - The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
 - The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view the six different faces of `Fira Code` using the Fonts application.
@@ -77,6 +77,14 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 - The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
 
 ![screenshot](img/SystemMonitor.resized.png)
+
+----------------------------------------------------------------
+
+- The `Logs` application allows you to quickly look at system logs. It's a super fast way to look for issues. If the log has a URL for support, it will be shown.
+
+![screenshot](img/logs.png)
+
+----------------------------------------------------------------
 
 #### Gnome Circle Apps
 
@@ -101,8 +109,6 @@ flatpak install flathub io.gitlab.adhami3310.Impression
 ### Gnome Extensions
 
 ![screenshots](img/Extensions.png)
-
-The first application is `Gnome Extensions`
 
 The Gnome project maintains an [Extensions Site](https://extensions.gnome.org/) where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article [Top 21 GNOME Extensions to Enhance Your Experience](https://itsfoss.com/best-gnome-extensions/) lists the extensions that `itsfoss` recommends.
 
@@ -152,7 +158,7 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 
 ----------------------------------------------------------------
 
-**Below are the four extensions that I have installed:**
+**Below are the extensions that I have installed:**
 
 - [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
