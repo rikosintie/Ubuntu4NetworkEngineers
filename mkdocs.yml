@@ -7,8 +7,9 @@ nav:
   - home: README.md
   - Intro: Introduction.md
   - Usage: Ch01-Using-Ubuntu.md
+  - Desktop: CH02-Install-Tools.md
+  - Terminal: terminal.md
   - SSH: SSH.md
-  - Gnome: CH02-Install-Tools.md
   - KVM: KVM-Bridge.md
   - Add to AD: Join-Ubuntu-24.04-desktop-to-AD.md
 
