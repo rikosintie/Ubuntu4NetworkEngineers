@@ -694,7 +694,7 @@ It takes a little bit of time to learn all the features of Meld but is is a grea
 
 ![screenshot](img/Warehouse-Icon.png)
 
-Ok, one more application for managing Flatpaks! Warehouse is relatively new and I had already been using `Gnome Extensions` and `Extension Manager` for flatpaks when I found this application. It can do everything in one place including adding non Flathub.org repositories. I have gone down that rabbit hole yet because I am happy spending time in the terminal if I'm not in VS Code.
+Ok, one more application for managing Flatpaks! Warehouse is relatively new and I had already been using `Gnome Extensions` and `Extension Manager` for flatpaks when I found this application. It can do everything in one place including adding non Flathub.org repositories. I haven't gone down that rabbit hole yet because I am happy spending time in the terminal if I'm not in VS Code.
 
 **Manage all things Flatpak**
 
@@ -729,6 +729,8 @@ flatpak run io.github.flattool.Warehouse
 Or by tapping the `Super` key, typing `warehouse` and clicking on the `Warehouse` icon.
 
 ----------------------------------------------------------------
+
+One great feature of `Warehouse` is that you can see how much disk space each application uses.
 
 ![screenshot](img/Warehouse1.png)
 
