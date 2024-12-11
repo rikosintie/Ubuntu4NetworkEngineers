@@ -594,6 +594,54 @@ I hovered over one of the large blocks and it told me that is the section of dis
 
 ----------------------------------------------------------------
 
+### Foliate
+
+![screenshot](img/Foliate.png)
+
+**Read e-books in style**
+
+Discover a new chapter in reading with Foliate, the modern e-book reader tailored for GNOME. Immerse yourself in a distraction-free interface, with customization features designed to match your unique preferences.
+
+Features include:
+
+- Open EPUB, Mobipocket, Kindle, FB2, CBZ, and PDF files
+- Paginated mode and scrolled mode
+- Customize font and line-spacing
+- Light, sepia, dark, and invert mode
+- Reading progress slider with chapter marks
+- Bookmarks and annotations
+- Find in book
+- Quick dictionary lookup
+
+Technical education is changing. When I got into network engineering back in 1999 you almost had to take an instructor led class at an organization like New Horizons or a local community college. But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from [Packt Publising](https://www.packtpub.com/en-us), [No Starch Press](https://nostarch.com/), and [Gumroad](https://gumroad.com). Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is great tool for organizing and reading ebooks.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub com.github.johnfactotum.Foliate
+```
+
+Once installed, run  `Meld` from the terminal using:
+
+```bash
+flatpak run com.github.johnfactotum.Foliate
+```
+
+Or by tapping the `Super` key, typing `foliate` and clicking on the `Foliate` icon.
+
+----------------------------------------------------------------
+Here is a screenshot of Foliate with my Python Library:
+
+![screenshot](img/Foliate1.png)
+
+----------------------------------------------------------------
+
+Foliate has a lot of functionality. So far I have just used it for reading the ebooks that I have purchased.
+
+----------------------------------------------------------------
+
 ### Meld
 
 ![screenshot](img/Meld.png)
@@ -624,7 +672,7 @@ Or by tapping the `Super` key, typing `meld` and clicking on the `Meld` icon.
 
 #### Example
 
-Here is an example of comparing two configuration files. On line 1 notice that there are two arrows pointing at each other. Out of view in screenshot is the firmware version. The left and right have different versions. The differences are highlighted in blue blocks.
+Here is an example of comparing two configuration files. On line 1 notice that there are two arrows int the center of the screen pointing at each other. Out of view in screenshot is the firmware version. The left and right have different versions. The differences are highlighted in blue blocks.
 
 On line 2 you can see a blue highlight showing that the firmware on the left side is 14.01 and on the right it's 14.21.
 
@@ -636,7 +684,7 @@ It takes a little bit of time to learn all the features of Meld but is is a grea
 
 ----------------------------------------------------------------
 
-![screenshot](img/Meld1.png)
+![screenshot](img/Meld1.resized.png)
 
 ----------------------------------------------------------------
 
