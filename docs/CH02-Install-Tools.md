@@ -738,4 +738,15 @@ One great feature of `Warehouse` is that you can see how much disk space each ap
 
 ## Wrapping up
 
-Now that we have these extensions and applications installed, I hope you find Ubuntu with Gnome desktop easy to manage. In the next chapter we will install some applications from the Ubuntu App store, some more flatpaks and some Appimages.
+We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed:
+
+- A system resource monitor
+- A tool to manage flatpak security settings
+- A disk Space analyzer
+- An ebook reader
+- A great diffing tool
+- A tool to manage every aspect of Flatpak applications
+
+With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable.
+
+In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
