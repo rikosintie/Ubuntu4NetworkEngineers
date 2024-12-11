@@ -6,6 +6,7 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
+- We will install `Terminator` which has tabs, logging, and many other plugins.
 - Ubuntu ships with the Bourne Again Shell (BASH).
 - We are going to install zsh and set it as the default shell.
 - Then we will install Oh-My-ZSH and configure it for awsomeness.
