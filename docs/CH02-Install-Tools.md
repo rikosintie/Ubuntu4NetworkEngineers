@@ -30,7 +30,7 @@ Ubuntu Desktop comes installed with a slightly modified version of the GNOME Des
 - In addition to Ubuntu desktop wallpapers, the default theme is Yaru and the default font is Ubuntu.
 - Minimize and maximize buttons are included on window title bars.
 
-### Help
+### Getting Help
 
 You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you are new to Ubuntu, I highly recommend that you review it.
 
@@ -935,4 +935,4 @@ One great feature of `Warehouse` is that you can see how much disk space each ap
 
 ## Wrapping up
 
-We installed several Gnome extensions that add functionality to the Gnome Desktop. With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
+We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed a few GUI applications that are useful in day to day operations. With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!
