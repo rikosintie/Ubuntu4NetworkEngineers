@@ -7,12 +7,12 @@
 :arrow_forward: KEY TAKEAWAYS
 
 - Ubuntu is built off of Debian Linux, so tools that are compatible with Debian will probably work on Ubuntu.
-- Ubuntu comes with the [The app store for Linux](https://snapcraft.io/) built in. Thousands of applications are available.
+- Ubuntu comes with the The App Center built in. Thousands of applications are available.
 - Ubuntu supports the Gnome Project's [Flat Pack](https://flathub.org/) applications.
-- Ubuntu Supports [App Images](https://appimage.org/). Linux apps that run anywhere!
+- Ubuntu supports [App Images](https://appimage.org/). Linux apps that run anywhere!
 - If you are coming from MacOS, you can use [Homebrew](https://docs.brew.sh/Homebrew-on-Linux) to install packages.
 - Thousands of networking tools are available on [github](github.com)
-- The [Packet Pushers](packetpushers.net) network maintains a list of [Open Source Networking Projects](https://packetpushers.net/blog/open-source-networking-projects/). Most work on Ubuntu.
+- The [Packet Pushers](https://packetpushers.net) network maintains a list of [Open Source Networking Projects](https://packetpushers.net/blog/open-source-networking-projects/). Most work on Ubuntu.
 
 ----------------------------------------------------------------
 
@@ -42,7 +42,7 @@ You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you 
 
 ## Package managers
 
-For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications are called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
+On linux, Applications are commonly referred to as packages. For years Linux distributions have used a `Package Manager` to install applications. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
 ----------------------------------------------------------------
 
