@@ -608,9 +608,11 @@ Features include:
 - Find in book
 - Quick dictionary lookup
 
+----------------------------------------------------------------
+
 Technical education is changing. When I got into network engineering back in 1999 you almost had to take an instructor led class at an organization like New Horizons or a local community college.
 
-But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from [Packt Publising](https://www.packtpub.com/en-us), [No Starch Press](https://nostarch.com/), and [Gumroad](https://gumroad.com). Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is great tool for organizing and reading ebooks.
+But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from [Packt Publising](https://www.packtpub.com/en-us), [No Starch Press](https://nostarch.com/), and [Gumroad](https://gumroad.com). Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is a great tool for organizing and reading ebooks.
 
 ----------------------------------------------------------------
 
@@ -855,7 +857,7 @@ One great feature of `Warehouse` is that you can see how much disk space each ap
 We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed:
 
 - [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
-- [Draw.io](CH02-Install-Tools.md/#drawio)) - A flexible and privacy-focused production grade diagramming tool.
+- [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
 - [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
 - [Foliate](CH02-Install-Tools.md/#foliate) - An ebook reader
 - [KolourPaint](CH02-Install-Tools.md/#kolourpaint) - A simple painting program to quickly create raster images.
