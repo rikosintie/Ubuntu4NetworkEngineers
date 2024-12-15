@@ -18,7 +18,31 @@
 
 ## Introduction
 
-For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications were called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
+**About GNOME on Ubuntu**
+
+Ubuntu Desktop comes installed with a slightly modified version of the GNOME Desktop Environment. Here is a list of the notable differences between GNOME on Ubuntu and "Vanilla" GNOME.
+
+- Ubuntu comes with Firefox instead of the GNOME Web browser.
+- Ubuntu comes with the Remmina remote desktop client instead of GNOME Connections.
+- The AppIndicators extension is included. This extension will enable icons in the top right corner of some applications.
+- The Ubuntu Dock extension is included. This extension provides the left sidebar for running applications.
+- The Desktop Icons NG extension is included. This extension enables the use of icons on the desktop.
+- In addition to Ubuntu desktop wallpapers, the default theme is Yaru and the default font is Ubuntu.
+- Minimize and maximize buttons are included on window title bars.
+
+### Help
+
+You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you are new to Ubuntu, I highly recommend that you review it.
+
+----------------------------------------------------------------
+
+![screenshot](img/Ubuntu-Help.png)
+
+----------------------------------------------------------------
+
+## Package managers
+
+For years Linux distributions have used a `Package Manager` to install applications. On linux, Applications are called packages. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
 ----------------------------------------------------------------
 
@@ -459,7 +483,17 @@ Now when I click on the Systemd-Manager icon the TFTP entry is black
 
 ## Flatpak Applications
 
-Now that we have the Gnome Extensions installed lets move onto the Flatpak applications that I use.
+Now that we have the Gnome Extensions installed let's install some Flatpak applications that you might call "Quality of Life" improvements! I listed them in alphabetical order order, not the order that you will use the most!
+
+- [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
+- [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
+- [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
+- [Foliate](CH02-Install-Tools.md/#foliate) - An ebook reader
+- [KolourPaint](CH02-Install-Tools.md/#kolourpaint) - A simple painting program to quickly create raster images.
+- [Meld](CH02-Install-Tools.md/#meld) - A great diffing tool
+- [Pinta](CH02-Install-Tools.md/#pinta) - An image editing, drawing and painting application
+- [Resources](CH02-Install-Tools.md/#resources) - A system resource monitor
+- [Warehouse](CH02-Install-Tools.md/#warehouse) - A tool to manage every aspect of Flatpak applications
 
 ----------------------------------------------------------------
 
@@ -499,6 +533,8 @@ I hovered over one of the large blocks and it told me that is the section of dis
 
 ![screenshot](img/drawio.png)
 
+----------------------------------------------------------------
+
 **Create and share diagrams**
 
 draw.io is the most flexible and privacy-focused of any production grade diagramming tool. Create flowcharts, process diagrams, org charts, UML, ER diagrams, network diagrams and much more.
@@ -525,7 +561,7 @@ When you launch Drawio, these are the choices for getting started:
 
 ![screenshot](img/drawio-1.png)
 
-As you can see, there are a lot of sample files to get you started.
+As you can see, there are a lot of built in templates. You select one of the built-in templates or select `Blank Diagram` to start from scratch.
 
 [The Drawio Project homepage](https://www.drawio.com/)
 
@@ -534,6 +570,8 @@ As you can see, there are a lot of sample files to get you started.
 ### Flatseal
 
 ![screenshot](img/Flatseal.png)
+
+----------------------------------------------------------------
 
 Flatseal is a graphical utility to review and modify permissions from your Flatpak applications. This application allows you to look at all of your installed Flatpak applications and verify their permissions.
 
@@ -551,9 +589,11 @@ Once installed, run `Flatseal` from the terminal using:
 flatpak run com.github.tchx84.Flatseal
 ```
 
-Or by tapping the `Super` key, typing flatseal and clicking on the Flatseal icon.
+Or by tapping the `Super` key, typing `flatseal` and clicking on the Flatseal icon.
 
-You will be able to see all of the flatpak applications that are installed when flatseal opens. From the terminal you can run:
+You will be able to see all of the flatpak applications that are installed when flatseal opens.
+
+#### List flatpaks in terminal
 
 ```bash
 flatpak list --app
@@ -563,7 +603,7 @@ To see the same list of applications. The `--app` limits the output to just appl
 
 #### flatpaks with Instructions
 
-If you want to install the flatpak applications on a different machine, run the following command and then copy the lines with `flatpak install` to the new machine.
+If you want to install the flatpak applications on a different machine, for example a VM, run the following command and then copy the lines with `flatpak install` to the new machine.
 
 ```bash hl_lines='1'
 flatpak list --app | sed -e "s/^[^\t]*//" -e "s/^\t/flatpak install /" -e "s/\t.*$//"
@@ -573,14 +613,15 @@ flatpak install com.github.johnfactotum.Foliate
 flatpak install com.github.tchx84.Flatseal
 flatpak install com.jgraph.drawio.desktop
 flatpak install com.mattjakeman.ExtensionManager
-flatpak install com.usebottles.bottles
 flatpak install fr.rubet.rpn
 flatpak install io.github.cboxdoerfer.FSearch
 flatpak install io.github.flattool.Warehouse
+flatpak install io.gitlab.adhami3310.Impression
 flatpak install net.nokyan.Resources
 flatpak install net.werwolv.ImHex
 flatpak install org.gnome.baobab
 flatpak install org.gnome.meld
+flatpak install org.kde.kolourpaint
 ```
 
 Here is a screenshot of the flatpak applications I have installed:
@@ -589,9 +630,41 @@ Here is a screenshot of the flatpak applications I have installed:
 
 ----------------------------------------------------------------
 
+### Launch flatpaks with a script
+
+If you were wondering why I included the terminal command with each flatpak when they are GUI applications, it's because you might want to create a script and launch several at once. For example, let's say you want to launch `Foliate`, `KolourPaint`, and `Meld` every time you start up your laptop.
+
+First we need to open an editor and create a shell script.
+
+```bash
+#!/bin/zsh
+
+flatpak run com.github.johnfactotum.Foliate
+flatpak run org.kde.kolourpaint
+flatpak run org.gnome.meld
+```
+
+Save the file as `morning.sh`
+
+**Make the file executable**
+
+```bash
+chmod +x morning.sh
+```
+
+**Run the script**
+
+```bash
+./morning.sh
+```
+
+----------------------------------------------------------------
+
 ### Foliate
 
 ![screenshot](img/Foliate.png)
+
+----------------------------------------------------------------
 
 **Read e-books in style**
 
@@ -645,6 +718,8 @@ Foliate has a lot of functionality. So far I have just used it for reading the e
 
 ![screenshot](img/KolourPaint.png)
 
+----------------------------------------------------------------
+
 **Paint Program**
 
 KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks. I use it to add callouts to screenshots.
@@ -685,6 +760,8 @@ Or by tapping the `Super` key, typing `KolourPaint` and clicking on the `KolourP
 ### Meld
 
 ![screenshot](img/Meld.png)
+
+----------------------------------------------------------------
 
 Meld is a flatpak from the Gnome project.
 
@@ -731,6 +808,8 @@ It takes a little bit of time to learn all the features of Meld but is is a grea
 ### Pinta
 
 ![screenshot](img/Pinta.png)
+
+----------------------------------------------------------------
 
 **Edit images and paint digitally**
 
@@ -810,6 +889,8 @@ There is a graphical interface available called KSAR that presents the data in a
 
 ![screenshot](img/Warehouse-Icon.png)
 
+----------------------------------------------------------------
+
 Ok, one more application for managing Flatpaks! Warehouse is relatively new and I had already been using `Gnome Extensions` and `Extension Manager` for flatpaks when I found this application. It can do everything in one place including adding non Flathub.org repositories. I haven't gone down that rabbit hole yet because I am happy spending time in the terminal if I'm not in VS Code.
 
 **Manage all things Flatpak**
@@ -854,16 +935,4 @@ One great feature of `Warehouse` is that you can see how much disk space each ap
 
 ## Wrapping up
 
-We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed:
-
-- [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
-- [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
-- [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
-- [Foliate](CH02-Install-Tools.md/#foliate) - An ebook reader
-- [KolourPaint](CH02-Install-Tools.md/#kolourpaint) - A simple painting program to quickly create raster images.
-- [Meld](CH02-Install-Tools.md/#meld) - A great diffing tool
-- [Pinta](CH02-Install-Tools.md/#pinta) - An image editing, drawing and painting application
-- [Resources](CH02-Install-Tools.md/#resources) - A system resource monitor
-- [Warehouse](CH02-Install-Tools.md/#warehouse) - A tool to manage every aspect of Flatpak applications
-
-With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
+We installed several Gnome extensions that add functionality to the Gnome Desktop. With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
