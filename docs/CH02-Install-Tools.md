@@ -461,46 +461,73 @@ Now when I click on the Systemd-Manager icon the TFTP entry is black
 
 Now that we have the Gnome Extensions installed lets move onto the Flatpak applications that I use.
 
-### Gnome Resources
+----------------------------------------------------------------
 
- ![screenshot](img/resources.png)
+### Disk Usage analyzer
 
-Gnome Resources is similar to the Windows Task Manager. Here is a [link](https://apps.gnome.org/Resources/) to the homepage describing Gnome Resources.
+![screenshot](img/DiskUsage.png)
 
 ----------------------------------------------------------------
 
 **Installation Instructions**
 
 ```bash
-flatpak install flathub net.nokyan.Resources
+flatpak install flathub org.gnome.baobab
 ```
 
-Once installed, run `Resources` from the terminal using:
+Once installed, run  `Flatseal` from the terminal using:
 
 ```bash
-flatpak run net.nokyan.Resources
+flatpak run org.gnome.baobab
 ```
 
-Or by tapping the `Super` key, typing resource and clicking on the Resources icon.
+Or by tapping the `Super` key, typing disk and clicking on the disk icon.
 
-Here is a screenshot of the Processes tab. Just like in the Windows Task Manager, you can right click on a process and get a menu of actions to perform:
+Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:
 
-![screenshot](img/resources-kill.resized.png)
+![screenshot](img/DiskUsage-Graph.resized.png)
 
-Unlike the Windows Task Manager, you have a clean menu on the side where you can select the following resources:
+I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird, I expanded the `.thunderbird` folder and then I could see `sent mail` and other folders. I prompted me to delete some email!
 
-- Apps - the apps that are running
-- Processes - the processes that are running
-- Processor - The CPU AND GPU percentages
-- Memory - The amount of memory applications are using
-- GPU1 - The utilization of GPU1
-- GPU2 - The utilization of GPU2
-- Disk activity - Activity of each internal disk
-- Network - Ethernet utilization
-- WiFI - Utilization of the WiFI adapter
-- Battery - Battery usage and properties
+----------------------------------------------------------------
 
-I think we can agree this is a useful tool!
+![screenshot](img/DiskUsage1.resized.png)
+
+----------------------------------------------------------------
+
+### Draw.io
+
+![screenshot](img/drawio.png)
+
+**Create and share diagrams**
+
+draw.io is the most flexible and privacy-focused of any production grade diagramming tool. Create flowcharts, process diagrams, org charts, UML, ER diagrams, network diagrams and much more.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub com.jgraph.drawio.desktop
+```
+
+Once installed, run  `Drawio` from the terminal using:
+
+```bash
+flatpak run com.jgraph.drawio.desktop
+```
+
+Or by tapping the `Super` key, typing `drawio` and clicking on the `Drawio` icon.
+
+----------------------------------------------------------------
+
+When you launch Drawio, these are the choices for getting started:
+
+![screenshot](img/drawio-1.png)
+
+As you can see, there are a lot of sample files to get you started.
+
+[The Drawio Project homepage](https://www.drawio.com/)
 
 ----------------------------------------------------------------
 
@@ -562,38 +589,6 @@ Here is a screenshot of the flatpak applications I have installed:
 
 ----------------------------------------------------------------
 
-### Gnome Disk Usage analyzer
-
-![screenshot](img/DiskUsage.png)
-
-----------------------------------------------------------------
-
-**Installation Instructions**
-
-```bash
-flatpak install flathub org.gnome.baobab
-```
-
-Once installed, run  `Flatseal` from the terminal using:
-
-```bash
-flatpak run org.gnome.baobab
-```
-
-Or by tapping the `Super` key, typing disk and clicking on the disk icon.
-
-Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:
-
-![screenshot](img/DiskUsage-Graph.resized.png)
-
-I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird, I expanded the `.thunderbird` folder and then I could see `sent mail` and other folders. I prompted me to delete some email!
-
-----------------------------------------------------------------
-
-![screenshot](img/DiskUsage1.resized.png)
-
-----------------------------------------------------------------
-
 ### Foliate
 
 ![screenshot](img/Foliate.png)
@@ -644,6 +639,47 @@ Foliate has a lot of functionality. So far I have just used it for reading the e
 
 ----------------------------------------------------------------
 
+### KolourPaint
+
+![screenshot](img/KolourPaint.png)
+
+**Paint Program**
+
+KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks. I use it to add callouts to screenshots.
+
+Features:
+
+- Support for drawing various shapes
+  - lines
+  - rectangles
+  - rounded rectangles
+  - ovals and polygons
+  - curves
+  - text
+- Color picker
+- Selections
+- Rotation, monochrome and other advanced effects
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub org.kde.kolourpaint
+```
+
+Once installed, run  `KolourPaint` from the terminal using:
+
+```bash
+flatpak run org.kde.kolourpaint
+```
+
+Or by tapping the `Super` key, typing `KolourPaint` and clicking on the `KolourPaint` icon.
+
+[The KolourPaint Handbook](https://docs.kde.org/stable5/en/kolourpaint/kolourpaint/index.html)
+
+----------------------------------------------------------------
+
 ### Meld
 
 ![screenshot](img/Meld.png)
@@ -687,6 +723,84 @@ It takes a little bit of time to learn all the features of Meld but is is a grea
 ----------------------------------------------------------------
 
 ![screenshot](img/Meld1.resized.png)
+
+----------------------------------------------------------------
+
+### Pinta
+
+![screenshot](img/Pinta.png)
+
+**Edit images and paint digitally**
+
+Pinta is a image editing, drawing and painting application with a simple yet powerful interface. Pinta has a wide range of drawing tools, including: freehand, rectangles, circles and lines. It also has over 35 effects to apply to your images, and also has the ability to create unlimited layers to help organize your creativity.
+
+We installed KolourPaint earlier and it works as expected but Pinta has a lot more features if I'm doing more than annotating a screenshot.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub com.github.PintaProject.Pinta
+```
+
+Once installed, run  `Pinta` from the terminal using:
+
+```bash
+flatpak run com.github.PintaProject.Pinta
+```
+
+Or by tapping the `Super` key, typing `Pinta` and clicking on the `Pinta` icon.
+
+----------------------------------------------------------------
+
+### Resources
+
+ ![screenshot](img/resources.png)
+
+Gnome Resources is similar to the Windows Task Manager. Here is a [link](https://apps.gnome.org/Resources/) to the homepage describing Gnome Resources.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub net.nokyan.Resources
+```
+
+Once installed, run `Resources` from the terminal using:
+
+```bash
+flatpak run net.nokyan.Resources
+```
+
+Or by tapping the `Super` key, typing resource and clicking on the Resources icon.
+
+Here is a screenshot of the Processes tab. Just like in the Windows Task Manager, you can right click on a process and get a menu of actions to perform:
+
+![screenshot](img/resources-kill.resized.png)
+
+Unlike the Windows Task Manager, you have a clean menu on the side where you can select the following resources:
+
+- Apps - the apps that are running
+- Processes - the processes that are running
+- Processor - The CPU AND GPU percentages
+- Memory - The amount of memory applications are using
+- GPU1 - The utilization of GPU1
+- GPU2 - The utilization of GPU2
+- Disk activity - Activity of each internal disk
+- Network - Ethernet utilization
+- WiFI - Utilization of the WiFI adapter
+- Battery - Battery usage and properties
+
+#### SAR
+
+Linux has been around for over 30 years and is used on a lot of servers. That means that there are a lot of monitoring tools available. If you want to collect long term data on your laptop or have a server in your home lab you can use System Activity Report (SAR) to collect long term data.
+
+There is a graphical interface available called KSAR that presents the data in a nice GUI. It's beyond the scope of this article to cover SAR/KSAR but here are link to some details blogs:
+
+- [Using sar to Show Current and Past System’s Statistics](https://www.baeldung.com/linux/sar-system-statistics) - Baeldung.com is a great site for indepth Linux sysadmin articles.
+- [KSAR](https://github.com/vlsi/ksar) - KSAR is a Java implementation of the GUI for SAR. I'm not big on Java tools but KSAR seems to be well maintained.
 
 ----------------------------------------------------------------
 
@@ -740,13 +854,14 @@ One great feature of `Warehouse` is that you can see how much disk space each ap
 
 We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed:
 
-- A system resource monitor
-- A tool to manage flatpak security settings
-- A disk Space analyzer
-- An ebook reader
-- A great diffing tool
-- A tool to manage every aspect of Flatpak applications
+- [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
+- [Draw.io](CH02-Install-Tools.md/#drawio)) - A flexible and privacy-focused production grade diagramming tool.
+- [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
+- [Foliate](CH02-Install-Tools.md/#foliate) - An ebook reader
+- [KolourPaint](CH02-Install-Tools.md/#kolourpaint) - A simple painting program to quickly create raster images.
+- [Meld](CH02-Install-Tools.md/#meld) - A great diffing tool
+- [Pinta](CH02-Install-Tools.md/#pinta) - An image editing, drawing and painting application
+- [Resources](CH02-Install-Tools.md/#resources) - A system resource monitor
+- [Warehouse](CH02-Install-Tools.md/#warehouse) - A tool to manage every aspect of Flatpak applications
 
-With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable.
-
-In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
+With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!!
