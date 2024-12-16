@@ -48,9 +48,17 @@ On linux, Applications are commonly referred to as packages. For years Linux dis
 
 ## Snaps vs Flatpak vs Appimage
 
-To work around this problem, AppImage, Snaps and Flatpaks were developed. It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+To work around this problem there are three universal package systems:
 
-Most importantly for us is that the Snap infrastructure was developed by Canonical, the publisher of Ubuntu, so it's built into Ubuntu. But Flatpak was developed for Gnome, KDE and FreeDesktop in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. The Gnome project has several applications for managing the Gnome desktop. I like the ones listed below, especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are very similar to the Windows applications for managing resources and disk usage.
+- Snaps
+- Flatpaks
+- AppImages
+
+ It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+
+Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. Gnome, KDE and FreeDesktop created Flatpak in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
+
+The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed [below](CH02-Install-Tools.md/#gnome-specific), especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage.
 
 We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`.
 
@@ -60,7 +68,7 @@ We will cover terminal tools later. In this section we will learn how to install
 
 I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
 
-The Flatpak store is located [here](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the applications are written by developers that don't get paid.
+Visit the Flatpak store by clicking this link [Flathub](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the developers don't get paid for their time.
 
 ----------------------------------------------------------------
 
