@@ -9,6 +9,7 @@ nav:
   - Usage: Ch01-Using-Ubuntu.md
   - Desktop: CH02-Install-Tools.md
   - Terminal: terminal.md
+  - Log Tools: Log_tools.md
   - SSH: SSH.md
   - KVM: KVM-Bridge.md
   - Add to AD: Join-Ubuntu-24.04-desktop-to-AD.md
