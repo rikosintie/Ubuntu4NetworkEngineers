@@ -179,7 +179,7 @@ To call the alias
 
 I wrote a python script that parses the CX log file into a csv file. The file can then be opened in Excel with each field of the file as a column. That allows you to sort and filter the log file. This is useful for `Root Cause Analysis` documentation purposes if the customer needs it.
 
-### AI
+### AI Analysis
 
 ----------------------------------------------------------------
 
@@ -207,16 +207,13 @@ And  a screenshot of the result file:
 
 ### Execution
 
-Simply grab the CX-Log-Parse.py file from the repository and run:
+Save the code listed below as CX-Log-Parse.py and run:
+
 `CX-Log-Parse.py -f CX-log.txt`
 
 This will create a csv file with the name CX-log.csv.
 
-**CX-Log-Parse**
-
-Or you can copy the code here and save it to a plain text file
-
-```python
+```python title="CX-Log-Parse.py"
 import argparse
 import csv
 import re
