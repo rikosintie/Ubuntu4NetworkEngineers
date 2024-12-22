@@ -1,7 +1,7 @@
 # Display Logs
 
 ----------------------------------------------------------------
-![screenshot](img/Tux-Log.png)
+![screenshot](img/Tux-Log8.png)
 
 ----------------------------------------------------------------
 
@@ -175,9 +175,21 @@ To call the alias
 
 ----------------------------------------------------------------
 
-## Log Parse
+## CX Log Parse
 
 I wrote a python script that parses the CX log file into a csv file. The file can then be opened in Excel with each field of the file as a column. That allows you to sort and filter the log file. This is useful for `Root Cause Analysis` documentation purposes if the customer needs it.
+
+----------------------------------------------------------------
+
+### Filtering
+
+Including `-r` after the `show logging` command outputs the log in reverse order. You can also use the advanced piping features of the CX OS to filter the output. For example:
+
+```bash
+show logging -r | i exceed | e 1/1/32
+```
+
+Will include entries with exceed but exclude entries with 1/1/32.
 
 ### AI Analysis
 
