@@ -2,6 +2,7 @@
 
 ----------------------------------------------------------------
 ![screenshot](img/Tux-Log.png)
+
 ----------------------------------------------------------------
 
 Linux has a rich set of tools available for collecting and reading log files.
@@ -70,7 +71,7 @@ You can see the advantage of having `spacer` put a time stamp and line for each 
 - tspin CX-log.txt --print | grep WARN
 - tspin CX-log.txt --print | grep VSX
 
-**Add on the fly colors**
+**Add "on the fly" colors**
 
 - tspin CX-log.txt --print --words-red LOG_WARN --words-green AMM
 - tspin CX-log.txt --print --words-red LOG_WARN,Partner --words-green AMM
@@ -80,11 +81,6 @@ You can see the advantage of having `spacer` put a time stamp and line for each 
 ![screenshot](img/tspin-word-color.png)
 
 ----------------------------------------------------------------
-
-**Use custom config file**
-
-- tspin --print --config-path ~/.config/tailspin/cx-config.toml CX-log.txt
-- tspin --print --config-path cx-config.toml CX-log.txt
 
 **Add custom word list to color**
 
@@ -124,6 +120,8 @@ words = ['ILPOWER', 'DETECT', 'POWER_GRANTED', 'IEEE_DISCONNECT']
 style = { fg = "magenta", bold = true}
 ```
 
+----------------------------------------------------------------
+
 You can create more `[[keywords]]` entries for other colors.
 
 In the example above I created a directory `~/.config/tailspin/` to save the toml files in.
@@ -132,9 +130,10 @@ In the example above I created a directory `~/.config/tailspin/` to save the tom
 
 The `-p` argument will create parent directories if necessary.
 
-**To use tspin with the custom file:**
+**Use custom config file**
 
-`tspin --print --config-path ~/.config/tailspin/cx-config.toml CX-log.txt`
+- tspin --print --config-path ~/.config/tailspin/cx-config.toml CX-log.txt
+- tspin --print --config-path cx-config.toml CX-log.txt
 
 You could save the toml file in the same directory as the log file and use:
 `tspin --print --config-path cx-config.toml CX-log.txt` but that doesn't scale well. I think it's better to put them in `~/.config/tailspin/` and then create an alias.
