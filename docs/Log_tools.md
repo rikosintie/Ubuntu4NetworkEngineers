@@ -122,13 +122,37 @@ style = { fg = "magenta", bold = true}
 
 ----------------------------------------------------------------
 
-You can create more `[[keywords]]` entries for other colors.
+You can create more `[[keywords]]` entries for other colors. The available colors are:
+
+- default
+- black
+- red
+- green
+- yellow
+- blue
+- magenta
+- cyan
+- white
+- bright_black
+- bright_red
+- bright_green
+- bright_yellow
+- bright_blue
+- bright_magenta
+- bright_cyan
+- bright_white`
+
+----------------------------------------------------------------
+
+**Create a custom theme directory**
 
 In the example above I created a directory `~/.config/tailspin/` to save the toml files in.
 
 `mkdir -p ~/config/tailspin`
 
 The `-p` argument will create parent directories if necessary.
+
+----------------------------------------------------------------
 
 **Use custom config file**
 
@@ -137,6 +161,8 @@ The `-p` argument will create parent directories if necessary.
 
 You could save the toml file in the same directory as the log file and use:
 `tspin --print --config-path cx-config.toml CX-log.txt` but that doesn't scale well. I think it's better to put them in `~/.config/tailspin/` and then create an alias.
+
+----------------------------------------------------------------
 
 **alias example**
 
@@ -155,7 +181,11 @@ I wrote a python script that parses the CX log file into a csv file. The file ca
 
 ### AI
 
-If you have a `Claude` account, you can narrow down the log messages that you think are relevant to the issue and have `Claude` analyze it. You would be surprised how good `Claude` is at log analysis.
+----------------------------------------------------------------
+
+If you have a `Claude` account, you can narrow down the log messages that you think are relevant to the issue using Log Parse and Excel, then have `Claude` analyze it. You would be surprised how good `Claude` is at log file analysis.
+
+----------------------------------------------------------------
 
 ### Rainbow CSV
 
@@ -203,18 +233,19 @@ log_pattern = re.compile(
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--Log_filename", dest="Log_filename")
 args = parser.parse_args()
-Log_filename = args.Log_filename
+Log_filename: str = args.Log_filename
 
 
 if Log_filename is None:
     print("-f Log filename is a required argument")
     sys.exit()
 
-csv_filename = Path(Log_filename).stem + ".csv"
+csv_filename: str = Path(Log_filename).stem + ".csv"
 
 # Get path and add Log Filename to it
 my_dir: Path = Path().resolve()
-Log_file_Exists = my_dir.joinpath(Log_filename)
+
+Log_file_Exists: Path = my_dir.joinpath(Log_filename)
 
 # Open log file and CSV file
 if Log_file_Exists.exists():
