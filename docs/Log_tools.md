@@ -205,11 +205,15 @@ And  a screenshot of the result file:
 
 ----------------------------------------------------------------
 
+You can see how fast that is to parse a huge log file down to just Warnings!
+
+----------------------------------------------------------------
+
 ### Execution
 
 Save the code listed below as CX-Log-Parse.py and run:
 
-`CX-Log-Parse.py -f CX-log.txt`
+`python CX-Log-Parse.py -f CX-log.txt`
 
 This will create a csv file with the name CX-log.csv.
 
@@ -219,8 +223,6 @@ import csv
 import re
 import sys
 from pathlib import Path
-
-# "args": "-s area1 -c cisco -e 1 -l 1",
 
 # Updated regex pattern to account for either a value like "1/1" or "-"
 log_pattern = re.compile(
