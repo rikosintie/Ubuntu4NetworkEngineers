@@ -383,7 +383,7 @@ If you open KDE Connect on the phone but your laptop can't be found:
 
 - check the firewall rules:
 
-```bash hl_lines="1"
+```bash hl_lines="1 8 9 11 12"
 sudo ufw status
 
 Status: active
