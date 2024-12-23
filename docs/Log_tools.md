@@ -15,6 +15,8 @@ Global system activity data, including startup messages are logged to `/var/log/
 
 will display the last 20 log entries. You can change 20 to any value.
 
+This blog is an in depth article on using the built in tools to display Linux logs - [Ultimate Guide to Linux Logging](https://www.loggly.com/ultimate-guide/linux-logging-basics/)
+
 ----------------------------------------------------------------
 
 ## Tailspin
