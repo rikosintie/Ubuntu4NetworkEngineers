@@ -1,11 +1,19 @@
-# Display Logs
+# Working with Logs
 
 ----------------------------------------------------------------
 ![screenshot](img/Tux-Log8.png)
 
 ----------------------------------------------------------------
 
-Linux has a rich set of tools available for collecting and reading log files.
+Linux has a rich set of tools available for collecting and reading log files. The system logs are stored in `/var/log` and you can use `ls -l /var/log` to display the logs.
+
+You will see files with .gz extensions. These are log files that have been archived. The system does not delete the log files that are archived.
+
+Global system activity data, including startup messages are logged to `/var/log/syslog` and `/var/log/messages`. You can use the built-in `tail` command to display the logs.
+
+`tail -20 /var/log/syslog`
+
+will display the last 20 log entries. You can change 20 to any value.
 
 ----------------------------------------------------------------
 
@@ -189,7 +197,7 @@ Including `-r` after the `show logging` command outputs the log in reverse order
 show logging -r | i exceed | e 1/1/32
 ```
 
-Will include entries with exceed but exclude entries with 1/1/32.
+Will include entries with exceed but exclude entries with 1/1/32. If you use a `?` after the pipe symbol `|` CX will show you examples of filtering.
 
 ### AI Analysis
 

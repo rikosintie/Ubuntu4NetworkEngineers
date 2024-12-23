@@ -1,6 +1,6 @@
 # Gnome Desktop Tools
 
-![screenshot](img/Tux-Tools.png)
+![screenshot](img/Tux-Desktop1.png)
 
 ----------------------------------------------------------------
 
