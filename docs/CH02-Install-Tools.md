@@ -313,7 +313,7 @@ Open the Extension Manager flatpak, click the `Browse` tab at the top, then type
 
 #### GSConnect
 
-If you use an Android phone this application is a must! It allows you to send/receive text messages, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.
+If you use an Android phone this application is a must! It allows you to send/receive text messages from your laptop, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.
 
 One nice feature that works on IOS and Android is `find my phone`! I always misplace my phone when working in closets and with GSConnect I can quickly make it ring to locate it.
 
@@ -381,7 +381,7 @@ If you open KDE Connect on the phone but your laptop can't be found:
 
 - check the firewall rules:
 
-```bash
+```bash hl_lines="1"
 sudo ufw status
 
 Status: active
@@ -412,7 +412,7 @@ udp6   0   3584 :::1716   :::*                1000       46961      7665/gjs
 
 - Use `netcat` to verify the laptop can connect to the phone
 
-```bash
+```bash hl_lines="1"
 netcat -z -v 192.168.10.101 1714-1764
 netcat: connect to 192.168.10.101 port 1714 (tcp) failed: Connection refused
 netcat: connect to 192.168.10.101 port 1715 (tcp) failed: Connection refused
@@ -423,7 +423,7 @@ netcat: connect to 192.168.10.101 port 1717 (tcp) failed: Connection refused
 ----------------------------------------------------------------
 
 !!! note
-    You will see a lot of "netcat: connect to 192.168.10.101 port 1764 (tcp) failed: Connection refused" messages. You only need 1 `succeeded!` message.
+    You will see a lot of `netcat: connect to 192.168.10.101 port 1764 (tcp) failed: Connection refused` messages. You only need 1 `succeeded!` message.
 
 This [site](https://userbase.kde.org/KDEConnect) has a lot of detail on KDE connect.
 
