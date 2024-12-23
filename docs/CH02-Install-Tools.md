@@ -402,10 +402,10 @@ fe00::/7 546/udp           ALLOW       fe00::/7 547/udp
 
 ----------------------------------------------------------------
 
-- Check that the process is listening on the network:
+- Check that the process is listening on the network. Use the port number from above
 
 ```bash hl_lines="1"
-sudo netstat -tunelp | grep -i 1716
+sudo netstat -tunelp | grep -i gjs
 tcp6   0      0 :::1716   :::*    LISTEN      1000       46960      7665/gjs
 udp6   0   3584 :::1716   :::*                1000       46961      7665/gjs
 ```
