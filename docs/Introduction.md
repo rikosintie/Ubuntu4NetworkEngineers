@@ -13,6 +13,7 @@
 - Ubuntu has [many flavors](https://wiki.ubuntu.com/UbuntuFlavors) and [dozens of specialized derivatives.](https://wiki.ubuntu.com/DerivativeTeam/Derivatives)
 - Ubuntu will run on Intel/AMD x64 processors and many ARM processors such as Raspberry Pi, Odroid, etc.
 - Ubuntu works great on VMware Workstation/Fusion, KVM, VirtualBox, and Gnome Boxes
+- You can run almost all of the tools and applications in this guide on Windows 11 using WSL. There are tons of blogs and YouTube videos on installing WLS2 and Ubuntu.
 
 ----------------------------------------------------------------
 
@@ -60,6 +61,16 @@ Here is an image of the Microsoft 365 launcher in Linux:
 ----------------------------------------------------------------
 
 I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an application called Draw.io that doesn't need an Internet connection to work.
+
+----------------------------------------------------------------
+
+### LibreOffice
+
+I loved Microsoft Office up until Office 2003 but after that not so much! But I love LibreOffice. I create a lot of Avery labels for switch boxes and the mail merge between different Libre Writer and Libre Calc is much easier than in Word/Excel!
+
+LibreOffice is a Free open Source Software (FOSS) project and is included in the full install of Ubuntu.
+
+----------------------------------------------------------------
 
 ### As a Network Engineer it Rocks
 
