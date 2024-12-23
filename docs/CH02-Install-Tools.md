@@ -375,6 +375,8 @@ ufw allow 1716:1764/tcp
 ufw allow 1716:1764/udp
 ```
 
+----------------------------------------------------------------
+
 #### Troubleshooting
 
 If you open KDE Connect on the phone but your laptop can't be found:
