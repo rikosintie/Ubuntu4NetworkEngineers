@@ -104,7 +104,7 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
 #### Gnome Core Apps
 
- Several of the the 28 `Core Apps` are installed by Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful. To open them, tap the super key and type the name of the application you want to open.
+ Several of the the 28 `Core Apps` are installed by Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful in day to day work.
 
 ----------------------------------------------------------------
 
@@ -278,7 +278,7 @@ Open the Extension Manager flatpak, click the `Browse` tab at the top, then type
 
 Since my laptop is at customer locations most of the time, I love this extension. It allows me to put my name and phone number on the lock screen like macOS!
 
-!!! Note
+!!! note
     The shortcut keys to lock the screen are `super+l`. That's a lowercase `el`.
 
 Here are the settings I use. The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu.
