@@ -56,7 +56,7 @@ To work around this problem three universal packaging systems were created:
 
  It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them 😁. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
- !!! note
+!!! note
     It was announced in December 2024 that Flatpak would become a [standalone organization](https://www.gamingonlinux.com/2024/12/flathub-to-become-a-self-sustaining-entity-and-theyre-looking-to-hire-someone-to-help/)!
 
 Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. Gnome, KDE and FreeDesktop created Flatpak in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
@@ -325,6 +325,14 @@ One nice feature that works on IOS and Android is `find my phone`! I always misp
 The :material-dots-vertical: icon in `Gnome Extensions` exposes the settings menu:
 
 ![screenshot](img/GSConnect1.png)
+
+----------------------------------------------------------------
+
+You can also click on the `Quick Settings` at the top right of the screen and select `GS Connect` to open mobile settings.
+
+----------------------------------------------------------------
+
+![screenshot](img/GSConnect4.png)
 
 ----------------------------------------------------------------
 
