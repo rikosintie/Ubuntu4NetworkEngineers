@@ -48,13 +48,16 @@ On linux, Applications are commonly referred to as packages. For years Linux dis
 
 ## Snaps vs Flatpak vs Appimage
 
-To work around this problem there are three universal package systems:
+To work around this problem three universal packaging systems were created:
 
 - Snaps
 - Flatpaks
 - AppImages
 
- It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+ It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them 😁. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
+
+ !!! Note
+    It was announced in December 2024 that Flatpak would become a [standalone organization](https://www.gamingonlinux.com/2024/12/flathub-to-become-a-self-sustaining-entity-and-theyre-looking-to-hire-someone-to-help/)!
 
 Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. Gnome, KDE and FreeDesktop created Flatpak in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
 
@@ -68,7 +71,7 @@ We will cover terminal tools later. In this section we will learn how to install
 
 I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
 
-Visit the Flatpak store by clicking this link [Flathub](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the developers don't get paid for their time.
+Visit the Flatpak store by clicking this link: [Flathub](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the developers don't get paid for their time.
 
 ----------------------------------------------------------------
 
@@ -88,7 +91,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 - sudo apt install flatpak - This uses the `Aptitude` package manager to actually install flatpak.
 - flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
 
-!!! Note
+!!! Warning
     Unfortunately you do have to restart after running the commands. There is no "Reboot Now" message but flatpak will not be available until you reboot.
 
 Once your system restarts we are going to install a few flatpak applications for managing the system and making life better!.
@@ -103,18 +106,40 @@ The Gnome project maintains a [site](https://apps.gnome.org/) that contains Flat
 
  Several of the the 28 `Core Apps` are installed by Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful. To open them, tap the super key and type the name of the application you want to open.
 
-- The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents.
-- The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view the six different faces of `Fira Code` using the Fonts application.
-- The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on Apple IOS.
-- The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application.
+----------------------------------------------------------------
+
+![screenshot](img/Characters.png)
+
+The `Characters` application contains smiley faces, symbols, math characters, etc. that you can insert into documents. To open, tap the `Super` key, type `characters` and press enter.
+
+----------------------------------------------------------------
+![screenshot](img/Fonts.png)
+
+The `Fonts` application lists every font available on your system. For coding, I installed `Fira Code` and I can view the six different faces of `Fira Code` using the Fonts application. To open, tap the `Super` key, type `fonts` and press enter.
+
+----------------------------------------------------------------
+![screenshot](img/Clocks.png)
+
+The `Clocks` application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on Apple IOS. To open, tap the `Super` key, type `clocks` and press enter.
+
+----------------------------------------------------------------
+![screenshot](img/SystemMonitorIcon.png)
+
+The `System Monitor` application is similar to the `Gnome Resources` application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application. To open, tap the `Super` key, type `system monitor` and press enter.
+
+----------------------------------------------------------------
 
 ![screenshot](img/SystemMonitor.resized.png)
 
 ----------------------------------------------------------------
 
-- The `Logs` application allows you to quickly look at system logs. It's a super fast way to look for issues. If the log has a URL for support, it will be shown.
+![screenshot](img/Logs.png)
 
-![screenshot](img/logs.png)
+The `Logs` application allows you to quickly look at system logs. It's a super fast way to look for issues. If the log has a URL for support, it will be shown.
+
+----------------------------------------------------------------
+
+![screenshot](img/logs1.png)
 
 ----------------------------------------------------------------
 
@@ -321,11 +346,13 @@ From the GSConnect Settings dialog you will see all devices that have ever conne
 
 ![screenshot](img/GSConnect2.resized.png)
 
+----------------------------------------------------------------
+
 I enabled the `GSConnect remains active when Gnome Shell is locked` slider so that the phone remains connected when I lock the desktop.
 
 ----------------------------------------------------------------
 
-----------------------------------------------------------------phone can connect to GSConnect. Open the terminal and paste the following commands in:
+Add the following rules to UFW so the phone can connect to GSConnect. Open the terminal and paste the following commands in:
 
 ```bash hl_lines='1 2 3'
 sudo ufw allow 1716:1764/tcp
@@ -337,6 +364,58 @@ Added user rules (see 'ufw status' for running firewall):
 ufw allow 1716:1764/tcp
 ufw allow 1716:1764/udp
 ```
+
+#### Troubleshooting
+
+If you open KDE Connect on the phone but your laptop can't be found:
+
+- check the firewall rules:
+
+```bash
+sudo ufw status
+
+Status: active
+
+To                         Action      From
+--                         ------      ----
+514/udp                    ALLOW       Anywhere
+1716:1764/tcp              ALLOW       Anywhere
+1716:1764/udp              ALLOW       Anywhere
+514/udp (v6)               ALLOW       Anywhere (v6)
+1716:1764/tcp (v6)         ALLOW       Anywhere (v6)
+1716:1764/udp (v6)         ALLOW       Anywhere (v6)
+22/tcp (v6)                ALLOW       Anywhere (v6)              # Open ssh tcp port 22
+fe00::/7 546/udp           ALLOW       fe00::/7 547/udp
+```
+
+----------------------------------------------------------------
+
+- Check that the process is listening on the network:
+
+```bash hl_lines="1"
+sudo netstat -tunelp | grep -i 1716
+tcp6   0      0 :::1716   :::*    LISTEN      1000       46960      7665/gjs
+udp6   0   3584 :::1716   :::*                1000       46961      7665/gjs
+```
+
+----------------------------------------------------------------
+
+- Use `netcat` to verify the laptop can connect to the phone
+
+```bash
+netcat -z -v 192.168.10.101 1714-1764
+netcat: connect to 192.168.10.101 port 1714 (tcp) failed: Connection refused
+netcat: connect to 192.168.10.101 port 1715 (tcp) failed: Connection refused
+Connection to 192.168.10.101 1716 port [tcp/*] succeeded!
+netcat: connect to 192.168.10.101 port 1717 (tcp) failed: Connection refused
+```
+
+----------------------------------------------------------------
+
+!!! note
+    You will see a lot of "netcat: connect to 192.168.10.101 port 1764 (tcp) failed: Connection refused" messages. You only need 1 `succeeded!` message.
+
+This [site](https://userbase.kde.org/KDEConnect) has a lot of detail on KDE connect.
 
 ----------------------------------------------------------------
 
