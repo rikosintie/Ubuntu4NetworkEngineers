@@ -6,10 +6,10 @@
 
 :arrow_forward: KEY TAKEAWAYS
 
-- We will install `Terminator` which has tabs, logging, and several available plugins.
 - We will install z shell (ZSH) and set it as the default shell.
 - Then we will install [Oh-My-ZSH](https://ohmyz.sh/) and configure it for awsomeness.
 - We will enable syntax highlighting, autosuggestions, History-substring-search, git integration and docker aliases!!
+- We will install `Terminator` which has tabs, logging, and several available plugins.
 - You will be the envy of your network engineering friends.
 
 ----------------------------------------------------------------
@@ -27,7 +27,7 @@ A google search for `Linux shells` will return many articles on shells.
 
 But I like zsh so that's the one I will cover. It is the standard on recent versions of macOS which is a plus for me since I use Linux and macOS depending on what I am doing.
 
-The reason I switched to zsh is that there is an add on called “Oh My ZSH” which is an unbelievably active community that creates themes and plugins for zsh.
+There is a great add-on to zsh called “Oh My ZSH” which is an unbelievably active community that creates themes and plugins for zsh. We will install it after we install zsh.
 
 Some zsh Features
 
@@ -51,7 +51,7 @@ sudo apt install zsh
 
 **Check the version**
 
-```bash
+```bash hl_lines="1"
 zsh --version`
 zsh 5.9 (x86_64-ubuntu-linux-gnu)
 ```
@@ -60,7 +60,7 @@ This is the current version as of December 2024
 
 You can check your current shell using the echo command:
 
-```bash
+```bash hl_lines="1"
 echo $SHELL
 /bin/bash
 ```
@@ -68,11 +68,14 @@ echo $SHELL
 You can see that the current shell is bash
 
 Run this to make zsh the default
-`chsh -s $(which zsh)`
+
+```bash
+chsh -s $(which zsh)`
+```
 
 Verify that zsh is the new shell
 
-```bash
+```bash  hl_lines="1"
 grep zsh /etc/passwd
 mhubbard:x:1000:1000:Michael Hubbard,,,:/home/mhubbard:/usr/bin/zsh
 ```
@@ -114,11 +117,13 @@ Choose 0 to just create the .zshrc file and exit because we are going to install
 
 ### Install Oh My ZSH
 
-The zsh project uses a `shell script` to install Oh My ZSH' on your system. In general, you should never copy a shell script from Internet and run it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. I have it here for convenience but you are free to to to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
-`sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+```bash
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
-When the install shell starts you will see:
+When the install shell script starts you will see:
 
 ```text
 Found ~/.zshrc. Backing up to /home/mhubbard/.zshrc.pre-oh-my-zsh
@@ -169,19 +174,22 @@ plugins=(
 Copy each of these lines and paste it into the terminal:
 
 `git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions`
+
 `git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions`
+
 `git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search`
+
 `git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases`
 
 **Plug in References**
 YOu can read the documentation for the plug-ins on their github repository
 
-[git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git) - The git plugin provides many aliases and a few useful functions.
-[zsh completions](https://github.com/zsh-users/zsh-completions) - Additional completion definitions for Zsh
-[zsh autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Fish-like fast/unobtrusive autosuggestions for zsh. It suggests commands as you type based on history and completions.
-[History Substring Search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/history-substring-search) -This is a clean-room implementation of the Fish shell's history search feature, where you can type in any part of any command from history and then press chosen keys, such as the UP and DOWN arrows, to cycle through matches.
-[colored man pages](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages) - This plugin adds colors to man pages.
-[zsh docker aliases](https://github.com/akarzim/zsh-docker-aliases) - Defines Docker aliases and functions.
+- [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git) - The git plugin provides many aliases and a few useful functions.
+- [zsh completions](https://github.com/zsh-users/zsh-completions) - Additional completion definitions for Zsh
+- [zsh autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Fish-like fast/unobtrusive autosuggestions for zsh. It suggests commands as you type based on history and completions.
+- [History Substring Search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/history-substring-search) -This is a clean-room implementation of the Fish shell's history search feature, where you can type in any part of any command from history and then press chosen keys, such as the UP and DOWN arrows, to cycle through matches.
+- [colored man pages](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages) - This plugin adds colors to man pages.
+- [zsh docker aliases](https://github.com/akarzim/zsh-docker-aliases) - Defines Docker aliases and functions.
 
 ----------------------------------------------------------------
 
