@@ -191,8 +191,56 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases
 ```
 
-**Plug in References**
-YOu can read the documentation for the plug-ins on their github repository
+#### Update zsh
+
+Anytime that you make changes to `~/.zshrc` you have to reload the configuration. You do this at a terminal using `exec zsh`. If there are no errors, all that you will see in the terminal is a new line.
+
+#### Set the default editor
+
+Especially in the beginning you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows:
+
+----------------------------------------------------------------
+
+```bash
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='nano'
+ else
+   export EDITOR='subl'
+ fi
+```
+
+----------------------------------------------------------------
+
+ This will make `nano` the default editor when you open a file over ssh and `sublime text` the default editor locally. If you haven't installed `sublime text` use the editor of your choice.
+
+Then add the following to ~/.zshrc:
+
+----------------------------------------------------------------
+
+```bash
+# open ~/.zshrc in using the default editor specified in $EDITOR
+alias ec="$EDITOR $HOME/.zshrc"
+# rerun ~/.zshrc after making changes
+alias sc="exec zsh"
+```
+
+----------------------------------------------------------------
+
+Close and reload the configuration using `exec zsh`
+
+The code that we added has two aliases:
+
+- ec - Open ~/.zshrc in the default editor
+- sc - reload the zsh configuration using `exec zsh`
+
+These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+
+----------------------------------------------------------------
+
+**Plug-ins References**
+
+You can read the documentation for the plug-ins on their github repository
 
 - [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git) - The git plugin provides many aliases and a few useful functions.
 - [zsh completions](https://github.com/zsh-users/zsh-completions) - Additional completion definitions for Zsh
@@ -228,6 +276,8 @@ echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 ```
 
 These commands install the `z-sy-h` package then echo the source command into the .zshrc file.
+
+Now enter `sc` to reload zsh.
 
 For reference, the last part of the echo command is a variable. We can echo it to the terminal using:
 
@@ -303,7 +353,8 @@ Download the latest `.deb` package from the release page [bat](https://github.c
 
 `sudo dpkg -i bat-musl_0.24.0_amd64.deb`  # adapt version number and architecture
 
-Important: If you install bat this way, please note that the executable may be installed as batcat instead of bat (due to a name clash with another package).
+!!! attention
+     If you install bat this way, please note that the executable may be installed as batcat instead of bat (due to a name clash with another package). I have not ever had this happen.
 
 If this happens, you can set up a bat -> batcat symlink or alias to prevent any issues that may come up because of this and to be consistent with other distributions:
 
