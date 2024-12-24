@@ -111,13 +111,15 @@ You can:
      the file by hand, if so desired).
 
 --- Type one of the keys in parentheses ---
-
-Choose 0 to just create the .zshrc file and exit because we are going to install a tool called “Oh My ZSH” to customize the shell.
 ```
+
+**Choose 0 to just create the .zshrc file and exit because we are going to install a tool called “Oh My ZSH” to customize the shell.**
 
 ### Install Oh My ZSH
 
-The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script.
+
+I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
 ```bash
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -173,13 +175,21 @@ plugins=(
 
 Copy each of these lines and paste it into the terminal:
 
-`git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions`
+```bash
+git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+```
 
-`git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions`
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
 
-`git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search`
+```bash
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
 
-`git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases`
+```bash
+git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases
+```
 
 **Plug in References**
 YOu can read the documentation for the plug-ins on their github repository
@@ -201,18 +211,18 @@ The zsh-syntax-highlighting package ( z-sy-h) is a **MUST**. It does a lot but t
 
 #### Installation
 
-In zhs prior to 5.8 I used the zsh plugin to install z-sy-h. The install page now recommends installing z-sy-h manually instead of using the `oh-my-zsh` plugin. The installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
+In zsh prior to 5.8 I used the zsh plugin to install z-sy-h. The install page now recommends installing z-sy-h manually instead of using the `oh-my-zsh` plugin. The installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
 Luckily, z-sy-h is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure
 
-```bash
+```bash hl_lines="1"
 sudo apt search zsh-syntax-highlighting
 zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
 ```
 
 So now we know the package is named `zsh-syntax-highlighting` so we can install is using:
 
-```bash
+```bash hl_lines="1 2"
 sudo apt install zsh-syntax-highlighting
 echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
@@ -221,7 +231,7 @@ These commands install the `z-sy-h` package then echo the source command into th
 
 For reference, the last part of the echo command is a variable. We can echo it to the terminal using:
 
-```bash
+```bash hl_lines="1"
 echo ${ZDOTDIR:-$HOME}/.zshrc
 /home/mhubbard/.zshrc
 ```
@@ -237,7 +247,8 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 
 ### Themes
 
-Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it change the ZSH-THEME line to:
+Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, Open the .zshrc file using:
+`nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` and change the ZSH-THEME line to:
 ZSH_THEME="duellj"
 
 I also like “amuse”. It’s similar to duellj but doesn’t put the username/machine name in the terminal. Since I’m on my personal laptop I don’t need that information. To use “amuse”
@@ -256,7 +267,8 @@ This is a great upgrade to the built in cat command. The automatic paging, synta
 
 There are a lot of other features to bat. You should review the official Git repository at [bat](https://github.com/sharkdp/bat)
 
-Syntax highlighting
+**Syntax highlighting**
+
 bat supports syntax highlighting for a large number of programming and markup languages:
 
 ----------------------------------------------------------------
@@ -265,7 +277,8 @@ bat supports syntax highlighting for a large number of programming and markup la
 
 ----------------------------------------------------------------
 
-Git integration
+**Git integration**
+
 bat communicates with git to show modifications with respect to the index (see left side bar):
 
 ----------------------------------------------------------------
@@ -274,8 +287,9 @@ bat communicates with git to show modifications with respect to the index (see l
 
 ----------------------------------------------------------------
 
-Show non-printable characters
-You can use the -A/--show-all option to show and highlight non-printable characters:
+**Show non-printable characters**
+
+You can use the -A/--show-all option to show and highlight non-printable characters. There are some malicious text files that embed non-printing characters. Use this method so see them.
 
 ----------------------------------------------------------------
 
