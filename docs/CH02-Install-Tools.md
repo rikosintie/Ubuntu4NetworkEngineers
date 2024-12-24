@@ -402,7 +402,7 @@ fe00::/7 546/udp           ALLOW       fe00::/7 547/udp
 
 ----------------------------------------------------------------
 
-- Check that the process is listening on the network. Use the port number from above
+- Check that the process is listening on the network.
 
 ```bash hl_lines="1"
 sudo netstat -tunelp | grep -i gjs
@@ -421,6 +421,8 @@ netcat: connect to 192.168.10.101 port 1715 (tcp) failed: Connection refused
 Connection to 192.168.10.101 1716 port [tcp/*] succeeded!
 netcat: connect to 192.168.10.101 port 1717 (tcp) failed: Connection refused
 ```
+
+If you ran the `netstat` command above you can just the active port for `netcat` instead of the range `1714-1764`.
 
 ----------------------------------------------------------------
 
