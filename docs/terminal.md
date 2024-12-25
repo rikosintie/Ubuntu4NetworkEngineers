@@ -168,7 +168,7 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 • Get stickers, shirts, coffee mugs and other swag: https://shop.planetargon.com/collections/oh-my-zsh
 ```
 
-**Add a theme, some plugins and aliases**
+#### Install  plugins
 
 Open the .zshrc file using:
 `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc`
@@ -266,13 +266,13 @@ You can read the documentation for the plug-ins on their github repository
 
 ----------------------------------------------------------------
 
-### zsh-syntax-highlighting
+#### install zsh-syntax-highlighting
 
 The zsh-syntax-highlighting package ( z-sy-h) is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
 
 ----------------------------------------------------------------
 
-#### Installation
+**Installation Instructions**
 
 In zsh prior to 5.8 I used the zsh plugin to install z-sy-h. The install page now recommends installing z-sy-h manually instead of using the `oh-my-zsh` plugin. The installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
@@ -401,6 +401,8 @@ The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` 
 As you can see, you have some homework to do if you want to be outstanding at the terminal.
 
 ----------------------------------------------------------------
+
+#### zsh_stats
 
 zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create and alias and save some typing.
 
