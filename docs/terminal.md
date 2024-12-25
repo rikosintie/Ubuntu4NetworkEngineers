@@ -541,7 +541,7 @@ I haven't used this script but it has a lot of positive comments in the repo.
 
 Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py`.
 
-```python line_num
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
