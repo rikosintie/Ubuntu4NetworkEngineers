@@ -206,6 +206,9 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases
 ```
 
+!!! note
+    If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard.
+
 #### Update zsh
 
 Anytime that you make changes to `~/.zshrc` you have to reload the configuration. You do this at a terminal using `exec zsh`. If there are no errors, all that you will see in the terminal is a new line.
@@ -322,6 +325,13 @@ ZSH_THEME="amuse"
 
 You can put a `#` symbol in front of the theme line to comment it out. I leave both themes in my `.zshrc` file and then switch back and forth as needed.
 
+Here is the prompt with `amuse` as the theme:
+
+```bash
+~/.config/terminator ⌚ 22:17:17
+$
+```
+
 You can find all of the themes here: [zsh themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
 
 Don't forget to update `.zshrc` with `sc` in a terminal.
@@ -390,11 +400,9 @@ diff='diff --color'
 
 This is just a small sample of the available aliases. The ones related to changing directories are super useful. You need to spend some time building the muscle memory to use them.
 
-The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
-
-The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
-
-The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the ouput into "human readable' format and the `--exclude=squashfs'` hides squash files.
+- The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
+- The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
+- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the ouput into "human readable' format and the `--exclude=squashfs'` hides squash files.
 
 As you can see, you have some homework to do if you want to be outstanding at the terminal.
 
@@ -402,7 +410,7 @@ As you can see, you have some homework to do if you want to be outstanding at th
 
 #### zsh_stats
 
-zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create and alias and save some typing.
+zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create an alias and save some typing.
 
 ```bash hl_lines="1"
 zsh_stats
