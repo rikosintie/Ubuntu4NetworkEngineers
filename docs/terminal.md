@@ -207,7 +207,7 @@ git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom
 ```
 
 !!! note
-    If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard.
+    If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard. This works everywhere in this document.
 
 #### Update zsh
 
