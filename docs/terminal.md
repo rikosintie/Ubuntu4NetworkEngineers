@@ -311,6 +311,15 @@ Showing that my `.zshrc` is located at `/home/mhubbard/` or the root of my home 
 
 The line in the .zshrc file they are referring to is `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` . I make it the last line to the `.zshrc` file.
 
+**Example of syntax highlighting**
+
+----------------------------------------------------------------
+![screenshot](img/syntax.png)
+
+----------------------------------------------------------------
+
+![screenshot](img/syntax1.png)
+
 ----------------------------------------------------------------
 
 #### zsh Themes
