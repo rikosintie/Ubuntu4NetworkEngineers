@@ -58,11 +58,24 @@ zsh 5.9 (x86_64-ubuntu-linux-gnu)
 
 This is the current version as of December 2024
 
+zsh uses a hidden file named `~/.zshrc as it's configuration file. BASH uses ~/.bashrc as its configuration file. You can list the files using:
+
+```bash
+ls -l ~/.*rc
+```
+
 You can check your current shell using the echo command:
 
 ```bash hl_lines="1"
 echo $SHELL
-/bin/bash
+/usr/bin/bash
+```
+
+or
+
+```bash hl_lines="1"
+echo $0
+/usr/bin/bash
 ```
 
 You can see that the current shell is bash
@@ -113,11 +126,13 @@ You can:
 --- Type one of the keys in parentheses ---
 ```
 
-**Choose 0 to just create the .zshrc file and exit because we are going to install a tool called “Oh My ZSH” to customize the shell.**
+**Choose 0 to just create the .zshrc file and exit**
+
+We are going to install a tool called “Oh My ZSH” to customize the shell.
 
 ### Install Oh My ZSH
 
-The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it wihtout carefully review it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
 
 I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
@@ -197,7 +212,7 @@ Anytime that you make changes to `~/.zshrc` you have to reload the configuration
 
 #### Set the default editor
 
-Especially in the beginning you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows:
+Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows:
 
 ----------------------------------------------------------------
 
@@ -268,7 +283,7 @@ sudo apt search zsh-syntax-highlighting
 zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
 ```
 
-So now we know the package is named `zsh-syntax-highlighting` so we can install is using:
+So now we know the package is named `zsh-syntax-highlighting`, we can install it using:
 
 ```bash hl_lines="1 2"
 sudo apt install zsh-syntax-highlighting
@@ -295,7 +310,7 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 
 ----------------------------------------------------------------
 
-### Themes
+#### zsh Themes
 
 Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, Open the .zshrc file using:
 `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` and change the ZSH-THEME line to:
@@ -309,7 +324,181 @@ You can put a `#` symbol in front of the theme line to comment it out. I leave b
 
 You can find all of the themes here: [zsh themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
 
+Don't forget to update `.zshrc` with `sc` in a terminal.
+
 ----------------------------------------------------------------
+
+#### Auto Correction
+
+Open the `.zshrc` file and search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+
+```bash
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+```
+
+Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
+
+```bash
+sl -l
+zsh: correct 'sl' to 'ls' [nyae]? y
+total 12K
+-rw-r--r-- 1 mhubbard mhubbard 6.9K 2024-12-24 17:41 config
+drwxrwxr-x 3 mhubbard mhubbard 4.0K 2024-12-18 15:40 plugins/
+```
+
+You can press:
+
+- y - for yes
+- n - for no
+- a - abort
+- e - edit
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+#### Aliases
+
+zsh includes a lot of aliases and we added more with the `git` and `docker aliases` plug-ins. To see what aliases are available, open a terminal, `ctrl+alt+t` and type:
+
+```bash hl_lines="1"
+alias
+-='cd -'
+..='cd ..'
+...='cd ../../../'
+....='cd ../../../../'
+.....=../../../..
+......=../../../../..
+1='cd -1'
+2='cd -2'
+3='cd -3'
+4='cd -4'
+5='cd -5'
+6='cd -6'
+7='cd -7'
+8='cd -8'
+9='cd -9'
+_='sudo '
+afind='ack -il'
+back='cd $OLDPWD'
+bd='. bd -si'
+cat=bat
+chmod='chmod -c'
+cp='cp -iv'
+df='df -h --exclude=squashfs'
+diff='diff --color'
+```
+
+This is just a small sample of the available aliases. The ones related to changing directories are super useful. You need to spend some time building the muscle memory to use them.
+
+The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
+
+The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
+
+The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the ouput into "human readable' format and the `--exclude=squashfs'` hides squash files.
+
+As you can see, you have some homework to do if you want to be outstanding at the terminal.
+
+----------------------------------------------------------------
+
+zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create and alias and save some typing.
+
+```bash
+zsh_stats
+     1    1026  16.7374%   sudo
+     2    312   5.08972%   cd
+     3    262   4.27406%   nmap
+     4    259   4.22512%   docker
+     5    215   3.50734%   git
+     6    182   2.969%     grep
+     7    176   2.87113%   ping
+     8    156   2.54486%   ssh
+     9    144   2.3491%    ls
+    10    143   2.33279%   mw-manuf
+    11    130   2.12072%   ip
+    12    121   1.9739%    cat
+    13    102   1.66395%   l
+    14    88    1.43556%   history
+    15    87    1.41925%   nmcli
+    16    86    1.40294%   man
+    17    82    1.33768%   python3
+    18    66    1.07667%   python
+    19    60    0.978793%  exa
+    20    59    0.96248%   j
+```
+
+If you are still using `BASH` you can use this to generate the list:
+
+`history 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10`
+
+----------------------------------------------------------------
+
+### Useful shell scripts
+
+You can include shell scripts in `.zshrc`. Here are two that I find very useful.
+
+#### Path
+
+This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc and paste this script in. Then in the terminal use the `sc` alias we created to reload zsh.
+
+```zsh
+# "path" shows current path, one element per line.
+# If an argument is supplied, grep for it.
+path() {
+    test -n "$1" && {
+        echo $PATH | perl -p -e "s/:/\n/g;" | grep -i "$1"
+    } || {
+        echo $PATH | perl -p -e "s/:/\n/g;"
+    }
+}
+```
+
+Now when we type `path` into the terminal we get:
+
+```bash
+ path
+/home/linuxbrew/.linuxbrew/bin
+/home/linuxbrew/.linuxbrew/sbin
+/home/mhubbard/.local/bin
+/home/mhubbard/.cargo/bin
+/usr/local/sbin
+/usr/local/bin
+/usr/sbin
+/usr/bin
+/sbin
+/bin
+/snap/bin
+/home/linuxbrew/.linuxbrew/opt/fzf/bin
+```
+
+#### Make dir
+
+This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc and paste this script in. Then in the terminal use the `sc` alias we created to reload zsh.
+
+```bash
+# Create a new directory and enter it
+mkd() {
+    mkdir -p "$@"
+    cd "$@" || exit
+}
+```
+
+Now type:
+
+```bash
+pwd
+/home/mhubbard
+
+~ ⌚ 20:09:57
+$ mkd 01_test/test
+mkdir: created directory '01_test'
+mkdir: created directory '01_test/test'
+
+~/01_test/test ⌚ 20:10:12
+```
+
+You can see that it created the parent directory, then the `01_test` directory.
 
 ### BAT
 
@@ -353,8 +542,8 @@ Download the latest `.deb` package from the release page [bat](https://github.c
 
 `sudo dpkg -i bat-musl_0.24.0_amd64.deb`  # adapt version number and architecture
 
-!!! attention
-     If you install bat this way, please note that the executable may be installed as batcat instead of bat (due to a name clash with another package). I have not ever had this happen.
+!!! warning
+     If you install bat this way, please note that the executable may be installed as batcat instead of bat (due to a name clash with another package). Although I have not ever had this happen.
 
 If this happens, you can set up a bat -> batcat symlink or alias to prevent any issues that may come up because of this and to be consistent with other distributions:
 
@@ -507,3 +696,13 @@ https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274
 ### zsh References
 
 [Install zsh in Ubuntu](https://www.tecmint.com/install-zsh-in-ubuntu/) - The Tecmint site has a tutorial for installing zsh
+
+### Additional tools
+
+[Optimize your shell experience](https://thoughtbot.com/blog/optimize-your-shell-experience) - Great tips on optimizing your terminal work flow.
+[How to See Beautiful Git Project Stats in Your Terminal](https://www.howtogeek.com/how-to-see-beautiful-git-project-stats-in-your-terminal/)
+[The Linux .bashrc File: What It Is, Plus 6 Things You Can Do With It](https://www.howtogeek.com/the-linux-bashrc-file-explained/)
+[Hack The Box themes](https://github.com/botnetbuddies/hackthebox-themes)
+[https://blog.confirm.ch/zsh-tips-auto-completion-correction/](zsh tips: Auto completion & correction)
+[git-delta](https://github.com/dandavison/delta) - A syntax highlighting tool for git diffs
+[Modern replacements for Unix tools](https://github.com/ibraheemdev/modern-unix) - a git repo full of modern replacement tools
