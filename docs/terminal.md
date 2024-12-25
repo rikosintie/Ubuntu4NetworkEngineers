@@ -356,8 +356,6 @@ You can press:
 
 ----------------------------------------------------------------
 
-----------------------------------------------------------------
-
 #### Aliases
 
 zsh includes a lot of aliases and we added more with the `git` and `docker aliases` plug-ins. To see what aliases are available, open a terminal, `ctrl+alt+t` and type:
@@ -501,6 +499,37 @@ mkdir: created directory '01_test/test'
 ```
 
 You can see that it created the parent directory, then the `01_test` directory.
+
+----------------------------------------------------------------
+
+### zsh custom dir
+
+The `.zshrc` file is primary configuration file for zsh. But if you start creating a lot of aliases, shell scripts, etc. it will become too large to easily manage.
+
+To solve this problem, oh-my-zsh provides a custom folder, `~/.oh-my-zsh/custom` where you can create an additional configuration file. The file has to have `zsh` as the extension. I use `my-aliases.zsh` for mine. Having your custom aliases and shell scripts in a separate file makes locating your aliases easier.
+
+I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- tab` and get a list of all of my aliases:
+
+```bash
+mw-exa2 -a
+mw-bauh              mw-ipen8             mw-nmshprofiles      mw-ssh-stop
+mw-bright            mw-kbd               mw-nmshrun           mw-start
+mw-chrome            mw-manuf             mw-nmshstate         mw-status
+mw-cpu10             mw-mem10             mw-nmshwifi          mw-stop
+mw-cpu5              mw-mem5              mw-nmshwifi-pw       mw-tftp
+mw-dang              mw-mount             mw-nmwifi            mw-tftp-conf
+mw-exa1              mw-nmcli-examples    mw-ntp               mw-tftp-fw
+mw-exa2              mw-nmcli-vlan-dhcp   mw-ports             mw-tftp-stop
+mw-extip             mw-nmcli-vlan-mac    mw-reload            mw-umount
+mw-interface         mw-nmconnectprof     mw-restart           mw-vmnet
+mw-interface-vlan    mw-nmlldp            mw-running_services  mw-vmnet-all
+mw-ipen0             mw-nmsh-ap           mw-sensors           mw-vmware
+mw-ipen6             mw-nmshipv4          mw-ssh
+```
+
+Without that trick I would never be able to remember all the aliases that I have created. I will include `my-aliases.zsh` at the end of this chapter.
+
+----------------------------------------------------------------
 
 ### BAT
 
@@ -687,13 +716,59 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 ```
 
-### Plugins
-
-There are many plug-ins for zsh
+----------------------------------------------------------------
 
 #### Copy BASH history
 
-https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274
+If you have been using bash for a while before installing `zsh` you will want to copy the history over to `zsh`.
+
+I haven't used this script but it has a lot of positive comments in the repo.
+
+**Create the script**
+
+Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py`.
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This is how I used it:
+# $ cat ~/.bash_history | python bash-to-zsh-hist.py >> ~/.zsh_history
+
+import sys
+import time
+
+
+def main():
+    timestamp = None
+    for line in sys.stdin.readlines():
+        line = line.rstrip('\n')
+        if line.startswith('#') and timestamp is None:
+            t = line[1:]
+            if t.isdigit():
+                timestamp = t
+                continue
+        else:
+            sys.stdout.write(': %s:0;%s\n' % (timestamp or time.time(), line))
+            timestamp = None
+
+
+if __name__ == '__main__':
+    main()
+```
+
+**Run the script**
+
+`cd ~/ && cp .bash_history .bash_history.bak && cat ~/.bash_history | python3 bash-to-zsh-hist.py >> ~/.zsh_history`
+
+!!! note
+    if zsh_history format is
+    : 1670471184:0;cat ~/.zsh_history
+    need use int(time.time()) at line 21 of the script
+
+Here is the repository:
+
+[bash-to-zsh-hist.py](https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274)
 
 ### zsh References
 
