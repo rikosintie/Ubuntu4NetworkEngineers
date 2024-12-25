@@ -531,6 +531,60 @@ Without that trick I would never be able to remember all the aliases that I have
 
 ----------------------------------------------------------------
 
+#### Copy BASH history
+
+If you have been using bash for a while before installing `zsh` you will want to copy the history over to `zsh`.
+
+I haven't used this script but it has a lot of positive comments in the repo.
+
+**Create the script**
+
+Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py`.
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This is how I used it:
+# $ cat ~/.bash_history | python bash-to-zsh-hist.py >> ~/.zsh_history
+
+import sys
+import time
+
+
+def main():
+    timestamp = None
+    for line in sys.stdin.readlines():
+        line = line.rstrip('\n')
+        if line.startswith('#') and timestamp is None:
+            t = line[1:]
+            if t.isdigit():
+                timestamp = t
+                continue
+        else:
+            sys.stdout.write(': %s:0;%s\n' % (timestamp or time.time(), line))
+            timestamp = None
+
+
+if __name__ == '__main__':
+    main()
+```
+
+**Run the script**
+
+`cd ~/ && cp .bash_history .bash_history.bak && cat ~/.bash_history | python3 bash-to-zsh-hist.py >> ~/.zsh_history`
+
+!!! note
+    if zsh_history format is
+    : 1670471184:0;cat ~/.zsh_history
+    need use int(time.time()) at line 21 of the script
+
+Here is the repository:
+
+[bash-to-zsh-hist.py](https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274)
+
+----------------------------------------------------------------
+
 ### BAT
 
 This is a great upgrade to the built in cat command. The automatic paging, syntax highlighting, Git integration and the ability to show non-printable characters makes replacing cat with bat a no brainer.
@@ -587,7 +641,7 @@ If you want to use an alias instead of a symlink, add
 
 to `~/.zshrc`
 
-#### Hubbard's .zshrc file
+### Hubbard's .zshrc file
 
 ```zsh title="Hubbard's .zshrc file"
 # If you come from bash you might have to change your $PATH.
@@ -632,7 +686,7 @@ ZSH_THEME="amuse"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
@@ -717,58 +771,6 @@ eval "$(fzf --zsh)"
 ```
 
 ----------------------------------------------------------------
-
-#### Copy BASH history
-
-If you have been using bash for a while before installing `zsh` you will want to copy the history over to `zsh`.
-
-I haven't used this script but it has a lot of positive comments in the repo.
-
-**Create the script**
-
-Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py`.
-
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# This is how I used it:
-# $ cat ~/.bash_history | python bash-to-zsh-hist.py >> ~/.zsh_history
-
-import sys
-import time
-
-
-def main():
-    timestamp = None
-    for line in sys.stdin.readlines():
-        line = line.rstrip('\n')
-        if line.startswith('#') and timestamp is None:
-            t = line[1:]
-            if t.isdigit():
-                timestamp = t
-                continue
-        else:
-            sys.stdout.write(': %s:0;%s\n' % (timestamp or time.time(), line))
-            timestamp = None
-
-
-if __name__ == '__main__':
-    main()
-```
-
-**Run the script**
-
-`cd ~/ && cp .bash_history .bash_history.bak && cat ~/.bash_history | python3 bash-to-zsh-hist.py >> ~/.zsh_history`
-
-!!! note
-    if zsh_history format is
-    : 1670471184:0;cat ~/.zsh_history
-    need use int(time.time()) at line 21 of the script
-
-Here is the repository:
-
-[bash-to-zsh-hist.py](https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274)
 
 ### zsh References
 
