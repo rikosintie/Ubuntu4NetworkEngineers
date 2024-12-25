@@ -59,9 +59,9 @@ To work around this problem three universal packaging systems were created:
 !!! note
     It was announced in December 2024 that Flatpak will become a [standalone organization](https://www.gamingonlinux.com/2024/12/flathub-to-become-a-self-sustaining-entity-and-theyre-looking-to-hire-someone-to-help/)! I hope that this will increase developer interest in Flatpak.
 
-Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. Gnome, KDE and FreeDesktop created Flatpak in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
+ Gnome, KDE and FreeDesktop created the Flatpak organization in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
 
-The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed [below](CH02-Install-Tools.md/#gnome-specific), especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage.
+The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed [below](CH02-Install-Tools.md/#gnome-specific), especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage. You can use terminal tools like `htop` and `du` for viewing resources and disk usage but when you first start using Ubuntu the GUI tools will be more comfortable.
 
 We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`.
 
