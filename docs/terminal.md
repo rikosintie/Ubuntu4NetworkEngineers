@@ -404,7 +404,7 @@ As you can see, you have some homework to do if you want to be outstanding at th
 
 zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create and alias and save some typing.
 
-```bash
+```bash hl_lines="1"
 zsh_stats
      1    1026  16.7374%   sudo
      2    312   5.08972%   cd
@@ -456,7 +456,7 @@ path() {
 
 Now when we type `path` into the terminal we get:
 
-```bash
+```bash hl_lines="1"
  path
 /home/linuxbrew/.linuxbrew/bin
 /home/linuxbrew/.linuxbrew/sbin
@@ -486,7 +486,7 @@ mkd() {
 
 Now type:
 
-```bash
+```bash hl_lines="1 5"
 pwd
 /home/mhubbard
 
