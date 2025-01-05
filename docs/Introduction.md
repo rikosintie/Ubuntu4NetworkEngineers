@@ -32,11 +32,7 @@ Any technical user running Microsoft Windows 10/11 who wants to try Linux! I use
 Once I started working with Python and studying for the Cisco NetDevOps certification, it became clear that Linux is a better choice for a technical user, whether they are a network engineer, administrator or developer. Tools like nmap work better under Linux ([raw socket support](https://antonio-cooler.gitbook.io/coolervoid-tavern/port-knocking-from-the-scratch)), you have access to sophisticated [terminal emulators](https://itsfoss.com/linux-terminal-emulators/) like Terminator, Alacritty, Tilix, and different shells (what most people call "the Terminal"). This guide will show you how to switch the shell from BASH to ZSH in a later chapter.
 
 - **Network Engineers** can use this guide to get started with Linux and then to customize their daily driver to fit the unique needs of a network engineer.
-<<<<<<< HEAD
-- **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. This guide discusses these tools in [Working in the Terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/docs/terminal.md).
-=======
-- **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. This guide discusses these tools in [Working in the Terminal](/docs/terminal.md).
->>>>>>> 502a44b8825b98a1a7be066bff7527e654253ee9
+- **Network Administrators** will find Unix tools like grep, sed, awk, and arp-scan useful in their day to day operation. This guide discusses these tools in [Working in the Terminal](https://github.com/rikosintie/Ubuntu4NetworkEngineers/blob/main/docs/terminal.md).
 - **Security Personnel** will find a plethora of open source tools available for Linux. Many of these tools are discussed in the DNS chapter and in the networking tools chapter.
 - **A Curious student** who wants to learn about Linux, Open Source, and NetDevOps.
 
