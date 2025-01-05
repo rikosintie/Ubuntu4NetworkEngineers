@@ -131,7 +131,14 @@ Cisco and Juniper both have certifications for NetDevOps. They both have a subst
 
 ## Linux Certifications
 
-The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. Linux Essentials is a good place to start. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on its site.
+The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. Linux Essentials is a good place to start. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on its site. If you attend one of the many Linux expos around the country, the LPI may be there and have the exams half off.
+
+**Linux Events**
+
+- [Southern California Linux Expo](https://www.socallinuxexpo.org/scale/22x) - The largest event in the US. It's held in early March in. Pasadena, California
+- [Linux Fest NorthWest](https://www.linuxfestnorthwest.org/) - Held in April at the Bellingham, Washington Technical College
+- [Southeast Linux Fest](https://southeastlinuxfest.org/) - It's held in June in Charlotte, North Carolina.
+- [Fosdem](https://fosdem.org/2025/) - Held in April in Brussels.
 
 ----------------------------------------------------------------
 
