@@ -60,7 +60,7 @@ Here is an image of the Microsoft 365 launcher in Linux:
 
 ----------------------------------------------------------------
 
-I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an application called Draw.io that doesn't need an Internet connection to work.
+I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an Flatpak application called [Draw.io](/docs/CH02-Install-Tools.md#drawio) that doesn't need an Internet connection to work.
 
 ----------------------------------------------------------------
 
@@ -86,7 +86,11 @@ Here is an image from the Cisco DevNet Associate course. You can see the emphasi
 
 ## Open source software and the community
 
-Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions. Ubuntu is [Open source software](https://opensource.org/osd/), meaning that the source code is available on the Canonical website. If you are coming from Microsoft Windows it's hard to wrap your mind around that! You will hear Open source software called Free, Open Source Software (FOSS) or Libre Software. In this case the "free" refers freedom, not zero cost.
+Ubuntu is a Linux distribution published by Canonical in the UK. There are both desktop and server versions available on the [Canonical site](https://ubuntu.com/download). If you are using VMware ESXi in your home lab, I recommend downloading Ubuntu server and spinning up a VM. It's free and the best way to learn is to get some hands on time with it. I have Ubuntu server 24.04 running on ESXi and have various networking tools installed.
+
+If you have VMware workstation, Virtualbox, or Gnome Boxes running on your laptop, you can download/install Ubuntu Desktop and test it out for free.
+
+Ubuntu is [Open source software](https://opensource.org/osd/), meaning that the source code is available on the Canonical website. This concept might be difficult to understand if you're used to proprietary software like Microsoft Windows! You will hear Open source software called 'Free, Open Source Software' (FOSS) or Libre Software. In this case the 'free' refers to freedom, not zero cost. Some open source projects offer support agreements or other services that require payment.
 
 What I love about Ubuntu is the "Open Source Software" community. It is a large community of developers, users, and engineers who love creating software, hardware, and sharing it. Some examples of Open Source Software include:
 
@@ -110,15 +114,15 @@ Cisco values the open source community as an essential resource and partner in i
 
 Open source is changing the technology industry and Cisco is a dedicated partner in that innovation. Cisco has been participating in open source development for nearly 3 decades, including founding projects like OpenDaylight, FD.io, VPP, SNAS, and OpenH264, and contributing to projects like OPNFV, Kubernetes, OpenStack, Ansible, Chef, Puppet, Maven, and countless more.
 
-There are pages and pages of links to the Open Source software that is used in Cisco products.
+Cisco uses many open-source tools, with extensive documentation available at the link above.
 
-Why am I bringing this up? Because when I started using Linux I just saw it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, etc. runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
+Why am I bringing this up? Because when I started using Linux I just saw it as a tool. But now that I am a few years in, I see that it is the foundation of modern society. Almost every switch, router, firewall, public web server, surveillance camera, and IoT device runs on Linux and uses Open Source software. Once you start using Open Source software you really feel like part of the community.
 
 ----------------------------------------------------------------
 
 ## NetDevOps Certifications
 
-Cisco and Juniper both have certifications for NetDevOps. They both have a substantial amount of free training material available. I have a repository with information on each program. If you are interested in working on either certification you can find the repositories here:
+Cisco and Juniper both have certifications for NetDevOps. They both have a substantial amount of free training material available. I have a repository with information on each program. If you are interested in working on either certification, the repositories can be found here:
 
 - [Cisco DevNetAssoc](https://github.com/rikosintie/DevNetAssoc)
 - [Juniper DevOps](https://github.com/rikosintie/Juniper-DevOps)
@@ -127,7 +131,7 @@ Cisco and Juniper both have certifications for NetDevOps. They both have a subst
 
 ## Linux Certifications
 
-The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. The Linux Essentials is a good one to start with. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on its site.
+The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several different certifications if you are interested. Linux Essentials is a good place to start. It is more about the Open Source philosophy and the history of Linux than a deep technical certification. LPI has free certification materials on its site.
 
 ----------------------------------------------------------------
 
@@ -135,12 +139,11 @@ The [Linux Professional Institute](https://www.lpi.org/) (LPI) offers several di
 
 This document is meant to get you up to speed with Ubuntu quickly. The first question is should I just spin up a virtual machine or use bare metal? I used Linux for a few years as a VM before I bought dedicated hardware.
 
-The advantage of using a VM is that if you damage it or decide for any reason it’s not the right distribution you can just delete it and try another one. The drawback to a VM is that the hypervisor hides the hardware so you don’t get the experience of installing, configuring, and maintaining Linux.
+The advantage of using a VM is that if you damage it or decide for any reason it’s not the right distribution you can just delete it and try another one. A drawback of using a VM is that you will have to manually map usb devices from the host to the VM. This isn't a big deal, it just makes troubleshooting USB devices a bit more complicated.
 
 My suggestion, if you have never touched Linux, is to install Ubuntu as a VM and get some experience with it. You won’t have to spend any money, Ubuntu is free, although I usually donate $10 when I download it to install on a fresh machine, and you can run any of the tools in this book.
 
-I have Ubuntu running on a System76 Gazelle from 2016 and a Dell G5 5587 laptop from 2018. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. The
-VM can do just about anything the bare metal can do, but when I would get stuck on something I would just shut it down and go back to Windows instead of figuring it out. Running on bare metal removed the temptation to do that!
+I have Ubuntu running on a System76 Gazelle from 2016 and a Dell G5 5587 laptop from 2018. I did this because I wanted to get my Linux certifications and I felt that I needed to be running Linux on my daily driver to learn. Using a VM can perform almost anything the bare metal can. However, when I encountered an issue,  I often just shut it down and returned to Windows rather than solving it. Running on bare metal removed the temptation to do that!
 
 There are a lot of good tutorials on installing Ubuntu available on the Internet, so I am not going to cover it here. It is actually very easy, pretty much click, click, next, reboot! This Youtube video [How to Install Ubuntu 24.04 Desktop: Complete Beginner's Guide](https://www.youtube.com/watch?v=zE7OYNkuQ1w) is a great guide to installing Ubuntu 24.04.
 
