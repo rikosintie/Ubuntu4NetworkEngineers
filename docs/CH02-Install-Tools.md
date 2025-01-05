@@ -30,6 +30,10 @@ Ubuntu Desktop comes installed with a slightly modified version of the GNOME Des
 - In addition to Ubuntu desktop wallpapers, the default theme is Yaru and the default font is Ubuntu.
 - Minimize and maximize buttons are included on window title bars.
 
+**Gnome News**
+
+The Gnome project maintains a site called [This Week in Gnome](https://thisweek.gnome.org) where they post links to short articles on what changed in the current week. I don't remember to look at it every week, but it's worth going to once in a while to see what has changed.
+
 ### Getting Help
 
 You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you are new to Ubuntu, I highly recommend that you review it.
