@@ -66,9 +66,9 @@ I don't have a license for Visio, I use the web based tool [Excalidraw](excalidr
 
 ### LibreOffice
 
-If you prefer a real application, LibreOffice is better than Microsoft office in my opinion. I have had zero issues sharing LibreOffice documents with Microsoft office users. I loved Microsoft Office up until Office 2003 but after that not so much! I can say that I love LibreOffice! I create a lot of Avery labels for switch boxes and the mail merge between different Libre Writer and Libre Calc is much easier than in Word/Excel!
+If you prefer a real application, LibreOffice is better than Microsoft office in my opinion. I have had zero issues sharing LibreOffice documents with Microsoft Office users. I loved Microsoft Office up until Office 2003, but not as much after that! I can say that I love LibreOffice! I create a lot of Avery labels for switch boxes and the mail merge between different LibreWriter and LibreCalc is much easier than in Word/Excel!
 
-LibreOffice is a Free open Source Software (FOSS) project and is included in the full install of Ubuntu. I have met a few of the LibreOffice team at the Southern California Linux Expo and they are a great group of Geeks! The project releases updates to LibreOffice on a regular basis.
+LibreOffice is a Free open source Software (FOSS) project and is included in the full install of Ubuntu. I have met a few of the LibreOffice team at the Southern California Linux Expo and they are a great group of Geeks! The project releases updates to LibreOffice on a regular basis.
 
 ----------------------------------------------------------------
 
