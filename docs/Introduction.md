@@ -44,13 +44,13 @@ This guide is written assuming that you have skills in MS Windows, Putty, Networ
 
 I helped a college student who was studying data science switch to Ubuntu recently. Our conversations had all been over text. I had the chance to meet him in person a month or so later and I asked him if he stuck with Ubuntu. His response was an enthusiastic Yes!
 
-I have been using Linux for quite a while, so his next comment caught me off guard. He said, "I love how there are no ads and nothing pops up in the start menu." There were more comments about how "clean" the Ubuntu interface is. I didn't realize how bad Windows 10/11 home edition is with the constant ads and pushing MS software.
+I have been using Linux for quite a while, so his next comment caught me off guard. He said, "I love how there are no ads and nothing pops up in the start menu." There were more comments about how "clean" the Ubuntu interface is. I hadn't realized how intrusive ads are on the Windows 10/11 home edition.
 
 ### But I need Microsoft office
 
-In the Linux community there is a joke that "Microsoft :heart: Linux". Back in the 1990s Steve Balmer said "Linux is a cancer that attaches itself in an intellectual property sense to everything it touches." Now Microsoft supports Linux with the WSL in Windows, Linux servers in Azure and other ways.
+There's a joke in the Linux community that "Microsoft :heart: Linux". Back in the 1990s Steve Balmer said "Linux is a cancer that attaches itself in an intellectual property sense to everything it touches." Now Microsoft supports Linux with the WSL in Windows, Linux servers in Azure and other ways.
 
-With Microsoft 365 it's not a problem to use Teams, Outlook, PowerPoint, Word, and Excel. All of the Microsoft Applications run in a browser. I use Edge when I’m using Microsoft applications, but they also work in Chrome. For my needs they are great. If you prefer a real application, Libre Office is better than Microsoft office in my opinion. I have had zero issue sharing Libre Office documents with Microsoft office users.
+With Microsoft 365 it's not a problem to use Teams, Outlook, PowerPoint, Word, and Excel. All of the Microsoft Applications run in a browser. I use Edge when I’m using Microsoft applications, but they also work in Chrome. For my needs they are great. If you prefer a real application, LibreOffice is better than Microsoft office in my opinion. I have had zero issues sharing LibreOffice documents with Microsoft office users.
 
 Here is an image of the Microsoft 365 launcher in Linux:
 
