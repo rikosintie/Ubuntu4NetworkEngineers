@@ -235,7 +235,6 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Removable Drive Menu](https://extensions.gnome.org/extension/7/removable-drive-menu/) - A status menu for accessing and unmounting removable devices.
-- [Snap Manager lite](https://github.com/fthx/snap-manager-lite) - Popup menu in the top bar to easily manage usual snap tasks (list, changes, refresh, remove, install...)
 - [Systemd Manager](https://github.com/hardpixel/systemd-manager) - Systemd Manager is a Gnome Shell Extension which allows you to start/stop systemd services via a menu in the status area in the top panel. You can preselect which services should be shown in the extension preferences dialog.
 
 !!! Tip
@@ -253,7 +252,6 @@ Systemd Manager
 Removable Drive Menu
 Clipboard Indicator
 GSConnect
-Snap Manager Lite
 Ubuntu AppIndicators
 Ubuntu Dock
 Desktop Icons NG (DING)
@@ -450,17 +448,6 @@ Open the Extension Manager flatpak, click the `Browse` tab at the top, then type
 Now, any time a flash drive is installed, the Removable Drive icon will be in the status menu. Simply click the icon, then select the drive to eject!
 
 ![screenshot](img/Removable-Drive1.png)
-
-----------------------------------------------------------------
-
-#### Snap Manager Lite
-
-This extension allows you to install and manage snaps:
-
-![screenshot](img/SnapManagerLite1.png)
-
-!!! Warning
-    For some reason `Snap Manager Lite` is not available for Gnome 46/Ubuntu 24.04. It is available for 22.04, 23.10, 24.10.
 
 ----------------------------------------------------------------
 
