@@ -80,10 +80,16 @@ echo $0
 
 You can see that the current shell is bash
 
+You can display all installed shells using:
+
+```bash
+cat /etc/shells
+```
+
 Run this to make zsh the default
 
 ```bash
-chsh -s $(which zsh)`
+chsh -s $(which zsh)
 ```
 
 Verify that zsh is the new shell
@@ -97,6 +103,8 @@ The file `/etc/passwd` contains the individual user settings. You can see that m
 
 !!! note
     You must log out and back in to make zsh the active shell. I usually reboot at this point instead using `sudo reboot now`
+
+Here is a [link](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/) to a good article on changing shells.
 
 ### Configure zsh
 
@@ -544,7 +552,7 @@ mw-ipen0             mw-nmsh-ap           mw-sensors           mw-vmware
 mw-ipen6             mw-nmshipv4          mw-ssh
 ```
 
-Without that trick I would never be able to remember all the aliases that I have created. I will include `my-aliases.zsh` at the end of this chapter.
+Without that trick I would never be able to remember all the aliases that I have created. I will include `my-aliases.zsh` at the end of this chapter. You can press `tab` to scroll through the aliases.
 
 ----------------------------------------------------------------
 
@@ -639,6 +647,11 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 ----------------------------------------------------------------
 
 **Installation Instructions**
+
+!!! note
+    I now install `bat` with homebrew instead of apt using `brew install bat`. The Homebrew package is coved in another chapter.
+
+----------------------------------------------------------------
 
 Download the latest `.deb` package from the release page [bat](https://github.com/sharkdp/bat/releases) and install it via:
 
@@ -796,9 +809,12 @@ eval "$(fzf --zsh)"
 ### Additional tools
 
 - [Optimize your shell experience](https://thoughtbot.com/blog/optimize-your-shell-experience) - Great tips on optimizing your terminal work flow.
+- [What's involved in getting a "modern" terminal setup?](https://jvns.ca/blog/2025/01/11/getting-a-modern-terminal-setup)
 - [How to See Beautiful Git Project Stats in Your Terminal](https://www.howtogeek.com/how-to-see-beautiful-git-project-stats-in-your-terminal/)
 - [The Linux .bashrc File: What It Is, Plus 6 Things You Can Do With It](https://www.howtogeek.com/the-linux-bashrc-file-explained/)
 - [Hack The Box themes](https://github.com/botnetbuddies/hackthebox-themes)
 [https://blog.confirm.ch/zsh-tips-auto-completion-correction/](zsh tips: Auto completion & correction)
 - [git-delta](https://github.com/dandavison/delta) - A syntax highlighting tool for git diffs
 - [Modern replacements for Unix tools](https://github.com/ibraheemdev/modern-unix) - a git repo full of modern replacement tools
+- [A list of new-ish terminal tools](https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/)
+- [Micro Text Editor](https://micro-editor.github.io/) - a modern and intuitive terminal-based text editor
