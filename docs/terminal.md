@@ -251,8 +251,7 @@ alias ec="$EDITOR $HOME/.zshrc"
 alias sc="exec zsh"
 ```
 
-----------------------------------------------------------------
-
+----------------------------------------------- uses: actions/cache@v2
 Close and reload the configuration using `exec zsh`
 
 The code that we added has two aliases:
