@@ -27,11 +27,262 @@ Secure Shell (SSH) has always been an open source project. It was originally rel
 
 OpenSSH was released in 1999 by the [OpenBSD](https://en.wikipedia.org/wiki/OpenBSD) project. Most network devices supports SSH V1 and V2. V1 has been deprecated and V2 was released in 2006. On network devices if you do a `show ip ssh` command you might see `SSH Enabled - version 1.99` which means both V1 and V2 are enabled. What you want to see is `SSH Enabled - version 2.0` meaning V1 is disabled.
 
-### What Cryptographic Algorithms Should I use
+The open source community for ssh and ssl are moving rapidly to drop support for legacy ciphers.
+
+!!! Warning
+    Ubuntu 25.04 includes openSSH 9.9p1 which dropped all support for ssh V1! Any device that uses ssh-dss for the Host Key Algorithm will not connect
+
+I upgraded to Ubuntu 25.04 on my laptop because I wanted some features in Gnome 48. The openSSH 9.9p1 update turns out a problem for older network devices like an HPE Procurve 2920, a Cisco IOS-XE device running 3.6.7 or older or a Ubiquiti M5 NanoStation. The reason is they are using ssh-dss for the Host Key Algorithm. This was part of the ssh V1 spec so it is gone.
+
+I tried to recompile openSSH using flags but they were serious and there isn't a way to add ssh-dss back. This means that you cannot open a terminal and ssh to an older network device.
+
+### Work Around for ssh-dss
+
+- You can install putty using `sudo snap install putty` since putty brings legacy crypto with it.
+- You can spin up a virtual machine of Ubuntu 24.04 using KVM.
+
+I installed Putty but then realized that I use netmiko and other tools so I had to install a VM. I will glad when ancient network equipment is gone. Just last week (June 2025) a friend texted me that he was at a customer with a working Cisco 4500 running CatOS and Cisco 2926 switches. Gemini couldn't figure out how old these devices were!
+
+### Verifying ssh ciphers
+
+From a terminal you can use:
+
+- ssh -V - Display openSSH version
+- ssh -Q HostKeyAlgorithms - Display the Host Key Algorithms supported
+- ssh -Q MACs - Display the Message Authentication Code algorithms supported
+- ssh -Q KexAlgorithms - Display the Key Exchange Algorithms supported.
+
+I created the following alias since I was checking often and on several machines:
+
+```bash
+alias mw-ssh='ssh -V && echo "" && echo HostKeyAlgorithms && ssh -Q HostKeyAlgorithms && echo "" && echo MACs && ssh -Q MACs && echo "" && echo KEXAlgorithms && ssh -Q KexAlgorithms'
+```
+
+I preface my custom aliases with "mw" so that I can type `mw-` and hit tab to display them.
+
+This is the output on Ubuntu 25.04
+
+```bash
+mw-ssh
+OpenSSH_9.9p1 Ubuntu-3ubuntu3.1, OpenSSL 3.4.1 11 Feb 2025
+
+HostKeyAlgorithms
+ssh-ed25519
+ssh-ed25519-cert-v01@openssh.com
+sk-ssh-ed25519@openssh.com
+sk-ssh-ed25519-cert-v01@openssh.com
+ecdsa-sha2-nistp256
+ecdsa-sha2-nistp256-cert-v01@openssh.com
+ecdsa-sha2-nistp384
+ecdsa-sha2-nistp384-cert-v01@openssh.com
+ecdsa-sha2-nistp521
+ecdsa-sha2-nistp521-cert-v01@openssh.com
+sk-ecdsa-sha2-nistp256@openssh.com
+sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
+webauthn-sk-ecdsa-sha2-nistp256@openssh.com
+ssh-rsa
+ssh-rsa-cert-v01@openssh.com
+rsa-sha2-256
+rsa-sha2-256-cert-v01@openssh.com
+rsa-sha2-512
+rsa-sha2-512-cert-v01@openssh.com
+
+MACs
+hmac-sha1
+hmac-sha1-96
+hmac-sha2-256
+hmac-sha2-512
+hmac-md5
+hmac-md5-96
+umac-64@openssh.com
+umac-128@openssh.com
+hmac-sha1-etm@openssh.com
+hmac-sha1-96-etm@openssh.com
+hmac-sha2-256-etm@openssh.com
+hmac-sha2-512-etm@openssh.com
+hmac-md5-etm@openssh.com
+hmac-md5-96-etm@openssh.com
+umac-64-etm@openssh.com
+umac-128-etm@openssh.com
+
+KEXAlgorithms
+diffie-hellman-group1-sha1
+diffie-hellman-group14-sha1
+diffie-hellman-group14-sha256
+diffie-hellman-group16-sha512
+diffie-hellman-group18-sha512
+diffie-hellman-group-exchange-sha1
+diffie-hellman-group-exchange-sha256
+ecdh-sha2-nistp256
+ecdh-sha2-nistp384
+ecdh-sha2-nistp521
+curve25519-sha256
+curve25519-sha256@libssh.org
+sntrup761x25519-sha512
+sntrup761x25519-sha512@openssh.com
+mlkem768x25519-sha256
+```
+
+Notice there are no ssh-dss ciphers
+
+This is the output on Ubuntu 24.04. You can see ssh-dss on lines 18-19.
+
+```bash linenums="1" hl_lines="18-19"
+mw-ssh
+OpenSSH_9.6p1 Ubuntu-3ubuntu13.12, OpenSSL 3.0.13 30 Jan 2024
+
+HostKeyAlgorithms
+ssh-ed25519
+ssh-ed25519-cert-v01@openssh.com
+sk-ssh-ed25519@openssh.com
+sk-ssh-ed25519-cert-v01@openssh.com
+ecdsa-sha2-nistp256
+ecdsa-sha2-nistp256-cert-v01@openssh.com
+ecdsa-sha2-nistp384
+ecdsa-sha2-nistp384-cert-v01@openssh.com
+ecdsa-sha2-nistp521
+ecdsa-sha2-nistp521-cert-v01@openssh.com
+sk-ecdsa-sha2-nistp256@openssh.com
+sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
+webauthn-sk-ecdsa-sha2-nistp256@openssh.com
+ssh-dss
+ssh-dss-cert-v01@openssh.com
+ssh-rsa
+ssh-rsa-cert-v01@openssh.com
+rsa-sha2-256
+rsa-sha2-256-cert-v01@openssh.com
+rsa-sha2-512
+rsa-sha2-512-cert-v01@openssh.com
+
+MACs
+hmac-sha1
+hmac-sha1-96
+hmac-sha2-256
+hmac-sha2-512
+hmac-md5
+hmac-md5-96
+umac-64@openssh.com
+umac-128@openssh.com
+hmac-sha1-etm@openssh.com
+hmac-sha1-96-etm@openssh.com
+hmac-sha2-256-etm@openssh.com
+hmac-sha2-512-etm@openssh.com
+hmac-md5-etm@openssh.com
+hmac-md5-96-etm@openssh.com
+umac-64-etm@openssh.com
+umac-128-etm@openssh.com
+
+KEXAlgorithms
+diffie-hellman-group1-sha1
+diffie-hellman-group14-sha1
+diffie-hellman-group14-sha256
+diffie-hellman-group16-sha512
+diffie-hellman-group18-sha512
+diffie-hellman-group-exchange-sha1
+diffie-hellman-group-exchange-sha256
+ecdh-sha2-nistp256
+ecdh-sha2-nistp384
+ecdh-sha2-nistp521
+curve25519-sha256
+curve25519-sha256@libssh.org
+sntrup761x25519-sha512@openssh.com
+```
+
+### Locating devices with ssh-dss Host Key Algorithms
+
+You can use nmap to quickly scan devices and find those with ssh-dss ciphers.
+
+`nmap -sV -p 22 -oN ssh-dss.nmap --script ssh2-enum-algos 192.168.10.50-254`
+
+The -oN ssh-dss creates a `.nmap` file.
+
+Here is the output from the HPE 2920 in my garage:
+
+```bash linenums="1" hl_lines="13"
+Nmap scan report for 2920-Garage.pu.pri (192.168.10.52)
+Host is up (0.0069s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     Mocana NanoSSH 6.3 (protocol 2.0)
+| ssh2-enum-algos:
+|   kex_algorithms: (4)
+|       ecdh-sha2-nistp521
+|       ecdh-sha2-nistp384
+|       ecdh-sha2-nistp256
+|       diffie-hellman-group14-sha1
+|   server_host_key_algorithms: (1)
+|       ssh-dss
+|   encryption_algorithms: (8)
+|       aes256-ctr
+|       aes256-cbc
+|       rijndael-cbc@lysator.liu.se
+|       aes192-ctr
+|       aes192-cbc
+|       aes128-ctr
+|       aes128-cbc
+|       3des-cbc
+|   mac_algorithms: (4)
+|       hmac-sha1-96
+|       hmac-md5
+|       hmac-sha1
+|       hmac-md5-96
+|   compression_algorithms: (1)
+|_      none
+```
+
+Since we created the nmap file we can use:
+
+`grep -i '192.168|dss' ssh-dss.nmap` to quickly find all devices.
+
+Here is a sample output:
+
+```bash linenums="1" hl_lines="2,4,6"
+:Nmap scan report for Ubiquiti-ofc.pu.pri (192.168.10.50)
+17:|       ssh-dss
+28:Nmap scan report for Ubiquiti-garage.pu.pri (192.168.10.51)
+43:|       ssh-dss
+54:Nmap scan report for 2920-Garage.pu.pri (192.168.10.52)
+66:|       ssh-dss
+```
+
+As you can see, devices 192.168.10.51-52 are using `ssh-dss` as the Host Key Algorithm. I have my network devices registered in DNS to it's easy to identify them. If you use MS Windows you can easily ask chatGPT to create a PowerShell script to read a spreadsheet of hostnames/IP addresses and create the DNS entries.
+
+The HPE 2920 is running `WB.16.10.0025` firmware which I think is the last release. Here is a `show ip ssh` from the 2920:
+
+```bash linenums="1" hl_lines="7"
+HP-2920-24G-PoEP# sh ip ssh
+
+  SSH Enabled     : Yes                 Secure Copy Enabled : No
+  TCP Port Number : 22                  Timeout (sec)       : 120
+  Rekey Enabled   : No                  Rekey Time (min)    : 60
+                                        Rekey Volume (KB)   : 1048576
+  Host Key Type   : DSA                 Host Key/Curve Size : 1024
+
+  Ciphers : aes256-ctr,aes256-cbc,rijndael-cbc@lysator.liu.se,aes192-ctr,
+            aes192-cbc,aes128-ctr,aes128-cbc,3des-cbc
+  MACs    : hmac-sha1-96,hmac-md5,hmac-sha1,hmac-md5-96
+```
+
+You can see from the ip ssh config that you can change the cipher and the MAC but not the Host Key Algorithm. FYI, HMAC is Hashed Message Authentication Code. All ssh MACs are actually HMACs.
+
+```bash linenums="1" hl_lines="2,5"
+HP-2920-24G-PoEP(config)# ip ssh
+ cipher                Specify a cipher to enable/disable.
+ filetransfer          Enable/disable secure file transfer capability.
+ listen                Specify in which mode daemon should listen in.
+ mac                   Specify a mac to enable/disable.
+ port                  Specify the TCP port on which the daemon should listen for SSH connections.
+ public-key            Configure a client public-key.
+ rekey                 Enable SSH key re-exchange.
+ timeout               Specify the maximum length of time (seconds) permitted for protocol
+                       negotiation and authentication.
+```
+
+## What Cryptographic Algorithms Should I use
 
 When building a configuration template for a deployment you should remove as many legacy ciphers as possible. As the US CISA pushes for more secure IT infrastructure you will find more customers running security scans after you deploy. It's better to pass a security scan than have to answer questions about why your refresh failed a basic security audit.
 
-Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. IoT manufactures and Network devices typically have a lot of ancient ciphers. Episode 209 of the [2.5 Admins](https://2.5admins.com/2-5-admins-209/) podcast titled: Faulty Defaults is worth listening to if any of this is new to you.
+Since SSH is almost 30 years old there are a lot of ciphers available. But of course, many are no longer secure. IoT manufactures and network devices typically have a lot of ancient ciphers. Episode 209 of the [2.5 Admins](https://2.5admins.com/2-5-admins-209/) podcast titled: Faulty Defaults is worth listening to if any of this is new to you.
 
 Asking which ciphers are secure is like asking "Is Mac better than Windows?". But here are some general guidelines:
 
@@ -40,8 +291,9 @@ Asking which ciphers are secure is like asking "Is Mac better than Windows?". Bu
 - Don't use a MAC with SHA1 in the name if possible. For example hmac-sha1
 - Do use a MAC with SHA2 in the name. For example hmac-sha2-256 or hmac-sha2-512
 - Don't use a Key Exchange Algorithm (KEX) with SHA1 in the name if possible. For example diffie-hellman-group1-sha1
+- Don't use a HostKeyAlgorithm with dss in the name. This is an SSH V1 Host key and has been dropped on openSSH 9.9 and above.
 
-You can do a search on the Internet for current algorithms. But, you will find that a lot of network devices don't support modern cryptographic algorithms. Some notable exceptions are:
+You can do a search on the Internet for current algorithms. But, you will find that a lot of network devices don't support modern cryptographic algorithms. Some notable exceptions that support modern ciphers are:
 
 - Aruba CX version 10.07 and newer
 - Juniper Junos version 18.2R1.9 or higher
