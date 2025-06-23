@@ -585,6 +585,7 @@ Now that we have the Gnome Extensions installed let's install some Flatpak appli
 - [Meld](CH02-Install-Tools.md/#meld) - A great diffing tool
 - [Pinta](CH02-Install-Tools.md/#pinta) - An image editing, drawing and painting application
 - [Resources](CH02-Install-Tools.md/#resources) - A system resource monitor
+- [Vesktop](CH02-Install-Tools.md/#Vesktop) - A snappier Discord Client
 - [Warehouse](CH02-Install-Tools.md/#warehouse) - A tool to manage every aspect of Flatpak applications
 
 ----------------------------------------------------------------
