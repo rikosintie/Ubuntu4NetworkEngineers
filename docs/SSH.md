@@ -265,7 +265,7 @@ HP-2920-24G-PoEP# sh ip ssh
 
 You can see from the ip ssh config that you can change the cipher and the MAC but not the Host Key Algorithm. FYI, HMAC is Hashed Message Authentication Code. All ssh MACs are actually HMACs.
 
-```bash linenums="1" hl_lines="2,5"
+```bash linenums="1" hl_lines="2 5"
 HP-2920-24G-PoEP(config)# ip ssh
  cipher                Specify a cipher to enable/disable.
  filetransfer          Enable/disable secure file transfer capability.
