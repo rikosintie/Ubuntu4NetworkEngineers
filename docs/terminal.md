@@ -22,6 +22,7 @@ There are several shells available for Ubuntu. To name a few:
 - ZSH - My preferred shell! Zsh was created by Paul Falstad in 1990 while he was a student at Princeton University.
 - FISH - Friendly Interactive Shell is a smart and user-friendly command line shell for Linux, macOS, and the rest of the family.
 - KORN - The KornShell (ksh) is a Unix shell and language based on the Bourne shell (sh) developed in the early 1980s.
+- Warp - This is a new, AI based terminal. I have it installed but haven't used it a much. [Warp Website](https://warp.dev)
 
 A google search for `Linux shells` will return many articles on shells.
 
@@ -41,20 +42,29 @@ Some zsh Features
 
 **Installation Instructions**
 
+We will need `curl` installed before we start. curl is a tool for communicating with http servers. We will use it a lot in NetDevOps. If you have installed `homebrew` for Linux, still use the apt method. You can run into ssl issues if you use the `homebrew` curl and your system ssl is a different version. I spent hours troubleshooting curl and ssl issues before chatGPT explained the root cause to me.
+
+Use:
+
+```bash
+sudo apt install curl
+```
+
+To install curl.
+
 Open the terminal, `ctrl+alt+t`, and enter:
 
 ```bash
-sudo apt update
-sudo apt upgrade
-sudo apt install zsh
+sudo apt update && sudo apt upgrade && sudo apt install zsh
 ```
 
 **Check the version**
 
 ```bash hl_lines="1"
 zsh --version`
-zsh 5.9 (x86_64-ubuntu-linux-gnu)
 ```
+
+zsh 5.9 (x86_64-ubuntu-linux-gnu)
 
 This is the current version as of December 2024
 
@@ -68,15 +78,15 @@ You can check your current shell using the echo command:
 
 ```bash hl_lines="1"
 echo $SHELL
-/usr/bin/bash
 ```
+/usr/bin/bash
 
 or
 
 ```bash hl_lines="1"
 echo $0
-/usr/bin/bash
 ```
+/usr/bin/bash
 
 You can see that the current shell is bash
 
@@ -96,8 +106,8 @@ Verify that zsh is the new shell
 
 ```bash  hl_lines="1"
 grep zsh /etc/passwd
-mhubbard:x:1000:1000:Michael Hubbard,,,:/home/mhubbard:/usr/bin/zsh
 ```
+`mhubbard:x:1000:1000:Michael Hubbard,,,:/home/mhubbard:/usr/bin/zsh`
 
 The file `/etc/passwd` contains the individual user settings. You can see that my shell is now `/usr/bin/zsh`.
 
@@ -238,7 +248,7 @@ if [[ -n $SSH_CONNECTION ]]; then
 
 ----------------------------------------------------------------
 
- This will make `nano` the default editor when you open a file over ssh and `sublime text` the default editor locally. If you haven't installed `sublime text` use the editor of your choice.
+ This will make `nano` the default editor when you open a file over ssh and `sublime text` the default editor locally. If you haven't installed `sublime text` use the editor of your choice. For example, to use `nano` the line would be `export EDITOR='nano'`
 
 Then add the following to ~/.zshrc:
 
@@ -259,7 +269,7 @@ The code that we added has two aliases:
 - ec - Open ~/.zshrc in the default editor
 - sc - reload the zsh configuration using `exec zsh`
 
-These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+Now you can type `ec` to edit the .zshrc file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
 
 ----------------------------------------------------------------
 
@@ -290,17 +300,16 @@ Luckily, z-sy-h is in the Ubuntu repository so installation of the package is si
 
 ```bash hl_lines="1"
 sudo apt search zsh-syntax-highlighting
-zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
 ```
+zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
 
 So now we know the package is named `zsh-syntax-highlighting`, we can install it using:
 
 ```bash hl_lines="1 2"
-sudo apt install zsh-syntax-highlighting
-echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+sudo apt install zsh-syntax-highlighting && echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-These commands install the `z-sy-h` package then echo the source command into the .zshrc file.
+These commands install the `z-s-h` package then echo the source command into the .zshrc file.
 
 Now enter `sc` to reload zsh.
 
