@@ -237,7 +237,7 @@ Since we created the nmap file we can use:
 Here is a sample output:
 
 ```bash linenums="1" hl_lines="2,4,6"
-:Nmap scan report for Ubiquiti-ofc.pu.pri (192.168.10.50)
+ 2:Nmap scan report for Ubiquiti-ofc.pu.pri (192.168.10.50)
 17:|       ssh-dss
 28:Nmap scan report for Ubiquiti-garage.pu.pri (192.168.10.51)
 43:|       ssh-dss
