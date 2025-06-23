@@ -966,6 +966,8 @@ Unlike the Windows Task Manager, you have a clean menu on the side where you can
 - WiFI - Utilization of the WiFI adapter
 - Battery - Battery usage and properties
 
+----------------------------------------------------------------
+
 #### SAR
 
 Linux has been around for over 30 years and is used on a lot of servers. That means that there are a lot of monitoring tools available. If you want to collect long term data on your laptop or have a server in your home lab you can use System Activity Report (SAR) to collect long term data.
@@ -974,6 +976,38 @@ There is a graphical interface available called KSAR that presents the data in a
 
 - [Using sar to Show Current and Past System’s Statistics](https://www.baeldung.com/linux/sar-system-statistics) - Baeldung.com is a great site for indepth Linux sysadmin articles.
 - [KSAR](https://github.com/vlsi/ksar) - KSAR is a Java implementation of the GUI for SAR. I'm not big on Java tools but KSAR seems to be well maintained.
+
+----------------------------------------------------------------
+
+### Vesktop
+
+ ![screenshot](img/vesktop.png)
+
+----------------------------------------------------------------
+
+Snappier Discord app with Vencord
+
+Vesktop is a cross platform desktop app aiming to give you a snappier Discord experience with Vencord pre-installed.
+
+Vesktop comes bundled with Venmic, a purpose-built library to provide functioning audio screenshare.
+
+When you start `vesktop` you are presented with a Discord login screen:
+
+ ![screenshot](img/vesktop1.png)
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub dev.vencord.Vesktop
+```
+
+Once installed, run `Vesktop` from the terminal using:
+
+```bash
+flatpak run dev.vencord.Vesktop
+```
+
+Or by tapping the `Super` key, typing Vesktop and clicking on the Vesktop icon.
 
 ----------------------------------------------------------------
 
