@@ -391,7 +391,7 @@ Sometimes you want to copy the full path to a file when working in the file mana
 
 One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.
 
-To install GNOME Sushi using Ubuntu Software, click the following link:
+To install GNOME Sushi using Ubuntu Software, open a terminal and paste the following code in:
 
 ```bash
 sudo apt install gnome-sushi
@@ -399,6 +399,22 @@ sudo apt install gnome-sushi
 
 For a more detailed description see
 [How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)](https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/)
+
+----------------------------------------------------------------
+
+### Resize/Rotate images
+
+Gnome provides a package that adds resize and rotate capabilities for the Files application. I find this package very useful when creating documentation.
+
+To install the Nautilus Image Converter, open a terminal and paste the following code in:
+
+```bash
+sudo apt install nautilus-image-converter
+```
+
+Now when you right click on an image file, you will see an option to resize and an option to rotate.
+
+![screenshot](img/resize.png)
 
 ----------------------------------------------------------------
 
