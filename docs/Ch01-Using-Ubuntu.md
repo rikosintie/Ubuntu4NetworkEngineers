@@ -441,6 +441,18 @@ Ubuntu also has a [Common Tasks](https://help.ubuntu.com/stable/ubuntu-help/file
 
 ----------------------------------------------------------------
 
+### Custom folder icons in Files
+
+You can change the icon for a folder in the Files application. Right click on a folder, and select `Properties` from the menu. Look at the lower right of the folder icon and you will see pencil icon. Click the `Pencil` and a `Select Custom Icon` dialog will open. Navigate to a folder containing icons and select the one you want.
+
+Here is the icon I have set for the folder containing the files for this project:
+
+![screenshot](img/FolderIcon.png)
+
+[Custom folder Icon](https://www.omgubuntu.co.uk/2023/12/gnome-devs-improve-nautilus-custom-folder-icon-feature) - An article from OMG Ubuntu on setting custom folder icons
+
+----------------------------------------------------------------
+
 ### I have a red Lock icon on a file or folder
 
 Files, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.
