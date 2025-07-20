@@ -63,30 +63,30 @@ Nala offers a more user-friendly interface with features like parallel downloads
 
 **Parallel Downloads**
 
-Outside of pretty formatting, the number 1 reason to use Nala over apt is parallel downloads. By default, we will download 3 packages per unique mirror in your sources.list file. Opening multiple connections to the same mirror is great for speeding up downloading many small packages. We have the 3 connections per mirror limit to minimize how hard we are hitting mirrors. Additionally, we alternate downloads between the available mirrors to improve download speeds even further. If a mirror fails for whatever reason, we just try the next until all defined mirrors are exhausted.
+Outside of pretty formatting, the number 1 reason to use Nala over apt is parallel downloads. By default, Nala will download 3 packages per unique mirror in your sources.list file. Opening multiple connections to the same mirror is great for speeding up downloading many small packages. We have the 3 connections per mirror limit to minimize how hard we are hitting mirrors. Additionally, we alternate downloads between the available mirrors to improve download speeds even further. If a mirror fails for whatever reason, we just try the next until all defined mirrors are exhausted.
 
 Note: Nala does not use APT for package downloading and verification
 
 **Fetch**
 
-sudo nala fetch
+`sudo nala fetch`
 
-Which brings us to our next standout feature, nala fetch. Nala fetch will check if your distribution is either Debian or Ubuntu. Nala will then go get all the mirrors from the respective master list. Once done we test the latency and score each mirror. Nala will choose the fastest 3 mirrors (configurable) and write them to a file.
+Which brings us to the next standout feature, nala fetch. Nala fetch will check if your distribution is either Debian or Ubuntu. Nala will then go get all the mirrors from the respective master list. Once done we test the latency and score each mirror. Nala will choose the fastest 3 mirrors (configurable) and write them to a file.
 
 !!! Note
     At the moment fetch will only work on Debian, Ubuntu and derivatives still tied to the main repos.
 
 **History**
 
-nala history
+`nala history`
 
-Our last big feature is the nala history command.
+The last big feature is the nala history command.
 
-We store each  `Install`, `Remove` or `Upgrade` in `/var/lib/nala/history.json` with a unique `<ID>` number. At any time you can call `nala history` to print a summary of every transaction ever made. You can then further manipulate this with commands such as nala history undo `<ID>` or nala history redo `<ID>`.
+Nala stores each  `Install`, `Remove` or `Upgrade` in `/var/lib/nala/history.json` with a unique `<ID>` number. At any time you can call `nala history` to print a summary of every transaction ever made. You can then further manipulate this with commands such as `nala history undo <ID>` or `nala history redo <ID>`.
 
-If there is something in the history file that you don't want, you can use the `nala history clear` `<ID>` to remove that entry.
+If there is something in the history file that you don't want, you can use the `nala history clear <ID>` to remove that entry.
 
-Alternatively for the clear command we accept --all which will remove the entire history.
+Alternatively for the clear command we accept --all which will remove the entire history - `sudo nala history clear --all`.
 
 **Installation**
 
