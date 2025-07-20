@@ -44,13 +44,66 @@ You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you 
 
 ----------------------------------------------------------------
 
-## Package managers
+## Terminal based Package managers
 
 On linux, Applications are commonly referred to as packages. For years Linux distributions have used a `Package Manager` to install applications. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
+### Advanced Package Tool - The Ubuntu package manager
+
+The Advanced Package Tool (apt) is the default terminal based package manager for Debian based Linux distributions like Ubuntu.
+
+### The Nala Package manager
+
+Description from the [nala webpage](https://github.com/volitank/nala):
+Nala is a front-end for libapt-pkg, the library that uses the python-apt api. Especially for newer users it can be hard to understand what apt is trying to do when installing or upgrading. We aim to solve this by not showing some redundant messages, formatting the packages better, and using color to show specifically what will happen with a package during install, removal, or an upgrade.
+
+#### Benefits of Nala over Apt
+
+Nala offers a more user-friendly interface with features like parallel downloads, improved output formatting, and package transaction history, making it easier to manage software
+
+**Parallel Downloads**
+
+Outside of pretty formatting, the number 1 reason to use Nala over apt is parallel downloads. By default, we will download 3 packages per unique mirror in your sources.list file. Opening multiple connections to the same mirror is great for speeding up downloading many small packages. We have the 3 connections per mirror limit to minimize how hard we are hitting mirrors. Additionally, we alternate downloads between the available mirrors to improve download speeds even further. If a mirror fails for whatever reason, we just try the next until all defined mirrors are exhausted.
+
+Note: Nala does not use APT for package downloading and verification
+
+**Fetch**
+
+sudo nala fetch
+
+Which brings us to our next standout feature, nala fetch. Nala fetch will check if your distribution is either Debian or Ubuntu. Nala will then go get all the mirrors from the respective master list. Once done we test the latency and score each mirror. Nala will choose the fastest 3 mirrors (configurable) and write them to a file.
+
+!!! Note
+    At the moment fetch will only work on Debian, Ubuntu and derivatives still tied to the main repos.
+
+**History**
+
+nala history
+
+Our last big feature is the nala history command.
+
+We store each  `Install`, `Remove` or `Upgrade` in `/var/lib/nala/history.json` with a unique `<ID>` number. At any time you can call `nala history` to print a summary of every transaction ever made. You can then further manipulate this with commands such as nala history undo `<ID>` or nala history redo `<ID>`.
+
+If there is something in the history file that you don't want, you can use the `nala history clear` `<ID>` to remove that entry.
+
+Alternatively for the clear command we accept --all which will remove the entire history.
+
+**Installation**
+
+```bash
+sudo apt update
+sudo apt install nala
+```
+
+**References**
+
+[Nala on Github](https://github.com/volitank/nala)
+
+[Nala apt Frontend for Linux](https://phoenixnap.com/kb/nala-apt) - An article from PhoenixNAP on Nala.
+
 ----------------------------------------------------------------
 
-## Snaps vs Flatpak vs Appimage
+## Universal Linux Package Managers
 
 To work around this problem three universal packaging systems were created:
 
@@ -60,20 +113,37 @@ To work around this problem three universal packaging systems were created:
 
  It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them 😁. This article explains the who, and how of the three - [Flatpak vs. Snap vs. AppImage](https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage).
 
+### Snaps vs Flatpak vs Appimage
+
+**Snaps**
+
+Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. It runs on a proprietary backend hosted by Canonical. This has caused an uproar in the Linux community that values Open Source over everything. My opinion is that I use Ubuntu, snaps are native to Ubuntu and the Ubuntu security team does a good job in general so I use snaps when I find a useful application packaged as a snap.
+
+**Flatpaks**
+
+Gnome, KDE and FreeDesktop created the Flatpak organization in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017.
+
 !!! note
     It was announced in December 2024 that Flatpak will become a [standalone organization](https://www.gamingonlinux.com/2024/12/flathub-to-become-a-self-sustaining-entity-and-theyre-looking-to-hire-someone-to-help/)! I hope that this will increase developer interest in Flatpak.
 
- Gnome, KDE and FreeDesktop created the Flatpak organization in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017. Most importantly for us is that Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. AppImage is an open source community project not affiliated with Canonical or The Gnome project.
+**Appimages**
 
-The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed [below](CH02-Install-Tools.md/#gnome-specific), especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage. You can use terminal tools like `htop` and `du` for viewing resources and disk usage but when you first start using Ubuntu the GUI tools will be more comfortable.
+AppImage is an open source community project not affiliated with Canonical or The Gnome project. The Appimage webpage describes them as `Linux apps that run anywhere` and Linux Torvalds, Linux Creator says `This is just very cool.` Oddly enough, I in the Flatpak section below I will explain a flatpak called `Gearlever` that was developed to make managing appimages easy!
 
-We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`.
+!!! tip
+    Appimages on Ubuntu after 23.04 require installing the FUSE 2 library using `sudo apt install libfuse2t64`. Please read this article:  [Appimages on Ubuntu >22.04](https://www.omgubuntu.co.uk/2023/04/appimages-libfuse2-ubuntu-23-04)
+
+When I wrote this in July 2025, the [Appimage Hub](https://www.appimagehub.com/) had 1522 applications listed!
 
 ----------------------------------------------------------------
 
 ## Flatpak
 
-I am going to start with flatpak applications instead of the Ubuntu App Store because there are some flatpak applications that are useful for managing the system.
+The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed [below](CH02-Install-Tools.md/#gnome-specific), especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage. You can use terminal tools like `htop` and `du` for viewing resources and disk usage but when you first start using Ubuntu the GUI tools will be more comfortable.
+
+We will cover terminal tools later. In this section we will learn how to install graphical tools using `Flatpaks`.
+
+I am going to start with flatpak applications instead of the Ubuntu App Store because there are some Gnome project developed flatpak applications that are useful for managing the system.
 
 Visit the Flatpak store by clicking this link: [Flathub](https://flathub.org/). There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a `Donate` button. If you install the application and find it useful, please go back and donate. Most of the developers don't get paid for their time.
 
@@ -81,18 +151,18 @@ Visit the Flatpak store by clicking this link: [Flathub](https://flathub.org/). 
 
 ### Install Flatpak
 
-Open a terminal (ctrl+alt+t) and run the following commands:
+I am going to be using the Nala package manager in the instructions. If you haven't installed Nala yet, substitute `apt` for `nala. Open a terminal (ctrl+alt+t) and run the following commands:
 
 ```bash
-sudo apt update
-sudo apt install flatpak
+sudo nala update
+sudo nala install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
 **Explanation**
 
-- sudo apt update - This uses the `Aptitude` package manager to update the repositories that your machine uses.
-- sudo apt install flatpak - This uses the `Aptitude` package manager to actually install flatpak.
+- sudo nala update - This uses the `Nala` package manager to update the repositories that your machine uses.
+- sudo nala install flatpak - This uses the `Nala` package manager to actually install flatpak.
 - flatpak remote-add - This uses the `Aptitude` package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.
 
 !!! Warning
@@ -550,7 +620,7 @@ And found that tftpd-hpa had been failing since I upgraded to 24.10 on November 
 ```bash
 sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.bak
 sudo dpkg --purge --force-all tftpd-hpa
-sudo apt install tftpd-hpa
+sudo nala install tftpd-hpa
 sudo cp /etc/default/tftpd-hpa.bak /etc/default/tftpd-hpa
 sudo systemctl is-enabled tftpd-hpa
 sudo systemctl start tftpd-hpa
@@ -581,6 +651,7 @@ Now that we have the Gnome Extensions installed let's install some Flatpak appli
 - [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
 - [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
 - [Foliate](CH02-Install-Tools.md/#foliate) - An ebook reader
+- [Gear Lever](CH02-Install-Tools.md/#gearlever) - A flatpak for managing Appimages!
 - [KolourPaint](CH02-Install-Tools.md/#kolourpaint) - A simple painting program to quickly create raster images.
 - [Meld](CH02-Install-Tools.md/#meld) - A great diffing tool
 - [Pinta](CH02-Install-Tools.md/#pinta) - An image editing, drawing and painting application
@@ -811,6 +882,76 @@ Here is a screenshot of Foliate with my Python Library:
 ----------------------------------------------------------------
 
 Foliate has a lot of functionality. So far I have just used it for reading the ebooks that I have purchased.
+
+----------------------------------------------------------------
+
+### GearLever
+
+![screenshot](img/GearLever.png)
+
+----------------------------------------------------------------
+
+**Manage AppImages**
+
+An utility to manage AppImages with ease! Gear lever will organize and manage AppImage files for you, generate desktop entries and app metadata, update apps in-place or keep multiple versions side-by-side.
+
+Features
+
+- Integrate AppImages into your app menu with just one click
+- Drag and drop files directly from your file manager
+- Keep all the AppImages organized in a custom folder
+- Open new AppImages directly with Gear lever
+- Manage updates: keep older versions installed or replace them with the latest release
+- Save CLI apps with their executable name automatically
+- Modern and Fresh UI
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub it.mijorus.gearlever
+```
+
+Once installed, run  `KolourPaint` from the terminal using:
+
+```bash
+flatpak run it.mijorus.gearlever
+```
+
+Or by tapping the `Super` key, typing `Gear Lever` and clicking on the `KolourPaint` icon.
+
+#### CLI
+
+Starting from version 3.0.0, Gear Lever includes some useful command line tools to manage your AppImages. The CLI uses the same logics as the UI.
+
+Please use flatpak run it.mijorus.gearlever --help to get an updated version of this help screen
+
+**Usage:**
+
+```bash
+flatpak run it.mijorus.gearlever [OPTION...]`
+# OR gearlever [OPTION...] if using the alias
+
+--integrate        Integrate an AppImage file
+--update           Update an AppImage file
+--update --all     Update all apps
+--remove           Trashes an AppImage, its .desktop file and icons
+--list-installed   List integrated apps
+--list-updates     List available updates
+```
+
+!!! note
+    For an improved user experience, add the following line to your .zshrc or.bashrc file:
+
+```bash
+alias gearlever='flatpak run it.mijorus.gearlever
+```
+
+**Reference Links**
+
+[Gear Lever on Github](https://github.com/mijorus/gearlever)
+[Gear Lever on Flathub](https://mijorus.it/projects/gearlever/)
 
 ----------------------------------------------------------------
 
