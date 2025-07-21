@@ -128,7 +128,7 @@ Gnome, KDE and FreeDesktop created the Flatpak organization in September 2015. T
 
 **Appimages**
 
-AppImage is an open source community project not affiliated with Canonical or The Gnome project. The Appimage webpage describes them as `Linux apps that run anywhere` and Linux Torvalds, Linux Creator says `This is just very cool.` Oddly enough, I in the Flatpak section below I will explain a flatpak called `Gearlever` that was developed to make managing appimages easy!
+AppImage is an open source community project not affiliated with Canonical or The Gnome project. The Appimage webpage describes them as `Linux apps that run anywhere` and Linus Torvalds, Linux Creator says `This is just very cool.` Oddly enough, in the Flatpak section below, I will show a flatpak called `Gear lever` that was developed to make managing appimages easy!
 
 !!! tip
     Appimages on Ubuntu after 23.04 require installing the FUSE 2 library using `sudo apt install libfuse2t64`. Please read this article:  [Appimages on Ubuntu >22.04](https://www.omgubuntu.co.uk/2023/04/appimages-libfuse2-ubuntu-23-04)
@@ -151,7 +151,7 @@ Visit the Flatpak store by clicking this link: [Flathub](https://flathub.org/). 
 
 ### Install Flatpak
 
-I am going to be using the Nala package manager in the instructions. If you haven't installed Nala yet, substitute `apt` for `nala. Open a terminal (ctrl+alt+t) and run the following commands:
+I am going to be using the Nala package manager in the instructions. If you haven't installed Nala yet, substitute `apt` for `nala`. Open a terminal (ctrl+alt+t) and run the following commands:
 
 ```bash
 sudo nala update
@@ -180,7 +180,7 @@ They are easy to understand, simple to use, feature a consistent and polished de
 
 #### Gnome Core Apps
 
- Several of the the 28 `Core Apps` are installed by Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful in day to day work.
+ Several of the the 28 `Core Apps` are installed in Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful in day to day work.
 
 ----------------------------------------------------------------
 
@@ -221,11 +221,9 @@ The `Logs` application allows you to quickly look at system logs. It's a super f
 
 #### Gnome Circle Apps
 
-GNOME Circle champions the great software that is available for the GNOME platform. Not only do we showcase the best apps and libraries for GNOME, but we also support independent developers who are using GNOME technologies.
+GNOME Circle champions the great software that is available for the GNOME platform. Not only do we showcase the best apps and libraries for GNOME, but we also support independent developers who are using GNOME technologies. GNOME Circle contains applications extending the GNOME ecosystem. It champions the great **additional** software that is available for the GNOME platform. [Learn more about GNOME Circle](https://circle.gnome.org/).
 
-GNOME Circle contains applications extending the GNOME ecosystem. It champions the great additional software that is available for the GNOME platform. [Learn more about GNOME Circle](https://circle.gnome.org/).
-
-One Circle application that is basically mandatory is `Impression`, an application to write ISO images to a flash drive! Simply start `Impression`, pick the image, pick the USB flash drive, click `write`.
+One Circle application that I think is mandatory is `Impression`, an application to write ISO images to a flash drive! Start `Impression`, pick the image, select the USB flash drive, click `write`.
 
 In the screenshot below, I picked the the Windows 11 image from my ~/Downloads directory and selected the Aruba flash drive to write it to. All that is left is to click on `Write` and a bootable flash drive will be created.
 
