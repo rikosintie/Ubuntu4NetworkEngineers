@@ -407,7 +407,7 @@ You can also click on the `Quick Settings` at the top right of the screen and se
 
 ----------------------------------------------------------------
 
-#### Install KDE Connect
+**Install KDE Connect**
 
 GSConnect is a Gnome port of the KDE Connect application. On the GSConnect settings dialog you will see links to:
 
@@ -448,7 +448,7 @@ ufw allow 1716:1764/udp
 
 ----------------------------------------------------------------
 
-#### Troubleshooting
+**Troubleshooting**
 
 If you open KDE Connect on the phone but your laptop can't be found:
 
