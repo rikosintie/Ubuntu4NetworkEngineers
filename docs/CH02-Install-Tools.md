@@ -302,6 +302,7 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 - [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
+- [Logo Menu](https://extensions.gnome.org/away/https%253A%252F%252Fgithub.com%252FAryan20%252FLogomenu) - Adds a MacOS like button to the top left of the screen with `About my System`, `Force Quit App`, etc. Very cool extension.
 - [Removable Drive Menu](https://extensions.gnome.org/extension/7/removable-drive-menu/) - A status menu for accessing and unmounting removable devices.
 - [Systemd Manager](https://github.com/hardpixel/systemd-manager) - Systemd Manager is a Gnome Shell Extension which allows you to start/stop systemd services via a menu in the status area in the top panel. You can preselect which services should be shown in the extension preferences dialog.
 
@@ -500,6 +501,30 @@ If you ran the `netstat` command above you can just the active port for `netcat`
     You will see a lot of `netcat: connect to 192.168.10.101 port 1764 (tcp) failed: Connection refused` messages. You only need 1 `succeeded!` message.
 
 This [site](https://userbase.kde.org/KDEConnect) has a lot of detail on KDE connect.
+
+----------------------------------------------------------------
+
+### Logo Menu
+
+Quick access menu for the GNOME panel with options that help ease the workflow for newcomers and power users alike and gives a great logo that you can switch to your liking to match your distribution or add something your own. Similar to the Apple Menu found on MacOS.
+
+Adds a customizable icon on the top left of screen. I picked an Icon that is the new Ubuntu Orange circle with the three dots.
+
+![screenshot](img/LogoMenu.png)
+
+----------------------------------------------------------------
+
+I enabled the following options:
+
+![screenshot](img/LogoMenu1.resized.png)
+
+----------------------------------------------------------------
+
+Here is what the dialog looks like when you click on it:
+
+![screenshot](img/LogoMenu2.png)
+
+If you are migrating from macOS this extension will make you feel a little more at home on Ubuntu.
 
 ----------------------------------------------------------------
 
