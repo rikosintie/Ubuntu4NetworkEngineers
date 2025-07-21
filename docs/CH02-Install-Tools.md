@@ -504,7 +504,7 @@ This [site](https://userbase.kde.org/KDEConnect) has a lot of detail on KDE conn
 
 ----------------------------------------------------------------
 
-### Logo Menu
+#### Logo Menu
 
 Quick access menu for the GNOME panel with options that help ease the workflow for newcomers and power users alike and gives a great logo that you can switch to your liking to match your distribution or add something your own. Similar to the Apple Menu found on MacOS.
 
@@ -528,7 +528,7 @@ If you are migrating from macOS this extension will make you feel a little more 
 
 ----------------------------------------------------------------
 
-### Removable Drive menu
+#### Removable Drive menu
 
 On some projects I end up using flash drives quite a lot. All this extension does is puts the `Eject Drive` icon ![screenshot](img/Removable-Drive.png) in the status menu. But I find useful when I'm not in `Files` and want to work with the files on a flash drive or eject a drive.
 
@@ -572,7 +572,7 @@ If you don't want to have to type the `-e7`.
 
 ----------------------------------------------------------------
 
-### Systemd Manager
+#### Systemd Manager
 
 Systemd is a system and service manager for Linux operating systems. There are hundreds of services running on the system and usually terminal commands are used to start/stop/enable and check status. There are a few services like the `UFW Firewall`, `ssh server` and `tftp server` that I turn on and off often. The `Systemd Manager` extensions lets me easily check the status from the `status menu`. The icon looks like the Gnome setting gear - ![screenshot](img/Systemd-Manager.png).
 
@@ -606,7 +606,7 @@ One of files in the directory is named `metadata.json` Below are the contents of
 }
 ```
 
-#### Configuration
+**Configuration**
 
 Click on the `Systemd-Manager` icon in the status menu and select `Add Service`. Here is what it will look like:
 
@@ -624,7 +624,7 @@ Now click the `Systemd-Manager` icon in the `status menu` and you will see the s
 
 Simply slide the slider to the right to enable a service or to the left to disable a service. You can also restart a service by clicking the icon with the circular arrow or mask a service by clicking the icon on the right.
 
-#### Why the Red
+**Why the Red**
 
 Notice that the TFTP entry is red. I wasn't sure what that meant so I ran the following command from a terminal:
 
