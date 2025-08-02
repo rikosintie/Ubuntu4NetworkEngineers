@@ -138,7 +138,7 @@ When `sparrow` starts up, click the `ip scan` button to start a scan.
 
 #### Create a function to start sparrow
 
-Below is a simple function that you can add to your `.zshrc` or or custom zsh alias file. I prefer to put my custom functions into the zsh custom aliases file. Mine is at `~/.oh-my-zsh/custom/my-aliases.zsh` but you can use any name in the custom folder as long as the extension is `.zsh`
+Below is a simple function that you can add to your `.zshrc` or custom zsh alias file. I prefer to put my custom functions into the zsh custom aliases file. Mine is at `~/.oh-my-zsh/custom/my-aliases.zsh` but you can use any name in the custom folder as long as the extension is `.zsh`
 
 To add it to `.zshrc`:
 
@@ -178,9 +178,7 @@ Linux has many built-in or freely available terminal based tools for viewing inf
 
 This is an oldie but goodie in Linux! From the MAN pages:
 
-```text
 Iwconfig is similar to ifconfig(8), but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example: the frequency). Iwconfig may also be used to display those parameters, and the wireless statistics (extracted from /proc/net/wireless).
-```
 
 That last line means that we can display wireless interface statistics using the Linux watch command. Watch is a tool that runs a command at a regular interval and displays the output to the screen. The default is 2 seconds, -n1 sets it to 1 second.
 
@@ -197,6 +195,8 @@ wlp61s0   IEEE 802.11  ESSID:"test"
           Tx excessive retries:0  Invalid misc:8   Missed beacon:0
 ```
 
+This is useful when restarting an AP or troubleshooting wireless. With `watch` running, you can glance at the screen and see if the interface is connected.
+
 `iwconfig` is part of the `wireless-tools` for Linux package maintained by Jean Tourrilhes.
 
 **Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
@@ -206,7 +206,8 @@ If you didn't install `Sparrow-WiFi` above, install `wireless-tools` using:
     sudo nala install wireless-tools
 ```
 
-**Test iwconfig, my wireless interface is wlp61s0:**
+**Test iwconfig**
+my wireless interface is wlp61s0
 
 ```bash
     iwconfig wlp61s0
@@ -220,6 +221,7 @@ If you didn't install `Sparrow-WiFi` above, install `wireless-tools` using:
           Tx excessive retries:0  Invalid misc:8   Missed beacon:0
 ```
 
+----------------------------------------------------------------
 
 ### iwgetid
 
@@ -389,9 +391,9 @@ Current Bit Rate:866.7 Mb/s
 
 [Get more detailed wireless information from a wireless interface](http://www.linux-commands-examples.com/iwlist)
 
-#### Display Saved Networks
+### Display Saved Networks
 
-When you connect to a wireless network, the settings, including the username/password, are saved. To view them, open a terminal and enter:
+When you connect to a network, the settings, including the username/password, are saved. To view them, open a terminal and enter:
 
 ```bash
 nm-connection-editor
