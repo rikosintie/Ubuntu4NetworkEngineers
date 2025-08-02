@@ -99,13 +99,16 @@ urllib3            2.5.0
 ```
 
 **Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
+
  Sparrow-WiFi uses the Linux `iwconfig` tool from `wireless-tools`. Install it using:
 
 ```bash
 sudo nala install wireless-tools
 ```
 
-**Test iwconfig, my wireless interface is wlp61s0:**
+**Test iwconfig**
+
+my wireless interface is wlp61s0:
 
 ```bash
     iwconfig wlp61s0
@@ -181,6 +184,7 @@ This is an oldie but goodie in Linux!
 `iwconfig` is part of the `wireless-tools` for Linux package maintained by Jean Tourrilhes.
 
 **Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
+
 If you didn't install `Sparrow-WiFi` above, install `wireless-tools` using:
 
 ```bash
