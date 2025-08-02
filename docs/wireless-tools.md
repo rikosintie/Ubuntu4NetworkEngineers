@@ -108,7 +108,7 @@ sudo nala install wireless-tools
 
 **Test iwconfig**
 
-my wireless interface is wlp61s0:
+In this example, my wireless interface is wlp61s0
 
 ```bash
     iwconfig wlp61s0
@@ -192,7 +192,8 @@ sudo nala install wireless-tools
 ```
 
 **Test iwconfig**
-my wireless interface is wlp61s0
+
+In this example, my wireless interface is wlp61s0
 
 ```bash
     iwconfig wlp61s0
@@ -269,7 +270,7 @@ Usage iwgetid [OPTIONS] [ifname]
 
 **Examples**
 
-```bash hl_nums='1'
+```bash hl_lines='1'
 iwgetid -a
 wlp61s0   Access Point/Cell: 9C:8C:D8:11:7A:F0
 
@@ -328,7 +329,7 @@ Type `exec zsh` to reload the shell
 
 Now you can enter
 
-```bash hl_num='1'
+```bash hl_lines='1'
 iwget
 AP Mac: 9C:8C:D8:11:7A:F0
 Interface: wlp61s0   Frequency:5.18 GHz
