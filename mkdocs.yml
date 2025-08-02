@@ -9,6 +9,7 @@ nav:
   - Usage: Ch01-Using-Ubuntu.md
   - Desktop: CH02-Install-Tools.md
   - Terminal: terminal.md
+  - WiFi Tools: Wireless-Tools.md
   - Log Tools: Log_tools.md
   - SSH: SSH.md
   - KVM: KVM-Bridge.md
