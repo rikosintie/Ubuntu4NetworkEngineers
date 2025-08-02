@@ -270,7 +270,7 @@ Usage iwgetid [OPTIONS] [ifname]
 
 **Examples**
 
-```bash hl_lines='1'
+```bash hl_lines='1 4 7 10 13 16 19 22'
 iwgetid -a
 wlp61s0   Access Point/Cell: 9C:8C:D8:11:7A:F0
 
@@ -441,6 +441,18 @@ If you click on an SSID, then click the `gear` icon, Wi-Fi Security, it will ope
 ----------------------------------------------------------------
 
 ![screenshot](img/nm-connection-editor-pw.resized.png)
+
+----------------------------------------------------------------
+
+### nmcli device wifi list
+
+To get a quick, static, view of all SSIDs use:
+
+`nmcli device wifi list`
+
+----------------------------------------------------------------
+
+![screenshot](img/nmcli-device-wifi-list.resized.png)
 
 ----------------------------------------------------------------
 
