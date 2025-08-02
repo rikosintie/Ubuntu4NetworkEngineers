@@ -102,7 +102,7 @@ urllib3            2.5.0
  Sparrow-WiFi uses the Linux `iwconfig` tool from `wireless-tools`. Install it using:
 
 ```bash
-    sudo nala install wireless-tools
+sudo nala install wireless-tools
 ```
 
 **Test iwconfig, my wireless interface is wlp61s0:**
@@ -125,7 +125,7 @@ urllib3            2.5.0
     You have to include the path to the venv python because sparrow needs root access. Is you don't include the path, the `sudo` command will override the venv and call the system python
 
 ```bash
-    sudo /home/mhubbard/Insync/GD/04_Tools/sparrow-wifi/venv/bin/python3 sparrow-wifi.py
+sudo /home/mhubbard/Insync/GD/04_Tools/sparrow-wifi/venv/bin/python3 sparrow-wifi.py
 ```
 
 When `sparrow` starts up, click the `ip scan` button to start a scan.
@@ -176,7 +176,33 @@ Linux has many built-in or freely available terminal based tools for viewing inf
 
 ### iwconfig
 
-This is an oldie but goodie in Linux! From the MAN pages:
+This is an oldie but goodie in Linux!
+
+`iwconfig` is part of the `wireless-tools` for Linux package maintained by Jean Tourrilhes.
+
+**Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
+If you didn't install `Sparrow-WiFi` above, install `wireless-tools` using:
+
+```bash
+sudo nala install wireless-tools
+```
+
+**Test iwconfig**
+my wireless interface is wlp61s0
+
+```bash
+    iwconfig wlp61s0
+    wlp61s0   IEEE 802.11  ESSID:"test"
+          Mode:Managed  Frequency:5.18 GHz  Access Point: 9C:8C:D8:11:7A:F0
+          Bit Rate=1.1342 Gb/s   Tx-Power=22 dBm
+          Retry short limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+          Link Quality=70/70  Signal level=-22 dBm
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:8   Missed beacon:0
+```
+
+From the MAN pages:
 
 Iwconfig is similar to ifconfig(8), but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example: the frequency). Iwconfig may also be used to display those parameters, and the wireless statistics (extracted from /proc/net/wireless).
 
@@ -215,30 +241,6 @@ You can also use `watch` with an ethernet interface. This is useful when you rel
        valid_lft 2591982sec preferred_lft 604782sec
     inet6 fe80::2c7f:3933:39b9:ac0e/64 scope link noprefixroute
        valid_lft forever preferred_lft forever
-```
-
-`iwconfig` is part of the `wireless-tools` for Linux package maintained by Jean Tourrilhes.
-
-**Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
-If you didn't install `Sparrow-WiFi` above, install `wireless-tools` using:
-
-```bash
-    sudo nala install wireless-tools
-```
-
-**Test iwconfig**
-my wireless interface is wlp61s0
-
-```bash
-    iwconfig wlp61s0
-    wlp61s0   IEEE 802.11  ESSID:"test"
-          Mode:Managed  Frequency:5.18 GHz  Access Point: 9C:8C:D8:11:7A:F0
-          Bit Rate=1.1342 Gb/s   Tx-Power=22 dBm
-          Retry short limit:7   RTS thr:off   Fragment thr:off
-          Power Management:on
-          Link Quality=70/70  Signal level=-22 dBm
-          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
-          Tx excessive retries:0  Invalid misc:8   Missed beacon:0
 ```
 
 ----------------------------------------------------------------
