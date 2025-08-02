@@ -197,6 +197,26 @@ wlp61s0   IEEE 802.11  ESSID:"test"
 
 This is useful when restarting an AP or troubleshooting wireless. With `watch` running, you can glance at the screen and see if the interface is connected.
 
+You can also use `watch` with an ethernet interface. This is useful when you reload the switch you are connected to:
+
+`watch ip address show enx0050b61ca0c0`
+
+```bash
+10: enx0050b61ca0c0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 00:50:b6:1c:a0:c0 brd ff:ff:ff:ff:ff:ff
+
+10: enx0050b61ca0c0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:50:b6:1c:a0:c0 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.130/24 brd 192.168.10.255 scope global dynamic noprefixroute enx0050b61ca0c0
+       valid_lft 3567sec preferred_lft 3567sec
+    inet6 fd24:42b2:12ce:0:756c:178d:b308:c785/64 scope global temporary dynamic
+       valid_lft 604769sec preferred_lft 86063sec
+    inet6 fd24:42b2:12ce:0:f5af:c424:4a19:d4e6/64 scope global dynamic mngtmpaddr noprefixroute
+       valid_lft 2591982sec preferred_lft 604782sec
+    inet6 fe80::2c7f:3933:39b9:ac0e/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+```
+
 `iwconfig` is part of the `wireless-tools` for Linux package maintained by Jean Tourrilhes.
 
 **Ubuntu 25.04 doesn't install the `wireless-tools` package by default**
