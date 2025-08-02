@@ -15,6 +15,8 @@ How to use Ubuntu for Network Engineering
 
 Destination Linux is a weekly show where Ryan, Jill, & Michael share their passion for Linux & Open Source. Destination Linux is a show for all experience levels, whether you’re a beginner to Open Source or a Guru of Sudo, this is the podcast for you. Destination Linux covers a wide range of topics from the latest news, discussions on Linux & Open Source, gaming on Linux, unique in-depth interviews and much more!
 
-Visit [The Destination Linux Podcast](https://tuxdigital.com/podcasts/destination-linux/)
+Visit [The Destination Linux Podcast](https://tuxdigital.com/podcasts/destination-linux/) homepage.
+
+----------------------------------------------------------------
 
 Listen to the review of the Guide on [Destination Linux Episode 429](https://pca.st/episode/49d37132-d398-4593-a55e-b08cf51ef25a) - It's in the `Community Tip and Trick` chapter or at 1:03:49 if your podcast player doesn't show chapters.
