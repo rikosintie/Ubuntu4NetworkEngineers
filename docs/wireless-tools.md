@@ -177,6 +177,73 @@ Now you can enter `sparrow` to start `sparrow-wifi` without manually entering al
 
 Linux has many built-in or freely available terminal based tools for viewing information the wireless Interface.
 
+### Display SSIDs
+
+To get a quick, static, view of all SSIDs visible to your laptop:
+
+`nmcli device wifi list`
+
+----------------------------------------------------------------
+
+![screenshot](img/nmcli-device-wifi-list.resized.png)
+
+----------------------------------------------------------------
+
+### List all connections
+
+This command will list all connections on your laptop. The TYPE column lists the connection type and the DEVICE column lists the interface that is connected. This list will grow long for a network engineer because every SSID is recorded.
+
+```bash hl_lines='1'
+nmcli connection show
+NAME                UUID                                  TYPE      DEVICE
+Work                4adc6bf7-3a1c-4c0d-af1a-709974497468  ethernet  enx0050b61ca0c0
+LAB                 d135c39f-bcc1-4666-9951-6d5c32c3bf94  wifi      wlp61s0
+lo                  2a4b667f-68db-47bd-bb6c-a396b833b671  loopback  lo
+virbr0              231172c6-33ab-4176-81aa-950b75b55e27  bridge    virbr0
+vnet0               3d320508-d381-4a78-9ad4-b235b2a28828  tun       vnet0
+Home-Lab            3d160ffd-982d-46d2-8f87-de9cb9a87e13  ethernet  --
+NETGEAR             5a899d4d-5af0-4d6b-b999-a1897709fd0c  wifi      --
+Profile 1           d05e76a7-292b-4841-9933-d78fe78c0494  ethernet  --
+test                e6e95de6-0825-4c72-8da4-4b0c54f86264  wifi      --
+Wired connection 1  c23c0b73-a5f9-3e45-b074-7b03f8d269e2  ethernet  --
+```
+
+----------------------------------------------------------------
+
+### Display the SSID and password
+
+This is useful is you need to share the password of a wireless network:
+
+```bash linenums='1' hl_lines='1'
+sudo nmcli -a -p device wifi show-password ifname wlp61s0
+SSID: LAB
+Security: WPA
+Password: Guest111
+```
+
+![screenshot](img/qr.resized.png)
+
+----------------------------------------------------------------
+
+### List WiFi properties
+
+Show details for the "test" connection profile with password.
+Note: without --show-secrets option, secrets would not be displayed.
+
+`nmcli --show-secrets connection show "test"`
+
+If you are looking for a PSK password, you can add a grep to the end
+`nmcli --show-secrets connection show test | grep security.psk`
+802-11-wireless-security.psk:           SuperSecretPasswd
+
+List all available connection profiles for your Wi-Fi interface wlp61s0.
+`nmcli -f CONNECTIONS device show wlp61s0`
+
+List only GENERAL and WIFI-PROPERTIES sections for wlp61s0
+`nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0`
+
+----------------------------------------------------------------
+
 ### iwconfig
 
 This is an oldie but goodie in Linux!
@@ -441,18 +508,6 @@ If you click on an SSID, then click the `gear` icon, Wi-Fi Security, it will ope
 ----------------------------------------------------------------
 
 ![screenshot](img/nm-connection-editor-pw.resized.png)
-
-----------------------------------------------------------------
-
-### nmcli device wifi list
-
-To get a quick, static, view of all SSIDs use:
-
-`nmcli device wifi list`
-
-----------------------------------------------------------------
-
-![screenshot](img/nmcli-device-wifi-list.resized.png)
 
 ----------------------------------------------------------------
 
