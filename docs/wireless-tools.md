@@ -212,13 +212,13 @@ Wired connection 1  c23c0b73-a5f9-3e45-b074-7b03f8d269e2  ethernet  --
 
 ### Display the SSID and password
 
-This is useful is you need to share the password of a wireless network:
+This is useful is you need to share the password of a wireless network. A mobile phone can scan the QR code to connect:
 
 ```bash linenums='1' hl_lines='1'
 sudo nmcli -a -p device wifi show-password ifname wlp61s0
 SSID: LAB
 Security: WPA
-Password: Guest111
+Password: Guest123456
 ```
 
 ![screenshot](img/qr.resized.png)
