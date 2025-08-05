@@ -33,7 +33,7 @@ Written entirely in Python3, Sparrow-wifi has been designed for the following sc
 
 ----------------------------------------------------------------
 
-### Installation steps on Ubuntu 24.04+
+### Installation on Ubuntu 24.04 and newer
 
 ```bash
     git clone https://github.com/ghostop14/sparrow-wifi
@@ -227,20 +227,79 @@ Password: Guest123456
 
 ### List WiFi properties
 
-Show details for the "test" connection profile with password.
+Show details for the SSID "test" connection with the `preshared key password` (PSK).
 Note: without --show-secrets option, secrets would not be displayed.
 
 `nmcli --show-secrets connection show "test"`
 
-If you are looking for a PSK password, you can add a grep to the end
-`nmcli --show-secrets connection show test | grep security.psk`
-802-11-wireless-security.psk:           SuperSecretPasswd
+If you are looking for a PSK password, you can pipe the output to grep:
 
-List all available connection profiles for your Wi-Fi interface wlp61s0.
+```bash hl_lines='1'
+nmcli --show-secrets connection show test | grep security.psk
+802-11-wireless-security.psk:           SuperSecretPasswd
+```
+
+The advantage of this over the `sudo nmcli -a -p device wifi show-password ifname wlp61s0` command is that you don't have to be connected to the SSID to retrieve the password.
+
+List all available connection profiles for the Wi-Fi interface wlp61s0.
 `nmcli -f CONNECTIONS device show wlp61s0`
 
 List only GENERAL and WIFI-PROPERTIES sections for wlp61s0
-`nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0`
+
+```bash line_nums='1' hl_lines='1 9-11'
+nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
+nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
+GENERAL.DEVICE:                         wlp61s0
+GENERAL.TYPE:                           wifi
+GENERAL.NM-TYPE:                        NMDeviceWifi
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/Devices/4
+GENERAL.VENDOR:                         Intel Corporation
+GENERAL.PRODUCT:                        Wi-Fi 6E(802.11ax) AX210/AX1675* 2x2 [Typhoon Peak] (Wi-Fi 6 AX210 160MHz)
+GENERAL.DRIVER:                         iwlwifi
+GENERAL.DRIVER-VERSION:                 6.14.0-24-generic
+GENERAL.FIRMWARE-VERSION:               89.4d42c933.0 ty-a0-gf-a0-89.uc
+GENERAL.HWADDR:                         28:D0:EA:93:2A:42
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.REASON:                         0 (No reason given)
+GENERAL.IP4-CONNECTIVITY:               4 (full)
+GENERAL.IP6-CONNECTIVITY:               4 (full)
+GENERAL.UDI:                            /sys/devices/pci0000:00/0000:00:1d.6/0000:3d:00.0/net/wlp61s0
+GENERAL.PATH:                           pci-0000:3d:00.0
+GENERAL.IP-IFACE:                       wlp61s0
+GENERAL.IS-SOFTWARE:                    no
+GENERAL.NM-MANAGED:                     yes
+GENERAL.AUTOCONNECT:                    yes
+GENERAL.FIRMWARE-MISSING:               no
+GENERAL.NM-PLUGIN-MISSING:              no
+GENERAL.PHYS-PORT-ID:                   --
+GENERAL.CONNECTION:                     LAB
+GENERAL.CON-UUID:                       d135c39f-bcc1-4666-9951-6d5c32c3bf94
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/36
+GENERAL.METERED:                        no (guessed)
+WIFI-PROPERTIES.WEP:                    yes
+WIFI-PROPERTIES.WPA:                    yes
+WIFI-PROPERTIES.WPA2:                   yes
+WIFI-PROPERTIES.TKIP:                   yes
+WIFI-PROPERTIES.CCMP:                   yes
+WIFI-PROPERTIES.AP:                     yes
+WIFI-PROPERTIES.ADHOC:                  yes
+WIFI-PROPERTIES.2GHZ:                   yes
+WIFI-PROPERTIES.5GHZ:                   yes
+WIFI-PROPERTIES.6GHZ:                   yes
+WIFI-PROPERTIES.MESH:                   no
+WIFI-PROPERTIES.IBSS-RSN:               yes
+
+```
+
+This command is nice because it lists the:
+
+- Chip vendor - Intel
+- The chip model, a Wi-Fi 6E, AX210 in this case.
+- The driver the chip is using, iwlwifi
+- The driver version, 6.14.0.24
+- The firmware version, 89.4d42c933.0 ty-a0-gf-a0-89.uc
+- The Hardware address
 
 ----------------------------------------------------------------
 
@@ -295,7 +354,7 @@ wlp61s0   IEEE 802.11  ESSID:"test"
 
 This is useful when restarting an AP or troubleshooting wireless. With `watch` running, you can glance at the screen and see if the interface is connected.
 
-You can also use `watch` with an ethernet interface. This is useful when you reload the switch you are connected to:
+You can also use `watch` with an ethernet interface. In this example I was connected to a switch that I needed to reboot. I wanted to monitor the Ethernet interface and know when it was back up. The default time for watch is 2 seconds but you can override that with the -n (interval) switch. In this case 2 seconds was fine.
 
 `watch ip address show enx0050b61ca0c0`
 
@@ -314,6 +373,8 @@ You can also use `watch` with an ethernet interface. This is useful when you rel
     inet6 fe80::2c7f:3933:39b9:ac0e/64 scope link noprefixroute
        valid_lft forever preferred_lft forever
 ```
+
+You can see that initially the interface was down with no IP Address, then `watch` refreshes and the port has an ip address.
 
 ----------------------------------------------------------------
 
@@ -517,7 +578,7 @@ Another wireless monitoring tool for Ubuntu.
 
 #### Installation
 
-`sudo apt install wavemon`
+`sudo nala install wavemon`
 
 From the MAN pages - Wavemon is an ncurses-based monitoring application for wireless network devices. It plots levels in real-time as well as showing wireless and network related device information.
 
@@ -538,3 +599,9 @@ Note that you can see “hidden” SSIDs also.
 ![screenshot](img/wavemon-scan.resized.png)
 
 ----------------------------------------------------------------
+
+### Cheat Sheets
+
+[Ubuntu server Cheat Sheet](https://www.cheatography.com/nielzzz/cheat-sheets/ububtu-server/)
+[Linux Bash Shell Cheat Sheet](https://learncodethehardway.org/unix/bash_cheat_sheet.pdf)
+[Linux Commands Cheat Sheet](https://www.linuxtrainingacademy.com/linux-commands-cheat-sheet/)
