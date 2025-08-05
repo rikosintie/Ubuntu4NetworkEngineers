@@ -241,13 +241,23 @@ nmcli --show-secrets connection show test | grep security.psk
 
 The advantage of this over the `sudo nmcli -a -p device wifi show-password ifname wlp61s0` command is that you don't have to be connected to the SSID to retrieve the password.
 
-List all available connection profiles for the Wi-Fi interface wlp61s0.
-`nmcli -f CONNECTIONS device show wlp61s0`
+----------------------------------------------------------------
+
+List connections for the Wi-Fi interface wlp61s0.
+
+```bash hl_lines='1'
+nmcli -f connections device show wlp61s0
+CONNECTIONS.AVAILABLE-CONNECTION-PATHS: /org/freedesktop/NetworkManager/Settings/8
+CONNECTIONS.AVAILABLE-CONNECTIONS[1]:   d135c39f-bcc1-4666-9951-6d5c32c3bf94 | LAB
+```
+
+The log GUID is the connection ID for SSID `LAB`.
+
+----------------------------------------------------------------
 
 List only GENERAL and WIFI-PROPERTIES sections for wlp61s0
 
 ```bash linenums='1' hl_lines='1 9-11'
-nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
 nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
 GENERAL.DEVICE:                         wlp61s0
 GENERAL.TYPE:                           wifi
