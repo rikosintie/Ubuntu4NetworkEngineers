@@ -232,7 +232,9 @@ Note: without --show-secrets option, secrets would not be displayed.
 
 `nmcli --show-secrets connection show "test"`
 
-If you are looking for a PSK password, you can pipe the output to grep:
+This returns a lot of information, too much to post here.
+
+If you are looking for just the PSK password, you can pipe the output to grep:
 
 ```bash hl_lines='1'
 nmcli --show-secrets connection show test | grep security.psk
@@ -251,7 +253,7 @@ CONNECTIONS.AVAILABLE-CONNECTION-PATHS: /org/freedesktop/NetworkManager/Settings
 CONNECTIONS.AVAILABLE-CONNECTIONS[1]:   d135c39f-bcc1-4666-9951-6d5c32c3bf94 | LAB
 ```
 
-The log GUID is the connection ID for SSID `LAB`.
+The log UUID is the connection ID for SSID `LAB`.
 
 ----------------------------------------------------------------
 
