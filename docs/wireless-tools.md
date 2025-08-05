@@ -246,7 +246,7 @@ List all available connection profiles for the Wi-Fi interface wlp61s0.
 
 List only GENERAL and WIFI-PROPERTIES sections for wlp61s0
 
-```bash line_nums='1' hl_lines='1 9-11'
+```bash linenums='1' hl_lines='1 9-11'
 nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
 nmcli -f GENERAL,WIFI-PROPERTIES dev show wlp61s0
 GENERAL.DEVICE:                         wlp61s0
@@ -289,7 +289,6 @@ WIFI-PROPERTIES.5GHZ:                   yes
 WIFI-PROPERTIES.6GHZ:                   yes
 WIFI-PROPERTIES.MESH:                   no
 WIFI-PROPERTIES.IBSS-RSN:               yes
-
 ```
 
 This command is nice because it lists the:
