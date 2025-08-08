@@ -2144,3 +2144,29 @@ Nmap done: 1 IP address (1 host up) scanned in 11.07 seconds
 - [Arch wiki on ssh server](https://wiki.archlinux.org/title/OpenSSH) Good information on OpenSSH including configuring Google Authenticator
 - [Arch wiki on ssh keys](https://wiki.archlinux.org/title/SSH_keys) - As always, the Arch wiki has a great page on ssh
 - [The Ultimate Guide to SSH - Setting Up SSH Keys](https://www.freecodecamp.org/news/the-ultimate-guide-to-ssh-setting-up-ssh-keys/)
+
+----------------------------------------------------------------
+
+## Apendix A - IOS-XE CIPHERS
+
+- From Cisco IOS XE Release 17.10, the Secure Shell Version 1.99 is not supported.
+- From Cisco IOS XE Release 17.10, the minimum RSA key pair size must be 2048 bits.
+- From Cisco IOS XE Release 17.11, if you want to continue using the weak RSA key, disable CSDL compliance on the device using the `crypto engine compliance shield disable` command, and reboot.
+
+### Secure Shell Version 2
+
+The configuration for the SSH Version 2 server is similar to the configuration for SSH Version 1. The ip ssh version command defines the SSH version to be configured. If you do not configure this command, SSH by default runs in compatibility mode; that is, both SSH Version 1 and SSH Version 2 connections are honored.
+
+The `ip ssh rsa keypair-name` command enables an SSH connection using the Rivest, Shamir, and Adleman (RSA) keys that you have configured. Previously, SSH was linked to the first RSA keys that were generated (that is, SSH was enabled when the first RSA key pair was generated). This behavior still exists, but by using the `ip ssh rsa keypair-name` command, you can overcome this behavior.
+
+If you configure the `ip ssh rsa keypair-name` command with a key pair name, SSH is enabled if the key pair exists or SSH will be enabled if the key pair is generated later. If you use this command to enable SSH, you are not forced to configure a hostname and a domain name, which was required in SSH Version 1 of the Cisco software.
+
+----------------------------------------------------------------
+
+| Supported Algorithms | Default                                                                                                                                                                                                                               |                Non-Default                |
+|:--------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------:|
+| Encryption           | * chacha20-poly1305@openssh.com * aes128-gcm@openssh.com * aes256-gcm@openssh.com * aes128-gcm * aes256-gcm * aes128-ctr * aes192-ctr * aes256-ctr                                                                                    | aes128-cbc aes192-cbc aes256-cbc 3des-cbc |
+| HMAC                 | * hmac-sha2-256-etm@openssh.com * hmac-sha2-512-etm@openssh.com                                                                                                                                                                       | hmac-sha1 hmac-sha2-256 hmac-sha2-512     |
+| Host Key             | * rsa-sha2-512 * rsa-sha2-256 *ssh-rsa                                                                                                                                                                                                | x509v3-ssh-rsa                            |
+| KEX DH Group         | * curve25519-sha256 * curve25519-sha256@libssh.org * ecdh-sha2-nistp256 * ecdh-sha2-nistp384 * ecdh-sha2-nistp521 * diffie-hellman-group14-sha256 * diffie-hellman-group16-sha512                                                     | diffie-hellman-group14-sha1               |
+| Public Key           | * ssh-rsa * ecdsa-sha2-nistp256 * ecdsa-sha2-nistp384 * ecdsa-sha2-nistp521 * ssh-ed25519 * x509v3-ecdsa-sha2-nistp256 * x509v3-ecdsa-sha2-nistp384 * x509v3-ecdsa-sha2-nistp521 * rsa-sha2-256 * rsa-sha2-512 *x509v3-rsa2048-sha256 | x509v3-ssh-rsa                            |
