@@ -705,7 +705,7 @@ flatpak run me.iepure.devtoolbox
 
 Or by tapping the `Super` key, typing `dev` and clicking on the `Dev Toolbox` icon.
 
-Even if you aren't a developer this app has tools you might use. This is a collection of powerful yet simple-to-use tools to solve the most common daily development problems.
+Even if you aren't a developer this app has tools you might use. Dev Toolbox is a collection of powerful yet simple-to-use tools to solve the most common daily problems.
 
 Includes:
 
@@ -725,11 +725,11 @@ The `QR Code Generator` is great create a QR code for a web URL or other text an
 
 ----------------------------------------------------------------
 
-~[screenshot](img/DevToolbox-QR.png)
+![screenshot](img/DevToolbox-QR.resized.png)
 
 ----------------------------------------------------------------
 
-![screenshot](img/DevtoolBox1.png)
+![screenshot](img/DevtoolBox1.resized.png)
 
 ----------------------------------------------------------------
 
