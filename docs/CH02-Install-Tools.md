@@ -670,6 +670,7 @@ Now when I click on the Systemd-Manager icon the TFTP entry is black
 
 Now that we have the Gnome Extensions installed let's install some Flatpak applications that you might call "Quality of Life" improvements! I listed them in alphabetical order order, not the order that you will use the most!
 
+- [Dev Toolbox](CH02-Install-Tools.md/#Dev-Toolbox) - Dev tools at your fingertips
 - [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
 - [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
 - [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings
@@ -681,6 +682,48 @@ Now that we have the Gnome Extensions installed let's install some Flatpak appli
 - [Resources](CH02-Install-Tools.md/#resources) - A system resource monitor
 - [Vesktop](CH02-Install-Tools.md/#vesktop) - A snappier Discord Client
 - [Warehouse](CH02-Install-Tools.md/#warehouse) - A tool to manage every aspect of Flatpak applications
+
+----------------------------------------------------------------
+
+### Dev Toolbox
+
+![screenshot](img/DevToolbox.png)
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+```bash
+flatpak install flathub me.iepure.devtoolbox
+```
+
+Once installed, run  `Dev Toolbox` from the terminal using:
+
+```bash
+flatpak run me.iepure.devtoolbox
+```
+
+Or by tapping the `Super` key, typing `dev` and clicking on the `Dev Toolbox` icon.
+
+Even if you aren't a developer this app has tools you might use. This is a collection of powerful yet simple-to-use tools to solve the most common daily development problems.
+
+Includes:
+
+- JSON to YAML converter and vice-versa
+- CRON expressions parser
+- GZip compressor and decompressor
+- Formatters for common programming languages
+- Hash generators
+- Regex tester
+- Markdown Previewer
+- Image converters
+- Much more...
+
+For example, JSON is pervasive on the web now. It can be hard to read in raw format. You can pasted it into the is tool and use the `JSON Formatter` to make it easy to read.
+
+The `Base 64 Encoder & Decoder` is great if you need to decode some Base64 and the `Text Diff` tool is super easy to use and is great from comparing an interface that has changed.
+
+![screenshot](img/DevtoolBox1.png)
 
 ----------------------------------------------------------------
 
@@ -696,13 +739,13 @@ Now that we have the Gnome Extensions installed let's install some Flatpak appli
 flatpak install flathub org.gnome.baobab
 ```
 
-Once installed, run  `Flatseal` from the terminal using:
+Once installed, run  `Disk Usage Analyzer` from the terminal using:
 
 ```bash
 flatpak run org.gnome.baobab
 ```
 
-Or by tapping the `Super` key, typing disk and clicking on the disk icon.
+Or by tapping the `Super` key, typing `disk` and clicking on the `Disk Usage Anlyzer` icon.
 
 Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:
 
