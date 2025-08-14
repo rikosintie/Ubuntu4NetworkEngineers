@@ -721,7 +721,13 @@ Includes:
 
 For example, JSON is pervasive on the web now. It can be hard to read in raw format. You can pasted it into the is tool and use the `JSON Formatter` to make it easy to read.
 
-The `Base 64 Encoder & Decoder` is great if you need to decode some Base64 and the `Text Diff` tool is super easy to use and is great from comparing an interface that has changed.
+The `QR Code Generator` is great create a QR code for a web URL or other text and the `Text Diff` tool is super easy to use and is great from comparing an interface that has changed.
+
+----------------------------------------------------------------
+
+~[screenshot](img/DevToolbox-QR.png)
+
+----------------------------------------------------------------
 
 ![screenshot](img/DevtoolBox1.png)
 
