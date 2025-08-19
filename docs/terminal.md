@@ -44,18 +44,24 @@ Some zsh Features
 
 We will need `curl` installed before we start. curl is a tool for communicating with http servers. We will use it a lot in NetDevOps. If you have installed `homebrew` for Linux, still use the apt method. You can run into ssl issues if you use the `homebrew` curl and your system ssl is a different version. I spent hours troubleshooting curl and ssl issues before chatGPT explained the root cause to me.
 
-Use:
+Open the terminal, `ctrl+alt+t`, and enter:
 
 ```bash
 sudo apt install curl
 ```
 
-To install curl.
+We will also need `git` installed:
 
-Open the terminal, `ctrl+alt+t`, and enter:
+```bash hl_lines='1'
+sudo apt install git
+```
+
+Now we can install zsh
 
 ```bash
-sudo apt update && sudo apt upgrade && sudo apt install zsh
+sudo apt update
+sudo apt upgrade
+sudo apt install zsh
 ```
 
 **Check the version**
@@ -68,25 +74,19 @@ zsh 5.9 (x86_64-ubuntu-linux-gnu)
 
 This is the current version as of December 2024
 
-zsh uses a hidden file named `~/.zshrc as it's configuration file. BASH uses ~/.bashrc as its configuration file. You can list the files using:
-
-```bash
-ls -l ~/.*rc
-```
-
 You can check your current shell using the echo command:
 
 ```bash hl_lines="1"
 echo $SHELL
-```
 /usr/bin/bash
+```
 
 or
 
 ```bash hl_lines="1"
 echo $0
-```
 /usr/bin/bash
+```
 
 You can see that the current shell is bash
 
@@ -114,7 +114,13 @@ The file `/etc/passwd` contains the individual user settings. You can see that m
 !!! note
     You must log out and back in to make zsh the active shell. I usually reboot at this point instead using `sudo reboot now`
 
-Here is a [link](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/) to a good article on changing shells.
+Here is a good article on changing shells: [How to change your default shell on Linux with chsh](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/)
+
+On Linux/Mac, hidden files start with a `.`, zsh uses a hidden file named `~/.zshrc as it's configuration file. BASH uses ~/.bashrc as its configuration file. You can list the files using:
+
+```bash
+ls -l ~/.*rc
+```
 
 ### Configure zsh
 
@@ -160,17 +166,32 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 When the install shell script starts you will see:
 
-```text
-Found ~/.zshrc. Backing up to /home/mhubbard/.zshrc.pre-oh-my-zsh
-Using the Oh My Zsh template file and adding it to ~/.zshrc.
+```text hl_lines='15 26'
+Cloning Oh My Zsh...
+remote: Enumerating objects: 1444, done.
+remote: Counting objects: 100% (1444/1444), done.
+remote: Compressing objects: 100% (1380/1380), done.
+remote: Total 1444 (delta 40), reused 1248 (delta 36), pack-reused 0 (from 0)
+Receiving objects: 100% (1444/1444), 3.29 MiB | 4.52 MiB/s, done.
+Resolving deltas: 100% (40/40), done.
+From https://github.com/ohmyzsh/ohmyzsh
+ * [new branch]      master     -> origin/master
+branch 'master' set up to track 'origin/master'.
+Already on 'master'
+/home/mhubbard
 
-Time to change your default shell to zsh:
-Do you want to change your default shell to zsh? [Y/n] y
-Changing the shell...
-Password:
-Shell successfully changed to '/usr/bin/zsh'.
+Looking for an existing zsh config...
+Found /home/mhubbard/.zshrc.
+The existing .zshrc will be backed up to .zshrc.pre-oh-my-zsh if overwritten.
+Make sure your .zshrc contains the following minimal configuration if you choose not to overwrite it:
+----------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
 
-
+source $ZSH/oh-my-zsh.sh
+----------------------------------------
+Do you want to overwrite it with the Oh My Zsh template? [Y/n] y
 
          __                                     __
   ____  / /_     ____ ___  __  __   ____  _____/ /_
@@ -233,7 +254,7 @@ Anytime that you make changes to `~/.zshrc` you have to reload the configuration
 
 #### Set the default editor
 
-Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows:
+Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows. Remove the `#` symbols, they are comments.
 
 ----------------------------------------------------------------
 
@@ -294,14 +315,14 @@ The zsh-syntax-highlighting package ( z-sy-h) is a **MUST**. It does a lot but t
 
 **Installation Instructions**
 
-In zsh prior to 5.8 I used the zsh plugin to install z-sy-h. The install page now recommends installing z-sy-h manually instead of using the `oh-my-zsh` plugin. The installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
+In zsh prior to 5.8 I used the zsh plugin to install zsh-syntax-highlighting. The install page now recommends installing zsh-syntax-highlighting manually instead of using the `oh-my-zsh` plugin. The zsh-syntax-highlighting installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
-Luckily, z-sy-h is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure
+Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure
 
 ```bash hl_lines="1"
 sudo apt search zsh-syntax-highlighting
-```
 zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
+```
 
 So now we know the package is named `zsh-syntax-highlighting`, we can install it using:
 
@@ -309,7 +330,7 @@ So now we know the package is named `zsh-syntax-highlighting`, we can install it
 sudo apt install zsh-syntax-highlighting && echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-These commands install the `z-s-h` package then echo the source command into the .zshrc file.
+These commands install the `zsh-syntax-highlighting` package then echo the source command into the .zshrc file.
 
 Now enter `sc` to reload zsh.
 
