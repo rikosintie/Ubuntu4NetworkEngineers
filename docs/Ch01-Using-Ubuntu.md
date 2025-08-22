@@ -207,7 +207,7 @@ The `visudo` command opens a text editor like normal, but it validates the synta
 
 Traditionally, visudo opens the /etc/sudoers file with the vi text editor. Ubuntu, however, has configured visudo to use the nano text editor instead. Before running `visudo` use the following command to verify what editor will be used:
 
-```bash
+```bash hl_lines='1'
 sudo update-alternatives --config editor
 [sudo] password for mhubbard:
 There are 9 choices for the alternative editor (providing /usr/bin/editor).
@@ -477,10 +477,37 @@ If the file has a grey square icon with an X in it the file is read only.
 
 ----------------------------------------------------------------
 
+### Access the root folder
+
+To navigate to the root of the file system, click into the address bar, type `\` and press `enter`. To create a bookmark for root press `ctrl+d` while in the root folder.
+
+Here is a screenshot of the bookmark
+
+----------------------------------------------------------------
+
+![screenshot](img/root-bookmark.png)
+
+----------------------------------------------------------------
+
+### Access the root folder as admin
+
+In the `Files` application, click into the address bar, type `admin://` and press `enter`. You will be prompted for your user password.
+
+Here is a screenshot showing that we are in the folder as administrator.
+
+----------------------------------------------------------------
+
+![screenshot](img/root-admin.png)
+
+----------------------------------------------------------------
+
+As always, BE CAREFUL when you are the administrator!
+
 **References for the Files app**
 
 - [Meaning of files-folders with a red x](https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590)
 - [10 tips for Gnome Files](https://www.youtube.com/watch?v=tR5uDUlZJNA) - A 10 minute video that is worth watching.
+- [Access Root Directory in Nautilus File Manager](https://itsfoss.com/access-root-nautilus/)
 
 ----------------------------------------------------------------
 
