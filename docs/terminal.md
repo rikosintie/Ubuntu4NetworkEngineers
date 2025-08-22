@@ -44,23 +44,24 @@ Some zsh Features
 
 We will need `curl` installed before we start. curl is a tool for communicating with http servers. We will use it a lot in NetDevOps. If you have installed `homebrew` for Linux, still use the apt method. You can run into ssl issues if you use the `homebrew` curl and your system ssl is a different version. I spent hours troubleshooting curl and ssl issues before chatGPT explained the root cause to me.
 
-Open the terminal, `ctrl+alt+t`, and enter:
+We will also install `git`, a version control system commonly used in Open Source software
+
+First we will make sure the system is up to date. Open the terminal using `ctrl+alt+t`, and enter:
 
 ```bash
-sudo apt install curl
+sudo apt update
+sudo apt upgrade
 ```
 
-We will also need `git` installed:
+Once the update is complete, enter the following to install `curl` and `git`:
 
-```bash hl_lines='1'
-sudo apt install git
+```bash
+sudo apt install curl git -y
 ```
 
 Now we can install zsh
 
 ```bash
-sudo apt update
-sudo apt upgrade
 sudo apt install zsh
 ```
 
