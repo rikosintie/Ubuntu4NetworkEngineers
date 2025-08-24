@@ -701,6 +701,48 @@ If you want to use an alias instead of a symlink, add
 
 to `~/.zshrc`
 
+#### BAT configuration
+
+**Highlighting theme**
+Use `bat --list-themes` to get a list of all available themes for syntax highlighting. There are a too many to list, I chose Dracula. You can quickly test a theme you can call `bat` with the --theme=Dracula option. To permanently use the Dracula theme, set the BAT_THEME environment variable to Dracula. Use export BAT_THEME="Dracula" in your shell's startup file to make the change permanent.
+
+`bat` can also be customized with a configuration file. A default configuration file can be created with the --generate-config-file option.
+
+`bat --generate-config-file`
+
+The location of the file is dependent on your operating system. To get the default path for your system, call
+
+```bash hl_lines='1'
+ bat --config-file
+/home/mhubbard/.config/bat/config
+```
+
+Then open the file:
+
+```bash hl_lines='1'
+micro /home/mhubbard/.config/bat/config
+```
+
+The configuration file is a simple list of command line arguments. Use `bat --help` to see a full list of possible options and values. In addition, you can add comments by prepending a line with the # character.
+
+**Example configuration file:**
+
+```bash
+# Set the theme to "TwoDark"
+--theme="TwoDark"
+
+# Show line numbers, Git modifications and file header (but no grid)
+--style="numbers,changes,header"
+
+# Use italic text on the terminal (not supported on all terminals)
+--italic-text=always
+
+# Use C++ syntax for Arduino .ino files
+--map-syntax "*.ino:C++"
+```
+
+----------------------------------------------------------------
+
 ### Hubbard's .zshrc file
 
 ```zsh title="Hubbard's .zshrc file"
