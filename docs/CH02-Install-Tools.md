@@ -48,6 +48,8 @@ You can tap the superkey and type `help` to open Ubuntu's Desktop Guide. If you 
 
 On linux, Applications are commonly referred to as packages. For years Linux distributions have used a `Package Manager` to install applications. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.
 
+This chapter will be about Graphical tools but I need to explain two terminal package managers first because they are needed to update the system after the installation of Ubuntu finishes.
+
 ### Advanced Package Tool - The Ubuntu package manager
 
 The Advanced Package Tool (apt) is the default terminal based package manager for Debian based Linux distributions like Ubuntu.
