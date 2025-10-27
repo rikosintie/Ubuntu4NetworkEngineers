@@ -419,8 +419,8 @@ end
 
 ### View saved configuration
 
-- `virsh dumpxml win2k16 | grep -i 'bridge'` show bridge config for a host named win2k16
-- `virsh dumpxml win2k16 > ~/win2k16.xml` Save the configuration for a host named win2k16
+- `sudo virsh dumpxml win2k16 | grep -i 'bridge'` show bridge config for a host named win2k16
+- `sudo virsh dumpxml win2k16 > ~/win2k16.xml` Save the configuration for a host named win2k16
 
 ### Start/stop a virtual machine
 
@@ -431,16 +431,16 @@ end
 
 ### View VM Details
 
-- `virsh dominfo win2k16` Show detailed information
+- `sudo virsh dominfo win2k16` Show detailed information
 
 ### Check Virtual Machine status
 
-- `virsh domstate win2k16`
+- `sudo virsh domstate win2k16`
 
 ### List virtual machines
 
-- `virsh list --all` List all vms including those not running
-- `virsh list` List all running vms
+- `sudo virsh list --all` List all vms including those not running
+- `sudo virsh list` List all running vms
 
 ### Connect to VM Console
 
@@ -448,25 +448,25 @@ end
 
 ### View DHCP leases
 
-- `virsh net-dhcp-leases default` show dhcp leases on network default.
-- `virsh net-dhcp-leases host-bridge` show dhcp leases on network host-bridge.
+- `sudo virsh net-dhcp-leases default` show dhcp leases on network default.
+- `sudo virsh net-dhcp-leases host-bridge` show dhcp leases on network host-bridge.
 
 In the yaml file we disabled dhcp with `dhcp4: false` so there are no leases.
 
 ### View the network yaml files
 
-- virsh netdumpxml default Show the configuration of the network named default
-- virsh netdumpxml host-bridge Show the configuration of the network named host-bridge
+- sudo virsh netdumpxml default Show the configuration of the network named default
+- sudo virsh netdumpxml host-bridge Show the configuration of the network named host-bridge
 
 ### Edit the network yaml files
 
-- virsh net-edit default Open the yaml configuration file of the  network `default` in the system editor
-- virsh net-edit host-bridge Open the yaml configuration file of the network `host-bridge` in the system editor
+- virsh net-edit default - Open the yaml configuration file of the  network `default` in the system editor
+- sudo virsh net-edit host-bridge - Open the yaml configuration file of the network `host-bridge` in the system editor
 
 ### Start/Stop networks
 
-- virsh net-destroy default Stop the network `default`
-- virsh net-start default Start the network `default`
+- sudo virsh net-destroy default - Stop the network `default`
+- sudo virsh net-start default Start the network `default`
 
 ## Manually create the bridge configuration
 
@@ -831,7 +831,7 @@ The next step is to configure virtual networks defined for virsh domains. This i
 Check existing virtual networks:
 
 ```bash
-virsh net-list --all
+sudo virsh net-list --all
 ```
 
 There should be one default network as in this example:
@@ -851,14 +851,14 @@ virsh net-info default
 Remove the default network:
 
 ```bash
-virsh net-destroy default
-virsh net-undefine default
+sudo virsh net-destroy default
+sudo virsh net-undefine default
 ```
 
 Check network list to confirm the changes have been applied. There should no networks defined now:
 
 ```bash
-virsh net-list --all
+sudo virsh net-list --all
 ```
 
 ### Create the networks
@@ -909,15 +909,15 @@ This consists of three steps (performed for each of the networks):
 - Set the network to autostart.
 
 ```bash linenums='1'
-virsh net-define net-br0.xml
-virsh net-define net-br0-vlan40.xml
-virsh net-define net-br0-vlan41.xml
-virsh net-start br0
-virsh net-start br0-vlan40
-virsh net-start br0-vlan41
-virsh net-autostart br0
-virsh net-autostart br0-vlan40
-virsh net-autostart br0-vlan41
+sudo virsh net-define net-br0.xml
+sudo virsh net-define net-br0-vlan40.xml
+sudo virsh net-define net-br0-vlan41.xml
+sudo virsh net-start br0
+sudo virsh net-start br0-vlan40
+sudo virsh net-start br0-vlan41
+sudo virsh net-autostart br0
+sudo virsh net-autostart br0-vlan40
+sudo virsh net-autostart br0-vlan41
 ```
 
 At this point you should have a bridge interface configured with the vlans 40, 41 up and running.
@@ -929,7 +929,7 @@ KVM/Virsh provides a rich set of terminal commands for verifying the network and
 ### Use net-list
 
 ```bash linenums='1' hl_lines='1'
-virsh net-list --all
+sudo virsh net-list --all
  Name         State    Autostart   Persistent
 -----------------------------------------------
  br0          active   yes         yes
