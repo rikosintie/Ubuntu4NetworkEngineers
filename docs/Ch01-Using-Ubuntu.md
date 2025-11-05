@@ -259,9 +259,11 @@ I am bringing this up because I installed a bunch of Gnome extensions a while ba
 
 ----------------------------------------------------------------
 
-### Two options I always use in Files
+### Options I always use in Files
 
-If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`. Two options are available that I always enable:
+If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`.
+
+The General options that I always enable:
 
 - Sort Folders Before Files
 - Expandable Folders in List View
@@ -269,6 +271,25 @@ If you click on the hamburger menu, or press `ctrl+,` you will see `Preferences`
 The `Expandable Folders` option puts a `>` symbol beside the folder name. Clicking the symbols expands the folder
 
 ![screenshot](img/File-Preferences.png)
+
+----------------------------------------------------------------
+
+The Optional Context Menu Actions that I always enable:
+
+- Create Link - Creates a shortcut to the file you have highlighted
+- Delete Permanently - Allows you to skip the Trashcan
+
+![screenshot](img/Files-Context.png)
+
+----------------------------------------------------------------
+
+The Grid View Cations that I always enable:
+
+- First - size
+- Second - Created
+- Third - type
+
+![screenshot](img/Files-Grid.png)
 
 ----------------------------------------------------------------
 
@@ -281,6 +302,12 @@ Files works great and has a feature I love – Tabs! Once you get used to having
     From [PCWorld](https://www.pcworld.com/article/1430331/use-the-new-tabbed-file-explorer-to-simplify-your-life.html#:~:text=Remember%2C%20tabs%20within%20File%20Explorer,seen%20them%20before%2C%20that's%20fine.)
 
     Remember, tabs within File Explorer were not part of the Windows 11 2022 Update (22H2) — they were added as part of a later separate update. It’s all part of the new “Moments” strategy that Microsoft has implemented to add new features at unexpected times.
+
+#### Open a new Tab
+
+You can use the keyboard shortcut `ctrl+t` to create a new tab or click the `Hamburger menu` and select New Tab. This will open the current folder in a new tab.
+
+If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab! That is a big time saver.
 
 ----------------------------------------------------------------
 
@@ -355,14 +382,6 @@ This one is very useful is you like to use GUI applications for files that requi
 
 ----------------------------------------------------------------
 
-### Open a new Tab
-
-You can use the keyboard shortcut `ctrl+t` to create a new tab or click the `Hamburger menu` and select New Tab. This will open the current folder in a new tab.
-
-If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab! That is a big time saver.
-
-----------------------------------------------------------------
-
 ### Keyboard shortcuts
 
 Gnome `Files` has a lot of keyboard shortcuts. You click the hamburger menu and select `Keyboard Shortcuts` or press `ctrl+?` to open a dialog displaying the shortcuts. There are 3 pages of them!
@@ -395,6 +414,7 @@ To install GNOME Sushi using Ubuntu Software, open a terminal and paste the foll
 
 ```bash
 sudo apt install gnome-sushi
+nautilus -q
 ```
 
 For a more detailed description see
@@ -410,11 +430,34 @@ To install the Nautilus Image Converter, open a terminal and paste the following
 
 ```bash
 sudo apt install nautilus-image-converter
+nautilus -q
 ```
 
 Now when you right click on an image file, you will see an option to resize and an option to rotate.
 
 ![screenshot](img/resize.png)
+
+----------------------------------------------------------------
+
+### Completely wipe files and folders from the disk
+
+Nautilus provides an extension to wipe files securely and fill the empty places so that data can not be recovered anymore. This is not a quick operation, it can takes minutes or hours depending on the size of the file.
+
+To install the Nautilus Image Converter, open a terminal and paste the following code in:
+
+```bash
+sudo apt install nautilus-wipe
+nautilus -q
+```
+
+----------------------------------------------------------------
+
+### Get the list of recently visited directories
+
+On the top left, right-click on the back arrow to get the list of previously visited folders.
+
+![screenshot](img/Files-recent.png)
+
 
 ----------------------------------------------------------------
 
