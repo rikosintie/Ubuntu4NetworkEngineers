@@ -79,15 +79,17 @@ You can check your current shell using the echo command:
 
 ```bash hl_lines="1"
 echo $SHELL
-/usr/bin/bash
 ```
+
+You should see `/usr/bin/bash`
 
 or
 
 ```bash hl_lines="1"
 echo $0
-/usr/bin/bash
 ```
+
+You should see `/usr/bin/bash`
 
 You can see that the current shell is bash
 
@@ -322,8 +324,10 @@ Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of 
 
 ```bash hl_lines="1"
 sudo apt search zsh-syntax-highlighting
-zsh-syntax-highlighting/oracular,oracular 0.7.1-2 all
 ```
+
+You should see `zsh-syntax-highlighting 0.7.1-2 [Ubuntu/noble universe]
+└── Fish shell like syntax highlighting for zsh`
 
 So now we know the package is named `zsh-syntax-highlighting`, we can install it using:
 
@@ -679,27 +683,37 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 **Installation Instructions**
 
 !!! note
-    I now install `bat` with homebrew instead of apt using `brew install bat`. The Homebrew package is coved in another chapter.
+    I now install `bat` with homebrew instead of apt using `brew install bat`. The Homebrew package is covered below.
+
+**A quick brew install guide**
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Once the install completes, paste these three lines into the terminal and press `enter`
+
+```bash
+echo >> /home/mhubbard/.zshrc
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/mhubbard/.zshrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+These lines add brew to the `.zshrc` file
+
+Install the `build-essential` tools. These are need by Brew and by many of the tools that we will install later.
+
+```bash
+sudo apt install build-essential
+```
+
+Finally, install `bat` using:
+
+```bash
+brew install bat
+```
 
 ----------------------------------------------------------------
-
-Download the latest `.deb` package from the release page [bat](https://github.com/sharkdp/bat/releases) and install it via:
-
-`sudo dpkg -i bat-musl_0.24.0_amd64.deb`  # adapt version number and architecture
-
-!!! warning
-     If you install bat this way, please note that the executable may be installed as batcat instead of bat (due to a name clash with another package). Although I have not ever had this happen.
-
-If this happens, you can set up a bat -> batcat symlink or alias to prevent any issues that may come up because of this and to be consistent with other distributions:
-
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
-
-If you want to use an alias instead of a symlink, add
-
-`alias cat='batcat'`
-
-to `~/.zshrc`
 
 #### BAT configuration
 
