@@ -326,7 +326,7 @@ Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of 
 sudo apt search zsh-syntax-highlighting
 ```
 
-You should see `zsh-syntax-highlighting 0.7.1-2 [Ubuntu/noble universe]</br>
+You should see `zsh-syntax-highlighting 0.7.1-2 [Ubuntu/noble universe]<\br>
 └── Fish shell like syntax highlighting for zsh`
 
 So now we know the package is named `zsh-syntax-highlighting`, we can install it using:
