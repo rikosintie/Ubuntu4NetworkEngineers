@@ -261,13 +261,10 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 ### Install  plugins
 
-Open the .zshrc file using:
+Open the .zshrc file using one of the followng method:
 
-Terminal Editor - `nano ~/.zshrc`
-
-or
-
-GUI -  `gnome-text-editor ~/.zshrc`
+- Terminal - `nano ~/.zshrc`
+- GUI - `gnome-text-editor ~/.zshrc`
 
 Find the plugin section
 
@@ -333,9 +330,9 @@ The code that we added has two aliases:
 
 ### Download the plugins
 
-Close the `~/.zshrc` file.
+Close the `~/.zshrc` file by pressing `ctrl+s`, then `ctrl+x`
 
-Copy each of these lines and paste it into the terminal:
+Copy each of these lines, paste it into the terminal and press [enter]:
 
 ```bash
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
@@ -357,9 +354,9 @@ git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom
 
 **Reload the configuration using `exec zsh`**
 
-Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh.
+Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
 
-These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+Anytime that you make changes to `~/.zshrc` you have to reload the `.zshrc` configuration.
 
 ----------------------------------------------------------------
 
@@ -372,7 +369,7 @@ Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` 
 ENABLE_CORRECTION="true"
 ```
 
-Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
+Save and close the `.zshrc` file. Run `sc` in the terminal. Now, for common typos, you will see this prompt:
 
 ```bash
 sl -l
@@ -391,12 +388,6 @@ You can press:
 - n - for no
 - a - abort
 - e - edit
-
-----------------------------------------------------------------
-
-#### Reload zsh
-
-Anytime that you make changes to `~/.zshrc` you have to reload the configuration. You do this at a terminal using `exec zsh` or the `sc` alias we just added. If there are no errors, all that you will see in the terminal is a new line.
 
 ----------------------------------------------------------------
 
