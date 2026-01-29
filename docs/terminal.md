@@ -261,7 +261,7 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 ### Install  plugins
 
-Open the .zshrc file using one of the followng method:
+Open the `.zshrc` file using one of the following methods:
 
 - Terminal - `nano ~/.zshrc`
 - GUI - `gnome-text-editor ~/.zshrc`
@@ -289,7 +289,6 @@ plugins=(
 
 Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor so that we can open `~/.zshrc` with an alias.
 
-- Open the `zsh` config file using `nano ~/.zshrc`
 - Search for `export EDITOR`.
 - Then modify the configuration as follows. Remove the `#` symbols on all lines except `# Preferred editor for local and remote sessions`.
 
@@ -332,7 +331,7 @@ The code that we added has two aliases:
 
 Close the `~/.zshrc` file by pressing `ctrl+s`, then `ctrl+x`
 
-Copy each of these lines, paste it into the terminal and press [enter]:
+Copy each line below, paste it into the terminal, and press [enter]:
 
 ```bash
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
@@ -460,7 +459,7 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 
 #### zsh Themes
 
-Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, Open the .zshrc file using `ec`and change the ZSH-THEME line to:
+Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, open the .zshrc file using `ec`and change the ZSH-THEME line to:
 
 `ZSH_THEME="duellj"`
 
