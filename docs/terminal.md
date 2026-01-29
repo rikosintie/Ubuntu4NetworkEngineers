@@ -14,7 +14,7 @@
 
 ----------------------------------------------------------------
 
-## Change Shells
+## Why Change Shells
 
 There are several shells available for Ubuntu. To name a few:
 
@@ -42,7 +42,7 @@ Some zsh Features
 
 ----------------------------------------------------------------
 
-**Installation Instructions**
+## ZSH Installation Instructions
 
 We will need `curl` installed before we start. curl is a tool for communicating with http servers. We will use it a lot in NetDevOps. If you have installed `homebrew` for Linux, still use the apt method. You can run into ssl issues if you use the `homebrew` curl and your system ssl is a different version. I spent hours troubleshooting curl and ssl issues before chatGPT explained the root cause to me.
 
@@ -50,7 +50,7 @@ We will also install `git`, a version control system commonly used in Open Sourc
 
 First we will make sure the system is up to date. Open the terminal using `ctrl+alt+t`, and enter:
 
-```bash
+```bash hl_lines="1-2"
 sudo apt update
 sudo apt upgrade
 ```
@@ -60,7 +60,7 @@ sudo apt upgrade
 
 Once these commands complete, enter the following to install `curl` and `git`:
 
-```bash
+```bash hl_lines="1"
 sudo apt install curl git -y
 ```
 
@@ -68,7 +68,7 @@ You may get a message saying the latest versions are already installed. That's f
 
 Now we can install zsh
 
-```bash
+```bash hl_lines="1"
 sudo apt install zsh
 ```
 
@@ -108,17 +108,37 @@ You can see that the current shell is `bash`
 
 You can display all installed shells using:
 
-```bash
+```bash hl_lines="1"
 cat /etc/shells
 ```
+
+```bash title='Command Output'
+# /etc/shells: valid login shells
+/bin/sh
+/usr/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/usr/bin/dash
+/usr/bin/screen
+/usr/bin/tmux
+/bin/zsh
+/usr/bin/zsh
+/usr/bin/zsh
+```
+
+----------------------------------------------------------------
 
 ### Make zsh the default shell
 
 Run this to make zsh the default
 
-```bash
+```bash hl_lines="1"
 chsh -s $(which zsh)
 ```
+
+There is no output from this command.
 
 Verify that zsh is the new shell
 
@@ -143,7 +163,7 @@ Here is a good article on changing shells if you want more information: [How to 
 
 Once you log back in, open a terminal with  `ctrl+alt+t`
 
-You will get a message saying zsh needs some configuration:
+You will get a message saying `zsh` needs some configuration:
 
 ```text hl_lines="12"
 This is the Z Shell configuration function for new users,
@@ -171,7 +191,7 @@ You can:
 
 On Linux/Mac, hidden files start with a `dot`, zsh uses a hidden file named `~/.zshrc` as it's configuration file. BASH uses `~/.bashrc` as its configuration file. You can list the files using:
 
-```bash
+```bash hl_lines="1"
 ls -l ~/.*rc
 ```
 
@@ -180,13 +200,13 @@ ls -l ~/.*rc
 .rw-rw-r-- 5.3k mhubbard  2 Jan 13:06 󱆃 /home/mhubbard/.zshrc
 ```
 
-We are going to install a tool called “Oh My ZSH” to customize the shell.
+Now we can install a tool called “Oh My ZSH” to customize the shell.
 
 ----------------------------------------------------------------
 
-### Install Oh My ZSH
+## Install Oh My ZSH
 
-The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it `root` without carefully reviewing it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it as `root` without carefully reviewing it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
 
 I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
@@ -239,7 +259,7 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 ----------------------------------------------------------------
 
-#### Install  plugins
+### Install  plugins
 
 Open the .zshrc file using:
 
@@ -268,7 +288,7 @@ plugins=(
 
 ----------------------------------------------------------------
 
-#### Set the default editor
+### Set the default editor
 
 Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor so that we can open `~/.zshrc` with an alias.
 
@@ -343,7 +363,7 @@ These two aliases will save a ton of time when you are making changes to `~/.zsh
 
 ----------------------------------------------------------------
 
-#### Auto Correction
+### Enable Auto Correction
 
 Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
 
@@ -380,7 +400,7 @@ Anytime that you make changes to `~/.zshrc` you have to reload the configuration
 
 ----------------------------------------------------------------
 
-#### Plug-ins References
+### Plug-ins References
 
 You can read the documentation for the plug-ins on their github repository
 
@@ -393,7 +413,7 @@ You can read the documentation for the plug-ins on their github repository
 
 ----------------------------------------------------------------
 
-#### install zsh-syntax-highlighting
+### install zsh-syntax-highlighting
 
 The zsh-syntax-highlighting package is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
 
@@ -516,7 +536,7 @@ This is just a small sample of the available aliases. The ones related to changi
 - The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
 - The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides the squash files.
 
-As you can see, you have some homework to do if you want to be outstanding at the terminal.
+As you can see, there are many tools available to make you  outstanding at the terminal.
 
 ----------------------------------------------------------------
 
