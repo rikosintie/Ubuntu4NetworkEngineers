@@ -105,7 +105,7 @@ You can display all installed shells using:
 cat /etc/shells
 ```
 
-#### Make zsh the default shell
+### Make zsh the default shell
 
 Run this to make zsh the default
 
@@ -128,7 +128,7 @@ The file `/etc/passwd` contains the individual user settings. You can see that m
 !!! note
     You must log out and back in to make zsh the active shell. I usually reboot at this point instead using `sudo reboot now`
 
-Here is a good article on changing shells: [How to change your default shell on Linux with chsh](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/)
+Here is a good article on changing shells if you want more information: [How to change your default shell on Linux with chsh](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/)
 
 ----------------------------------------------------------------
 
@@ -235,9 +235,16 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 #### Install  plugins
 
 Open the .zshrc file using:
-`nano ~/.zshrc` or `gnome-text-editor ~/.zshrc`
 
-Find the plugin line and change it to
+Terminal Editor `nano ~/.zshrc`
+or
+GUI `gnome-text-editor ~/.zshrc`
+
+Find the plugin section
+
+`plugins=(git)`
+
+and change it to
 
 ```text
 plugins=(
@@ -254,7 +261,13 @@ plugins=(
 
 #### Set the default editor
 
-Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open the file using `nano ~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows. Remove the `#` symbols on all lines except `# Preferred editor for local and remote sessions`. In `bash` and `zsh`, lines that start with the `#` symbol are comments.
+Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor so that we can open `~/.zshrc` with an alias.
+
+- Open the `zsh` config file using `nano ~/.zshrc`
+- Search for `export EDITOR`.
+- Then modify the configuration as follows. Remove the `#` symbols on all lines except `# Preferred editor for local and remote sessions`.
+
+In `bash` and `zsh`, lines that start with the `#` symbol are comments.
 
 ----------------------------------------------------------------
 
@@ -282,8 +295,6 @@ alias ec="$EDITOR $HOME/.zshrc"
 alias sc="exec zsh"
 ```
 
-----------------------------------------------------------------
-
 The code that we added has two aliases:
 
 - ec - Open ~/.zshrc in the default editor
@@ -291,35 +302,7 @@ The code that we added has two aliases:
 
 ----------------------------------------------------------------
 
-#### Auto Correction
-
-Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
-
-```bash
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-```
-
-Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
-
-```bash
-sl -l
-zsh: correct 'sl' to 'ls' [nyae]? y
-total 12K
--rw-r--r-- 1 mhubbard mhubbard 6.9K 2024-12-24 17:41 config
-drwxrwxr-x 3 mhubbard mhubbard 4.0K 2024-12-18 15:40 plugins/
-```
-
-You can press:
-
-- y - for yes
-- n - for no
-- a - abort
-- e - edit
-
-----------------------------------------------------------------
-
-**Download the plugins**
+### Download the plugins
 
 Close the `~/.zshrc` file.
 
@@ -344,9 +327,44 @@ git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom
 !!! note
     If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard. This works everywhere in this document.
 
-**Close and reload the configuration using `exec zsh`**
+----------------------------------------------------------------
 
-Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+**Reload the configuration using `exec zsh`**
+
+Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh.
+
+These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+
+----------------------------------------------------------------
+
+#### Auto Correction
+
+Open the .zshrc file. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+
+```bash
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+```
+
+Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
+
+```bash
+sl -l
+```
+
+```bash title='Command Output'
+zsh: correct 'sl' to 'ls' [nyae]? y
+total 12K
+-rw-r--r-- 1 mhubbard mhubbard 6.9K 2024-12-24 17:41 config
+drwxrwxr-x 3 mhubbard mhubbard 4.0K 2024-12-18 15:40 plugins/
+```
+
+You can press:
+
+- y - for yes
+- n - for no
+- a - abort
+- e - edit
 
 ----------------------------------------------------------------
 
