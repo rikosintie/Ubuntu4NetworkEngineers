@@ -40,6 +40,8 @@ Some zsh Features
 - Spelling correction and autofill of command names.
 - Named directories.
 
+----------------------------------------------------------------
+
 **Installation Instructions**
 
 We will need `curl` installed before we start. curl is a tool for communicating with http servers. We will use it a lot in NetDevOps. If you have installed `homebrew` for Linux, still use the apt method. You can run into ssl issues if you use the `homebrew` curl and your system ssl is a different version. I spent hours troubleshooting curl and ssl issues before chatGPT explained the root cause to me.
@@ -53,13 +55,16 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Once the update is complete, enter the following to install `curl` and `git`:
+!!! note
+    If you hover the mouse over the command it will bring up a `copy to clipboard` icon on the right. Just click it and the command will be copied to the clipboard. This works everywhere in this document.
+
+Once these commands complete, enter the following to install `curl` and `git`:
 
 ```bash
 sudo apt install curl git -y
 ```
 
-You may get a message saying the latest versions are already installed. That's fine, it just means you already have the latest versions.
+You may get a message saying the latest versions are already installed. That's fine, it just means you already have the latest versions installed.
 
 Now we can install zsh
 
@@ -73,7 +78,9 @@ sudo apt install zsh
 zsh --version
 ```
 
+```bash title='Command Output'
 zsh 5.9 (x86_64-ubuntu-linux-gnu)
+```
 
 This is the current version as of January, 2026.
 
@@ -138,7 +145,7 @@ Once you log back in, open a terminal with  `ctrl+alt+t`
 
 You will get a message saying zsh needs some configuration:
 
-```text
+```text hl_lines="12"
 This is the Z Shell configuration function for new users,
 zsh-newuser-install.
 
@@ -162,7 +169,7 @@ You can:
 
 **Choose 0 to just create the .zshrc file and exit**
 
-On Linux/Mac, hidden files start with a `.`, zsh uses a hidden file named `~/.zshrc` as it's configuration file. BASH uses `~/.bashrc` as its configuration file. You can list the files using:
+On Linux/Mac, hidden files start with a `dot`, zsh uses a hidden file named `~/.zshrc` as it's configuration file. BASH uses `~/.bashrc` as its configuration file. You can list the files using:
 
 ```bash
 ls -l ~/.*rc
@@ -179,7 +186,7 @@ We are going to install a tool called “Oh My ZSH” to customize the shell.
 
 ### Install Oh My ZSH
 
-The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it without carefully reviewing it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it `root` without carefully reviewing it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
 
 I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
@@ -189,7 +196,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 When the install shell script starts you will see:
 
-```text hl_lines='15 26'
+```text hl_lines='15 25'
 Cloning Oh My Zsh...
 remote: Enumerating objects: 1444, done.
 remote: Counting objects: 100% (1444/1444), done.
@@ -236,9 +243,11 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 Open the .zshrc file using:
 
-Terminal Editor `nano ~/.zshrc`
+Terminal Editor - `nano ~/.zshrc`
+
 or
-GUI `gnome-text-editor ~/.zshrc`
+
+GUI -  `gnome-text-editor ~/.zshrc`
 
 Find the plugin section
 
@@ -324,9 +333,6 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases
 ```
 
-!!! note
-    If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard. This works everywhere in this document.
-
 ----------------------------------------------------------------
 
 **Reload the configuration using `exec zsh`**
@@ -339,7 +345,7 @@ These two aliases will save a ton of time when you are making changes to `~/.zsh
 
 #### Auto Correction
 
-Open the .zshrc file. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
 
 ```bash
 # Uncomment the following line to enable command auto-correction.
@@ -374,7 +380,7 @@ Anytime that you make changes to `~/.zshrc` you have to reload the configuration
 
 ----------------------------------------------------------------
 
-**Plug-ins References**
+#### Plug-ins References
 
 You can read the documentation for the plug-ins on their github repository
 
@@ -389,7 +395,7 @@ You can read the documentation for the plug-ins on their github repository
 
 #### install zsh-syntax-highlighting
 
-The zsh-syntax-highlighting package ( z-sy-h) is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
+The zsh-syntax-highlighting package is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
 
 ----------------------------------------------------------------
 
@@ -443,15 +449,20 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 
 #### zsh Themes
 
-Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, Open the .zshrc file using:
-`nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` and change the ZSH-THEME line to:
-ZSH_THEME="duellj"
+Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, Open the .zshrc file using `ec`and change the ZSH-THEME line to:
+
+`ZSH_THEME="duellj"`
 
 I also like “amuse”. It’s similar to duellj but doesn’t put the username/machine name in the terminal. Since I’m on my personal laptop I don’t need that information. To use “amuse”
 
-ZSH_THEME="amuse"
+`ZSH_THEME="amuse"`
 
 You can put a `#` symbol in front of the theme line to comment it out. I leave both themes in my `.zshrc` file and then switch back and forth as needed.
+
+```text
+ZSH_THEME="duellj"
+# ZSH_THEME="amuse"
+```
 
 Here is the prompt with `amuse` as the theme:
 
@@ -503,7 +514,7 @@ This is just a small sample of the available aliases. The ones related to changi
 - The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
 - The `chmod -c` - like verbose but report only when a change is made.
 - The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
-- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides squash files.
+- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides the squash files.
 
 As you can see, you have some homework to do if you want to be outstanding at the terminal.
 
@@ -549,7 +560,7 @@ You can include shell scripts in `.zshrc`. Here are two that I find very useful.
 
 #### Path
 
-This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc and paste this script in. Then in the terminal use the `sc` alias we created to reload zsh.
+This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
 
 ```zsh
 # "path" shows current path, one element per line.
@@ -583,7 +594,7 @@ Now when we type `path` into the terminal we get:
 
 #### Make dir
 
-This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc and paste this script in. Then in the terminal use the `sc` alias we created to reload zsh.
+This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
 
 ```bash
 # Create a new directory and enter it
@@ -595,7 +606,7 @@ mkd() {
 
 Now type:
 
-```bash hl_lines="1 5"
+```bash hl_lines="1 5 9"
 pwd
 /home/mhubbard
 
