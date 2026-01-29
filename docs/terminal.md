@@ -327,11 +327,23 @@ The code that we added has two aliases:
 
 ----------------------------------------------------------------
 
+### Enable Auto Correction
+
+Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+
+```bash
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+```
+
+----------------------------------------------------------------
+
 ### Download the plugins
 
 Close the `~/.zshrc` file by pressing `ctrl+s`, then `ctrl+x`
 
 Copy each line below, paste it into the terminal, and press [enter]:
+Copy each of these lines, paste it into the terminal and press [enter]:
 
 ```bash
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
@@ -359,20 +371,15 @@ Anytime that you make changes to `~/.zshrc` you have to reload the `.zshrc` conf
 
 ----------------------------------------------------------------
 
-### Enable Auto Correction
+### Auto Correction in action
 
-Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
-
-```bash
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-```
-
-Save and close the `.zshrc` file. Run `sc` in the terminal. Now, for common typos, you will see this prompt:
+Here I have typed `sl -l` instead of `ls -l`:
 
 ```bash
 sl -l
 ```
+
+With `ENABLE_CORRECTION="true"` uncommented, for common typos, you will see this prompt:
 
 ```bash title='Command Output'
 zsh: correct 'sl' to 'ls' [nyae]? y
