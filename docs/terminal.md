@@ -7,7 +7,7 @@
 :arrow_forward: KEY TAKEAWAYS
 
 - We will install z shell (ZSH) and set it as the default shell.
-- Then we will install [Oh-My-ZSH](https://ohmyz.sh/) and configure it for awsomeness.
+- Then we will install [Oh-My-ZSH](https://ohmyz.sh/) and configure it for awesomeness.
 - We will enable syntax highlighting, autosuggestions, History-substring-search, git integration and docker aliases!!
 - We will install `Terminator` which has tabs, logging, and several available plugins.
 - You will be the envy of your network engineering friends.
@@ -59,6 +59,8 @@ Once the update is complete, enter the following to install `curl` and `git`:
 sudo apt install curl git -y
 ```
 
+You may get a message saying the latest versions are already installed. That's fine, it just means you already have the latest versions.
+
 Now we can install zsh
 
 ```bash
@@ -68,12 +70,12 @@ sudo apt install zsh
 **Check the version**
 
 ```bash hl_lines="1"
-zsh --version`
+zsh --version
 ```
 
 zsh 5.9 (x86_64-ubuntu-linux-gnu)
 
-This is the current version as of December 2024
+This is the current version as of January, 2026.
 
 You can check your current shell using the echo command:
 
@@ -81,7 +83,9 @@ You can check your current shell using the echo command:
 echo $SHELL
 ```
 
-You should see `/usr/bin/bash`
+```bash title='Command Output'
+/usr/bin/bash
+```
 
 or
 
@@ -89,15 +93,19 @@ or
 echo $0
 ```
 
-You should see `/usr/bin/bash`
+```bash title='Command Output'
+/usr/bin/bash
+```
 
-You can see that the current shell is bash
+You can see that the current shell is `bash`
 
 You can display all installed shells using:
 
 ```bash
 cat /etc/shells
 ```
+
+#### Make zsh the default shell
 
 Run this to make zsh the default
 
@@ -110,7 +118,10 @@ Verify that zsh is the new shell
 ```bash  hl_lines="1"
 grep zsh /etc/passwd
 ```
-`mhubbard:x:1000:1000:Michael Hubbard,,,:/home/mhubbard:/usr/bin/zsh`
+
+```bash title='Command Output'
+mhubbard:x:1000:1000:Michael Hubbard,,,:/home/mhubbard:/usr/bin/zsh
+```
 
 The file `/etc/passwd` contains the individual user settings. You can see that my shell is now `/usr/bin/zsh`.
 
@@ -119,11 +130,7 @@ The file `/etc/passwd` contains the individual user settings. You can see that m
 
 Here is a good article on changing shells: [How to change your default shell on Linux with chsh](https://www.howtogeek.com/669835/how-to-change-your-default-shell-on-linux-with-chsh/)
 
-On Linux/Mac, hidden files start with a `.`, zsh uses a hidden file named `~/.zshrc as it's configuration file. BASH uses ~/.bashrc as its configuration file. You can list the files using:
-
-```bash
-ls -l ~/.*rc
-```
+----------------------------------------------------------------
 
 ### Configure zsh
 
@@ -155,11 +162,24 @@ You can:
 
 **Choose 0 to just create the .zshrc file and exit**
 
+On Linux/Mac, hidden files start with a `.`, zsh uses a hidden file named `~/.zshrc` as it's configuration file. BASH uses `~/.bashrc` as its configuration file. You can list the files using:
+
+```bash
+ls -l ~/.*rc
+```
+
+```bash title='Command Output'
+.rw-r--r-- 4.1k mhubbard  3 May  2025 󱆃 /home/mhubbard/.bashrc
+.rw-rw-r-- 5.3k mhubbard  2 Jan 13:06 󱆃 /home/mhubbard/.zshrc
+```
+
 We are going to install a tool called “Oh My ZSH” to customize the shell.
+
+----------------------------------------------------------------
 
 ### Install Oh My ZSH
 
-The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it wihtout carefully review it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
+The zsh project uses a `shell script` to install `Oh My ZSH` on your system. In general, you should never copy a shell script from Internet and run it without carefully reviewing it. There are a lot of malicious scripts on the Internet! But the zsh project is a FOSS project and you can trust the shell script. Plus, the shell script is not run with `root` privileges.
 
 I have it here for convenience but you are free to go to the [zsh project](https://ohmyz.sh/#install) and copy the shell script from the official website.
 
@@ -210,6 +230,8 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 • Get stickers, shirts, coffee mugs and other swag: https://shop.planetargon.com/collections/oh-my-zsh
 ```
 
+----------------------------------------------------------------
+
 #### Install  plugins
 
 Open the .zshrc file using:
@@ -228,7 +250,78 @@ plugins=(
         )
 ```
 
+----------------------------------------------------------------
+
+#### Set the default editor
+
+Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open the file using `nano ~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows. Remove the `#` symbols on all lines except `# Preferred editor for local and remote sessions`. In `bash` and `zsh`, lines that start with the `#` symbol are comments.
+
+----------------------------------------------------------------
+
+```bash
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='nano'
+ else
+   export EDITOR='subl'
+ fi
+```
+
+----------------------------------------------------------------
+
+This will make `nano` the default editor when you open a file over ssh and `sublime text` the default editor locally. If you haven't installed `sublime text` use the editor of your choice. For example, to use `nano` the line would be `export EDITOR='nano'`
+
+Then add the following after the `preferred editor` section:
+
+----------------------------------------------------------------
+
+```bash
+# open ~/.zshrc in using the default editor specified in $EDITOR
+alias ec="$EDITOR $HOME/.zshrc"
+# rerun ~/.zshrc after making changes
+alias sc="exec zsh"
+```
+
+----------------------------------------------------------------
+
+The code that we added has two aliases:
+
+- ec - Open ~/.zshrc in the default editor
+- sc - reload the zsh configuration using `exec zsh`
+
+----------------------------------------------------------------
+
+#### Auto Correction
+
+Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+
+```bash
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+```
+
+Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
+
+```bash
+sl -l
+zsh: correct 'sl' to 'ls' [nyae]? y
+total 12K
+-rw-r--r-- 1 mhubbard mhubbard 6.9K 2024-12-24 17:41 config
+drwxrwxr-x 3 mhubbard mhubbard 4.0K 2024-12-18 15:40 plugins/
+```
+
+You can press:
+
+- y - for yes
+- n - for no
+- a - abort
+- e - edit
+
+----------------------------------------------------------------
+
 **Download the plugins**
+
+Close the `~/.zshrc` file.
 
 Copy each of these lines and paste it into the terminal:
 
@@ -251,49 +344,15 @@ git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom
 !!! note
     If you hover the mouse over the command it will bring up a `copy to clipboard` icon. Just click it and the command will be copied to the clipboard. This works everywhere in this document.
 
-#### Update zsh
+**Close and reload the configuration using `exec zsh`**
 
-Anytime that you make changes to `~/.zshrc` you have to reload the configuration. You do this at a terminal using `exec zsh`. If there are no errors, all that you will see in the terminal is a new line.
-
-#### Set the default editor
-
-Especially in the beginning, you will be making a lot of changes to `.zshrc` and you won't want to type `nano ~/.zshrc` or `gnome-text-editor ~/.zshrc` every time. First we will set the default editor. Open `~/.zshrc` and search for `export EDITOR`. Then modify the configuration as follows. Remove the `#` symbols, they are comments.
+Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
 
 ----------------------------------------------------------------
 
-```bash
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nano'
- else
-   export EDITOR='subl'
- fi
-```
+#### Reload zsh
 
-----------------------------------------------------------------
-
- This will make `nano` the default editor when you open a file over ssh and `sublime text` the default editor locally. If you haven't installed `sublime text` use the editor of your choice. For example, to use `nano` the line would be `export EDITOR='nano'`
-
-Then add the following to ~/.zshrc:
-
-----------------------------------------------------------------
-
-```bash
-# open ~/.zshrc in using the default editor specified in $EDITOR
-alias ec="$EDITOR $HOME/.zshrc"
-# rerun ~/.zshrc after making changes
-alias sc="exec zsh"
-```
-
------------------------------------------------ uses: actions/cache@v2
-Close and reload the configuration using `exec zsh`
-
-The code that we added has two aliases:
-
-- ec - Open ~/.zshrc in the default editor
-- sc - reload the zsh configuration using `exec zsh`
-
-Now you can type `ec` to edit the .zshrc file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+Anytime that you make changes to `~/.zshrc` you have to reload the configuration. You do this at a terminal using `exec zsh` or the `sc` alias we just added. If there are no errors, all that you will see in the terminal is a new line.
 
 ----------------------------------------------------------------
 
@@ -318,9 +377,9 @@ The zsh-syntax-highlighting package ( z-sy-h) is a **MUST**. It does a lot but t
 
 **Installation Instructions**
 
-In zsh prior to 5.8 I used the zsh plugin to install zsh-syntax-highlighting. The install page now recommends installing zsh-syntax-highlighting manually instead of using the `oh-my-zsh` plugin. The zsh-syntax-highlighting installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
+The zsh-syntax-highlighting installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
-Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure
+Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure:
 
 ```bash hl_lines="1"
 sudo apt search zsh-syntax-highlighting
@@ -335,7 +394,7 @@ So now we know the package is named `zsh-syntax-highlighting`, we can install it
 sudo apt install zsh-syntax-highlighting && echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-These commands install the `zsh-syntax-highlighting` package then echo the source command into the .zshrc file.
+These commands install the `zsh-syntax-highlighting` package, then echo the source command into the .zshrc file.
 
 Now enter `sc` to reload zsh.
 
@@ -349,7 +408,7 @@ echo ${ZDOTDIR:-$HOME}/.zshrc
 Showing that my `.zshrc` is located at `/home/mhubbard/` or the root of my home directory.
 
 !!! Note
-    In zsh newer than 5.8 (not including 5.8 itself), zsh-syntax-highlighting uses the add-zle-hook-widget facility to install a zle-line-pre-redraw hook. Hooks are run in order of registration, therefore, z-sy-h must be sourced (and register its hook) after anything else that adds hooks that modify the command-line buffer.
+    In zsh 5.9, zsh-syntax-highlighting uses the add-zle-hook-widget facility to install a zle-line-pre-redraw hook. Hooks are run in order of registration, therefore, z-sy-h must be sourced (and register its hook) after anything else that adds hooks that modify the command-line buffer.
 
 The line in the .zshrc file they are referring to is `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` . I make it the last line to the `.zshrc` file.
 
@@ -389,39 +448,11 @@ Don't forget to update `.zshrc` with `sc` in a terminal.
 
 ----------------------------------------------------------------
 
-#### Auto Correction
-
-Open the `.zshrc` file and search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
-
-```bash
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-```
-
-Save the `.zshrc` file and run `sc` in the terminal. Now for common typos you will see this prompt:
-
-```bash
-sl -l
-zsh: correct 'sl' to 'ls' [nyae]? y
-total 12K
--rw-r--r-- 1 mhubbard mhubbard 6.9K 2024-12-24 17:41 config
-drwxrwxr-x 3 mhubbard mhubbard 4.0K 2024-12-18 15:40 plugins/
-```
-
-You can press:
-
-- y - for yes
-- n - for no
-- a - abort
-- e - edit
-
-----------------------------------------------------------------
-
 #### Aliases
 
 zsh includes a lot of aliases and we added more with the `git` and `docker aliases` plug-ins. To see what aliases are available, open a terminal, `ctrl+alt+t` and type:
 
-```bash hl_lines="1"
+```bash hl_lines="1 17 22-24"
 alias
 -='cd -'
 ..='cd ..'
@@ -452,8 +483,9 @@ diff='diff --color'
 This is just a small sample of the available aliases. The ones related to changing directories are super useful. You need to spend some time building the muscle memory to use them.
 
 - The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
+- The `chmod -c` - like verbose but report only when a change is made.
 - The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
-- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the ouput into "human readable' format and the `--exclude=squashfs'` hides squash files.
+- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides squash files.
 
 As you can see, you have some homework to do if you want to be outstanding at the terminal.
 
@@ -557,7 +589,7 @@ mkdir: created directory '01_test/test'
 ~/01_test/test ⌚ 20:10:12
 ```
 
-You can see that it created the parent directory, then the `01_test` directory.
+You can see that it created the parent directory `01_test`, then the `test` directory.
 
 ----------------------------------------------------------------
 
@@ -567,7 +599,7 @@ The `.zshrc` file is primary configuration file for zsh. But if you start creati
 
 To solve this problem, oh-my-zsh provides a custom folder, `~/.oh-my-zsh/custom` where you can create an additional configuration file. The file has to have `zsh` as the extension. I use `my-aliases.zsh` for mine. Having your custom aliases and shell scripts in a separate file makes locating your aliases easier.
 
-I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- tab` and get a list of all of my aliases:
+I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- [tab]` and get a list of all of my aliases:
 
 ```bash
 mw-exa2 -a
@@ -598,7 +630,7 @@ I haven't used this script but it has a lot of positive comments in the repo.
 
 **Create the script**
 
-Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py`.
+Create an empty text file in your text editor and paste the following into it. Save it as `bash-to-zsh-hist.py` in the root of your home folder.
 
 ``` py linenums="1"
 #!/usr/bin/env python
@@ -633,12 +665,14 @@ if __name__ == '__main__':
 
 `cd ~/ && cp .bash_history .bash_history.bak && cat ~/.bash_history | python3 bash-to-zsh-hist.py >> ~/.zsh_history`
 
-!!! note
-    if zsh_history format is
-    : 1670471184:0;cat ~/.zsh_history
-    need use int(time.time()) at line 21 of the script
+That command line uses `&&` to combine multiple commands. The `&&` operator means "Run command 1, if it exits successfully, run command 2", and you can chain as many together as needed.
 
-Here is the repository:
+- cd ~/ --- Change directory to the root of home
+- cp    --- copy ~/.bash_history to ~/.bash_history_bak
+- cat   --- list the contents of ~/bash_history to screen
+- python3 - run the script using python3
+
+Here is the repository. If you have any problems, you might find a solution here:
 
 [bash-to-zsh-hist.py](https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274)
 
@@ -683,7 +717,7 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 **Installation Instructions**
 
 !!! note
-    I now install `bat` with homebrew instead of apt using `brew install bat`. The Homebrew package is covered below.
+    I now install `bat` with homebrew instead of `apt` using `brew install bat`. The Homebrew package is covered below.
 
 **A quick brew install guide**
 
@@ -701,7 +735,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 These lines add brew to the `.zshrc` file
 
-Install the `build-essential` tools. These are need by Brew and by many of the tools that we will install later.
+Install the `build-essential` tools. These are needed by Brew and by many of the tools that we will install later.
 
 ```bash
 sudo apt install build-essential
