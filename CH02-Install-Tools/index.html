@@ -1,0 +1,2351 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Michael Hubbard (rikosintie)">
+      
+      
+        <link rel="canonical" href="https://rikosintie.github.io/Ubuntu4NetworkEngineers/CH02-Install-Tools/">
+      
+      
+        <link rel="prev" href="../Ch01-Using-Ubuntu/">
+      
+      
+        <link rel="next" href="../terminal/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Desktop - Ubuntu for Network Engineers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Desktop - Ubuntu for Network Engineers" />
+<meta property="og:image" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/assets/images/social/CH02-Install-Tools.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/CH02-Install-Tools/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Desktop - Ubuntu for Network Engineers" />
+<meta property="twitter:image" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/assets/images/social/CH02-Install-Tools.png" />
+</head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gnome-desktop-tools" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-header__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  <img src="../img/ubuntu_icon1.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ubuntu for Network Engineers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Desktop
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rikosintie/Ubuntu4NetworkEngineers" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Ubuntu4NetworkEngineers
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Intro
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Ch01-Using-Ubuntu/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Desktop
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terminal/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Terminal
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../wireless-tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  WiFi Tools
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Log_tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Log Tools
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SSH/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  SSH
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../KVM-Bridge/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  KVM
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Join-Ubuntu-24.04-desktop-to-AD/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Add to AD
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-nav__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  <img src="../img/ubuntu_icon1.png" alt="logo">
+
+    </a>
+    Ubuntu for Network Engineers
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rikosintie/Ubuntu4NetworkEngineers" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Ubuntu4NetworkEngineers
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ch01-Using-Ubuntu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desktop
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Help
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-based-package-managers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal based Package managers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Terminal based Package managers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advanced-package-tool-the-ubuntu-package-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Package Tool - The Ubuntu package manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nala-package-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Nala Package manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Nala Package manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#benefits-of-nala-over-apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benefits of Nala over Apt
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universal-linux-package-managers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Universal Linux Package Managers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Universal Linux Package Managers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#snaps-vs-flatpak-vs-appimage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snaps vs Flatpak vs Appimage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flatpak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flatpak
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flatpak">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-flatpak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Flatpak
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Flatpak">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gnome-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gnome Specific
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gnome-core-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gnome Core Apps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gnome-circle-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gnome Circle Apps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gnome-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gnome Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Extensions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing Extensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clipboard-indicator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clipboard Indicator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customize-clock-on-lock-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customize Clock on Lock Screen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GSConnect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logo-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logo Menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removable-drive-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removable Drive menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Systemd Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flatpak-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flatpak Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flatpak Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dev-toolbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dev Toolbox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disk-usage-analyzer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk Usage analyzer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drawio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Draw.io
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatseal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flatseal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flatseal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-flatpaks-in-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List flatpaks in terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flatpaks-with-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flatpaks with Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-flatpaks-with-a-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch flatpaks with a script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foliate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Foliate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gearlever" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GearLever
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GearLever">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolourpaint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KolourPaint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meld" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meld
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Meld">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pinta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vesktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vesktop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warehouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warehouse
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wrapping-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrapping up
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wireless-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Log_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Log Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SSH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KVM-Bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KVM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Join-Ubuntu-24.04-desktop-to-AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Add to AD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="gnome-desktop-tools">Gnome Desktop Tools</h1>
+<p><img alt="screenshot" src="../img/Tux-Desktop1.png" /></p>
+<hr />
+<p><img alt="▶" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/25b6.svg" title=":arrow_forward:" /> KEY TAKEAWAYS</p>
+<ul>
+<li>Ubuntu is built off of Debian Linux, so tools that are compatible with Debian will probably work on Ubuntu.</li>
+<li>Ubuntu comes with the The App Center built in. Thousands of applications are available. To open - Tap <code>Superkey</code>, type <code>App</code>, press <code>Enter</code>.</li>
+<li>Ubuntu supports the Gnome Project's <a href="https://flathub.org/">Flat Pack</a> applications.</li>
+<li>Ubuntu supports <a href="https://appimage.org/">App Images</a>. Linux apps that run anywhere!</li>
+<li>If you are coming from MacOS, you can use <a href="https://docs.brew.sh/Homebrew-on-Linux">Homebrew</a> to install packages.</li>
+<li>Thousands of networking tools are available on <a href="github.com">github</a></li>
+<li>The <a href="https://packetpushers.net">Packet Pushers</a> network maintains a list of <a href="https://packetpushers.net/blog/open-source-networking-projects/">Open Source Networking Projects</a>. Most work on Ubuntu.</li>
+</ul>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p><strong>About GNOME on Ubuntu</strong></p>
+<p>Ubuntu Desktop comes installed with a slightly modified version of the GNOME Desktop Environment. Here is a list of the notable differences between GNOME on Ubuntu and "Vanilla" GNOME.</p>
+<ul>
+<li>Ubuntu comes with Firefox instead of the GNOME Web browser.</li>
+<li>Ubuntu comes with the Remmina remote desktop client instead of GNOME Connections.</li>
+<li>The AppIndicators extension is included. This extension will enable icons in the top right corner of some applications.</li>
+<li>The Ubuntu Dock extension is included. This extension provides the left sidebar for running applications.</li>
+<li>The Desktop Icons NG extension is included. This extension enables the use of icons on the desktop.</li>
+<li>In addition to Ubuntu desktop wallpapers, the default theme is Yaru and the default font is Ubuntu.</li>
+<li>Minimize and maximize buttons are included on window title bars.</li>
+</ul>
+<p><strong>Gnome News</strong></p>
+<p>The Gnome project maintains a site called <a href="https://thisweek.gnome.org">This Week in Gnome</a> where they post links to short articles on what changed in the current week. I don't remember to look at it every week, but it's worth going to once in a while to see what has changed.</p>
+<h3 id="getting-help">Getting Help</h3>
+<p>You can tap the superkey and type <code>help</code> to open Ubuntu's Desktop Guide. If you are new to Ubuntu, I highly recommend that you review it.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Ubuntu-Help.png" /></p>
+<hr />
+<h2 id="terminal-based-package-managers">Terminal based Package managers</h2>
+<p>On linux, Applications are commonly referred to as packages. For years Linux distributions have used a <code>Package Manager</code> to install applications. The problem with package managers is that Debian/Ubuntu used a different package manager than Redhat/Centos, which used a different package manager than Arch, which used a different package manager than SUSE. And on and on. This meant any developer who wanted to create Linux applications had to create packages for every manager. That was not popular with developers and held Desktop Linux adoption back.</p>
+<p>This chapter will be about Graphical tools but I need to explain two terminal package managers first because they are needed to update the system after the installation of Ubuntu finishes.</p>
+<h3 id="advanced-package-tool-the-ubuntu-package-manager">Advanced Package Tool - The Ubuntu package manager</h3>
+<p>The Advanced Package Tool (apt) is the default terminal based package manager for Debian based Linux distributions like Ubuntu.</p>
+<h3 id="the-nala-package-manager">The Nala Package manager</h3>
+<p>Description from the <a href="https://github.com/volitank/nala">nala webpage</a>:
+Nala is a front-end for libapt-pkg, the library that uses the python-apt api. Especially for newer users it can be hard to understand what apt is trying to do when installing or upgrading. We aim to solve this by not showing some redundant messages, formatting the packages better, and using color to show specifically what will happen with a package during install, removal, or an upgrade.</p>
+<h4 id="benefits-of-nala-over-apt">Benefits of Nala over Apt</h4>
+<p>Nala offers a more user-friendly interface with features like parallel downloads, improved output formatting, and package transaction history, making it easier to manage software</p>
+<p><strong>Parallel Downloads</strong></p>
+<p>Outside of pretty formatting, the number 1 reason to use Nala over apt is parallel downloads. By default, Nala will download 3 packages per unique mirror in your sources.list file. Opening multiple connections to the same mirror is great for speeding up downloading many small packages. We have the 3 connections per mirror limit to minimize how hard we are hitting mirrors. Additionally, we alternate downloads between the available mirrors to improve download speeds even further. If a mirror fails for whatever reason, we just try the next until all defined mirrors are exhausted.</p>
+<p>Note: Nala does not use APT for package downloading and verification</p>
+<p><strong>Fetch</strong></p>
+<p><code>sudo nala fetch</code></p>
+<p>Which brings us to the next standout feature, nala fetch. Nala fetch will check if your distribution is either Debian or Ubuntu. Nala will then go get all the mirrors from the respective master list. Once done we test the latency and score each mirror. Nala will choose the fastest 3 mirrors (configurable) and write them to a file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment fetch will only work on Debian, Ubuntu and derivatives still tied to the main repos.</p>
+</div>
+<p><strong>History</strong></p>
+<p><code>nala history</code></p>
+<p>The last big feature is the nala history command.</p>
+<p>Nala stores each  <code>Install</code>, <code>Remove</code> or <code>Upgrade</code> in <code>/var/lib/nala/history.json</code> with a unique <code>&lt;ID&gt;</code> number. At any time you can call <code>nala history</code> to print a summary of every transaction ever made. You can then further manipulate this with commands such as <code>nala history undo &lt;ID&gt;</code> or <code>nala history redo &lt;ID&gt;</code>.</p>
+<p>If there is something in the history file that you don't want, you can use the <code>nala history clear &lt;ID&gt;</code> to remove that entry.</p>
+<p>Alternatively for the clear command we accept --all which will remove the entire history - <code>sudo nala history clear --all</code>.</p>
+<p><strong>Installation</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nala
+</span></code></pre></div>
+<p><strong>References</strong></p>
+<p><a href="https://github.com/volitank/nala">Nala on Github</a></p>
+<p><a href="https://phoenixnap.com/kb/nala-apt">Nala apt Frontend for Linux</a> - An article from PhoenixNAP on Nala.</p>
+<hr />
+<h2 id="universal-linux-package-managers">Universal Linux Package Managers</h2>
+<p>To work around this problem three universal packaging systems were created:</p>
+<ul>
+<li>Snaps</li>
+<li>Flatpaks</li>
+<li>AppImages</li>
+</ul>
+<p>It's the old "Pick a standard, any standard" joke. We now have a package installer format that works on all platforms, but there are three of them 😁. This article explains the who, and how of the three - <a href="https://phoenixnap.com/kb/flatpak-vs-snap-vs-appimage">Flatpak vs. Snap vs. AppImage</a>.</p>
+<h3 id="snaps-vs-flatpak-vs-appimage">Snaps vs Flatpak vs Appimage</h3>
+<p><strong>Snaps</strong></p>
+<p>Canonical, the publisher of Ubuntu, developed the Snap infrastructure so it's built into Ubuntu. It runs on a proprietary backend hosted by Canonical. This has caused an uproar in the Linux community that values Open Source over everything. My opinion is that I use Ubuntu, snaps are native to Ubuntu and the Ubuntu security team does a good job in general so I use snaps when I find a useful application packaged as a snap.</p>
+<p><strong>Flatpaks</strong></p>
+<p>Gnome, KDE and FreeDesktop created the Flatpak organization in September 2015. This is before Ubuntu switched to the Gnome desktop in October 2017.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It was announced in December 2024 that Flatpak will become a <a href="https://www.gamingonlinux.com/2024/12/flathub-to-become-a-self-sustaining-entity-and-theyre-looking-to-hire-someone-to-help/">standalone organization</a>! I hope that this will increase developer interest in Flatpak.</p>
+</div>
+<p><strong>Appimages</strong></p>
+<p>AppImage is an open source community project not affiliated with Canonical or The Gnome project. The Appimage webpage describes them as <code>Linux apps that run anywhere</code> and Linus Torvalds, Linux Creator says <code>This is just very cool.</code> Oddly enough, in the Flatpak section below, I will show a flatpak called <code>Gear lever</code> that was developed to make managing appimages easy!</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Appimages on Ubuntu after 23.04 require installing the FUSE 2 library using <code>sudo apt install libfuse2t64</code>. Please read this article:  <a href="https://www.omgubuntu.co.uk/2023/04/appimages-libfuse2-ubuntu-23-04">Appimages on Ubuntu &gt;22.04</a></p>
+</div>
+<p>When I wrote this in July 2025, the <a href="https://www.appimagehub.com/">Appimage Hub</a> had 1522 applications listed!</p>
+<hr />
+<h2 id="flatpak">Flatpak</h2>
+<p>The Gnome project created dedicated applications for managing the Gnome desktop. I like the ones listed <a href="./#gnome-specific">below</a>, especially for users coming to Ubuntu from Windows. Gnome Resources and Disk Analyzer are similar to the Windows applications for managing resources and disk usage. You can use terminal tools like <code>htop</code> and <code>du</code> for viewing resources and disk usage but when you first start using Ubuntu the GUI tools will be more comfortable.</p>
+<p>We will cover terminal tools later. In this section we will learn how to install graphical tools using <code>Flatpaks</code>.</p>
+<p>I am going to start with flatpak applications instead of the Ubuntu App Store because there are some Gnome project developed flatpak applications that are useful for managing the system.</p>
+<p>Visit the Flatpak store by clicking this link: <a href="https://flathub.org/">Flathub</a>. There are thousands of applications that you can browse and install. Most are free open source software (FOSS). Some will have a <code>Donate</code> button. If you install the application and find it useful, please go back and donate. Most of the developers don't get paid for their time.</p>
+<hr />
+<h3 id="install-flatpak">Install Flatpak</h3>
+<p>I am going to be using the Nala package manager in the instructions. If you haven't installed Nala yet, substitute <code>apt</code> for <code>nala</code>. Open a terminal (ctrl+alt+t) and run the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>nala<span class="w"> </span>update
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>nala<span class="w"> </span>install<span class="w"> </span>flatpak
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>flatpak<span class="w"> </span>remote-add<span class="w"> </span>--if-not-exists<span class="w"> </span>flathub<span class="w"> </span>https://dl.flathub.org/repo/flathub.flatpakrepo
+</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>sudo nala update - This uses the <code>Nala</code> package manager to update the repositories that your machine uses.</li>
+<li>sudo nala install flatpak - This uses the <code>Nala</code> package manager to actually install flatpak.</li>
+<li>flatpak remote-add - This uses the <code>Aptitude</code> package manager to add the remote flatpak repository. This allows the flatpaks to receive updates.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unfortunately you do have to restart after running the commands. There is no "Reboot Now" message but flatpak will not be available until you reboot.</p>
+</div>
+<p>Once your system restarts we are going to install a few flatpak applications for managing the system and making life better!.</p>
+<hr />
+<h4 id="gnome-specific">Gnome Specific</h4>
+<p>The Gnome project maintains a <a href="https://apps.gnome.org/">site</a> that contains Flatpak applications designed specifically to enhance the functionality of the Gnome desktop. Apps featured in this curated overview are all built with the GNOME philosophy in mind.</p>
+<p>They are easy to understand, simple to use, feature a consistent and polished design and provide a noticeable attention to details. Naturally, they are <a href="https://fsfe.org/freesoftware/">free software</a> and have committed to being part of a <a href="https://wiki.gnome.org/Foundation/CodeOfConduct">welcoming and friendly community</a>. These apps will perfectly integrate with your GNOME Desktop.</p>
+<h4 id="gnome-core-apps">Gnome Core Apps</h4>
+<p>Several of the the 28 <code>Core Apps</code> are installed in Ubuntu by default and are worth looking at. Here are descriptions of five that I find useful in day to day work.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Characters.png" /></p>
+<p>The <code>Characters</code> application contains smiley faces, symbols, math characters, etc. that you can insert into documents. To open, tap the <code>Super</code> key, type <code>characters</code> and press enter.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Fonts.png" /></p>
+<p>The <code>Fonts</code> application lists every font available on your system. For coding, I installed <code>Fira Code</code> and I can view the six different faces of <code>Fira Code</code> using the Fonts application. To open, tap the <code>Super</code> key, type <code>fonts</code> and press enter.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Clocks.png" /></p>
+<p>The <code>Clocks</code> application is useful if you work with teams in different time zones. You can add clocks from any time zone in the world. Also included are an Alarm, Stopwatch, amd Timer. It's very similar to the clocks app on Apple IOS. To open, tap the <code>Super</code> key, type <code>clocks</code> and press enter.</p>
+<hr />
+<p><img alt="screenshot" src="../img/SystemMonitorIcon.png" /></p>
+<p>The <code>System Monitor</code> application is similar to the <code>Gnome Resources</code> application but not as comprehensive. It's worth looking at. Below is a screenshot of the System Monitor application. To open, tap the <code>Super</code> key, type <code>system monitor</code> and press enter.</p>
+<hr />
+<p><img alt="screenshot" src="../img/SystemMonitor.resized.png" /></p>
+<hr />
+<p><img alt="screenshot" src="../img/Logs.png" /></p>
+<p>The <code>Logs</code> application allows you to quickly look at system logs. It's a super fast way to look for issues. If the log has a URL for support, it will be shown.</p>
+<hr />
+<p><img alt="screenshot" src="../img/logs1.png" /></p>
+<hr />
+<h4 id="gnome-circle-apps">Gnome Circle Apps</h4>
+<p>GNOME Circle champions the great software that is available for the GNOME platform. Not only do we showcase the best apps and libraries for GNOME, but we also support independent developers who are using GNOME technologies. GNOME Circle contains applications extending the GNOME ecosystem. It champions the great <strong>additional</strong> software that is available for the GNOME platform. <a href="https://circle.gnome.org/">Learn more about GNOME Circle</a>.</p>
+<p>One Circle application that I think is mandatory is <code>Impression</code>, an application to write ISO images to a flash drive! Start <code>Impression</code>, pick the image, select the USB flash drive, click <code>write</code>.</p>
+<p>In the screenshot below, I picked the the Windows 11 image from my ~/Downloads directory and selected the Aruba flash drive to write it to. All that is left is to click on <code>Write</code> and a bootable flash drive will be created.</p>
+<p><img alt="screenshot" src="../img/Impression.png" /></p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>io.gitlab.adhami3310.Impression
+</span></code></pre></div>
+<hr />
+<h3 id="gnome-extensions">Gnome Extensions</h3>
+<p><img alt="screenshots" src="../img/Extensions.png" /></p>
+<p>The Gnome project maintains an <a href="https://extensions.gnome.org/">Extensions Site</a> where you can install "Extensions". These are small programs that add functionality to the Gnome Desktop. I try to keep the number of extensions to a minimum because of performance and stability issues. This article <a href="https://itsfoss.com/best-gnome-extensions/">Top 21 GNOME Extensions to Enhance Your Experience</a> lists the extensions that <code>itsfoss</code> recommends.</p>
+<p>In the past, you used Google Chrome or Mozilla Firefox to install Gnome extensions. This was a painful process I thought and you had to install a chrome or Mozilla Firefox <code>Connector</code> first.</p>
+<p>I prefer to use an flatpak named <code>Gnome Extensions</code> to install extensions. This is a flatpak written by the Gnome Project so I am comfortable using it. <code>Gnome Extensions</code> handles updating extensions, configuring extension preferences and removing or disabling unwanted extensions without using a browser. For some reason, Gnome Extensions does not have the ability to install extensions. We will install the similarly named <code>Extensions Manager</code> that has the ability to install extensions.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>org.gnome.Extensions
+</span></code></pre></div>
+<p>Once installed, run <code>Extensions</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.gnome.Extensions
+</span></code></pre></div>
+<p>Or by tapping the Super key, typing <code>extension</code> and clicking on the Extensions icon.</p>
+<p>Below is a screenshot of the <code>Gnome Extensions</code> application running on my laptop:</p>
+<p><img alt="screenshot" src="../img/Extensions-App.png" /></p>
+<hr />
+<h3 id="installing-extensions">Installing Extensions</h3>
+<p>You can install extensions several ways. This <a href="https://itsfoss.com/gnome-shell-extensions/">article from itsfoss</a> goes into detail on the different methods. I prefer to use this tool, <code>Extension Manager</code> even though it's not written by the Gnome team. It's confusing because it looks just like the <code>Gnome Extensions</code> application except that it has the capability to install extensions. I like this method better than using the Chrome browser extension.</p>
+<p>There is another It's FOSS article - <a href="https://www.youtube.com/watch?v=ZPcxwiyCqtc">21 Best GNOME Extensions I Use and Recommend</a> that covers more extension. It's from August 14th, 2024 so if you are on Ubuntu 26.04 some of them might not be compatible with Gnome 50. I know my favorite "Systemd Manager" isn't.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<p>Like all flatpak applications you search <a href="https://flathub.org">flathub.org</a>, click the <code>Install</code> button and copy the terminal command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>com.mattjakeman.ExtensionManager
+</span></code></pre></div>
+<p>Then tap the super key and enter <code>Extension</code>, click the icon:</p>
+<p><img alt="screenshot" src="../img/ExtensionsManager.png" /></p>
+<p>Once <code>Extensions Manager</code> opens, click <code>Browse</code> at the top and you can search and install <code>Gnome Extensions</code>.</p>
+<p><img alt="screenshot" src="../img/ExtensionManager-Browse.png" /></p>
+<p>You may ask why I installed the Gnome tool when this tool does everything the Gnome tool does and more. That is a good question. Basically I use my laptop every day and consider it a tool. I don't enjoy troubleshooting issues with the tool. Since I'm using the Gnome desktop, and Gnome writes a tool to update extensions I use it for updating. Why the official Gnome tool can't do installation is beyond me.</p>
+<hr />
+<p><strong>Below are the extensions that I have installed:</strong></p>
+<ul>
+<li><a href="https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator">Clipboard Indicator</a> - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads</li>
+<li><a href="https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/">Customize Clock on Lock Screen</a> -  Create Custom Text on the Lock Screen</li>
+<li><a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> - With GSConnect you can securely connect to mobile devices</li>
+<li><a href="https://extensions.gnome.org/away/https%253A%252F%252Fgithub.com%252FAryan20%252FLogomenu">Logo Menu</a> - Adds a MacOS like button to the top left of the screen with <code>About my System</code>, <code>Force Quit App</code>, etc. Very cool extension.</li>
+<li><a href="https://extensions.gnome.org/extension/7/removable-drive-menu/">Removable Drive Menu</a> - A status menu for accessing and unmounting removable devices.</li>
+<li><a href="https://github.com/hardpixel/systemd-manager">Systemd Manager</a> - Systemd Manager is a Gnome Shell Extension which allows you to start/stop systemd services via a menu in the status area in the top panel. You can preselect which services should be shown in the extension preferences dialog.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>From the terminal you can list the installed extensions
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>gnome-extensions<span class="w"> </span>list<span class="w"> </span>-d<span class="w"> </span>--enabled<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;Name:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/  Name: //&#39;</span>
+</span></code></pre></div></p>
+</div>
+<p>Here is the output of the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="hll">gnome-extensions<span class="w"> </span>list<span class="w"> </span>-d<span class="w"> </span>--enabled<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;Name:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/  Name: //&#39;</span>
+</span></span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Customize<span class="w"> </span>Clock<span class="w"> </span>on<span class="w"> </span>Lock<span class="w"> </span>Screen
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Systemd<span class="w"> </span>Manager
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Removable<span class="w"> </span>Drive<span class="w"> </span>Menu
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Clipboard<span class="w"> </span>Indicator
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>GSConnect
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Ubuntu<span class="w"> </span>AppIndicators
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Ubuntu<span class="w"> </span>Dock
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Desktop<span class="w"> </span>Icons<span class="w"> </span>NG<span class="w"> </span><span class="o">(</span>DING<span class="o">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>Ubuntu<span class="w"> </span>Tiling<span class="w"> </span>Assistant
+</span></code></pre></div>
+<hr />
+<h4 id="clipboard-indicator">Clipboard Indicator</h4>
+<p>There are a lot of clipboard managers out there. I went with this one because it is a Gnome extension and it had good ratings. There are installable applications available but I liked the having an extension that is managed along with the other extensions I use. As always, there are security implications when using a clipboard manager. I felt that the convenience offsets the risk, you have to decide for yourself if it's worth the risk.</p>
+<p>Here is what it looks like in use:</p>
+<p><img alt="screenshot" src="../img/Clipboard.png" /></p>
+<p>Clicking on <code>Settings</code> brings up a dialog with tons of options. The <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"/></svg></span> icon in <code>Gnome Extensions</code> exposes the settings menu. The only option I changed is <code>Notifications, show notification on copy</code> so that I get a popup message when I copy something to the clipboard.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<p>Open the Extension Manager flatpak, click the <code>Browse</code> tab at the top, then type <code>clipboard indicator</code>. Once Extension Manager finds <code>Clipboard Indicator</code> click on the <code>Install...</code> button.</p>
+<hr />
+<h4 id="customize-clock-on-lock-screen">Customize Clock on Lock Screen</h4>
+<p>Since my laptop is at customer locations most of the time, I love this extension. It allows me to put my name and phone number on the lock screen like macOS!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The shortcut keys to lock the screen are <code>super+l</code>. That's a lowercase <code>el</code>.</p>
+</div>
+<p>Here are the settings I use. The <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"/></svg></span> icon in <code>Gnome Extensions</code> exposes the settings menu.</p>
+<p><img alt="screenshot" src="../img/Customize-Clock.resized.png" /></p>
+<hr />
+<p>That puts the following text on the lock screen:</p>
+<p><img alt="screenshot" src="../img/Lock-Screen.png" /></p>
+<hr />
+<p>If you want to use the same settings for time:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>%A<span class="w"> </span>%B<span class="w"> </span>%d,<span class="w"> </span>%Y<span class="w"> </span>%H:%M:%S<span class="w"> </span><span class="o">(</span>%Z<span class="o">)</span><span class="w"> </span>-<span class="w"> </span>week<span class="w"> </span>%V
+</span></code></pre></div>
+<p>The week number is very popular in Europe. After I worked in France for awhile I find that I like it. In meetings you can say "in week 48 we need to accomplish the following" and everyone knows what dates you mean. There are widgets and applications for IOS and Android to show Weeks if you want to quickly see what a week number translates to on a calendar.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<p>Open the Extension Manager flatpak, click the <code>Browse</code> tab at the top, then type <code>customize clock on Lock Screen</code>. Once Extension Manager finds <code>customize clock on Lock Screen</code> click on the <code>Install...</code> button.</p>
+<hr />
+<h4 id="gsconnect">GSConnect</h4>
+<p>If you use an Android phone this application is a must! It allows you to send/receive text messages from your laptop, send files to the phone, and much more. iPhone is more limited because Apple won't allow iMessages support. But with RCS rolling out in IOS 18 that might change.</p>
+<p>One nice feature that works on IOS and Android is <code>find my phone</code>! I always misplace my phone when working in closets and with GSConnect I can quickly make it ring to locate it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The phone and laptop have to be connected to the same network. This usually isn't an issue but if the customer doesn't allow you to connect then <code>Find My Phone</code> will fail.</p>
+</div>
+<p><strong>Open GSConnect Settings</strong></p>
+<p>The <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m0-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"/></svg></span> icon in <code>Gnome Extensions</code> exposes the settings menu:</p>
+<p><img alt="screenshot" src="../img/GSConnect1.png" /></p>
+<hr />
+<p>You can also click on the <code>Quick Settings</code> at the top right of the screen and select <code>GS Connect</code> to open mobile settings.</p>
+<hr />
+<p><img alt="screenshot" src="../img/GSConnect4.png" /></p>
+<hr />
+<p><strong>Install KDE Connect</strong></p>
+<p>GSConnect is a Gnome port of the KDE Connect application. On the GSConnect settings dialog you will see links to:</p>
+<ul>
+<li>Android Play Store</li>
+<li>Apple App Store</li>
+<li>Sailfish OS OpenRepos</li>
+<li>F-Droid</li>
+</ul>
+<p>Go to the appropriate store for your phone and install the KDE Connect application on your phone.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On IOS you will be notified that KDE Connect is installed using a program called <code>TestFlight</code> that Apple uses for experimental Applications.</p>
+</div>
+<p>Open the KDE Connect application on your phone and follow the instructions for connecting to GSConnect.</p>
+<p>From the GSConnect Settings dialog you will see all devices that have ever connected and their status:</p>
+<p><img alt="screenshot" src="../img/GSConnect2.resized.png" /></p>
+<hr />
+<p>I enabled the <code>GSConnect remains active when Gnome Shell is locked</code> slider so that the phone remains connected when I lock the desktop.</p>
+<hr />
+<p>Add the following rules to UFW so the phone can connect to GSConnect. Open the terminal and paste the following commands in:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="hll">sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">1716</span>:1764/tcp
+</span></span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="hll">sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">1716</span>:1764/udp
+</span></span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="hll">sudo<span class="w"> </span>ufw<span class="w"> </span>show<span class="w"> </span>added
+</span></span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="o">[</span>output<span class="o">]</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Added<span class="w"> </span>user<span class="w"> </span>rules<span class="w"> </span><span class="o">(</span>see<span class="w"> </span><span class="s1">&#39;ufw status&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>running<span class="w"> </span>firewall<span class="o">)</span>:
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">1716</span>:1764/tcp
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">1716</span>:1764/udp
+</span></code></pre></div>
+<hr />
+<p><strong>Troubleshooting</strong></p>
+<p>If you open KDE Connect on the phone but your laptop can't be found:</p>
+<ul>
+<li>check the firewall rules:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="hll">sudo<span class="w"> </span>ufw<span class="w"> </span>status
+</span></span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Status:<span class="w"> </span>active
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>To<span class="w">                         </span>Action<span class="w">      </span>From
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>--<span class="w">                         </span>------<span class="w">      </span>----
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="m">514</span>/udp<span class="w">                    </span>ALLOW<span class="w">       </span>Anywhere
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="hll"><span class="m">1716</span>:1764/tcp<span class="w">              </span>ALLOW<span class="w">       </span>Anywhere
+</span></span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="hll"><span class="m">1716</span>:1764/udp<span class="w">              </span>ALLOW<span class="w">       </span>Anywhere
+</span></span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="m">514</span>/udp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">               </span>ALLOW<span class="w">       </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="hll"><span class="m">1716</span>:1764/tcp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">         </span>ALLOW<span class="w">       </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span></span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="hll"><span class="m">1716</span>:1764/udp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">         </span>ALLOW<span class="w">       </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span></span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="m">22</span>/tcp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">                </span>ALLOW<span class="w">       </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">              </span><span class="c1"># Open ssh tcp port 22</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>fe00::/7<span class="w"> </span><span class="m">546</span>/udp<span class="w">           </span>ALLOW<span class="w">       </span>fe00::/7<span class="w"> </span><span class="m">547</span>/udp
+</span></code></pre></div>
+<hr />
+<ul>
+<li>Check that the process is listening on the network.</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="hll">sudo<span class="w"> </span>netstat<span class="w"> </span>-tunelp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>gjs
+</span></span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>tcp6<span class="w">   </span><span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w"> </span>:::1716<span class="w">   </span>:::*<span class="w">    </span>LISTEN<span class="w">      </span><span class="m">1000</span><span class="w">       </span><span class="m">46960</span><span class="w">      </span><span class="m">7665</span>/gjs
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>udp6<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">3584</span><span class="w"> </span>:::1716<span class="w">   </span>:::*<span class="w">                </span><span class="m">1000</span><span class="w">       </span><span class="m">46961</span><span class="w">      </span><span class="m">7665</span>/gjs
+</span></code></pre></div>
+<hr />
+<ul>
+<li>Use <code>netcat</code> to verify the laptop can connect to the phone</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="hll">netcat<span class="w"> </span>-z<span class="w"> </span>-v<span class="w"> </span><span class="m">192</span>.168.10.101<span class="w"> </span><span class="m">1714</span>-1764
+</span></span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>netcat:<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span><span class="m">192</span>.168.10.101<span class="w"> </span>port<span class="w"> </span><span class="m">1714</span><span class="w"> </span><span class="o">(</span>tcp<span class="o">)</span><span class="w"> </span>failed:<span class="w"> </span>Connection<span class="w"> </span>refused
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>netcat:<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span><span class="m">192</span>.168.10.101<span class="w"> </span>port<span class="w"> </span><span class="m">1715</span><span class="w"> </span><span class="o">(</span>tcp<span class="o">)</span><span class="w"> </span>failed:<span class="w"> </span>Connection<span class="w"> </span>refused
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Connection<span class="w"> </span>to<span class="w"> </span><span class="m">192</span>.168.10.101<span class="w"> </span><span class="m">1716</span><span class="w"> </span>port<span class="w"> </span><span class="o">[</span>tcp/*<span class="o">]</span><span class="w"> </span>succeeded!
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>netcat:<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span><span class="m">192</span>.168.10.101<span class="w"> </span>port<span class="w"> </span><span class="m">1717</span><span class="w"> </span><span class="o">(</span>tcp<span class="o">)</span><span class="w"> </span>failed:<span class="w"> </span>Connection<span class="w"> </span>refused
+</span></code></pre></div>
+<p>If you ran the <code>netstat</code> command above you can just the active port for <code>netcat</code> instead of the range <code>1714-1764</code>.</p>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will see a lot of <code>netcat: connect to 192.168.10.101 port 1764 (tcp) failed: Connection refused</code> messages. You only need 1 <code>succeeded!</code> message.</p>
+</div>
+<p>This <a href="https://userbase.kde.org/KDEConnect">site</a> has a lot of detail on KDE connect.</p>
+<hr />
+<h4 id="logo-menu">Logo Menu</h4>
+<p>Quick access menu for the GNOME panel with options that help ease the workflow for newcomers and power users alike and gives a great logo that you can switch to your liking to match your distribution or add something your own. Similar to the Apple Menu found on MacOS.</p>
+<p>Adds a customizable icon on the top left of screen. I picked an Icon that is the new Ubuntu Orange circle with the three dots.</p>
+<p><img alt="screenshot" src="../img/LogoMenu.png" /></p>
+<hr />
+<p>I enabled the following options:</p>
+<p><img alt="screenshot" src="../img/LogoMenu1.resized.png" /></p>
+<hr />
+<p>Here is what the dialog looks like when you click on it:</p>
+<p><img alt="screenshot" src="../img/LogoMenu2.png" /></p>
+<p>If you are migrating from macOS this extension will make you feel a little more at home on Ubuntu.</p>
+<hr />
+<h4 id="removable-drive-menu">Removable Drive menu</h4>
+<p>On some projects I end up using flash drives quite a lot. All this extension does is puts the <code>Eject Drive</code> icon <img alt="screenshot" src="../img/Removable-Drive.png" /> in the status menu. But I find useful when I'm not in <code>Files</code> and want to work with the files on a flash drive or eject a drive.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<p>Open the Extension Manager flatpak, click the <code>Browse</code> tab at the top, then type <code>Removable Drive Menu</code>. Once Extension Manager finds <code>Removable Drive Menu</code> click on the <code>Install...</code> button.</p>
+<p>Now, any time a flash drive is installed, the Removable Drive icon will be in the status menu. Simply click the icon, then select the drive to eject!</p>
+<p><img alt="screenshot" src="../img/Removable-Drive1.png" /></p>
+<hr />
+<p>One annoying feature of snaps is that they install as <a href="https://itsfoss.com/loop-device-linux/">Loop devices</a>. This means that when you run <code>lsblk</code> from the terminal to view your disks you see a lot of <code>loop</code> entries.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="hll">lsblk
+</span></span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>NAME<span class="w">        </span>MAJ:MIN<span class="w"> </span>RM<span class="w">   </span>SIZE<span class="w"> </span>RO<span class="w"> </span>TYPE<span class="w"> </span>MOUNTPOINTS
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>loop0<span class="w">         </span><span class="m">7</span>:0<span class="w">    </span><span class="m">0</span><span class="w">   </span><span class="m">9</span>.5M<span class="w">  </span><span class="m">1</span><span class="w"> </span>loop<span class="w"> </span>/snap/asciinema/35
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>loop1<span class="w">         </span><span class="m">7</span>:1<span class="w">    </span><span class="m">0</span><span class="w">  </span><span class="m">11</span>.6M<span class="w">  </span><span class="m">1</span><span class="w"> </span>loop<span class="w"> </span>/snap/auto-cpufreq/146
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>loop2<span class="w">         </span><span class="m">7</span>:2<span class="w">    </span><span class="m">0</span><span class="w">  </span><span class="m">76</span>.5M<span class="w">  </span><span class="m">1</span><span class="w"> </span>loop<span class="w"> </span>/snap/aurora-editor/55
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>loop3<span class="w">         </span><span class="m">7</span>:3<span class="w">    </span><span class="m">0</span><span class="w">   </span><span class="m">9</span>.4M<span class="w">  </span><span class="m">1</span><span class="w"> </span>loop<span class="w"> </span>/snap/asciinema/32
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>loop4<span class="w">         </span><span class="m">7</span>:4<span class="w">    </span><span class="m">0</span><span class="w">  </span><span class="m">11</span>.6M<span class="w">  </span><span class="m">1</span><span class="w"> </span>loop<span class="w"> </span>/snap/auto-cpufreq/147
+</span></code></pre></div>
+<p>To avoid this, add the -e7 flag:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>lsblk<span class="w"> </span>-e7
+</span></code></pre></div>
+<p>You can add an alias in the <code>.bahsrc</code> or <code>.zshrc</code> file using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">lsblk</span><span class="o">=</span><span class="s1">&#39;lsblk -e7&#39;</span>
+</span></code></pre></div>
+<p>If you don't want to have to type the <code>-e7</code>.</p>
+<hr />
+<h4 id="systemd-manager">Systemd Manager</h4>
+<p>Systemd is a system and service manager for Linux operating systems. There are hundreds of services running on the system and usually terminal commands are used to start/stop/enable and check status. There are a few services like the <code>UFW Firewall</code>, <code>ssh server</code> and <code>tftp server</code> that I turn on and off often. The <code>Systemd Manager</code> extensions lets me easily check the status from the <code>status menu</code>. The icon looks like the Gnome setting gear - <img alt="screenshot" src="../img/Systemd-Manager.png" />.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<p>This extension isn't available using the <code>Extension Manager</code> flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed like on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.</p>
+<p>Click this link <a href="https://github.com/hardpixel/systemd-manager">Systemd Manager</a> to download the zip file of release V17. Version 17 supports Gnome 45/46/47.</p>
+<p>Right click on the zip file and select <code>Extract To..</code>. In the Files dialog that opens search for <code>~/.local/share/gnome-shell/extensions</code> and click <code>Select</code>. This will extract the file into a folder named <code>systemd-manager-v17</code> under the <code>extensions</code> directory. Locate the folder in Files and rename it to <code>systemd-manager@hardpixel.eu</code></p>
+<p>You will need to restart Ubuntu to activate the extension.</p>
+<p>One of files in the directory is named <code>metadata.json</code> Below are the contents of the json file. You can see the shell version the extension works with and the uuid. The uuid is the required name of the directory containing the extension's configuration files. I right clicked on <code>metadata.json</code> and used <code>Text Edit</code> to open the configuration file.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&quot;shell-version&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;45&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;46&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;47&quot;</span><span class="p">],</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;systemd-manager@hardpixel.eu&quot;</span><span class="p">,</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/hardpixel/systemd-manager&quot;</span><span class="p">,</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="nt">&quot;settings-schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.gnome.shell.extensions.systemd-manager&quot;</span><span class="p">,</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="nt">&quot;gettext-domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;systemd-manager&quot;</span><span class="p">,</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Systemd Manager&quot;</span><span class="p">,</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Toggle systemd services on/off from a popup menu in the top gnome panel. Can be used to start services like apache2, mysql, postgres. It uses `pkexec&#39; to run `sytemctl&#39;. If you want to start services without entering a password you have to polkit policy file. An example policy file can be found in the github repository.&quot;</span><span class="p">,</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="nt">&quot;donations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="nt">&quot;github&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jonian&quot;</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Configuration</strong></p>
+<p>Click on the <code>Systemd-Manager</code> icon in the status menu and select <code>Add Service</code>. Here is what it will look like:</p>
+<p><img alt="screenshot" src="../img/Systemd-Manager-settings.png" /></p>
+<hr />
+<p>Type a name for the service in the <code>Name in menu</code> field and enter the service in the <code>Search for service</code> field. Click the <code>+ Add</code> button and then click the <code>X</code> at the top right corner of the dialog to close it.</p>
+<p>Now click the <code>Systemd-Manager</code> icon in the <code>status menu</code> and you will see the services you added.</p>
+<p><img alt="screenshot" src="../img/Systemd-Manager-status.png" /></p>
+<hr />
+<p>Simply slide the slider to the right to enable a service or to the left to disable a service. You can also restart a service by clicking the icon with the circular arrow or mask a service by clicking the icon on the right.</p>
+<p><strong>Why the Red</strong></p>
+<p>Notice that the TFTP entry is red. I wasn't sure what that meant so I ran the following command from a terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<p>And received a message that the service couldn't be started. I ran the following command to view the journal for tftpd-hpa:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>journalctl<span class="w"> </span>-u<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<p>And found that tftpd-hpa had been failing since I upgraded to 24.10 on November 17th! I Googled the error message but nothing really jumped out so I did the following:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/default/tftpd-hpa<span class="w"> </span>/etc/default/tftpd-hpa.bak
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>--purge<span class="w"> </span>--force-all<span class="w"> </span>tftpd-hpa
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>sudo<span class="w"> </span>nala<span class="w"> </span>install<span class="w"> </span>tftpd-hpa
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/default/tftpd-hpa.bak<span class="w"> </span>/etc/default/tftpd-hpa
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>is-enabled<span class="w"> </span>tftpd-hpa
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<p>Those commands did the following</p>
+<ul>
+<li>made a backup of the tftpd-hpa configuration file</li>
+<li>removed the tftpd-hpa service and the configuration file</li>
+<li>reinstalled the tftpd-hpa service</li>
+<li>copied the tftpd-hpa configuration file from the backup</li>
+<li>verified that the tftpd-hpa was enabled so that it could start after a reboot</li>
+<li>started the tftpd-hpa service</li>
+</ul>
+<p>Now when I click on the Systemd-Manager icon the TFTP entry is black</p>
+<hr />
+<p><img alt="screenshot" src="../img/SystemMonitor1.png" /></p>
+<hr />
+<h2 id="flatpak-applications">Flatpak Applications</h2>
+<p>Now that we have the Gnome Extensions installed let's install some Flatpak applications that you might call "Quality of Life" improvements! I listed them in alphabetical order order, not the order that you will use the most!</p>
+<ul>
+<li><a href="./#Dev-Toolbox">Dev Toolbox</a> - Dev tools at your fingertips</li>
+<li><a href="./#disk-usage-analyzer">Disk Usage Analyzer</a> - A GUI disk Space analyzer tool</li>
+<li><a href="./#drawio">Draw.io</a> - A flexible and privacy-focused production grade diagramming tool.</li>
+<li><a href="./#flatseal">Flatseal</a> - A tool to manage flatpak security settings</li>
+<li><a href="./#foliate">Foliate</a> - An ebook reader</li>
+<li><a href="./#gearlever">Gear Lever</a> - A flatpak for managing Appimages!</li>
+<li><a href="./#kolourpaint">KolourPaint</a> - A simple painting program to quickly create raster images.</li>
+<li><a href="./#meld">Meld</a> - A great diffing tool</li>
+<li><a href="./#pinta">Pinta</a> - An image editing, drawing and painting application</li>
+<li><a href="./#resources">Resources</a> - A system resource monitor</li>
+<li><a href="./#vesktop">Vesktop</a> - A snappier Discord Client</li>
+<li><a href="./#warehouse">Warehouse</a> - A tool to manage every aspect of Flatpak applications</li>
+</ul>
+<hr />
+<h3 id="dev-toolbox">Dev Toolbox</h3>
+<p><img alt="screenshot" src="../img/DevToolbox.png" /></p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>me.iepure.devtoolbox
+</span></code></pre></div>
+<p>Once installed, run  <code>Dev Toolbox</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>me.iepure.devtoolbox
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>dev</code> and clicking on the <code>Dev Toolbox</code> icon.</p>
+<p>Even if you aren't a developer this app has tools you might use. Dev Toolbox is a collection of powerful yet simple-to-use tools to solve the most common daily problems.</p>
+<p>Includes:</p>
+<ul>
+<li>JSON to YAML converter and vice-versa</li>
+<li>CRON expressions parser</li>
+<li>GZip compressor and decompressor</li>
+<li>Formatters for common programming languages</li>
+<li>Hash generators</li>
+<li>Regex tester</li>
+<li>Markdown Previewer</li>
+<li>Image converters</li>
+<li>Much more...</li>
+</ul>
+<p>For example, JSON is pervasive on the web now. It can be hard to read in raw format. You can pasted it into the is tool and use the <code>JSON Formatter</code> to make it easy to read.</p>
+<p>The <code>QR Code Generator</code> is great create a QR code for a web URL or other text and the <code>Text Diff</code> tool is super easy to use and is great from comparing an interface that has changed.</p>
+<hr />
+<p><img alt="screenshot" src="../img/DevToolbox-QR.resized.png" /></p>
+<hr />
+<p><img alt="screenshot" src="../img/DevtoolBox1.resized.png" /></p>
+<hr />
+<h3 id="disk-usage-analyzer">Disk Usage analyzer</h3>
+<p><img alt="screenshot" src="../img/DiskUsage.png" /></p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>org.gnome.baobab
+</span></code></pre></div>
+<p>Once installed, run  <code>Disk Usage Analyzer</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.gnome.baobab
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>disk</code> and clicking on the <code>Disk Usage Anlyzer</code> icon.</p>
+<p>Disk Usage analyzer is similar to disk usage tools on Windows and Mac. Here is a screenshot of the disk usage on my home folder:</p>
+<p><img alt="screenshot" src="../img/DiskUsage-Graph.resized.png" /></p>
+<p>I hovered over one of the large blocks and it told me that is the section of disk holding my Inbox. Since my email client is Thunderbird, I expanded the <code>.thunderbird</code> folder and then I could see <code>sent mail</code> and other folders. I prompted me to delete some email!</p>
+<hr />
+<p><img alt="screenshot" src="../img/DiskUsage1.resized.png" /></p>
+<hr />
+<h3 id="drawio">Draw.io</h3>
+<p><img alt="screenshot" src="../img/drawio.png" /></p>
+<hr />
+<p><strong>Create and share diagrams</strong></p>
+<p>draw.io is the most flexible and privacy-focused of any production grade diagramming tool. Create flowcharts, process diagrams, org charts, UML, ER diagrams, network diagrams and much more.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>com.jgraph.drawio.desktop
+</span></code></pre></div>
+<p>Once installed, run  <code>Drawio</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>com.jgraph.drawio.desktop
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>drawio</code> and clicking on the <code>Drawio</code> icon.</p>
+<hr />
+<p>When you launch Drawio, these are the choices for getting started:</p>
+<p><img alt="screenshot" src="../img/drawio-1.png" /></p>
+<p>As you can see, there are a lot of built in templates. You select one of the built-in templates or select <code>Blank Diagram</code> to start from scratch.</p>
+<p><a href="https://www.drawio.com/">The Drawio Project homepage</a></p>
+<hr />
+<h3 id="flatseal">Flatseal</h3>
+<p><img alt="screenshot" src="../img/Flatseal.png" /></p>
+<hr />
+<p>Flatseal is a graphical utility to review and modify permissions from your Flatpak applications. This application allows you to look at all of your installed Flatpak applications and verify their permissions.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>com.github.tchx84.Flatseal
+</span></code></pre></div>
+<p>Once installed, run <code>Flatseal</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>com.github.tchx84.Flatseal
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>flatseal</code> and clicking on the Flatseal icon.</p>
+<p>You will be able to see all of the flatpak applications that are installed when flatseal opens.</p>
+<h4 id="list-flatpaks-in-terminal">List flatpaks in terminal</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>flatpak<span class="w"> </span>list<span class="w"> </span>--app
+</span></code></pre></div>
+<p>To see the same list of applications. The <code>--app</code> limits the output to just applications. If you omit it, you will see flatpak runtime applications needed to make the flatpak infrastructure work.</p>
+<h4 id="flatpaks-with-instructions">flatpaks with Instructions</h4>
+<p>If you want to install the flatpak applications on a different machine, for example a VM, run the following command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="hll">flatpak<span class="w"> </span>list<span class="w"> </span>--app<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;s/^[^\t]*//&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;s/^\t/flatpak install /&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;s/\t.*</span>$<span class="s2">//&quot;</span>
+</span></span></code></pre></div>
+<p>Copy the lines with <code>flatpak install</code> (you can click the copy icon on the right), then paste them into terminal on the new machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>cc.arduino.arduinoide
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>flatpak<span class="w"> </span>install<span class="w"> </span>com.github.PintaProject.Pinta
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>flatpak<span class="w"> </span>install<span class="w"> </span>com.github.johnfactotum.Foliate
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>flatpak<span class="w"> </span>install<span class="w"> </span>com.github.tchx84.Flatseal
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>flatpak<span class="w"> </span>install<span class="w"> </span>com.jgraph.drawio.desktop
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>flatpak<span class="w"> </span>install<span class="w"> </span>com.mattjakeman.ExtensionManager
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>flatpak<span class="w"> </span>install<span class="w"> </span>fr.rubet.rpn
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>flatpak<span class="w"> </span>install<span class="w"> </span>io.github.cboxdoerfer.FSearch
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>flatpak<span class="w"> </span>install<span class="w"> </span>io.github.flattool.Warehouse
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>flatpak<span class="w"> </span>install<span class="w"> </span>io.gitlab.adhami3310.Impression
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>flatpak<span class="w"> </span>install<span class="w"> </span>net.nokyan.Resources
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>flatpak<span class="w"> </span>install<span class="w"> </span>net.werwolv.ImHex
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>flatpak<span class="w"> </span>install<span class="w"> </span>org.gnome.baobab
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>flatpak<span class="w"> </span>install<span class="w"> </span>org.gnome.meld
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>flatpak<span class="w"> </span>install<span class="w"> </span>org.kde.kolourpaint
+</span></code></pre></div>
+<hr />
+<p>Here is a screenshot of the flatpak applications I have installed:</p>
+<p><img alt="screenshot" src="../img/FlatSeal-apps.png" /></p>
+<hr />
+<h3 id="launch-flatpaks-with-a-script">Launch flatpaks with a script</h3>
+<p>If you were wondering why I included the terminal command with each flatpak when they are GUI applications, it's because you might want to create a script and launch several at once. For example, let's say you want to launch <code>Foliate</code>, <code>KolourPaint</code>, and <code>Meld</code> every time you start up your laptop.</p>
+<p>First we need to open an editor and create a shell script.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="ch">#!/bin/zsh</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>flatpak<span class="w"> </span>run<span class="w"> </span>com.github.johnfactotum.Foliate
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.kde.kolourpaint
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.gnome.meld
+</span></code></pre></div>
+<p>Save the file as <code>morning.sh</code></p>
+<p><strong>Make the file executable</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>morning.sh
+</span></code></pre></div>
+<p><strong>Run the script</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>./morning.sh
+</span></code></pre></div>
+<hr />
+<h3 id="foliate">Foliate</h3>
+<p><img alt="screenshot" src="../img/Foliate.png" /></p>
+<hr />
+<p><strong>Read e-books in style</strong></p>
+<p>Discover a new chapter in reading with Foliate, the modern e-book reader tailored for GNOME. Immerse yourself in a distraction-free interface, with customization features designed to match your unique preferences.</p>
+<p>Features include:</p>
+<ul>
+<li>Open EPUB, Mobipocket, Kindle, FB2, CBZ, and PDF files</li>
+<li>Paginated mode and scrolled mode</li>
+<li>Customize font and line-spacing</li>
+<li>Light, sepia, dark, and invert mode</li>
+<li>Reading progress slider with chapter marks</li>
+<li>Bookmarks and annotations</li>
+<li>Find in book</li>
+<li>Quick dictionary lookup</li>
+</ul>
+<hr />
+<p>Technical education is changing. When I got into network engineering back in 1999 you almost had to take an instructor led class at an organization like New Horizons or a local community college.</p>
+<p>But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from <a href="https://www.packtpub.com/en-us">Packt Publising</a>, <a href="https://nostarch.com/">No Starch Press</a>, and <a href="https://gumroad.com">Gumroad</a>. Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is a great tool for organizing and reading ebooks.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>com.github.johnfactotum.Foliate
+</span></code></pre></div>
+<p>Once installed, run  <code>Meld</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>com.github.johnfactotum.Foliate
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>foliate</code> and clicking on the <code>Foliate</code> icon.</p>
+<hr />
+<p>Here is a screenshot of Foliate with my Python Library:</p>
+<p><img alt="screenshot" src="../img/Foliate1.png" /></p>
+<hr />
+<p>Foliate has a lot of functionality. So far I have just used it for reading the ebooks that I have purchased.</p>
+<hr />
+<h3 id="gearlever">GearLever</h3>
+<p><img alt="screenshot" src="../img/GearLever.png" /></p>
+<hr />
+<p><strong>Manage AppImages</strong></p>
+<p>An utility to manage AppImages with ease! Gear lever will organize and manage AppImage files for you, generate desktop entries and app metadata, update apps in-place or keep multiple versions side-by-side.</p>
+<p>Features</p>
+<ul>
+<li>Integrate AppImages into your app menu with just one click</li>
+<li>Drag and drop files directly from your file manager</li>
+<li>Keep all the AppImages organized in a custom folder</li>
+<li>Open new AppImages directly with Gear lever</li>
+<li>Manage updates: keep older versions installed or replace them with the latest release</li>
+<li>Save CLI apps with their executable name automatically</li>
+<li>Modern and Fresh UI</li>
+</ul>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>it.mijorus.gearlever
+</span></code></pre></div>
+<p>Once installed, run  <code>KolourPaint</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>it.mijorus.gearlever
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>Gear Lever</code> and clicking on the <code>KolourPaint</code> icon.</p>
+<h4 id="cli">CLI</h4>
+<p>Starting from version 3.0.0, Gear Lever includes some useful command line tools to manage your AppImages. The CLI uses the same logics as the UI.</p>
+<p>Please use flatpak run it.mijorus.gearlever --help to get an updated version of this help screen</p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>it.mijorus.gearlever<span class="w"> </span><span class="o">[</span>OPTION...<span class="o">]</span><span class="sb">`</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="c1"># OR gearlever [OPTION...] if using the alias</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>--integrate<span class="w">        </span>Integrate<span class="w"> </span>an<span class="w"> </span>AppImage<span class="w"> </span>file
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>--update<span class="w">           </span>Update<span class="w"> </span>an<span class="w"> </span>AppImage<span class="w"> </span>file
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>--update<span class="w"> </span>--all<span class="w">     </span>Update<span class="w"> </span>all<span class="w"> </span>apps
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>--remove<span class="w">           </span>Trashes<span class="w"> </span>an<span class="w"> </span>AppImage,<span class="w"> </span>its<span class="w"> </span>.desktop<span class="w"> </span>file<span class="w"> </span>and<span class="w"> </span>icons
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>--list-installed<span class="w">   </span>List<span class="w"> </span>integrated<span class="w"> </span>apps
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>--list-updates<span class="w">     </span>List<span class="w"> </span>available<span class="w"> </span>updates
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For an improved user experience, add the following line to your .zshrc or.bashrc file:</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">gearlever</span><span class="o">=</span><span class="err">&#39;</span>flatpak<span class="w"> </span>run<span class="w"> </span>it.mijorus.gearlever
+</span></code></pre></div>
+<p><strong>Reference Links</strong></p>
+<p><a href="https://github.com/mijorus/gearlever">Gear Lever on Github</a>
+<a href="https://mijorus.it/projects/gearlever/">Gear Lever on Flathub</a></p>
+<hr />
+<h3 id="kolourpaint">KolourPaint</h3>
+<p><img alt="screenshot" src="../img/KolourPaint.png" /></p>
+<hr />
+<p><strong>Paint Program</strong></p>
+<p>KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks. I use it to add callouts to screenshots.</p>
+<p>Features:</p>
+<ul>
+<li>Support for drawing various shapes</li>
+<li>lines</li>
+<li>rectangles</li>
+<li>rounded rectangles</li>
+<li>ovals and polygons</li>
+<li>curves</li>
+<li>text</li>
+<li>Color picker</li>
+<li>Selections</li>
+<li>Rotation, monochrome and other advanced effects</li>
+</ul>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>org.kde.kolourpaint
+</span></code></pre></div>
+<p>Once installed, run  <code>KolourPaint</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.kde.kolourpaint
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>KolourPaint</code> and clicking on the <code>KolourPaint</code> icon.</p>
+<p><a href="https://docs.kde.org/stable5/en/kolourpaint/kolourpaint/index.html">The KolourPaint Handbook</a></p>
+<hr />
+<h3 id="meld">Meld</h3>
+<p><img alt="screenshot" src="../img/Meld.png" /></p>
+<hr />
+<p>Meld is a flatpak from the Gnome project.</p>
+<p><strong>Compare and merge your files</strong></p>
+<p>Meld is a visual diff and merge tool targeted at developers. Meld helps you compare files, directories, and version controlled projects. It provides two- and three-way comparison of both files and directories, and supports many version control systems including Git, Mercurial, Bazaar and Subversion.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>org.gnome.meld
+</span></code></pre></div>
+<p>Once installed, run  <code>Meld</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>org.gnome.meld
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>meld</code> and clicking on the <code>Meld</code> icon.</p>
+<hr />
+<h4 id="example">Example</h4>
+<p>Here is an example of comparing two configuration files. On line 1 notice that there are two arrows int the center of the screen pointing at each other. Out of view in screenshot is the firmware version. The left and right have different versions. The differences are highlighted in blue blocks.</p>
+<p>On line 2 you can see a blue highlight showing that the firmware on the left side is 14.01 and on the right it's 14.21.</p>
+<p>On line 10 you see a green highlighted line on the right side with an arrow pointing to the left. That tells you that the line <code>sntp server priority 1 10.124.14.5</code> was added to the file on the right.</p>
+<p>Further down you can see a blue highlighted line on the right that rolls over to the left. That tells you that the name of the interface was changed.</p>
+<p>It takes a little bit of time to learn all the features of Meld but is is a great tool for a network engineer.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Meld1.resized.png" /></p>
+<hr />
+<h3 id="pinta">Pinta</h3>
+<p><img alt="screenshot" src="../img/Pinta.png" /></p>
+<hr />
+<p><strong>Edit images and paint digitally</strong></p>
+<p>Pinta is a image editing, drawing and painting application with a simple yet powerful interface. Pinta has a wide range of drawing tools, including: freehand, rectangles, circles and lines. It also has over 35 effects to apply to your images, and also has the ability to create unlimited layers to help organize your creativity.</p>
+<p>We installed KolourPaint earlier and it works as expected but Pinta has a lot more features if I'm doing more than annotating a screenshot.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>com.github.PintaProject.Pinta
+</span></code></pre></div>
+<p>Once installed, run  <code>Pinta</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>com.github.PintaProject.Pinta
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>Pinta</code> and clicking on the <code>Pinta</code> icon.</p>
+<hr />
+<h3 id="resources">Resources</h3>
+<p><img alt="screenshot" src="../img/resources.png" /></p>
+<p>Gnome Resources is similar to the Windows Task Manager. Here is a <a href="https://apps.gnome.org/Resources/">link</a> to the homepage describing Gnome Resources.</p>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>net.nokyan.Resources
+</span></code></pre></div>
+<p>Once installed, run <code>Resources</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>net.nokyan.Resources
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing resource and clicking on the Resources icon.</p>
+<p>Here is a screenshot of the Processes tab. Just like in the Windows Task Manager, you can right click on a process and get a menu of actions to perform:</p>
+<p><img alt="screenshot" src="../img/resources-kill.resized.png" /></p>
+<p>Unlike the Windows Task Manager, you have a clean menu on the side where you can select the following resources:</p>
+<ul>
+<li>Apps - the apps that are running</li>
+<li>Processes - the processes that are running</li>
+<li>Processor - The CPU AND GPU percentages</li>
+<li>Memory - The amount of memory applications are using</li>
+<li>GPU1 - The utilization of GPU1</li>
+<li>GPU2 - The utilization of GPU2</li>
+<li>Disk activity - Activity of each internal disk</li>
+<li>Network - Ethernet utilization</li>
+<li>WiFI - Utilization of the WiFI adapter</li>
+<li>Battery - Battery usage and properties</li>
+</ul>
+<hr />
+<h4 id="sar">SAR</h4>
+<p>Linux has been around for over 30 years and is used on a lot of servers. That means that there are a lot of monitoring tools available. If you want to collect long term data on your laptop or have a server in your home lab you can use System Activity Report (SAR) to collect long term data.</p>
+<p>There is a graphical interface available called KSAR that presents the data in a nice GUI. It's beyond the scope of this article to cover SAR/KSAR but here are link to some details blogs:</p>
+<ul>
+<li><a href="https://www.baeldung.com/linux/sar-system-statistics">Using sar to Show Current and Past System’s Statistics</a> - Baeldung.com is a great site for indepth Linux sysadmin articles.</li>
+<li><a href="https://github.com/vlsi/ksar">KSAR</a> - KSAR is a Java implementation of the GUI for SAR. I'm not big on Java tools but KSAR seems to be well maintained.</li>
+</ul>
+<hr />
+<h3 id="vesktop">Vesktop</h3>
+<p><img alt="screenshot" src="../img/vesktop.png" /></p>
+<hr />
+<p>Snappier Discord app with Vencord</p>
+<p>Vesktop is a cross platform desktop app aiming to give you a snappier Discord experience with Vencord pre-installed.</p>
+<p>Vesktop comes bundled with Venmic, a purpose-built library to provide functioning audio screenshare.</p>
+<p>When you start <code>vesktop</code> you are presented with a Discord login screen:</p>
+<p><img alt="screenshot" src="../img/vesktop1.png" /></p>
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>dev.vencord.Vesktop
+</span></code></pre></div>
+<p>Once installed, run <code>Vesktop</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>dev.vencord.Vesktop
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing Vesktop and clicking on the Vesktop icon.</p>
+<hr />
+<h3 id="warehouse">Warehouse</h3>
+<p><img alt="screenshot" src="../img/Warehouse-Icon.png" /></p>
+<hr />
+<p>Ok, one more application for managing Flatpaks! Warehouse is relatively new and I had already been using <code>Gnome Extensions</code> and <code>Extension Manager</code> for flatpaks when I found this application. It can do everything in one place including adding non Flathub.org repositories. I haven't gone down that rabbit hole yet because I am happy spending time in the terminal if I'm not in VS Code.</p>
+<p><strong>Manage all things Flatpak</strong></p>
+<p>Warehouse provides a simple UI to control complex Flatpak options, all without resorting to the command line.</p>
+<p>Features:</p>
+<ul>
+<li>Manage installed Flatpaks and view properties of any package</li>
+<li>Change versions of a Flatpak to rollback any unwanted updates</li>
+<li>Pin runtimes and mask Flatpaks</li>
+<li>Filter packages and sort data, to help find anything easily</li>
+<li>See current app user data, and cleanup any unused data left behind</li>
+<li>Add popular Flatpak remotes with a few clicks or add custom remotes instead</li>
+<li>Take snapshots of your apps' user data, saving your data</li>
+<li>Install new packages from any remote, or from your system</li>
+<li>Responsive UI to fit large and small screen sizes</li>
+</ul>
+<hr />
+<p><strong>Installation Instructions</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>flathub<span class="w"> </span>io.github.flattool.Warehouse
+</span></code></pre></div>
+<p>Once installed, run  <code>Warehouse</code> from the terminal using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>flatpak<span class="w"> </span>run<span class="w"> </span>io.github.flattool.Warehouse
+</span></code></pre></div>
+<p>Or by tapping the <code>Super</code> key, typing <code>warehouse</code> and clicking on the <code>Warehouse</code> icon.</p>
+<hr />
+<p>One great feature of <code>Warehouse</code> is that you can see how much disk space each application uses.</p>
+<p><img alt="screenshot" src="../img/Warehouse1.png" /></p>
+<hr />
+<h2 id="wrapping-up">Wrapping up</h2>
+<p>We installed several Gnome extensions that add functionality to the Gnome Desktop. Then we installed a few GUI applications that are useful in day to day operations. With these tools installed, I hope you find Ubuntu with Gnome desktop easy to manage and highly capable. In the next chapter we setup the terminal for complete awesomeness! You will wonder how you ever lived with cmd.exe!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../Ch01-Using-Ubuntu/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Usage">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Usage
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../terminal/" class="md-footer__link md-footer__link--next" aria-label="Next: Terminal">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Terminal
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2024 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rikosintie" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/rikosintie" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/mwhubbard/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate", "header.autohide", "navigation.expand", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.highlight", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

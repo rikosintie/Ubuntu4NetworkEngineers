@@ -1,0 +1,2329 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Michael Hubbard (rikosintie)">
+      
+      
+        <link rel="canonical" href="https://rikosintie.github.io/Ubuntu4NetworkEngineers/Ch01-Using-Ubuntu/">
+      
+      
+        <link rel="prev" href="../Introduction/">
+      
+      
+        <link rel="next" href="../CH02-Install-Tools/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Usage - Ubuntu for Network Engineers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Usage - Ubuntu for Network Engineers" />
+<meta property="og:image" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/assets/images/social/Ch01-Using-Ubuntu.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/Ch01-Using-Ubuntu/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Usage - Ubuntu for Network Engineers" />
+<meta property="twitter:image" content="https://rikosintie.github.io/Ubuntu4NetworkEngineers/assets/images/social/Ch01-Using-Ubuntu.png" />
+</head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-ubuntu" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-header__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  <img src="../img/ubuntu_icon1.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ubuntu for Network Engineers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rikosintie/Ubuntu4NetworkEngineers" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Ubuntu4NetworkEngineers
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Intro
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../CH02-Install-Tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Desktop
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terminal/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Terminal
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../wireless-tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  WiFi Tools
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Log_tools/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Log Tools
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SSH/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  SSH
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../KVM-Bridge/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  KVM
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Join-Ubuntu-24.04-desktop-to-AD/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Add to AD
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ubuntu for Network Engineers" class="md-nav__button md-logo" aria-label="Ubuntu for Network Engineers" data-md-component="logo">
+      
+  <img src="../img/ubuntu_icon1.png" alt="logo">
+
+    </a>
+    Ubuntu for Network Engineers
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rikosintie/Ubuntu4NetworkEngineers" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Ubuntu4NetworkEngineers
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#desktop-environments-in-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desktop Environments in Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#podcasts-on-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Podcasts on Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#casting-your-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casting your display
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-rdp-to-share-the-ubuntu-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using RDP to share the Ubuntu desktop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-super-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Super Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-for-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search for an application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Switching Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewing-all-installed-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewing all installed applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-between-multiple-open-windows-in-the-same-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Switching between multiple open windows in the same application
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-dock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring the Dock
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-gnome-the-tweaks-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customizing Gnome - The Tweaks Tool
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#startup-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Startup Applications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display-asterisks-when-typing-passwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Display Asterisks when typing passwords
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-gui-files-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the GUI Files application
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the GUI Files application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options-i-always-use-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options I always use in Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#open-a-new-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open a new Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-files-right-click-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Files right Click menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Document
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visible-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visible Columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-as-administrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open as Administrator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyboard-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyboard shortcuts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-archives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating archives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-the-full-path-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Display the Full path in files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#easily-preview-files-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Easily preview files in Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resizerotate-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resize/Rotate images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#completely-wipe-files-and-folders-from-the-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completely wipe files and folders from the disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-list-of-recently-visited-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get the list of recently visited directories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-folder-icons-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom folder icons in Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-have-a-red-lock-icon-on-a-file-or-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I have a red Lock icon on a file or folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-have-a-grey-x-on-a-file-or-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I have a grey X on a file or folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-the-root-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access the root folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-the-root-folder-as-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access the root folder as admin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-bootable-usb-stick-from-an-iso-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a bootable USB stick from an ISO image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a bootable USB stick from an ISO image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-dd-to-make-bootable-flash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use dd to make bootable flash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-ubuntu-make-startup-disk-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the Ubuntu "Make Startup disk" tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-qemu-to-test-a-startup-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use qemu to test a startup disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-the-linux-file-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with the Linux File System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with the Linux File System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lsblk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LSBLK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lsusb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LSUSB
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gnome-system-tool-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gnome System Tool (GUI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewing-log-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Viewing Log Messages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#locating-files-from-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locating files from the terminal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Locating files from the terminal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drill-a-graphical-and-cli-tool-for-searching-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drill - A graphical and CLI tool for searching files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CH02-Install-Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wireless-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Log_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Log Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SSH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KVM-Bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KVM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Join-Ubuntu-24.04-desktop-to-AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Add to AD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="using-ubuntu">Using Ubuntu</h1>
+<p><img alt="screenshot" src="../img/Tux-Use.png" /></p>
+<hr />
+<p><img alt="▶" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/25b6.svg" title=":arrow_forward:" /> KEY TAKEAWAYS</p>
+<ul>
+<li>It's surprising easy switch from MS Windows to Ubuntu 24.04</li>
+<li>There are no license fees to use Ubuntu</li>
+<li>Ubuntu's desktop and files manager are very similar to Windows 10</li>
+<li>You can customize so many things in Ubuntu that you can't customize in Windows</li>
+</ul>
+<hr />
+<p>It's surprisingly easy to switch from Microsoft Windows to Ubuntu 24.04.The basic operation of the Ubuntu desktop is similar to Windows. The file manager (Files) is similar to Windows Explorer and of course, Chrome or Edge work just like they do in Windows including syncing, extensions, etc. There is a keyboard button called the superkey (on most keyboards it will have the Windows logo) just like the Windows key. You tap it and search for an application or pick from the running applications.</p>
+<p>So, what is the hard part? Things like killing a hung application, searching for files from the terminal, and checking free disk space are different and will take a little getting used to. It's a lot like working on Cisco IOS for years and then having to work on an Aruba or Juniper switch. At first, it's frustrating, you have to look up commands and do some things differently.</p>
+<p>The reason for this guide is to help get you past the hurdles so that you can start enjoying Ubuntu. I promise that if you get over the hump your productivity as a network engineer will soar. Since MacOS is based on Open BSD Unix,
+once your muscle memory is up to speed you can jump back and forth easily between Windows, Mac and Linux. In a later chapter I will discuss the terminal tools that make Linux so much fun and so powerful for
+a network engineer.</p>
+<hr />
+<h2 id="desktop-environments-in-linux">Desktop Environments in Linux</h2>
+<p>One of the big advantages for Linux is that you can customize almost everything since it's open source. You can change the terminal you use, the file manager, the way almost anything works and even the desktop itself.</p>
+<p>The first choice you have to make with Ubuntu is which Desktop Environment do  you want to use. The two most popular desktop environments (DE) for Linux are Gnome (Ubuntu’s default), and KDE (which is available on Ubuntu) but there are many more. Gnome is the most popular Desktop Environment in Linux and I just learned to customize Gnome to fit my workflow. Here is a TecMint article on <a href="https://www.tecmint.com/top-best-linux-lightweight-desktop-environments/">Desktop Environments</a> that will explain the differences between them. My advice is to start out with Ubuntu and Gnome until you are comfortable.</p>
+<p>I listen to a lot of podcasts on Linux and KDE, XFCE and MATE are highly recommended desktop environments (DE) that you may like better than Gnome. If you watched the second episode of Mr. Robot (Season 1 – which I highly recommend) there is a scene were an executive tells Elliot that he runs KDE but
+understands why Elliott prefers Gnome.</p>
+<p>These two short YouTube videos sum it up better than I can:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=wcdquhB6hT8">6 Things to Know When Switching to Linux from Windows</a></li>
+<li><a href="https://www.youtube.com/watch?v=JOOkfGv58u0">10 things you can do with Linux that you can't do with Windows</a></li>
+</ul>
+<hr />
+<h2 id="podcasts-on-linux">Podcasts on Linux</h2>
+<p>There are a lot of podcasts dedicated to Linux. In your podcast application just search Linux. My favorites are:</p>
+<ul>
+<li>Destination Linux - A weekly podcast on general Open Source topics.</li>
+<li>Late Night Linux - A weekly podcast on Linux and the wider tech industry. NOTE: Lots of F bombs!</li>
+<li>Linux After Dark - A weekly podcast on Linux experiences.</li>
+<li>Linux Dev Time - A weekly podcast on Developing on Linux</li>
+<li>Linux Downtime - A weekly podcast "From working in the Industry and progressing your career, to managing a project's community"</li>
+<li>Linux Unplugged - A weekly podcast on Linux by Jupiter Broadcasting. Covers news and applications for Linux.</li>
+<li>This Week in Linux - A weekly podcast on Linux</li>
+</ul>
+<hr />
+<h2 id="casting-your-display">Casting your display</h2>
+<p>I have a Vizio “Smart” TV with Chromecast built in. Using the Chrome browser I can click the three dot menu on the right and select “Cast...” to send the output to the TV.</p>
+<p>In VLC, select “Playback, Renderer” to send VLC’s output to the TV. I don’t have a Chromecast dongle, but I am guessing it would work the same way as the Vizio TV.</p>
+<hr />
+<h2 id="using-rdp-to-share-the-ubuntu-desktop">Using RDP to share the Ubuntu desktop</h2>
+<p>Ubuntu 24.04 has an RDP server built in. To enable it:</p>
+<ul>
+<li>Tap the <code>super key</code> (Windows key on some laptops), type <code>settings</code> and press <code>enter</code>.</li>
+<li>In the top left corner of the screen click on the magnifying glass, type rdp.</li>
+<li>Click on the resulting <code>System</code></li>
+<li>Click on <code>Remote Desktop</code>, enable <code>Desktop Sharing</code> and <code>Remote Control</code></li>
+<li>Under <code>login details</code>, click on the eyeball icon so show the password</li>
+<li>Add port 3389 to the firewall using <code>sudo ufw allow from any to any port 3389 proto tcp</code></li>
+</ul>
+<p>You can now use Windows RDP or any RDP client to connect to your laptop!</p>
+<p>For a more detailed tutorial see <a href="https://linuxconfig.org/ubuntu-20-04-remote-desktop-access-from-windows-10">Ubuntu Remote Desktop Access from Windows 10/11</a></p>
+<hr />
+<h2 id="working-with-applications">Working with Applications</h2>
+<p>Like in Windows, there are many ways to open applications in Gnome.</p>
+<h3 id="the-super-key">The Super Key</h3>
+<p>You can hit the Windows key (Superkey is what it's called in Ubuntu) to bring up a search box.</p>
+<p><img alt="screenshot" src="../img/Open-Applications.png" /></p>
+<p>Notice that the files application icon has two dots on the left side. That's because I have two separate windows open. If you click on the icon, the screen will change to show the two files windows.</p>
+<p><img alt="screenshot" src="../img/files-side-by-side.png" /></p>
+<hr />
+<h3 id="search-for-an-application">Search for an application</h3>
+<p>To open an application using search, simply tap the super key and start typing the name of the application in the search box. As you
+type, all the matching applications will be displayed below the search box. If the one you want is the first one
+displayed on the left you can just hit enter. If not, keep typing and the list of displayed applications will get
+smaller. In the screenshot below, hitting enter will open the built in calculator app. Right arrow, Enter will open
+LibreOffice Calc!</p>
+<p><img alt="screenshot" src="../img/search.png" /></p>
+<p>You can also use the mouse and click on any application that is displayed to open it.</p>
+<hr />
+<h3 id="switching-applications">Switching Applications</h3>
+<p>Tap the super key (Windows key on some keyboards). Below the search box are the applications that are currently running. If you want to switch to one of the open applications, you can use the Tab key and [enter] or use the mouse to select one of the running applications.</p>
+<p>You can also use ctrl+tab just like in Windows.</p>
+<p>Finally, you can use the dock to open applications that you have pinned to it and switch to an open application.</p>
+<hr />
+<h3 id="viewing-all-installed-applications">Viewing all installed applications</h3>
+<p>The dock has a small icon at the bottom, it’s three rows of three dots. You can click that icon to see the
+installed applications in a window.</p>
+<p><img alt="screenshot" src="../img/Dock-square.png" /></p>
+<p>If there are too many to display, a column of circles will appear at the bottom of the screen and and an arrow on the right side. You can scroll down with the mouse button, click on one of the circles or click the arrow on the right to jump to the next page. As you can see, it’s very easy to open applications in Ubuntu.</p>
+<p><img alt="screenshot" src="../img/frequent-new.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ubuntu 24.10 has changed the icon to an Ubuntu icon instead of the dots.</p>
+<p><img alt="screenshot" src="../img/All-Apps-New.png" /></p>
+</div>
+<hr />
+<h3 id="switching-between-multiple-open-windows-in-the-same-application">Switching between multiple open windows in the same application</h3>
+<p>If you have several copies of the same application open you can switch between them using the super key + ~ key (the key to the left of 1 on a US keyboard). You can also bring up the dock, click on the application
+icon and then select the one you want but the keyboard is much easier and faster.</p>
+<p>For Example, in LibreCalc I often have a lot of spreadsheets open. To switch to a different sheet I can use the super + ` key combination. On a US keyboard that is the key to teh left of the 1 key. Here is a screenshot of two spreadsheets.</p>
+<p><img alt="screenshot" src="../img/alt%2B~.png" /></p>
+<hr />
+<h2 id="configuring-the-dock">Configuring the Dock</h2>
+<p>Like Windows and Mac, Ubuntu with the Gnome DE has a dock. You customize the dock using the Gnome Settings application. To open the Gnome Settings application, click on "Activities Overview" icon at the top right corner of the
+screen, then select the gear icon. This will open the "settings" application. It’s very similar to “System Preferences” on the Mac or Control Panel on Windows.</p>
+<p>At the top left corner of the screen there is a magnifying glass. Click it and enter "dock". The dock is under "Ubuntu Desktop".</p>
+<p><img alt="screenshot" src="../img/Dock.png" /></p>
+<p>One thing I do to help me use all three operating systems
+is to customize the dock to be similar across all OSes. I set Windows, Mac and Linux to display it on the left
+because I am almost 100% of the time on a laptop and the screen is wider than it is high. I also set the dock to
+auto-hide and display a few commonly used apps.</p>
+<p>Using the super key and typing the first few letters is now my preferred work flow rather than clicking on an
+icon in the dock. One thing I like about Ubuntu is that when I’m using multiple monitors it puts the dock on all
+the monitors.</p>
+<hr />
+<h2 id="customizing-gnome-the-tweaks-tool">Customizing Gnome - The Tweaks Tool</h2>
+<p>Ubuntu ships with Gnome as the desktop environment (DE). Unlike Windows, Linux distributions can use a lot of different desktop environments (DE). Gnome is the default desktop environment for Ubuntu and Redhat (CentOS) so it has a large percentage of the desktop market in Linux. If you want to try others there are several official flavors of Ubuntu that you can download from Canonical.</p>
+<p>First, install the Gnome Tweak Tool. This tool allows you to change a lot of the Gnome settings to your preference. Open a terminal window, <code>ctrl+alt+t</code>, and type the following:</p>
+<p><code>sudo apt install gnome-tweak-tool</code></p>
+<p>Press [enter], you will be prompted for your password because of sudo, and the install will start. When it finishes, hit the super key, type</p>
+<p><code>tweaks</code></p>
+<p>and hit [enter].</p>
+<p><img alt="screenshot" src="../img/tweaks.png" /></p>
+<hr />
+<h2 id="startup-applications">Startup Applications</h2>
+<p>Gnome Tweaks is where you set the applications that run on startup. I try to keep these to a minimum. It's easy to forget that some application you don't use anymore is automatically starting and using system resources.</p>
+<p>There are a lot of options that you can "tweak" with the tool. I don't make a lot of changes but I do like having the Top Bar show Day, Data and Time.</p>
+<hr />
+<h2 id="display-asterisks-when-typing-passwords">Display Asterisks when typing passwords</h2>
+<p>By default Ubuntu doesn't display anything when you type a password. This annoys some users. Here is how to add Asterisks.</p>
+<p>Ubuntu provides a terminal tool called <code>visudo</code> to modify the <code>/etc/sudoers</code> file. This tool is a safety blanket that will catch a lot of mistakes when you try to exit. If you bork the file bad enough the system won't log in! Digital Ocean has a <a href="https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file">tutorial</a> on editing the sudoers file.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Never edit this file with a normal text editor! Always use the visudo command instead! Because improper syntax in the /etc/sudoers file can leave you with a broken system where it is impossible to obtain elevated privileges, it is important to use the visudo command to edit the file.</p>
+</div>
+<p>The <code>visudo</code> command opens a text editor like normal, but it validates the syntax of the file upon saving. This prevents configuration errors from blocking sudo operations, which may be your only way of obtaining root privileges.</p>
+<p>Traditionally, visudo opens the /etc/sudoers file with the vi text editor. Ubuntu, however, has configured visudo to use the nano text editor instead. Before running <code>visudo</code> use the following command to verify what editor will be used:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="hll">sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>editor
+</span></span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">[</span>sudo<span class="o">]</span><span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span>mhubbard:
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">9</span><span class="w"> </span>choices<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>alternative<span class="w"> </span>editor<span class="w"> </span><span class="o">(</span>providing<span class="w"> </span>/usr/bin/editor<span class="o">)</span>.
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>Selection<span class="w">    </span>Path<span class="w">                </span>Priority<span class="w">   </span>Status
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>------------------------------------------------------------
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>*<span class="w"> </span><span class="m">0</span><span class="w">            </span>/usr/bin/joe<span class="w">         </span><span class="m">70</span><span class="w">        </span>auto<span class="w"> </span>mode
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="m">1</span><span class="w">            </span>/bin/ed<span class="w">             </span>-100<span class="w">       </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="m">2</span><span class="w">            </span>/bin/nano<span class="w">            </span><span class="m">40</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="m">3</span><span class="w">            </span>/usr/bin/jmacs<span class="w">       </span><span class="m">50</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="m">4</span><span class="w">            </span>/usr/bin/joe<span class="w">         </span><span class="m">70</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="m">5</span><span class="w">            </span>/usr/bin/jpico<span class="w">       </span><span class="m">50</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="m">6</span><span class="w">            </span>/usr/bin/jstar<span class="w">       </span><span class="m">50</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="m">7</span><span class="w">            </span>/usr/bin/rjoe<span class="w">        </span><span class="m">25</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="m">8</span><span class="w">            </span>/usr/bin/vim.basic<span class="w">   </span><span class="m">30</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="m">9</span><span class="w">            </span>/usr/bin/vim.tiny<span class="w">    </span><span class="m">15</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Press<span class="w"> </span>&lt;enter&gt;<span class="w"> </span>to<span class="w"> </span>keep<span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>choice<span class="o">[</span>*<span class="o">]</span>,<span class="w"> </span>or<span class="w"> </span><span class="nb">type</span><span class="w"> </span>selection<span class="w"> </span>number:
+</span></code></pre></div>
+<p>You can see that I changed the default to the <code>joe editor</code>. Joe can handle massive text files and I do a lot of password hash cracking so I need to open word lists that are 100's of MBs in length. Joe easily handles that but it uses non-standard keys for save, exit, etc.</p>
+<p>I suggest leaving <code>nano</code> as the default if you are new to Ubuntu.</p>
+<p><strong><em>Open the sudoers file with visudo</em></strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>visudo
+</span></code></pre></div>
+<p>Scroll down till you see <code>Defaults        env_reset</code> and add <code>,pwfeedback</code>. The end result will be <code>Defaults        env_reset,pwfeedback</code>. Press <code>ctrl+s</code> to save the file and <code>ctrl+x</code> to exit.</p>
+<p>Now you will see Asterisks when typing a password:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="hll">$ sudo nmap -vv --script ssl-cert,ssl-enum-ciphers -p 443 192.168.10.253
+</span></span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>[sudo] password for mhubbard: ********
+</span></code></pre></div>
+<hr />
+<h2 id="using-the-gui-files-application">Using the GUI Files application</h2>
+<p>Files is the file manager for Gnome. The Gnome team is very creative with application names! The text editor is named "Text Editor", I kid you not. It makes Googling for tips a bit of a challenge.</p>
+<p>File used to be named <code>nautilus</code> and you can still launch the application from the terminal using <code>nautilus</code>. If you are having an issue with Files starting, for example you get a dialog saying "Files is not responding" with a Force quit and a Wait button you, go ahead and <code>Force Quit</code> it. Then open a terminal and type <code>nautilus</code>. If it fails to open you will get detailed output that should point you in the right direction to solve the problem.</p>
+<p>I am bringing this up because I installed a bunch of Gnome extensions a while back and one of them caused nautilus to hang. I got the logs from the terminal and and found this on article on <a href="https://bugs.launchpad.net/ubuntu/+source/nautilus/+bug/1993557">bugs.launchpad.net</a>. Running <code>systemctl mask --user --now tracker-miner-fs-3.service</code> fixed the issue with nautilus hanging. But searching with the word <code>files</code> would be a waste of time.</p>
+<hr />
+<h3 id="options-i-always-use-in-files">Options I always use in Files</h3>
+<p>If you click on the hamburger menu, or press <code>ctrl+,</code> you will see <code>Preferences</code>.</p>
+<p>The General options that I always enable:</p>
+<ul>
+<li>Sort Folders Before Files</li>
+<li>Expandable Folders in List View</li>
+</ul>
+<p>The <code>Expandable Folders</code> option puts a <code>&gt;</code> symbol beside the folder name. Clicking the symbols expands the folder</p>
+<p><img alt="screenshot" src="../img/File-Preferences.png" /></p>
+<hr />
+<p>The Optional Context Menu Actions that I always enable:</p>
+<ul>
+<li>Create Link - Creates a shortcut to the file you have highlighted</li>
+<li>Delete Permanently - Allows you to skip the Trashcan</li>
+</ul>
+<p><img alt="screenshot" src="../img/Files-Context.png" /></p>
+<hr />
+<p>The Grid View Cations that I always enable:</p>
+<ul>
+<li>First - size</li>
+<li>Second - Created</li>
+<li>Third - type</li>
+</ul>
+<p><img alt="screenshot" src="../img/Files-Grid.png" /></p>
+<hr />
+<h3 id="tabs">Tabs</h3>
+<p>Files works great and has a feature I love – Tabs! Once you get used to having tabs in your file manager it’s hard to use Windows Explorer! Below is a screenshot with three tabs open. You can see how convenient this is. On a Mac, the Finder app has tabs. I don’t know why Windows doesn’t.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>From <a href="https://www.pcworld.com/article/1430331/use-the-new-tabbed-file-explorer-to-simplify-your-life.html#:~:text=Remember%2C%20tabs%20within%20File%20Explorer,seen%20them%20before%2C%20that's%20fine.">PCWorld</a></p>
+<p>Remember, tabs within File Explorer were not part of the Windows 11 2022 Update (22H2) — they were added as part of a later separate update. It’s all part of the new “Moments” strategy that Microsoft has implemented to add new features at unexpected times.</p>
+</div>
+<h4 id="open-a-new-tab">Open a new Tab</h4>
+<p>You can use the keyboard shortcut <code>ctrl+t</code> to create a new tab or click the <code>Hamburger menu</code> and select New Tab. This will open the current folder in a new tab.</p>
+<p>If your mouse has a center button, you can select a folder and click it to open the selected folder in a new tab! That is a big time saver.</p>
+<hr />
+<h3 id="the-files-right-click-menu">The Files right Click menu</h3>
+<p>Files has an extensive right click menu. Here are the options for the folder <code>Scripts</code>. You can see the <code>&gt;</code> symbol beside the folder name.</p>
+<p><img alt="screenshot" src="../img/Right-Click.png" /></p>
+<hr />
+<p>I use the <code>list</code> view to list files. Unlike with the <code>Icon</code> view, there isn't an open space to right click on is you want to create a nw folder or paste a file. But, you can right click just to the left of the list of folders to bring up the an options menu. See the next image:</p>
+<p><img alt="screenshot" src="../img/Right-Click-folder.png" /></p>
+<hr />
+<p>The dialog has options for:</p>
+<ul>
+<li>New Folder - Create a new folder.</li>
+<li>New Document - Create a new document based off of a template.</li>
+<li>Open With... - This is an odd one. It allows you to select an application to - open a new folder with.</li>
+<li>Paste - If you have copied a file, a Paste menu will appear, otherwise it's greyed out.</li>
+<li>Paste as link - Similar to a <code>shortcut</code> on Windows.</li>
+<li>Select All - Selects all folders.</li>
+<li>Visible Columns - This opens a dialog where you can choose which columns are visible.</li>
+<li>Open in Terminal - Opens the Ubuntu Terminal in this folder.</li>
+<li>Open as Administrator - Open a new window running with root privileges.</li>
+<li>Properties - Shows the size of the folder and the permissions of the folder.</li>
+</ul>
+<hr />
+<h3 id="new-document">New Document</h3>
+<p>You can create templates in the <code>/home/$USER/templates</code> folder for the document types that you use on a regular basis. To create a template:</p>
+<ul>
+<li>Open the application you want to create a template for</li>
+<li>Set any options for the template or enter text if it's a document.</li>
+<li>Save the file in the <code>/home/$USER/templates</code> folder. For example, my template folder is <code>/home/mhubbard/templates</code></li>
+</ul>
+<p>I wanted a plain text template so I opened <code>Text Editor</code> and saved the blank document as New_Text_Document.txt in the templates folder. Now when I right click I can select <code>New_Txt_Document.txt</code> for a blank text file.</p>
+<p>I right clicked over the <code>New_Text_Document.txt</code> file and selected <code>Open With</code> then set VS Code as the <code>Always use for this type of file</code> option.</p>
+<p><img alt="screenshot" src="../img/Right-Click-Open-With.png" /></p>
+<hr />
+<p>You can also create LibreOffice templates. The templates that end in <code>.ott</code> are for LibreOffice Writer and templates that end in <code>.ots</code> are for LibreOffice Calc.</p>
+<p><img alt="screenshot" src="../img/Right-Click-New-Doc.png" /></p>
+<hr />
+<h3 id="visible-columns">Visible Columns</h3>
+<p>There are a lot of options for which columns to display:</p>
+<p><img alt="screenshot" src="../img/Right-Click-Columns.png" /></p>
+<hr />
+<p>I like the <code>detailed Type</code> option. Here is a screenshot of what is displayed:</p>
+<p><img alt="screenshot" src="../img/Detailed-Type.png" /></p>
+<hr />
+<h3 id="open-as-administrator">Open as Administrator</h3>
+<p>This one is very useful is you like to use GUI applications for files that require root privileges. You can also click your mouse into the address bar and type <code>admin:</code> to change the current window to root. You will be prompted for your password. Then you can open files as root.</p>
+<hr />
+<h3 id="keyboard-shortcuts">Keyboard shortcuts</h3>
+<p>Gnome <code>Files</code> has a lot of keyboard shortcuts. You click the hamburger menu and select <code>Keyboard Shortcuts</code> or press <code>ctrl+?</code> to open a dialog displaying the shortcuts. There are 3 pages of them!</p>
+<hr />
+<h3 id="creating-archives">Creating archives</h3>
+<p>From the right click menu you can select "Compress..." to create an archive. The <code>Compress...</code> menu supports:</p>
+<ul>
+<li>zip</li>
+<li>7zip (Must install 7z <code>sudo apt install 7zip</code>)</li>
+<li>tar.xz</li>
+</ul>
+<hr />
+<h3 id="display-the-full-path-in-files">Display the Full path in files</h3>
+<p>Sometimes you want to copy the full path to a file when working in the file manager. Hit <code>ctrl+l</code> (lowercase el) and the path will change to a format that you can copy.</p>
+<p><img alt="screenshot" src="../img/ZIP.png" /></p>
+<hr />
+<h3 id="easily-preview-files-in-files">Easily preview files in Files</h3>
+<p>One thing I missed from Windows Explorer was the preview pane. In Ubuntu running the Gnome desktop you can install "Sushi" to preview files. Then you just hit the space bar to preview a supported file format.</p>
+<p>To install GNOME Sushi using Ubuntu Software, open a terminal and paste the following code in:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gnome-sushi
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+<p>For a more detailed description see
+<a href="https://www.howtogeek.com/277987/how-to-quickly-preview-a-file-in-ubuntus-file-manager-like-quick-look-in-macos/">How to Quickly Preview a File in Ubuntu's File Manager (Like "Quick Look" in macOS)</a></p>
+<hr />
+<h3 id="resizerotate-images">Resize/Rotate images</h3>
+<p>Gnome provides a package that adds resize and rotate capabilities for the Files application. I find this package very useful when creating documentation.</p>
+<p>To install the Nautilus Image Converter, open a terminal and paste the following code in:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nautilus-image-converter
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+<p>Now when you right click on an image file, you will see an option to resize and an option to rotate.</p>
+<p><img alt="screenshot" src="../img/resize.png" /></p>
+<hr />
+<h3 id="completely-wipe-files-and-folders-from-the-disk">Completely wipe files and folders from the disk</h3>
+<p>Nautilus provides an extension to wipe files securely and fill the empty places so that data can not be recovered anymore. This is not a quick operation, it can takes minutes or hours depending on the size of the file.</p>
+<p>To install the Nautilus Image Converter, open a terminal and paste the following code in:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nautilus-wipe
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+<hr />
+<h3 id="get-the-list-of-recently-visited-directories">Get the list of recently visited directories</h3>
+<p>On the top left, right-click on the back arrow to get the list of previously visited folders.</p>
+<p><img alt="screenshot" src="../img/Files-recent.png" /></p>
+<hr />
+<h3 id="search">Search</h3>
+<p>The completely new "Files" application in Gnome 46 (Ubuntu 24.04) is amazing. Here is the announcement from the project <a href="https://release.gnome.org/46/">Introducing GNOME 46, “Kathmandu”</a></p>
+<p>One of the best features in Files is the new search. Just click on the magnifying glass next to the address bar and enter some text. Unlike in Windows, you can enter text that is in the middle of the filename. In the screenshot below, I entered "new" and it found "frequent-new.png" in a directory one level down.</p>
+<p><img alt="screenshot" src="../img/files-search1.png" /></p>
+<p>You can click on the funnel icon after you open search and filter on:</p>
+<ul>
+<li>Date</li>
+<li>Created<ul>
+<li>Last Modified</li>
+<li>Last Used</li>
+</ul>
+</li>
+<li>What - There are well over 100 file types to choose from</li>
+<li>Full Text or Filename</li>
+</ul>
+<p>Ubuntu has an article on using the new feature here: <a href="https://help.ubuntu.com/stable/ubuntu-help/files-search.html.en#:~:text=Open%20the%20Files%20application%20from,shown%20in%20the%20search%20bar.">Search for files</a></p>
+<p>Ubuntu also has a <a href="https://help.ubuntu.com/stable/ubuntu-help/files.html.en#more-file-tasks">Common Tasks</a> page for Files</p>
+<hr />
+<h3 id="custom-folder-icons-in-files">Custom folder icons in Files</h3>
+<p>You can change the icon for a folder in the Files application. Right click on a folder, and select <code>Properties</code> from the menu. Look at the lower right of the folder icon and you will see pencil icon. Click the <code>Pencil</code> and a <code>Select Custom Icon</code> dialog will open. Navigate to a folder containing icons and select the one you want.</p>
+<p>Here is the icon I have set for the folder containing the files for this project:</p>
+<p><img alt="screenshot" src="../img/FolderIcon.png" /></p>
+<p><a href="https://www.omgubuntu.co.uk/2023/12/gnome-devs-improve-nautilus-custom-folder-icon-feature">Custom folder Icon</a> - An article from OMG Ubuntu on setting custom folder icons</p>
+<hr />
+<h3 id="i-have-a-red-lock-icon-on-a-file-or-folder">I have a red Lock icon on a file or folder</h3>
+<p>Files, like every other GUI file manager, uses icons to represent files and folders. If the icon has a green check mark in it, you have full access to the file or folder.</p>
+<p>If the icon has a red lock in it, you don’t have full
+permissions to the file or folder.
+Here is a screenshot of Files showing a file with a red x.</p>
+<p><img alt="screenshot" src="../img/red-lock.png" /></p>
+<p>To take ownership of the file, open the terminal and enter:</p>
+<p><code>sudo chown mhubbard testsync.txt</code></p>
+<p>You will be prompted to enter your password.</p>
+<h3 id="i-have-a-grey-x-on-a-file-or-folder">I have a grey X on a file or folder</h3>
+<p>If the file has a grey square icon with an X in it the file is read only.</p>
+<p><img alt="screenshot" src="../img/grey-x.png" /></p>
+<hr />
+<h3 id="access-the-root-folder">Access the root folder</h3>
+<p>To navigate to the root of the file system, click into the address bar, type <code>\</code> and press <code>enter</code>. To create a bookmark for root press <code>ctrl+d</code> while in the root folder.</p>
+<p>Here is a screenshot of the bookmark</p>
+<hr />
+<p><img alt="screenshot" src="../img/root-bookmark.png" /></p>
+<hr />
+<h3 id="access-the-root-folder-as-admin">Access the root folder as admin</h3>
+<p>In the <code>Files</code> application, click into the address bar, type <code>admin://</code> and press <code>enter</code>. You will be prompted for your user password.</p>
+<p>Here is a screenshot showing that we are in the folder as administrator.</p>
+<hr />
+<p><img alt="screenshot" src="../img/root-admin.png" /></p>
+<hr />
+<p>As always, BE CAREFUL when you are the administrator!</p>
+<p><strong>References for the Files app</strong></p>
+<ul>
+<li><a href="https://askubuntu.com/questions/835588/meaning-of-files-folders-with-a-red-gray-x-on-them/835590">Meaning of files-folders with a red x</a></li>
+<li><a href="https://www.youtube.com/watch?v=tR5uDUlZJNA">10 tips for Gnome Files</a> - A 10 minute video that is worth watching.</li>
+<li><a href="https://itsfoss.com/access-root-nautilus/">Access Root Directory in Nautilus File Manager</a></li>
+</ul>
+<hr />
+<h2 id="creating-a-bootable-usb-stick-from-an-iso-image">Creating a bootable USB stick from an ISO image</h2>
+<p>You don't need a third-party tool to create a bootable USB stick on Linux if you don't mind using the terminal.</p>
+<h3 id="use-dd-to-make-bootable-flash">Use dd to make bootable flash</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ubuntu uses a system called "snaps" to sandbox applications. The drawback to snaps is that they mount every application using a "squashfs". I use the following alias so that I don't have to see all the applications.</p>
+</div>
+<p><code>alias df="df -h --exclude=squashfs"</code></p>
+<p>To add the alisa to bash:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="hll">gnome-text-editor<span class="w"> </span>~/.bashrc
+</span></span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>or
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll">gnome-text-editor<span class="w"> </span>~/.zshrc
+</span></span></code></pre></div></td></tr></table></div>
+<p>Depending on what your shell is. The default shell is bash. I will go over changing the shell to zsh later on.</p>
+<p>If you create the alias you can use df -h instead of including the --exclude=squashfs option.</p>
+<ul>
+<li>run df -h --exclude=squashfs</li>
+<li>Insert the flash drive</li>
+<li>run df -h --exclude=squashfs</li>
+</ul>
+<p>Look for a new entry in the table. For example, on my laptop I have two flash drives mounted.</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>Filesystem<span class="w">      </span>Size<span class="w">  </span>Used<span class="w"> </span>Avail<span class="w"> </span>Use%<span class="w"> </span>Mounted<span class="w"> </span>on
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>tmpfs<span class="w">           </span><span class="m">3</span>.2G<span class="w">  </span><span class="m">4</span>.0M<span class="w">  </span><span class="m">3</span>.1G<span class="w">   </span><span class="m">1</span>%<span class="w"> </span>/run
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a>/dev/nvme0n1p2<span class="w">  </span>457G<span class="w">  </span>392G<span class="w">   </span>43G<span class="w">  </span><span class="m">91</span>%<span class="w"> </span>/
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a>tmpfs<span class="w">            </span>16G<span class="w">  </span>219M<span class="w">   </span>16G<span class="w">   </span><span class="m">2</span>%<span class="w"> </span>/dev/shm
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a>tmpfs<span class="w">           </span><span class="m">5</span>.0M<span class="w">   </span>12K<span class="w">  </span><span class="m">5</span>.0M<span class="w">   </span><span class="m">1</span>%<span class="w"> </span>/run/lock
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a>efivarfs<span class="w">        </span>384K<span class="w">   </span>80K<span class="w">  </span>300K<span class="w">  </span><span class="m">21</span>%<span class="w"> </span>/sys/firmware/efi/efivars
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a>/dev/nvme0n1p1<span class="w">  </span>513M<span class="w">   </span>31M<span class="w">  </span>483M<span class="w">   </span><span class="m">6</span>%<span class="w"> </span>/boot/efi
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8"></a>tmpfs<span class="w">           </span><span class="m">3</span>.2G<span class="w">  </span><span class="m">1</span>.3M<span class="w">  </span><span class="m">3</span>.2G<span class="w">   </span><span class="m">1</span>%<span class="w"> </span>/run/user/1000
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9"></a>/dev/sdc1<span class="w">       </span><span class="m">7</span>.5G<span class="w">  </span><span class="m">4</span>.1G<span class="w">  </span><span class="m">3</span>.5G<span class="w">  </span><span class="m">55</span>%<span class="w"> </span>/media/mhubbard/C253-EE9A
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10"></a>/dev/sdb1<span class="w">       </span>116G<span class="w">  </span><span class="m">5</span>.0G<span class="w">  </span>111G<span class="w">   </span><span class="m">5</span>%<span class="w"> </span>/media/mhubbard/LINUX-ARCHI
+</span></code></pre></div></td></tr></table></div>
+<p>The two flash drives are /dev/sdc1 and /dev/sdb1. I can tell because they are listed as /media/mhubbard which is the mount point for the flash drives.</p>
+<p>In this example I am burning System Rescue to the flash drive.
+Parameters:</p>
+<ul>
+<li>if - input file name</li>
+<li>of - output filename</li>
+<li>bs - Block size to use</li>
+<li>status=progress - display progress</li>
+<li>&amp;&amp; sync - In Linux the "&amp;&amp;" means finish the first command then run the next command. In this case sync the writes to make sure it's ejected cleanly
+Enter the following:</li>
+</ul>
+<p><code>dd if=systemrescue.iso of=/dev/sdb bs=10M status=progress &amp;&amp; sync</code></p>
+<div class="admonition note">
+<p class="admonition-title">Be careful if you use this method</p>
+<p>dd is commonly referred to as "disk destroyer", meaning that it starts as soon as you hit enter, there are no "Are you sure" prompts.</p>
+</div>
+<p>MAKE SURE THAT YOU HAVE THE OF (output file) SET TO THE FLASH DRIVE!!</p>
+<hr />
+<h3 id="use-the-ubuntu-make-startup-disk-tool">Use the Ubuntu "Make Startup disk" tool</h3>
+<p>You can use the built in “Startup disk creator” by tapping the super key (Windows Key) and typing <code>start</code>. You will see the Startup disk icon:</p>
+<p><img alt="screenshot" src="../img/startup.png" /></p>
+<ul>
+<li>Pick the ISO image from the “Source disc image (.iso)” drop down</li>
+<li>Then select the USB stick from "Disk to Use"</li>
+<li>Click “Make Startup Disk”</li>
+<li>You will be prompted to select "Yes or No"</li>
+</ul>
+<p><img alt="screenshot" src="../img/startup-disk.png" /></p>
+<p>In this example, I am burning Kali Linux 2023.3 to the flash drive.</p>
+<hr />
+<h3 id="use-qemu-to-test-a-startup-disk">Use qemu to test a startup disk</h3>
+<p>You can install qemu and create a simple virtual machine to test a startup disk. I'm not going to cover that but these two articles will explain.</p>
+<ul>
+<li><a href="https://askubuntu.com/questions/1490805/how-do-i-install-qemu-on-ubuntu-23-10">How do I install qemu on Ubuntu 23.10?</a></li>
+<li><a href="https://makandracards.com/makandra/1192-using-qemu-to-quickly-test-an-iso-or-bootable-usb-drive">Using QEMU to quickly test an ISO or bootable USB drive</a></li>
+</ul>
+<hr />
+<h2 id="working-with-the-linux-file-system">Working with the Linux File System</h2>
+<p>If you have been a Windows user for a long time the hardest part of switching to Linux is the file system. There is no concept of drive letters in Linux. The Linux file system is based on the “File system Hierarchy Standard” maintained by the Linux Foundation.</p>
+<p>The top of the Linux file system is called the root. All files and directories are referenced from the root, even if they are stored on different physical or virtual devices. That is so different from Windows that it will take some
+time to get comfortable with.</p>
+<p>Here is a link to a great tutorial on the Linux file system by Abhishek Prakash - <a href="https://linuxhandbook.com/linux-directory-structure/">Linux Directory Structure Explained for Beginners</a>. His tutorial will get you up to speed on the Linux file system. Abhishek creates Linux tutorials and I recommend that you sign up for his newsletter. The subscribe button is at the top of the page.</p>
+<p>On Windows you have drive letters and the root of the file system is the “\” character – The good old C:. But Linux/Mac, or any *NIX for that matter, doesn’t use drive letters. The file system is usually described as a tree
+with root at the beginning. Root is shown in the file system as /. Everything is then displayed off the root. The “/” is another difference that will take a while to get used to. Unix/Linux/Mac use a forward slash instead of the backslash “\” for file system commands. When you use a web browser, you use the forward slash for file commands – <a href="https://github.com/rikosintie">https://github.com/rikosintie</a> for example.</p>
+<hr />
+<h3 id="lsblk">LSBLK</h3>
+<p>For a quick look at block devices (hard drives, thumb drives, nvme, etc.) on the system, you can use the "list block devices" command - lsblk. Here is an lsblk listing on my Dell laptop which has an m.2 NVME drive with the OS on it and 1TB SSD for data.</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="hll">$<span class="w"> </span>lsblk<span class="w"> </span>-e7
+</span></span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>NAME<span class="w">        </span>MAJ:MIN<span class="w"> </span>RM<span class="w">   </span>SIZE<span class="w"> </span>RO<span class="w"> </span>TYPE<span class="w"> </span>MOUNTPOINTS
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>sda<span class="w">           </span><span class="m">8</span>:0<span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">931</span>.5G<span class="w">  </span><span class="m">0</span><span class="w"> </span>disk<span class="w"> </span>/media/mhubbard/Data
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a>nvme0n1<span class="w">     </span><span class="m">259</span>:0<span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">465</span>.8G<span class="w">  </span><span class="m">0</span><span class="w"> </span>disk
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a>├─nvme0n1p1<span class="w"> </span><span class="m">259</span>:1<span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">513</span>.1M<span class="w">  </span><span class="m">0</span><span class="w"> </span>part<span class="w"> </span>/boot/efi
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a>└─nvme0n1p2<span class="w"> </span><span class="m">259</span>:2<span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">465</span>.3G<span class="w">  </span><span class="m">0</span><span class="w"> </span>part<span class="w"> </span>/
+</span></code></pre></div></td></tr></table></div>
+<p>Notice that I included -e7 on the end of the <code>lsblk</code> command. That is because Ubuntu uses "snaps" for a lot of applications and the show up as "loop" devices in lsblk. The -e means exclude and 7 is the number loop devices.</p>
+<p>So you can see that I have an NVME drive called nvme01n1. There are two partitions on the nvme drive:</p>
+<ul>
+<li>nvme01n1p1</li>
+<li>nvme01n1p2</li>
+</ul>
+<p>P1 is the boot partition and p2 has the operating system. Notice
+that nvme0n1p2 is type partition and mount is /. That means nvme0n1p2 is the root of the file system.</p>
+<p>There is also a "block device" named sda. This is a 1TB SATA SSD drive and it's mounted at /media/mhubbard/Data off the root.</p>
+<p><img alt="screenshot" src="../img/Drives.png" /></p>
+<p>The display needs a little explanation. For the disk labeled “Ubuntu” it says 45.4 GB / 490.6 GB available.
+That actually means it’s a 490.6GB drive with 45.4GB available.</p>
+<p>Once you get used to it, this seems more intuitive and easier to scale than the drive letter model used by Windows. You will also notice in the lsblk output that Linux/Mac, and again all *NIX systems, use the forward
+slash as a delimiter rather than the backslash.</p>
+<p>Linux has many “ls” commands for listing things:</p>
+<ul>
+<li>lsblk – list block level devices like disk drives, thumb drives, etc.</li>
+<li>lspci – list the PCI bus devices on the system</li>
+<li>lsusb – list USB bus devices</li>
+<li>lsof – list open files</li>
+<li>lslogins – list logins</li>
+<li>lsmod – list the status of modules inserted into the kernel</li>
+</ul>
+<p>I will cover each of these a later in this section.</p>
+<p>To list the commands that start with "ls" you can type ls and press [tab]. This works with any Linux command. Just like in a Cisco switch, Linux has "tab completion" but it will also show you a list f all commands that match.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$<span class="w"> </span>ls
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ls<span class="w">           </span>lsattr<span class="w">       </span>lsb_release<span class="w">  </span>LSCOLORS<span class="w">     </span>lsdiff<span class="w">       </span>lsinitramfs<span class="w">  </span>lslocks<span class="w">      </span>lsmem<span class="w">        </span>lsns<span class="w">         </span>lspci<span class="w">        </span>lspgpot<span class="w">      </span>lsusb
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>lsa<span class="w">          </span>lsblk<span class="w">        </span>LS_COLORS<span class="w">    </span>lscpu<span class="w">        </span>lshw<span class="w">         </span>lsipc<span class="w">        </span>lslogins<span class="w">     </span>lsmod<span class="w">        </span>lsof<span class="w">         </span>lspcmcia<span class="w">     </span>lspower
+</span></code></pre></div>
+<hr />
+<h3 id="lsusb">LSUSB</h3>
+<p>Linux makes it easy to see what USB devices are connected, who the manufacturer is and what the Product ID (PID) and Vendor ID (VID) are.</p>
+<p>In this example, I have a USB to Serial adapter connected. It uses the Future Technology Devices International (FTDI) UART. It’s connected to Bus 001, the Vendor ID is 0403, and the Product ID is 6001.</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="hll">lsusb
+</span></span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>Bus<span class="w"> </span><span class="m">002</span><span class="w"> </span>Device<span class="w"> </span><span class="m">001</span>:<span class="w"> </span>ID<span class="w"> </span>1d6b:0003<span class="w"> </span>Linux<span class="w"> </span>Foundation<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>root<span class="w"> </span>hub
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="hll">Bus<span class="w"> </span><span class="m">001</span><span class="w"> </span>Device<span class="w"> </span><span class="m">002</span>:<span class="w"> </span>ID<span class="w"> </span>0c45:6a08<span class="w"> </span>Microdia
+</span></span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a>Bus<span class="w"> </span><span class="m">001</span><span class="w"> </span>Device<span class="w"> </span><span class="m">003</span>:<span class="w"> </span>ID<span class="w"> </span><span class="m">8087</span>:0aaa<span class="w"> </span>Intel<span class="w"> </span>Corp.
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a>Bus<span class="w"> </span><span class="m">001</span><span class="w"> </span>Device<span class="w"> </span><span class="m">006</span>:<span class="w"> </span>ID<span class="w"> </span><span class="m">0403</span>:6001<span class="w"> </span>Future<span class="w"> </span>Technology<span class="w"> </span>Devices<span class="w"> </span>International,<span class="w"> </span>Ltd<span class="w"> </span>FT232<span class="w"> </span>USB-Serial<span class="w"> </span><span class="o">(</span>UART<span class="o">)</span><span class="w"> </span>IC
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a>Bus<span class="w"> </span><span class="m">001</span><span class="w"> </span>Device<span class="w"> </span><span class="m">001</span>:<span class="w"> </span>ID<span class="w"> </span>1d6b:0002<span class="w"> </span>Linux<span class="w"> </span>Foundation<span class="w"> </span><span class="m">2</span>.0<span class="w"> </span>root<span class="w"> </span>hub
+</span></code></pre></div></td></tr></table></div>
+<p>This is a very useful command once you make it part of your skill set. Anytime you connect a USB device you can quickly see who the manufacturer of the chipset is. This is especially useful if the device isn’t working correctly and want to Google for some information.</p>
+<p>Another command that will help here is dmesg. This displays the system messages that have been logged. With the <code>lsusb</code> command above you can see a Future Technology USB-Serial adapter has been inserted.</p>
+<p>If I run:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="hll">sudo<span class="w"> </span>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>FT232
+</span></span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="o">[</span><span class="m">83003</span>.234941<span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-3:<span class="w"> </span>Product:<span class="w"> </span>FT232R<span class="w"> </span>USB<span class="w"> </span>UART
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="o">[</span><span class="m">83003</span>.242719<span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-3:<span class="w"> </span>Detected<span class="w"> </span>FT232RL
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="o">[</span><span class="m">106493</span>.653320<span class="o">]</span><span class="w"> </span>usb<span class="w"> </span><span class="m">1</span>-3:<span class="w"> </span>Detected<span class="w"> </span>FT232RL
+</span></code></pre></div></td></tr></table></div>
+<p>You can see that the system logged the insertion of the UART.
+To see what kernel module is loaded for the UART (Note – I am only showing the UART module. Other USB kernel modules were displayed):</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>usb
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>usbserial
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="m">49152</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>ftdi_sio
+</span></code></pre></div></td></tr></table></div>
+<p>In this example the Future Technology USB-Serial adapter is working correctly but you would do the same things to troubleshoot a device that wasn’t working.
+The big difference over Windows is that support for a device in Linux is built into the kernel and loads when the device is inserted.</p>
+<p>There are cases where there is no support in the kernel and you will have to go to the manufacturer’s site and download a kernel module (driver in Windows).</p>
+<p>The steps above will quickly let you
+know that the device isn’t being discovered by Linux</p>
+<hr />
+<h2 id="gnome-system-tool-gui">Gnome System Tool (GUI)</h2>
+<p>Gnome includes a tool like “service.msc” on Windows. You start it by tapping the super key and typing “System". Here is a screenshot of the "Processes" panel.</p>
+<p><img alt="screenshot" src="../img/Gnome-System.png" /></p>
+<p>Like in Windows, you can right click and select an action:</p>
+<p><img alt="screenshot" src="../img/Gnome-Right-Click.png" /></p>
+<p>Here is a screenshot of the "Resources" panel</p>
+<p><img alt="screenshot" src="../img/Gnome-Resources.png" /></p>
+<p>Here is a screenshot of the "File Systems" panel</p>
+<p><img alt="screenshot" src="../img/Gnome-FileSystems.png" /></p>
+<p>You can see that my laptop boots off a 500GB nvme disk and has a 1TB drive (sdb) for storage.</p>
+<hr />
+<h2 id="working-with-services">Working with services</h2>
+<p>Ubuntu uses an "init system" called systemd to start and control services. At first it seems confusing and a little difficult compared to  “services.msc” on Windows. But like most things, after you do it a few times it’s very logical and easy to use. Here is a cheat sheet for systemd.</p>
+<table>
+<thead>
+<tr>
+<th>Viewing Systemd Information</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>systemctl list-dependencies</td>
+<td>Show a unit's dependencies</td>
+</tr>
+<tr>
+<td>systemctl list-sockets</td>
+<td>List sockets and what activates</td>
+</tr>
+<tr>
+<td>systemctl list-jobs</td>
+<td>View active systemd jobs</td>
+</tr>
+<tr>
+<td>systemctl list-unit-files</td>
+<td>See unit files and their states</td>
+</tr>
+<tr>
+<td>systemctl list-units</td>
+<td>Show if units are loaded/active</td>
+</tr>
+<tr>
+<td>systemctl get - default</td>
+<td>List default target (like run level)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span>
+<span class="normal"><a href="#__codelineno-13-8">8</a></span>
+<span class="normal"><a href="#__codelineno-13-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="hll">systemctl<span class="w"> </span>list-dependencies<span class="w"> </span>ufw
+</span></span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>ufw.service
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>●<span class="w"> </span>├─system.slice
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>●<span class="w"> </span>├─local-fs.target
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>●<span class="w"> </span>│<span class="w"> </span>├─-.mount
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>●<span class="w"> </span>│<span class="w"> </span>├─boot-efi.mount
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a>○<span class="w"> </span>│<span class="w"> </span>├─systemd-fsck-root.service
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8"></a>●<span class="w"> </span>│<span class="w"> </span>└─systemd-remount-fs.service
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9"></a>●<span class="w"> </span>└─network-pre.target
+</span></code></pre></div></td></tr></table></div>
+<hr />
+<table>
+<thead>
+<tr>
+<th>Working with Services</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>systemctl stop service</td>
+<td>Stop a running service</td>
+</tr>
+<tr>
+<td>systemctl start service</td>
+<td>Start a service</td>
+</tr>
+<tr>
+<td>systemctl restart service</td>
+<td>Restart a running service</td>
+</tr>
+<tr>
+<td>systemctl reload service</td>
+<td>Restart a running service</td>
+</tr>
+<tr>
+<td>systemctl status service</td>
+<td>See if service is running/enabled</td>
+</tr>
+<tr>
+<td>systemctl enable service</td>
+<td>Enable a service to start on boot</td>
+</tr>
+<tr>
+<td>systemctl disable service</td>
+<td>Disable a service - won't start at boot</td>
+</tr>
+<tr>
+<td>systemctl -H host status network</td>
+<td>Run any systemctl command remotely</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between start and enable is that you use enable to set the service to start on boot. If you just run "start" the service will be started but on reboot the service will not be started.</p>
+<p><strong>Example</strong></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="hll">systemctl<span class="w"> </span>status<span class="w"> </span>ufw
+</span></span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>●<span class="w"> </span>ufw.service<span class="w"> </span>-<span class="w"> </span>Uncomplicated<span class="w"> </span>firewall
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">     </span>Loaded:<span class="w"> </span>loaded<span class="w"> </span><span class="o">(</span>/lib/systemd/system/ufw.service<span class="p">;</span><span class="w"> </span>enabled<span class="p">;</span><span class="w"> </span>preset:<span class="w"> </span>enabled<span class="o">)</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">     </span>Active:<span class="w"> </span>active<span class="w"> </span><span class="o">(</span>exited<span class="o">)</span><span class="w"> </span>since<span class="w"> </span>Mon<span class="w"> </span><span class="m">2024</span>-07-01<span class="w"> </span><span class="m">17</span>:42:00<span class="w"> </span>PDT<span class="p">;</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>day<span class="w"> </span>4h<span class="w"> </span>ago
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">       </span>Docs:<span class="w"> </span>man:ufw<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">   </span>Main<span class="w"> </span>PID:<span class="w"> </span><span class="m">1713</span><span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">        </span>CPU:<span class="w"> </span>89ms
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8"></a>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9"></a>Jul<span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">17</span>:41:59<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Starting<span class="w"> </span>ufw.service<span class="w"> </span>-<span class="w"> </span>Uncomplicated<span class="w"> </span>firewall...
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10"></a>Jul<span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">17</span>:42:00<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Finished<span class="w"> </span>ufw.service<span class="w"> </span>-<span class="w"> </span>Uncomplicated<span class="w"> </span>firewall.
+</span></code></pre></div></td></tr></table></div>
+<hr />
+<table>
+<thead>
+<tr>
+<th>Changing System states</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>systemctl reboot</td>
+<td>Reboot the system</td>
+</tr>
+<tr>
+<td>systemctl poweroff</td>
+<td>Power off the system</td>
+</tr>
+<tr>
+<td>systemctl emergency</td>
+<td>Put in emergency mode</td>
+</tr>
+<tr>
+<td>systemctl default</td>
+<td>Back to default target</td>
+</tr>
+</tbody>
+</table>
+<h2 id="viewing-log-messages">Viewing Log Messages</h2>
+<table>
+<thead>
+<tr>
+<th>Viewing Log Messages</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>journalctl</td>
+<td>Show all collected log messages</td>
+</tr>
+<tr>
+<td>journalctl -u network.services</td>
+<td>See network service messages</td>
+</tr>
+<tr>
+<td>journalctl -f</td>
+<td>Follow messages as they appear</td>
+</tr>
+<tr>
+<td>journalctl -k</td>
+<td>show only kernel messages</td>
+</tr>
+<tr>
+<td>journalctl -e</td>
+<td>Jump to the end</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="hll">journalctl<span class="w"> </span>-e<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>clam
+</span></span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>Jul<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">19</span>:00:01<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>CRON<span class="o">[</span><span class="m">1218459</span><span class="o">]</span>:<span class="w"> </span><span class="o">(</span>mhubbard<span class="o">)</span><span class="w"> </span>CMD<span class="w"> </span><span class="o">(</span>clamav<span class="w"> </span>sleep<span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">42</span><span class="k">))</span><span class="p">;</span><span class="w"> </span>venv/bin/fangfrisch<span class="w"> </span>--conf<span class="w"> </span>/etc/fangfrisch.conf<span class="w"> </span>refresh<span class="o">)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>Jul<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">19</span>:10:01<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>CRON<span class="o">[</span><span class="m">1226306</span><span class="o">]</span>:<span class="w"> </span><span class="o">(</span>mhubbard<span class="o">)</span><span class="w"> </span>CMD<span class="w"> </span><span class="o">(</span>clamav<span class="w"> </span>sleep<span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">42</span><span class="k">))</span><span class="p">;</span><span class="w"> </span>venv/bin/fangfrisch<span class="w"> </span>--conf<span class="w"> </span>/etc/fangfrisch.conf<span class="w"> </span>refresh<span class="o">)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a>Jul<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">19</span>:20:01<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>CRON<span class="o">[</span><span class="m">1234175</span><span class="o">]</span>:<span class="w"> </span><span class="o">(</span>mhubbard<span class="o">)</span><span class="w"> </span>CMD<span class="w"> </span><span class="o">(</span>clamav<span class="w"> </span>sleep<span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">42</span><span class="k">))</span><span class="p">;</span><span class="w"> </span>venv/bin/fangfrisch<span class="w"> </span>--conf<span class="w"> </span>/etc/fangfrisch.conf<span class="w"> </span>refresh<span class="o">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5"></a>Jul<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">19</span>:30:01<span class="w"> </span>1S1K-G5-5587<span class="w"> </span>CRON<span class="o">[</span><span class="m">1242328</span><span class="o">]</span>:<span class="w"> </span><span class="o">(</span>mhubbard<span class="o">)</span><span class="w"> </span>CMD<span class="w"> </span><span class="o">(</span>clamav<span class="w"> </span>sleep<span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">42</span><span class="k">))</span><span class="p">;</span><span class="w"> </span>venv/bin/fangfrisch<span class="w"> </span>--conf<span class="w"> </span>/etc/fangfrisch.conf<span class="w"> </span>refresh<span class="o">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="locating-files-from-the-terminal">Locating files from the terminal</h2>
+<p>The locate tool allows you to search everywhere on the file system. To install and update the database. Run the <code>sudo updatedb</code> command  periodically especially if you modify the configuration file.</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="hll">sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mlocate
+</span></span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>sudo<span class="w"> </span>updatedb
+</span></code></pre></div></td></tr></table></div>
+<p>To configure locate:
+These two articles have detailed information on customizing locate.
+    • <a href="https://linux.die.net/man/5/updatedb.conf">configure locate</a> - configure locate
+    • <a href="https://www.tecmint.com/linux-locate-command-practical-examples/">Linux locate command practical examples</a></p>
+<p><strong>Example</strong></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="hll">locate<span class="w"> </span>apsum.py
+</span></span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>/home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
+</span></code></pre></div></td></tr></table></div>
+<h3 id="drill-a-graphical-and-cli-tool-for-searching-files">Drill - A graphical and CLI tool for searching files</h3>
+<p>From the website, “Search files without indexing, but clever crawling. It uses a different algorithm than most search tools and doesn't use a database like the the Ubuntu locate utility. It will search every mount point on the computer and is multithreaded so that it can search many at once. It will also use all available RAM to speed up the search.”</p>
+<p>In the GUI, just enter any part of the filename that you can remember. It's not case sensitive and will find the string anywhere in the name.
+From the website, Download Drill, you can download the GUI (.deb) and the cli (CLI .deb). It is also available as an appimage if you don't want to install it.</p>
+<p><strong>Example</strong></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="hll">drill-search-cli<span class="w"> </span>apsum.py
+</span></span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a>/home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/Python/Scripts/prod/apsum.py
+</span></code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../Introduction/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Intro">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Intro
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../CH02-Install-Tools/" class="md-footer__link md-footer__link--next" aria-label="Next: Desktop">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Desktop
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2024 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rikosintie" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/rikosintie" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/mwhubbard/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate", "header.autohide", "navigation.expand", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.highlight", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
