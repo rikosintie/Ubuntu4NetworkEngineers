@@ -277,6 +277,8 @@ Below is a screenshot of the `Gnome Extensions` application running on my laptop
 
 You can install extensions several ways. This [article from itsfoss](https://itsfoss.com/gnome-shell-extensions/) goes into detail on the different methods. I prefer to use this tool, `Extension Manager` even though it's not written by the Gnome team. It's confusing because it looks just like the `Gnome Extensions` application except that it has the capability to install extensions. I like this method better than using the Chrome browser extension.
 
+There is another It's FOSS article - [21 Best GNOME Extensions I Use and Recommend](https://www.youtube.com/watch?v=ZPcxwiyCqtc) that covers more extension. It's from August 14th, 2024 so if you are on Ubuntu 26.04 some of them might not be compatible with Gnome 50. I know my favorite "Systemd Manager" isn't.
+
 ----------------------------------------------------------------
 
 **Installation Instructions**
