@@ -329,12 +329,82 @@ The code that we added has two aliases:
 
 ### Enable Auto Correction
 
-Open the .zshrc file using `ec`. Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
 
 ```bash
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 ```
+
+----------------------------------------------------------------
+
+### Useful shell scripts
+
+You can include shell scripts in `.zshrc`. Here are two that I find very useful. Place them at the bottom of the `.zshrc` file, right before the `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` line.
+
+#### Path
+
+This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
+
+```zsh
+# "path" shows current path, one element per line.
+# If an argument is supplied, grep for it.
+path() {
+    test -n "$1" && {
+        echo $PATH | perl -p -e "s/:/\n/g;" | grep -i "$1"
+    } || {
+        echo $PATH | perl -p -e "s/:/\n/g;"
+    }
+}
+```
+
+Now when we type `path` into the terminal we get:
+
+```bash hl_lines="1"
+ path
+/home/linuxbrew/.linuxbrew/bin
+/home/linuxbrew/.linuxbrew/sbin
+/home/mhubbard/.local/bin
+/home/mhubbard/.cargo/bin
+/usr/local/sbin
+/usr/local/bin
+/usr/sbin
+/usr/bin
+/sbin
+/bin
+/snap/bin
+/home/linuxbrew/.linuxbrew/opt/fzf/bin
+```
+
+----------------------------------------------------------------
+
+#### Make dir
+
+This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
+
+```bash
+# Create a new directory and enter it
+mkd() {
+    mkdir -p "$@"
+    cd "$@" || exit
+}
+```
+
+Now type:
+
+```bash hl_lines="1 5 9"
+pwd
+/home/mhubbard
+
+~ ⌚ 20:09:57
+$ mkd 01_test/test
+mkdir: created directory '01_test'
+mkdir: created directory '01_test/test'
+
+~/01_test/test ⌚ 20:10:12
+```
+
+You can see that it created the parent directory `01_test`, then the `test` directory.
 
 ----------------------------------------------------------------
 
@@ -568,74 +638,6 @@ zsh_stats
 If you are still using `BASH` you can use this to generate the list:
 
 `history 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10`
-
-----------------------------------------------------------------
-
-### Useful shell scripts
-
-You can include shell scripts in `.zshrc`. Here are two that I find very useful.
-
-#### Path
-
-This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
-
-```zsh
-# "path" shows current path, one element per line.
-# If an argument is supplied, grep for it.
-path() {
-    test -n "$1" && {
-        echo $PATH | perl -p -e "s/:/\n/g;" | grep -i "$1"
-    } || {
-        echo $PATH | perl -p -e "s/:/\n/g;"
-    }
-}
-```
-
-Now when we type `path` into the terminal we get:
-
-```bash hl_lines="1"
- path
-/home/linuxbrew/.linuxbrew/bin
-/home/linuxbrew/.linuxbrew/sbin
-/home/mhubbard/.local/bin
-/home/mhubbard/.cargo/bin
-/usr/local/sbin
-/usr/local/bin
-/usr/sbin
-/usr/bin
-/sbin
-/bin
-/snap/bin
-/home/linuxbrew/.linuxbrew/opt/fzf/bin
-```
-
-#### Make dir
-
-This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
-
-```bash
-# Create a new directory and enter it
-mkd() {
-    mkdir -p "$@"
-    cd "$@" || exit
-}
-```
-
-Now type:
-
-```bash hl_lines="1 5 9"
-pwd
-/home/mhubbard
-
-~ ⌚ 20:09:57
-$ mkd 01_test/test
-mkdir: created directory '01_test'
-mkdir: created directory '01_test/test'
-
-~/01_test/test ⌚ 20:10:12
-```
-
-You can see that it created the parent directory `01_test`, then the `test` directory.
 
 ----------------------------------------------------------------
 
