@@ -399,8 +399,8 @@ _='sudo '
 
 Now you can type `_` instead of `sudo`. For exmaple:
 
-```bash linenums='1' hl_lines='1'
-- nano /etc/netplan/91-nw-init.yaml
+```bash hl_lines='1'
+_ nano /etc/netplan/91-nw-init.yaml
 ```
 
 to open the `91-nw-init.yaml` file.
