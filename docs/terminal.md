@@ -258,6 +258,36 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 ----------------------------------------------------------------
 
+### zsh Themes
+
+Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, open the .zshrc file using `ec`and change the ZSH-THEME line to:
+
+`ZSH_THEME="duellj"`
+
+I also like “amuse”. It’s similar to duellj but doesn’t put the username/machine name in the terminal. Since I’m on my personal laptop I don’t need that information. To use “amuse”
+
+`ZSH_THEME="amuse"`
+
+You can put a `#` symbol in front of the theme line to comment it out. I leave both themes in my `.zshrc` file and then switch back and forth as needed.
+
+```text
+ZSH_THEME="duellj"
+# ZSH_THEME="amuse"
+```
+
+Here is the prompt with `amuse` as the theme:
+
+```bash
+~/.config/terminator ⌚ 22:17:17
+$
+```
+
+You can find all of the themes here: [zsh themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
+
+Don't forget to update `.zshrc` with `sc` in a terminal.
+
+----------------------------------------------------------------
+
 ### Install  plugins
 
 Open the `.zshrc` file using one of the following methods:
@@ -530,36 +560,6 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 ----------------------------------------------------------------
 
 ![screenshot](img/syntax1.png)
-
-----------------------------------------------------------------
-
-#### zsh Themes
-
-Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, open the .zshrc file using `ec`and change the ZSH-THEME line to:
-
-`ZSH_THEME="duellj"`
-
-I also like “amuse”. It’s similar to duellj but doesn’t put the username/machine name in the terminal. Since I’m on my personal laptop I don’t need that information. To use “amuse”
-
-`ZSH_THEME="amuse"`
-
-You can put a `#` symbol in front of the theme line to comment it out. I leave both themes in my `.zshrc` file and then switch back and forth as needed.
-
-```text
-ZSH_THEME="duellj"
-# ZSH_THEME="amuse"
-```
-
-Here is the prompt with `amuse` as the theme:
-
-```bash
-~/.config/terminator ⌚ 22:17:17
-$
-```
-
-You can find all of the themes here: [zsh themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
-
-Don't forget to update `.zshrc` with `sc` in a terminal.
 
 ----------------------------------------------------------------
 
