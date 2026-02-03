@@ -260,7 +260,7 @@ Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugin
 
 ### zsh Themes
 
-Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, open the .zshrc file using `ec`and change the ZSH-THEME line to:
+Oh My ZSH offers a lot of themes. I found one that I really like called duellj. To install it, open the .zshrc file using `nano ~/.zshrc`and change the ZSH-THEME line to:
 
 `ZSH_THEME="duellj"`
 
@@ -277,7 +277,7 @@ ZSH_THEME="duellj"
 
 Here is the prompt with `amuse` as the theme:
 
-```bash
+```text
 ~/.config/terminator ⌚ 22:17:17
 $
 ```
@@ -285,6 +285,37 @@ $
 You can find all of the themes here: [zsh themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
 
 Don't forget to update `.zshrc` with `sc` in a terminal.
+
+----------------------------------------------------------------
+
+### Enable Auto Correction
+
+Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
+
+```bash
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+```
+
+----------------------------------------------------------------
+
+### Enable automatic updates
+
+Search for this section and uncomment `zstyle ':omz:update' mode auto`:
+
+```text
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+```
+
+**Uncomment this line and change to 5 days**
+
+```bash
+# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' frequency 5
+```
 
 ----------------------------------------------------------------
 
@@ -356,24 +387,13 @@ The code that we added has two aliases:
 
 ----------------------------------------------------------------
 
-### Enable Auto Correction
-
-Search for `ENABLE_CORRECTION`. Delete the `#` symbol at the beginning of the line.
-
-```bash
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-```
-
-----------------------------------------------------------------
-
 ### Useful shell scripts
 
 You can include shell scripts in `.zshrc`. Here are two that I find very useful. Place them at the bottom of the `.zshrc` file, right before the `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` line.
 
 #### Path
 
-This script displays the path with each statement on a separate line. I find it much easier to read the path that way. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
+This script displays the path with each statement on a separate line. I find it much easier to read the path that way. I place it near the bottom of the file.
 
 ```zsh
 # "path" shows current path, one element per line.
@@ -409,7 +429,7 @@ Now when we type `path` into the terminal we get:
 
 #### Make dir
 
-This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file. Exit the editor and use the `sc` alias we created to reload zsh.
+This script uses `mkdir -p` to create a directory, and if necessary, the parent path, then switches to the directory. Open ~/zshrc using `ec` and paste this script in. I place it near the bottom of the file.
 
 ```bash
 # Create a new directory and enter it
@@ -517,7 +537,7 @@ The zsh-syntax-highlighting package is a **MUST**. It does a lot but the most im
 
 **Installation Instructions**
 
-The zsh-syntax-highlighting installation instructions are [here](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
+The zsh-syntax-highlighting installation instructions are [zsh highlighting installation instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
 Luckily, zsh-syntax-highlighting is in the Ubuntu repository so installation of the package is simple. Here is how you would check if you weren’t sure:
 
