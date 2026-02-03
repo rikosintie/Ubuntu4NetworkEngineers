@@ -393,6 +393,7 @@ Scroll down a little further to the `# Example aliases` section. Add this
 
 ```bash
 _='sudo '
+alias bat='batcat'
 ```
 
  after the line `# alias ohmyzsh="mate ~/.oh-my-zsh"`
@@ -404,6 +405,8 @@ _ nano /etc/netplan/91-nw-init.yaml
 ```
 
 to open the `91-nw-init.yaml` file.
+
+The `alias bat='batcat'` alias will be used once we install `bat` later in this guide.
 
 ----------------------------------------------------------------
 
@@ -765,7 +768,7 @@ Here is the repository. If you have any problems, you might find a solution here
 
 ----------------------------------------------------------------
 
-### BAT
+### Install Bat
 
 This is a great upgrade to the built in cat command. The automatic paging, syntax highlighting, Git integration and the ability to show non-printable characters makes replacing cat with bat a no brainer.
 
@@ -801,7 +804,15 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 
 ----------------------------------------------------------------
 
-**Installation Instructions**
+### Bat Installation Instructions
+
+Bat is in the Ubuntu repository so you can install it with:
+
+```h hl_lines="1"
+sudo apt install bat
+```
+
+We installed the `alias bat="batcat"` previously.
 
 !!! note
     I now install `bat` with homebrew instead of `apt` using `brew install bat`. The Homebrew package is covered below.
