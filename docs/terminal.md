@@ -50,9 +50,8 @@ We will also install `git`, a version control system commonly used in Open Sourc
 
 First we will make sure the system is up to date. Open the terminal using `ctrl+alt+t`, and enter:
 
-```bash hl_lines="1-2"
-sudo apt update
-sudo apt upgrade
+```bash hl_lines="1"
+sudo apt update && sudo apt upgrade -y
 ```
 
 !!! note
@@ -69,7 +68,7 @@ You may get a message saying the latest versions are already installed. That's f
 Now we can install zsh
 
 ```bash hl_lines="1"
-sudo apt install zsh
+sudo apt install zsh -y
 ```
 
 **Check the version**
