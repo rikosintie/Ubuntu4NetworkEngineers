@@ -387,6 +387,19 @@ The code that we added has two aliases:
 
 ----------------------------------------------------------------
 
+### Add an alias for sudo
+
+Scroll down a little further to the `# Example aliases` section. Add this
+
+```bash
+_='sudo '
+```
+
+ after the line `# alias ohmyzsh="mate ~/.oh-my-zsh"`
+
+
+----------------------------------------------------------------
+
 ### Useful shell scripts
 
 You can include shell scripts in `.zshrc`. Here are two that I find very useful. Place them at the bottom of the `.zshrc` file, right before the `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` line.
