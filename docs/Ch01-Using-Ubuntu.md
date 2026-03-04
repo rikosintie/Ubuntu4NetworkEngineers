@@ -283,7 +283,7 @@ The Optional Context Menu Actions that I always enable:
 
 ----------------------------------------------------------------
 
-The Grid View Cations that I always enable:
+The Grid View Captions that I always enable:
 
 - First - size
 - Second - Created
