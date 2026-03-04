@@ -768,7 +768,7 @@ Here is the repository. If you have any problems, you might find a solution here
 
 ----------------------------------------------------------------
 
-### Install Bat
+### Bat - A better Cat
 
 This is a great upgrade to the built in cat command. The automatic paging, syntax highlighting, Git integration and the ability to show non-printable characters makes replacing cat with bat a no brainer.
 
@@ -809,7 +809,15 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 Bat is in the Ubuntu repository so you can install it with:
 
 ```h hl_lines="1"
-sudo apt install bat
+sudo apt install bat -y
+```
+
+**The -p option**
+
+Sometimes you want to use bat but not have the line numbers. In that case use the `-p | --plain` open. For example:
+
+```bash hl_lines='1'
+bat -p sshd_config
 ```
 
 We installed the `alias bat="batcat"` previously.
