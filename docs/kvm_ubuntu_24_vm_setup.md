@@ -36,7 +36,7 @@ Log out and back in or reboot.
 ### 4. Verify libvirt is Running
 
 ```bash
-virsh list --all
+sudo virsh list --all
 ```
 
 If it fails:
