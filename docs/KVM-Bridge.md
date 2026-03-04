@@ -13,6 +13,12 @@
 
 ----------------------------------------------------------------
 
+On [Paul's Security Weekly episode 915](https://www.scworld.com/podcast-episode/3812-ai-is-taking-over-cybersecurity-psw-915) Paul discusses his journey into KVM from VMWare Workstation. It's first story of the podcast and I highly recommend it. Paul is a wall known security researcher and gave a glowing review of KVM.
+
+He also published his [Getting Started with KVM](https://github.com/pasadoorian/Linux_Hacks) notes on GitHub.
+
+----------------------------------------------------------------
+
 ## Introduction
 
 KVM is the Linux Kernel-mode Virtual Machine tool. It's free and easy to install on Ubuntu. With all the uncertainty around VMware workstation, it's worth knowing how to use KVM! Like everything else when switching to Linux, it will feel quite different than using VMware Workstation at first. But once you spend a couple days KVM and create a few virtual machines I think you will like it.
