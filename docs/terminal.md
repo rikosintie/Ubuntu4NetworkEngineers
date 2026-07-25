@@ -213,6 +213,8 @@ I have it here for convenience but you are free to go to the [zsh project](https
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
+At the end of the installation, you will see `Do you want to overwrite it with the Oh My Zsh template? [Y/n]`, enter 'y' and press enter.
+
 When the install shell script starts you will see:
 
 ```text hl_lines='15 25'
@@ -330,7 +332,7 @@ zstyle ':omz:update' frequency 5
 
 ----------------------------------------------------------------
 
-### Install  plugins
+### Configure plugins
 
 Find the plugin section
 
@@ -426,13 +428,17 @@ _ nano /etc/netplan/91-nw-init.yaml
 
 to open the `91-nw-init.yaml` file.
 
-The `alias cat='batcat'` alias will be used once we install `bat` later in this guide.
+----------------------------------------------------------------
+
+### Add an alias for bat
+
+Add `alias cat='batcat'` alias right below the sudo alias. We will use this alisa once we install `bat` later in this guide. If you don't install `bat`, remove this alias.
 
 ----------------------------------------------------------------
 
-### Useful shell scripts
+### Useful functions
 
-You can include shell scripts in `.zshrc`. Here are two that I find very useful. Place them at the bottom of the `.zshrc` file, right before the `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` line.
+You can include shell functions in `.zshrc`. Here are two that I find very useful. Place them near the bottom of the `.zshrc` file, right before the `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` line.
 
 #### Path
 
@@ -503,13 +509,7 @@ You can see that it created the parent directory `01_test`, then the `test` dire
 
 ----------------------------------------------------------------
 
-Close the `~/.zshrc` file by pressing `ctrl+s`, then `ctrl+x`
-
-**Reload the configuration using `exec zsh`**
-
-Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
-
-Anytime that you make changes to `~/.zshrc` you have to reload the `.zshrc` configuration.
+Close the `~/.zshrc` file by pressing `ctrl+s`, then `ctrl+x` if you were in `nano` or `ctrl+s`, then `ctrl+q` if using `fresh` or `micro`.
 
 ----------------------------------------------------------------
 
@@ -532,6 +532,14 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 ```bash
 git clone https://github.com/akarzim/zsh-docker-aliases.git  ~/.oh-my-zsh/custom/plugins/zsh-docker-aliases
 ```
+
+----------------------------------------------------------------
+
+**Reload the configuration using `exec zsh`**
+
+Now you can type `ec` to edit the `~/.zshrc` file and `sc` to reload zsh. These two aliases will save a ton of time when you are making changes to `~/.zshrc`.
+
+Anytime that you make changes to `~/.zshrc` you have to reload the `.zshrc` configuration.
 
 ----------------------------------------------------------------
 
@@ -574,15 +582,13 @@ You can read the documentation for the plug-ins on their github repository
 
 ----------------------------------------------------------------
 
-### install zsh-syntax-highlighting
+### Install zsh-syntax-highlighting
 
 The zsh-syntax-highlighting package is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
 
 ----------------------------------------------------------------
 
 **Installation Instructions**
-
-The zsh-syntax-highlighting installation instructions are [zsh highlighting installation instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
 zsh-syntax-highlighting is in the Ubuntu repository so installation of the package is simple. We can install it using:
 
@@ -591,6 +597,8 @@ sudo apt install zsh-syntax-highlighting && echo "source /usr/share/zsh-syntax-h
 ```
 
 These commands install the `zsh-syntax-highlighting` package, then echo the source command into the .zshrc file.
+
+Detailed zsh-syntax-highlighting installation instructions are located here: [zsh highlighting installation instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md).
 
 Now enter `sc` to reload zsh.
 
@@ -604,9 +612,13 @@ echo ${ZDOTDIR:-$HOME}/.zshrc
 Showing that my `.zshrc` is located at `/home/mhubbard/` or the root of my home directory.
 
 !!! Note
-    In zsh 5.9, zsh-syntax-highlighting uses the add-zle-hook-widget facility to install a zle-line-pre-redraw hook. Hooks are run in order of registration, therefore, z-sy-h must be sourced (and register its hook) after anything else that adds hooks that modify the command-line buffer.
+    In zsh 5.9 (Current version as of July 24,2026), `zsh-syntax-highlighting` uses the add-zle-hook-widget facility to install a zle-line-pre-redraw hook. Hooks are run in order of registration, therefore, `zsh-syntax-highlighting` must be sourced (and register its hook) after anything else that adds hooks that modify the command-line buffer.
 
-The line in the .zshrc file they are referring to is `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh` . I make it the last line to the `.zshrc` file.
+The line in the .zshrc file they are referring to is `source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh`.
+
+**I make it the last line to the `.zshrc` file.**
+
+----------------------------------------------------------------
 
 **Example of syntax highlighting**
 
@@ -622,6 +634,8 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 ### Aliases
 
 zsh includes a lot of aliases and we added more with the `git` and `docker aliases` plug-ins. To see what aliases are available, open a terminal, `ctrl+alt+t` and type:
+
+----------------------------------------------------------------
 
 ```bash hl_lines="1 17 22-24"
 alias
@@ -651,14 +665,16 @@ df='df -h --exclude=squashfs'
 diff='diff --color'
 ```
 
+----------------------------------------------------------------
+
 This is just a small sample of the available aliases. The ones related to changing directories are super useful. You need to spend some time building the muscle memory to use them.
 
-- The `_=`sudo ` - is another good one since you use sudo anytime that you need elevated privileges.
-- The `chmod -c` - like verbose but report only when a change is made.
-- The `cp=`cp -iv` - adds an interactive prompt if you are copying and the target already exists.
-- The `df=`df -h --exclude=squashfs' - runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides the squash files.
+- The `_=`sudo ` alias is  good one since you use sudo anytime that you need elevated privileges. Add it to your muscle memory! For example, `_ nano /etc/netplan/01-netcfg-dhcp.yaml`
+- The `chmod -c` alias is like verbose but reports only when a change is made.
+- The `cp=`cp -iv` alias adds an interactive prompt if you are copying and the target already exists.
+- The `df=`df -h --exclude=squashfs' alias runs the Disk File usage command, the `-h` puts the output into "human readable' format and the `--exclude=squashfs'` hides the squash files used by snaps.
 
-As you can see, there are many tools available to make you  outstanding at the terminal.
+As you can see, there are many tools available to make you outstanding at the terminal.
 
 ----------------------------------------------------------------
 
@@ -702,26 +718,355 @@ The `.zshrc` file is primary configuration file for zsh. But if you start creati
 
 To solve this problem, oh-my-zsh provides a custom folder, `~/.oh-my-zsh/custom` where you can create an additional configuration file. The file has to have `zsh` as the extension. I use `my-aliases.zsh` for mine. Having your custom aliases and shell scripts in a separate file makes locating your aliases easier.
 
+#### Naming aliases
+
 I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- [tab]` and get a list of all of my aliases:
 
-```bash
-mw-exa2 -a
-mw-bauh              mw-ipen8             mw-nmshprofiles      mw-ssh-stop
-mw-bright            mw-kbd               mw-nmshrun           mw-start
-mw-chrome            mw-manuf             mw-nmshstate         mw-status
-mw-cpu10             mw-mem10             mw-nmshwifi          mw-stop
-mw-cpu5              mw-mem5              mw-nmshwifi-pw       mw-tftp
-mw-dang              mw-mount             mw-nmwifi            mw-tftp-conf
-mw-exa1              mw-nmcli-examples    mw-ntp               mw-tftp-fw
-mw-exa2              mw-nmcli-vlan-dhcp   mw-ports             mw-tftp-stop
-mw-extip             mw-nmcli-vlan-mac    mw-reload            mw-umount
-mw-interface         mw-nmconnectprof     mw-restart           mw-vmnet
-mw-interface-vlan    mw-nmlldp            mw-running_services  mw-vmnet-all
-mw-ipen0             mw-nmsh-ap           mw-sensors           mw-vmware
-mw-ipen6             mw-nmshipv4          mw-ssh
-```
+| mw-bauh   | mw-eza2           | mw-manuf1           | mw-nmcli-vlan-mac | mw-nmshwifi          | mw-ntp              | mw-start     | mw-vmnet     |
+|-----------|-------------------|---------------------|-------------------|----------------------|---------------------|--------------|--------------|
+| mw-bright | mw-interface      | mw-mem10            | mw-nmconnectprof  | mw-nmshwifi-pw       | mw-ports            | mw-status    | mw-vmnet-all |
+| mw-chrome | mw-interface-vlan | mw-mem5             | mw-nmlldp         | mw-nmwifi            | mw-reload           | mw-stop      | mw-vmware    |
+| mw-cpu10  | mw-ipen0          | mw-mem-check        | mw-nmsh-ap        | mw-nplan             | mw-restart          | mw-tftp      |              |
+| mw-cpu5   | mw-ipen6          | mw-mount            | mw-nmshipv4       | mw-nplan-apply       | mw-running_services | mw-tftp-conf |              |
+| mw-dang   | mw-ipen8          | mw-networkd-restart | mw-nmshprofiles   | mw-nplan-br0         | mw-sensors          | mw-tftp-fw   |              |
+| mw-extip  | mw-kbd            | mw-nmcli-examples   | mw-nmshrun        | mw-nplan-edit        | mw-ssh              | mw-tftp-stop |              |
+| mw-eza1   | mw-manuf          | mw-nmcli-vlan-dhcp  | mw-nmshstate      | mw-nplan_mode_switch | mw-ssh-stop         | mw-umount    |              |
 
 Without that trick I would never be able to remember all the aliases that I have created. I will include `my-aliases.zsh` at the end of this chapter. You can press `tab` to scroll through the aliases.
+
+### My Functions
+
+Aliases are great, but sometimes it's cleaner to use a function. Clause, Gemini, Copilot and chatGPT are very good at writing zsh functions.
+
+#### Display Memory statistics
+
+If you are running a lot of VMs or other memory intensive applications you may get a message "System Memory low. Process "x" has been killed.
+
+I (and Claude) wrote this function to quickly show me free memory, the swap file usage, any Out of Memory (OOM) messages, and top memory consumers:
+
+```bash linenums='1'
+mw-mem-check() {
+    echo "=== Memory statistics ==="
+    free -h
+    echo
+    echo "=== Swap ==="
+    swapon --show
+    echo
+    echo "=== OOM killer messages ==="
+    sudo dmesg -T | grep -i "out of memory\|killed process"
+    echo
+    echo "=== Top memory consumers ==="
+    \ps -eo pid,user,%mem,%cpu,rss,comm --sort=-%mem \
+        | head -11 \
+        | awk 'NR==1{print;next}{$5=$5*1024; print}' \
+        | numfmt --header --field=5 --to=iec \
+        | column -t
+    echo
+    read -q "reply?Do you want to run procs? (y/n) "
+    echo
+    if [[ $reply == [yY] ]]; then
+        echo
+        echo "=== procs full table ==="
+        procs --sortd mem
+    fi
+}
+```
+
+```bash title='Command Output'
+=== Memory statistics ===
+                    total        used        free            shared  buff/cache   available
+Mem:           30Gi        13Gi       977Mi       3.8Gi        19Gi        16Gi
+Swap:          8.0Gi       2.0Mi       8.0Gi
+
+=== Swap ===
+NAME      TYPE SIZE USED PRIO
+/swap.img file   8G   2M   -2
+
+=== OOM killer messages ===
+[sudo] password for mhubbard:
+
+=== Top memory consumers ===
+PID     USER          %MEM  %CPU    RSS                   COMMAND
+32971  mhubbard    3.9           6.8        1.3G                    soffice.bin
+10845  mhubbard    2.5           13.6      804                      firefox
+4260    mhubbard    2.1           8.4        683M                   gnome-shell
+5270    mhubbard    1.9           10.1      603M                    insync
+40671  mhubbard    1.6            5.1       522M                    msedge
+11172  mhubbard    1.6            1.2       517M  Isolated     Web  Co
+11982  mhubbard    1.5            4.8       477M  Isolated     Web  Co
+37662  mhubbard    1.4            13.5     458M                    code
+37693  mhubbard    1.4            6.8       443M                    code
+11202  mhubbard    1.2            0.5       397M  Isolated     Web  Co
+
+Do you want to run procs? (y/n)
+```
+
+----------------------------------------------------------------
+
+#### mw-iwget
+
+This one is handy if you do any Wi-Fi work. For the AP that you are connected to it displays:
+
+- the MAC of the AP
+- The Interface on you laptop
+- The Frequency you are using
+- The SSID
+
+```bash linenums='1'
+mw-iwget () {
+    APMac=`iwgetid -ar`
+    IntFace=`iwgetid -f`
+    ID=`iwgetid -s`
+    echo "AP Mac:" $APMac && echo "Interface:" $IntFace && echo "SSID:" $ID
+}
+```
+
+```bash title='Command Output'
+mw-iwget
+AP Mac: 9C:8C:D8:11:7A:F0
+Interface: wlp61s0   Frequency:5.18 GHz
+SSID: test
+```
+
+----------------------------------------------------------------
+
+#### Verify network settings - mw-nplan
+
+My laptop has Wi-Fi and Ethernet. I let the Linux `network manager` manage the Wi-Fi and `networkd` for Ethernet. This is because I have created a bridge to use with KVM for virtual machines and to be able to connect to vlans different than the Wi-Fi vlan.
+
+That means I can use the GUI settings tool to manage the WiFI but I have to edit a text file to manage the Ethernet. The functions below:
+
+- Retrieve the IPv4/IPv6 addresses from the WiFi and Br0 interfaces
+- prints the default routes - WiFi is lower so that I can still access the internet
+- pings `8.8.8.8` using the Wi-Fi interface
+- pings `8.8.8.8` using the bridge interface
+- shows the DNS settings for both interfaces
+
+```bash linenums='1'
+# red section header + separator helpers (top-level so they're
+# defined once and don't leak/redefine on every call)
+_mw_hdr() { printf "\e[31m         %s\e[0m\n\n" "$1"; }
+_mw_sep() { printf "\n---------------------\n\n"; }
+
+# return the IPv4 address (with CIDR) of an interface, or "no IP"
+_mw_ip() {
+    local addrs
+    addrs=$(ip -br addr show dev "$1" 2>/dev/null \
+            | awk '{$1=$2=""; print}' \
+            | tr ' ' '\n' | grep -v '^fe80' | grep . | paste -sd' ')
+    print -r -- "${addrs:-no IP}"
+}
+
+# verify that netplan is working with
+# NetWorkManager for wifi
+# networkd for ethternet
+mw-nplan() {
+    local ethif="br0"          # bridge/ethernet interface (edit as needed)
+    local wintf dev
+
+    # detect the wifi interface via sysfs (robust; no perl/proc parsing)
+    for dev in /sys/class/net/*(N); do
+        [[ -d "$dev/wireless" ]] && { wintf=${dev:t}; break; }
+    done
+
+    _mw_hdr "Check that route metrics are correct"
+    ip route | grep default
+    _mw_sep
+
+    # --- WiFi ---
+    if [[ -n "$wintf" ]]; then
+        _mw_hdr "ping 8.8.8.8 from Interface $wintf ($(_mw_ip $wintf))"
+        ping -I "$wintf" -c 3 8.8.8.8
+    else
+        _mw_hdr "No wireless interface found — skipping WiFi ping"
+    fi
+    _mw_sep
+
+    # --- Ethernet / bridge ---
+    if [[ -d "/sys/class/net/$ethif" ]]; then
+        _mw_hdr "ping 8.8.8.8 from Interface $ethif ($(_mw_ip $ethif))"
+        ping -I "$ethif" -c 3 8.8.8.8
+    else
+        _mw_hdr "Interface $ethif not present — skipping Ethernet ping"
+    fi
+    _mw_sep
+
+    # --- DNS ---
+    _mw_hdr "Check DNS resolution"
+    [[ -n "$wintf" ]] && resolvectl status "$wintf"
+    printf "\n-------------------------------\n\n"
+    [[ -d "/sys/class/net/$ethif" ]] && resolvectl status "$ethif"
+}
+```
+
+```bash title='Command Output'
+mw-nplan
+         Check that route metrics are correct
+
+default via 192.168.10.253 dev wlp61s0 proto dhcp src 192.168.10.143 metric 600
+default via 192.168.1.1 dev br0 proto dhcp src 192.168.1.101 metric 1000
+
+---------------------
+
+         ping 8.8.8.8 from Interface wlp61s0 (192.168.10.143/24 fd24:42b2:12ce:0:f1:a0c8:8f6:2055/128 fd24:42b2:12ce:0:ed02:f923:2bfa:f90e/64 fd24:42b2:12ce:0:50db:9203:b498:cd66/64)
+
+PING 8.8.8.8 (8.8.8.8) from 192.168.10.143 wlp61s0: 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=115 time=23.0 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=115 time=13.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=115 time=12.7 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 12.661/16.221/23.033/4.818 ms
+
+---------------------
+
+         ping 8.8.8.8 from Interface br0 (192.168.1.101/24 metric 1000)
+
+PING 8.8.8.8 (8.8.8.8) from 192.168.1.101 br0: 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=114 time=16.0 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=114 time=13.1 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=114 time=10.9 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 10.927/13.355/16.023/2.087 ms
+
+---------------------
+
+         Check DNS resolution
+
+Link 4 (wlp61s0)
+    Current Scopes: DNS
+         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: fd24:42b2:12ce::1
+       DNS Servers: 192.168.10.222 fd24:42b2:12ce::1
+        DNS Domain: pu.pri
+     Default Route: yes
+
+-------------------------------
+
+Link 5 (br0)
+    Current Scopes: DNS
+         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: 192.168.10.222
+       DNS Servers: 192.168.10.222
+     Default Route: yes
+```
+
+----------------------------------------------------------------
+
+#### mw-nplan-br0
+
+Displays the status of the bridge
+
+```bash linenums='1'
+# quick status display for br0
+# wait for an interface to get an IPv4 address (default 20s timeout)
+# Used with mw-nplan_mode_switch also
+_mw_wait_ip() {
+    local ifc=$1 waited=0 max=${2:-40}
+    until ip -4 addr show dev "$ifc" | grep -q "inet "; do
+        sleep 0.5
+        (( waited += 1 ))
+        (( waited >= max )) && return 1
+    done
+}
+
+mw-nplan-br0() {
+    sudo netplan apply
+    _mw_wait_ip br0 || echo "Timed out waiting for br0 IPv4."
+    ip a show dev br0
+    ip route | grep default
+}
+```
+
+----------------------------------------------------------------
+
+```bash title='Command Output'
+mw-nplan-br0
+5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 96:1b:00:a7:1a:98 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.101/24 metric 1000 brd 192.168.1.255 scope global dynamic br0
+       valid_lft 1800sec preferred_lft 1800sec
+    inet6 fe80::941b:ff:fea7:1a98/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+default via 192.168.1.1 dev br0 proto dhcp src 192.168.1.101 metric 1000
+```
+
+----------------------------------------------------------------
+
+#### mw-nplan_mode_switch
+
+Switch between DHCP and Static on the bridge interface. When moving to static, the function opens `/etc/netplan/02-netcfg-static.yaml` in nano so that you can edit it.
+
+!!! Warning
+    Be careful when editing the file. It's yaml so it has not sense of humor about errors. The function makes a backup with a `.bak` extension that you can recover from using `sudo cp /etc/netplan/02-netcfg-static.yaml.bak 02-netcfg-static.yaml`
+
+Here is the function.
+
+```bash linenums='1'
+# switch netplan br0 between dhcp and static (enable/disable via file extension)
+function mw-nplan_mode_switch() {
+    local mode=$1
+    local static_yaml="/etc/netplan/02-netcfg-static.yaml"
+    local static_disabled="/etc/netplan/02-netcfg-static.disabled"
+    local dhcp_yaml="/etc/netplan/01-netcfg-dhcp.yaml"
+    local dhcp_disabled="/etc/netplan/01-netcfg-dhcp.disabled"
+
+    case "$mode" in
+        static)
+            echo "Preparing Static IP configuration..."
+            [[ -f "$dhcp_yaml" ]] && sudo mv "$dhcp_yaml" "$dhcp_disabled"
+            [[ -f "$static_disabled" ]] && sudo mv "$static_disabled" "$static_yaml"
+            sudo cp "$static_yaml" "$static_yaml.bak"   # <-- here: file is guaranteed active
+            echo "Opening $static_yaml for review/edit. Close the editor when finished."
+            # sudo gnome-text-editor "$static_yaml"
+            sudo nano "$static_yaml"
+            echo "Editor closed."
+            ;;
+        dhcp)
+            echo "Preparing DHCP configuration..."
+            [[ -f "$static_yaml" ]] && sudo mv "$static_yaml" "$static_disabled"
+            [[ -f "$dhcp_disabled" ]] && sudo mv "$dhcp_disabled" "$dhcp_yaml"
+            ;;
+        *)
+            echo "Usage: mw-nplan_mode_switch [static|dhcp]"
+            return 1
+            ;;
+    esac
+
+    # validate before applying — catches YAML typos without breaking networking
+    if ! sudo netplan generate; then
+        echo "netplan generate failed — config not applied. Fix the YAML and retry." >&2
+        return 1
+    fi
+
+    sudo netplan apply
+
+    # wait 10 seconds for br0 to get an address, but don't hang forever
+    _mw_wait_ip br0 20 || echo "Timed out waiting for br0 to get an IPv4 address." >&2
+
+    ip a show dev br0
+    ip route | grep default
+}
+```
+
+```bash title='Command Output'
+mw-nplan_mode_switch
+Preparing Static IP configuration...
+Opening /etc/netplan/02-netcfg-static.yaml for review/edit. Close the editor when finished.
+--Nano opens the yaml file at this point--
+Editor closed.
+5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 96:1b:00:a7:1a:98 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.148/24 brd 192.168.10.255 scope global br0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::941b:ff:fea7:1a98/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+default via 192.168.10.253 dev br0 proto static metric 1000
+
+```
 
 ----------------------------------------------------------------
 
