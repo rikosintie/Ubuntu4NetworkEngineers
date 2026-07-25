@@ -907,7 +907,7 @@ export BAT_THEME="zenburn"
 
 ----------------------------------------------------------------
 
-### zsh custom dir
+## zsh custom dir
 
 The `.zshrc` file is primary configuration file for zsh. But if you start creating a lot of aliases, shell scripts, etc. it will become too large to easily manage.
 
@@ -915,7 +915,7 @@ To solve this problem, oh-my-zsh provides a custom folder, `~/.oh-my-zsh/custom`
 
 ----------------------------------------------------------------
 
-#### Naming aliases
+### Naming aliases
 
 I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- [tab]` and get a list of all of my aliases:
 
@@ -1170,7 +1170,7 @@ Current DNS Server: 192.168.10.222
 
 ----------------------------------------------------------------
 
-#### mw-nplan-br0
+### mw-nplan-br0
 
 Displays the status of the bridge interface
 
@@ -1210,7 +1210,7 @@ default via 192.168.1.1 dev br0 proto dhcp src 192.168.1.101 metric 1000
 
 ----------------------------------------------------------------
 
-#### mw-nplan_mode_switch
+### mw-nplan_mode_switch
 
 Switch between DHCP and Static on the bridge interface. When moving to static, the function opens `/etc/netplan/02-netcfg-static.yaml` in nano so that you can edit it.
 
