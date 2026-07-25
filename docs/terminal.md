@@ -631,7 +631,7 @@ The line in the .zshrc file they are referring to is `source /usr/share/zsh-synt
 
 ----------------------------------------------------------------
 
-### Aliases
+### Built in Aliases
 
 zsh includes a lot of aliases and we added more with the `git` and `docker aliases` plug-ins. To see what aliases are available, open a terminal, `ctrl+alt+t` and type:
 
@@ -678,7 +678,7 @@ As you can see, there are many tools available to make you outstanding at the te
 
 ----------------------------------------------------------------
 
-#### zsh_stats
+### zsh_stats
 
 zsh has a command that will output a list the top 20 commands you have executed. You can run it periodically and see what commands you are using the most. If possible, you can create an alias and save some typing.
 
@@ -804,7 +804,7 @@ You can use the -A/--show-all option to show and highlight non-printable charact
 
 ----------------------------------------------------------------
 
-### Bat Installation Instructions
+#### Bat Installation Instructions
 
 Bat is in the Ubuntu repository so you can install it with:
 
@@ -1217,6 +1217,20 @@ alias l.='ls -lha --time-style=long-iso --color=auto'
 
 #### Use Brew-installed tools as defaults
 
+We briefly discussed `homebrew`, usually called `brew` in [Gnome Desktop Tools](CH02-Install-Tools.md/#gnome-desktop-tools). It's a package manager that is popular on macOS and Linux. The format to install a tool is `brew install eza`. Brew takes care of any dependencies. To get started with `Homebrew` start at the [Brew homepage](https://brew.sh/)#_target=blank
+
+You can find brew formulas here: [https://formulae.brew.sh/formula/](https://formulae.brew.sh/formula/)#_target=blank.
+
+----------------------------------------------------------------
+
+#### eza
+
+eza is a modern replacement for the Linux ls command. It uses colours for information by default, helping you distinguish between many types of files, such as whether you are the owner, or in the owning group.
+
+Run `man wtf` to see all the options available.
+
+----------------------------------------------------------------
+
 These aliases have the '--time-style=long-iso --color=auto --icons' options. They print the time in this format: `2026-07-19 21:50', add color, and icons.
 
 ```bash linenums='1' hl_lines='1'
@@ -1271,6 +1285,31 @@ drwxrwxr-x     - mhubbard 2026-07-25 12:23  -N img
 .rw-rw-r--   66k mhubbard 2026-07-25 12:11  -M terminal.md
 ```
 
+#### eza with tree view
+
+```bash linenums='1' hl_lines='1'
+alias ezat='eza --tree --long --sort=name'
+```
+
+----------------------------------------------------------------
+
+```bash title='Command Output'
+ezat
+drwxrwxr-x     - mhubbard  4 Nov  2025 .
+drwxrwxr-x     - mhubbard 25 Jul 12:23 ├── img
+drwxrwxr-x     - mhubbard 29 Jan 16:13 │   ├── 'resources-kill (2).png'
+drwxrwxr-x     - mhubbard 29 Jan 16:13 │   ├── 'SystemMonitor.resized (2).png'
+.rw-rw-r--  1.6k mhubbard 20 Nov  2024 │   ├── All-Apps-New.png
+.rw-rw-r--  223k mhubbard  6 Dec  2023 │   ├── alt+~.png
+.rw-rw-r--  219k mhubbard 24 Nov  2024 │   ├── AppCenter.png
+.rw-r--r--  102k mhubbard 23 Dec  2024 │   ├── bat.png
+.rw-r--r--   99k mhubbard 23 Dec  2024 │   ├── bat1.png
+.rw-r--r--  104k mhubbard 23 Dec  2024 │   ├── bat2.png
+.rw-rw-r--  4.9k mhubbard 25 Nov  2024 │   ├── Bottles.png
+.rw-rw-r--   52k mhubbard 10 Dec  2024 │   ├── Bottles1.png
+.rw-r--r--   63k mhubbard 11 Aug  2024 │   ├── BR40-VM-Interface.png
+```
+
 ----------------------------------------------------------------
 
 #### dust
@@ -1303,17 +1342,15 @@ alias top='btm'              # Better top
 
 duf is a replacement for the Linux df command. It report file system space usage. duf creates a table for each device. This alias maps df to duf.
 
+```bash linenums='1' hl_lines='1'
+alias df='duf'
+```
+
 ----------------------------------------------------------------
 
 ![screenshot](/docs/img/duf.resized.png)
 
 ----------------------------------------------------------------
-
-```bash linenums='1' hl_lines='1'
-alias df='duf'
-```
-
-
 
 alias ps='procs'             # ps (process viewer with colors)
 
@@ -1369,9 +1406,6 @@ alias espanso-base="espanso path | grep Config | awk '{ print \$2\"/match/base.y
 # Use Gear Lever from the cli
 alias gearlever='flatpak run it.mijorus.gearlever'
 
-# EZA
-alias eza='eza --long --sort=name --group-directories-first'
-alias ezat='eza --tree --long --sort=name'
 
 # Pull the password from netperf.bufferbloat.net, parse it and pass to betterspeedtest
 alias bst="curl https://netperf.bufferbloat.net/ | grep \"Today's passphrase\" | awk '{ print \$4 }' | cut -c 7-20 | xargs -0 -I % betterspeedtest.sh -Z \"%\""
