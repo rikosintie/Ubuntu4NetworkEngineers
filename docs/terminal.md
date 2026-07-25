@@ -1180,12 +1180,12 @@ alias mw-umount='sudo umount /dev/sdb1'
 alias mw-chrome='cd /opt/google/chrome;./chrome --allow-file-access-from-files'
 ```
 
-```bash linenums='1' hl_lines='2'
+```bash linenums='1' hl_lines='1'
 # Display SSH ciphers
 alias mw-ssh='ssh -V && echo "" && echo HostKeyAlgorithms && ssh -Q HostKeyAlgorithms && echo "" && echo MACs && ssh -Q MACs && echo "" && echo KEXAlgorithms && ssh -Q KexAlgorithms'
 ```
 
-```bash linenums='1' hl_lines='2'
+```bash linenums='1' hl_lines='1'
 # -p no error if existing, make parent directories as needed -v print a message for each created directory
 alias mkdir='mkdir -pv'
 ```
@@ -1204,23 +1204,117 @@ alias chmod="chmod -c"
 alias back='cd $OLDPWD'
 ```
 
+```bash linenums='1' hl_lines='2'
 # -i prompt before overwrite -v verbse
 alias cp='cp -iv'
 alias mv='mv -iv'
+```
 
-alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+```bash linenums='1' hl_lines='2'
+# List files with long time format
+alias l.='ls -lha --time-style=long-iso --color=auto'
+```
 
-alias l.='ls -lhFa --time-style=long-iso --color=auto'
+#### Use Brew-installed tools as defaults
 
-# Use Brew-installed tools as defaults
-alias ls='eza --icons'       # Modern ls with icons
-alias la='eza -la --icons'   # ls -la alternative
-alias ll='eza -l --icons'    # ls -l alternative
-# alias find='fd'              # Faster find
-# alias grep='rg'              # Faster grep (ripgrep)
-alias du='dust'              # Better du
+These aliases have the '--time-style=long-iso --color=auto --icons' options. They print the time in this format: `2026-07-19 21:50', add color, and icons.
+
+```bash linenums='1' hl_lines='1'
+alias la='eza -la --time-style=long-iso --color=auto --icons'   # ls -la alternative
+```
+
+```bash linenums='1' hl_lines='1'
+alias ll='eza -l --time-style=long-iso --color=auto --icons --icons'    # ls -l alternative
+```
+
+```bash linenums='1' hl_lines='1'
+alias ls='eza --time-style=long-iso --color=auto --icons'       # Modern ls with icons
+```
+
+#### Eza supports a `--git` options that is very useful if you use git.
+
+The Git column shows the version control status of each file or folder relative to your Git repository. The letters you see in your terminal output represent:
+
+-N (New / Untracked): The file or folder is new and has not yet been added or tracked by Git.
+
+-I (Ignored): The item is ignored by Git (typically matched by a pattern inside a .gitignore file, such as python build files or virtual environments).
+
+-M (Modified): A tracked file or directory contains modified changes that have not yet been committed.
+
+-- (Unmodified / Clear): The item is tracked and clean—there are no unstaged changes or pending updates.
+
+!!! Note
+    The two character slots in the Git column correspond to Staged status (left) and Unstaged/Workspace status (right). For instance, -N means unstaged/untracked new, whereas N- would mean a newly added file staged for commit.
+
+```bash linenums='1' hl_lines='1'
+alias lt='eza --long --header --git --time-style=long-iso --color=auto' # ls with git status
+```
+
+----------------------------------------------------------------
+
+```bash title='Command Output'
+lt
+Permissions Size User     Date Modified    Git Name
+drwxrwxr-x     - mhubbard 2026-07-25 12:23  -N img
+.rw-rw-r--   45k mhubbard 2025-11-04 20:16  -- Ch01-Using-Ubuntu.md
+.rw-rw-r--   56k mhubbard 2026-01-30 14:42  -- CH02-Install-Tools.md
+.rw-rw-r--  5.7k mhubbard 2024-11-30 13:12  -- GUI-Tools.md
+.rw-rw-r--   15k mhubbard 2025-01-05 13:04  -- Introduction.md
+.rw-rw-r--   23k mhubbard 2024-08-20 13:55  -- Join-Ubuntu-24.04-desktop-to-AD.md
+.rw-rw-r--   43k mhubbard 2026-03-03 21:56  -- KVM-Bridge.md
+.rw-rw-r--  3.3k mhubbard 2025-10-28 08:02  -- kvm_ubuntu_24_vm_setup.md
+.rw-rw-r--   12k mhubbard 2024-12-23 16:34  -- Log_tools.md
+.rwxrwxr-x   116 mhubbard 2024-12-15 10:59  -- morning.sh
+.rw-rw-r--  1.6k mhubbard 2025-08-01 21:55  -- README.md
+.rw-rw-r--   799 mhubbard 2025-05-03 13:29  -N Snaps.md
+.rw-rw-r--  101k mhubbard 2025-08-07 22:10  -- SSH.md
+.rw-rw-r--   66k mhubbard 2026-07-25 12:11  -M terminal.md
+```
+
+----------------------------------------------------------------
+
+#### dust
+
+Dust - Like du but more intuitive. Run `man dust` to see a complete list of options.
+
+```bash
+alias du='dust -rR' # Print largest files first, screen reader mode
+```
+
+----------------------------------------------------------------
+
+```bash linenums='1' hl_lines='1 3 5 7 9' title='Command Output'
+.                       0   58M 100%
+img                     1   57M  99%
+vesktop1.png            2  1.7M   3%
+Tux-Log1.png            2  1.4M   2%
+Tux-Tools5.png          2  1.3M   2%
+Tux-Log5.png            2  1.3M   2%
+Tux-Tools1.png          2  1.3M   2%
+Tux-Log9.png            2  1.2M   2%
+Tux-ZSH2.png            2  1.2M   2%
+```
+
+----------------------------------------------------------------
+
 alias top='btm'              # Better top
-alias df='duf'               # Better DF
+
+#### duf
+
+duf is a replacement for the Linux df command. It report file system space usage. duf creates a table for each device. This alias maps df to duf.
+
+----------------------------------------------------------------
+
+![screenshot](/docs/img/duf.resized.png)
+
+----------------------------------------------------------------
+
+```bash linenums='1' hl_lines='1'
+alias df='duf'
+```
+
+
+
 alias ps='procs'             # ps (process viewer with colors)
 
 # Hide loop devices
