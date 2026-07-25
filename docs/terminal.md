@@ -582,7 +582,7 @@ You can read the documentation for the plug-ins on their github repository
 
 ----------------------------------------------------------------
 
-### Install zsh-syntax-highlighting
+### zsh-syntax-highlighting
 
 The zsh-syntax-highlighting package is a **MUST**. It does a lot but the most important to me is that as you start typing a command it will be red, as soon as the shell matches it, zsh-syntax-highlighting turns it green. It is hard to describe how useful this in on the terminal until you use it.
 
@@ -1215,7 +1215,7 @@ alias mv='mv -iv'
 alias l.='ls -lha --time-style=long-iso --color=auto'
 ```
 
-#### Brew-installed tools as defaults
+#### Brew-installed toolss
 
 We briefly discussed `homebrew`, usually called `brew` in [Gnome Desktop Tools](CH02-Install-Tools.md/#gnome-desktop-tools). It's a package manager that is popular on macOS and Linux. The format to install a tool is `brew install eza`. Brew takes care of any dependencies. To get started with `Homebrew` start at the [Brew homepage](https://brew.sh/)#_target=blank
 
@@ -1223,9 +1223,20 @@ You can find brew formulas here: [Brew formulas](https://formulae.brew.sh/formul
 
 To see the packages you have installed use `brew list` or `brew list | grep eza` to limit the output to just eza.
 
+----------------------------------------------------------------
+
 ```bash linenums='1' hl_lines='1'
 brew list
 ```
+
+The aliases below use:
+- bat - A better cat
+- duf - Disk Usage/Free Utility - a better 'df' alternative
+- dust - More intuitive version of du in rust
+- eza
+- lm-sensors
+- sniffnet
+- tailspin
 
 ==> Formulae
 <table>
@@ -1247,9 +1258,9 @@ brew list
 
 #### eza
 
-eza is a modern replacement for the Linux ls command. It uses colours for information by default, helping you distinguish between many types of files, such as whether you are the owner, or in the owning group.
+eza is a modern replacement for the Linux ls command. It uses colours for information by default, helping you distinguish between many types of files, such as whether you are the owner, or in the owning group. See [Eza Rocks](https://eza.rocks/) for more detail.
 
-Run `man wtf` to see all the options available.
+Run `man eza` to see all the options available.
 
 ----------------------------------------------------------------
 
@@ -1338,7 +1349,7 @@ drwxrwxr-x     - mhubbard 29 Jan 16:13 │   ├── 'SystemMonitor.resized (2
 
 #### dust
 
-Dust - Like du but more intuitive. Run `man dust` to see a complete list of options.
+Dust - Like du but more intuitive. Run `man dust` to see a complete list of options. See [Dust on Github](https://github.com/bootandy/dust) for more detail.
 
 ```bash
 alias du='dust -rR' # Print largest files first, screen reader mode
@@ -1364,7 +1375,7 @@ alias top='btm'              # Better top
 
 #### duf
 
-duf is a replacement for the Linux df command. It report file system space usage. duf creates a table for each device. This alias maps df to duf.
+duf is a replacement for the Linux df command. It report file system space usage. duf creates a table for each device. This alias maps df to duf. See [Duf on GitHub](https://github.com/muesli/duf) for more detail.
 
 ```bash hl_lines='1'
 alias df='duf'
