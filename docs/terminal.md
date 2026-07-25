@@ -718,6 +718,8 @@ The `.zshrc` file is primary configuration file for zsh. But if you start creati
 
 To solve this problem, oh-my-zsh provides a custom folder, `~/.oh-my-zsh/custom` where you can create an additional configuration file. The file has to have `zsh` as the extension. I use `my-aliases.zsh` for mine. Having your custom aliases and shell scripts in a separate file makes locating your aliases easier.
 
+----------------------------------------------------------------
+
 #### Naming aliases
 
 I found this tip in a Linux administration handbook - preface your personal aliases with a couple unique letters and a dash. I use `mw-` to preface mine. In the terminal I can type `mw- [tab]` and get a list of all of my aliases:
@@ -732,11 +734,17 @@ I found this tip in a Linux administration handbook - preface your personal alia
 | mw-extip  | mw-kbd            | mw-nmcli-examples   | mw-nmshrun        | mw-nplan-edit        | mw-ssh              | mw-tftp-stop |              |
 | mw-eza1   | mw-manuf          | mw-nmcli-vlan-dhcp  | mw-nmshstate      | mw-nplan_mode_switch | mw-ssh-stop         | mw-umount    |              |
 
+----------------------------------------------------------------
+
 Without that trick I would never be able to remember all the aliases that I have created. I will include `my-aliases.zsh` at the end of this chapter. You can press `tab` to scroll through the aliases.
+
+----------------------------------------------------------------
 
 ### My Functions
 
-Aliases are great, but sometimes it's cleaner to use a function. Clause, Gemini, Copilot and chatGPT are very good at writing zsh functions.
+Aliases are great, but sometimes it's cleaner to use a function. Claude, Gemini, Copilot and chatGPT are very good at writing zsh functions.
+
+----------------------------------------------------------------
 
 #### Display Memory statistics
 
@@ -772,7 +780,7 @@ mw-mem-check() {
 }
 ```
 
-```bash title='Command Output'
+```text title='Command Output'
 === Memory statistics ===
                     total        used        free            shared  buff/cache   available
 Mem:           30Gi        13Gi       977Mi       3.8Gi        19Gi        16Gi
@@ -812,6 +820,8 @@ This one is handy if you do any Wi-Fi work. For the AP that you are connected to
 - The Frequency you are using
 - The SSID
 
+----------------------------------------------------------------
+
 ```bash linenums='1'
 mw-iwget () {
     APMac=`iwgetid -ar`
@@ -820,6 +830,8 @@ mw-iwget () {
     echo "AP Mac:" $APMac && echo "Interface:" $IntFace && echo "SSID:" $ID
 }
 ```
+
+----------------------------------------------------------------
 
 ```bash title='Command Output'
 mw-iwget
@@ -841,6 +853,8 @@ That means I can use the GUI settings tool to manage the WiFI but I have to edit
 - pings `8.8.8.8` using the Wi-Fi interface
 - pings `8.8.8.8` using the bridge interface
 - shows the DNS settings for both interfaces
+
+----------------------------------------------------------------
 
 ```bash linenums='1'
 # red section header + separator helpers (top-level so they're
@@ -898,6 +912,8 @@ mw-nplan() {
     [[ -d "/sys/class/net/$ethif" ]] && resolvectl status "$ethif"
 }
 ```
+
+----------------------------------------------------------------
 
 ```bash title='Command Output'
 mw-nplan
@@ -958,10 +974,9 @@ Current DNS Server: 192.168.10.222
 
 #### mw-nplan-br0
 
-Displays the status of the bridge
+Displays the status of the bridge interface
 
 ```bash linenums='1'
-# quick status display for br0
 # wait for an interface to get an IPv4 address (default 20s timeout)
 # Used with mw-nplan_mode_switch also
 _mw_wait_ip() {
@@ -973,6 +988,7 @@ _mw_wait_ip() {
     done
 }
 
+# quick status display for br0
 mw-nplan-br0() {
     sudo netplan apply
     _mw_wait_ip br0 || echo "Timed out waiting for br0 IPv4."
@@ -1004,6 +1020,8 @@ Switch between DHCP and Static on the bridge interface. When moving to static, t
     Be careful when editing the file. It's yaml so it has not sense of humor about errors. The function makes a backup with a `.bak` extension that you can recover from using `sudo cp /etc/netplan/02-netcfg-static.yaml.bak 02-netcfg-static.yaml`
 
 Here is the function.
+
+----------------------------------------------------------------
 
 ```bash linenums='1'
 # switch netplan br0 between dhcp and static (enable/disable via file extension)
@@ -1051,6 +1069,8 @@ function mw-nplan_mode_switch() {
     ip route | grep default
 }
 ```
+
+----------------------------------------------------------------
 
 ```bash title='Command Output'
 mw-nplan_mode_switch
