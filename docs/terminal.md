@@ -794,17 +794,18 @@ NAME      TYPE SIZE USED PRIO
 [sudo] password for mhubbard:
 
 === Top memory consumers ===
-PID     USER          %MEM  %CPU    RSS                   COMMAND
-32971  mhubbard    3.9           6.8        1.3G                    soffice.bin
-10845  mhubbard    2.5           13.6      804                      firefox
-4260    mhubbard    2.1           8.4        683M                   gnome-shell
-5270    mhubbard    1.9           10.1      603M                    insync
-40671  mhubbard    1.6            5.1       522M                    msedge
-11172  mhubbard    1.6            1.2       517M  Isolated     Web  Co
-11982  mhubbard    1.5            4.8       477M  Isolated     Web  Co
-37662  mhubbard    1.4            13.5     458M                    code
-37693  mhubbard    1.4            6.8       443M                    code
-11202  mhubbard    1.2            0.5       397M  Isolated     Web  Co
+| PID   | USER     | %MEM | %CPU | RSS  | COMMAND     |
+|-------|----------|------|------|------|-------------|
+| 32971 | mhubbard | 3.9  | 6.8  | 1.3G | soffice.bin |
+| 10845 | mhubbard | 2.5  | 13.6 | 804  | firefox     |
+| 4260  | mhubbard | 2.1  | 8.4  | 683M | gnome-shell |
+| 5270  | mhubbard | 1.9  | 10.1 | 603M | insync      |
+| 40671 | mhubbard | 1.6  | 5.1  | 522M | msedge      |
+| 11172 | mhubbard | 1.6  | 1.2  | 517M | Isolated    |
+| 11982 | mhubbard | 1.5  | 4.8  | 477M | Isolated    |
+| 37662 | mhubbard | 1.4  | 13.5 | 458M | code        |
+| 37693 | mhubbard | 1.4  | 6.8  | 443M | code        |
+| 11202 | mhubbard | 1.2  | 0.5  | 397M | Isolated    |
 
 Do you want to run procs? (y/n)
 ```
