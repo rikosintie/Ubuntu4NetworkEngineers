@@ -954,7 +954,9 @@ Without that trick I would never be able to remember all the aliases that I have
 
 ### My aliases
 
-I have created many useful aliases over the years. Sometimes to save time on commands I run all the time, sometimes for a more involved set of instructions that I can't remember when I need them. My current aliases are located [here](/docs/my-aliases.md).
+I have created many useful aliases over the years. Sometimes to save time on commands I run all the time, sometimes for a more involved set of instructions that I can't remember when I need them.
+
+My current aliases are located [here](/docs/my-aliases.md). It's worth looking through them to find one that will save you time.
 
 ### Hubbard's .zshrc file
 
