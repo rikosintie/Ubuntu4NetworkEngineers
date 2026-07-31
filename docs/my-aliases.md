@@ -47,13 +47,29 @@ If there are more than one directory with the same name up in the hierarchy, bd 
 
 ### Other uses
 
-Using bd within backticks (`bd <letter(s)>`) prints out the path without changing the current directory.
+Using bd within backticks
 
-You can take advantage of that by combining `bd <letter(s)>` with other commands such as ls, ln, echo, zip, tar etc..
+```bash linenums='1' hl_lines='1'
+`bd <letter(s)>` prints out the path without changing the current directory.
+```
+
+You can take advantage of that by combining
+
+```bash
+`bd <letter(s)>`
+```
+
+with other commands such as ls, ln, echo, zip, tar etc..
 
 Example:
 
-If you just want to list the contents of a higher directory, without going there, then you can use: ls `bd D` in the example, it will list the contents of `/home/mhubbard/Insync/GD/04_Tools/Discovery`. In this example I want to list the files in `/home/mhubbard/Insync/GD/04_Tools/Discovery`:
+If you just want to list the contents of a higher directory, without going there, then you can use:
+
+```bash
+ls `bd D`
+```
+
+in the example, it will list the contents of `/home/mhubbard/Insync/GD/04_Tools/Discovery`:
 
 ```bash hl_lines='2'
 ┌─[mhubbard@1S1K-G5] - [~/Insync/GD/04_Tools/Discovery/port-maps/pinginfo]
