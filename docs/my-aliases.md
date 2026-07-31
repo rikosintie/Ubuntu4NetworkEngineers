@@ -49,7 +49,7 @@ If there are more than one directory with the same name up in the hierarchy, bd 
 
 Using bd within backticks
 
-```bash linenums='1' hl_lines='1'
+```bash
 `bd <letter(s)>` prints out the path without changing the current directory.
 ```
 
