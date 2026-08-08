@@ -10,6 +10,7 @@ nav:
   - Desktop: CH02-Install-Tools.md
   - Terminal: terminal.md
   - My Aliases: my-aliases.md
+  - Backing Up configs: backup-tool-chain.md
   - WiFi Tools: wireless-tools.md
   - Log Tools: Log_tools.md
   - SSH: SSH.md
