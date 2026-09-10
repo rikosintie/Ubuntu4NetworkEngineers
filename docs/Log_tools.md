@@ -31,7 +31,7 @@ tailspin does not make any assumptions on the format or position of the items it
 
 The repository is located here: [tailspin](https://github.com/bensadeh/tailspin). Tailspin is installed using `brew install tailspin`. There are instructions for tailspin on the README page at the repo.
 
-A second tool, spacer, is very useful with tspin. The spacer repository is located [here](https://github.com/samwho/spacer). `spacer` is a simple CLI tool to insert spacers when command output stops.
+A second tool, spacer, is very useful with tspin. The spacer repository is located at [spacer](https://github.com/samwho/spacer). `spacer` is a simple CLI tool to insert spacers when command output stops.
 
 If you're the type of person that habitually presses enter a few times in your log tail to know where the last request ended and the new one begins, this tool is for you!
 
@@ -72,6 +72,8 @@ Dec 21 14:40:01 1S1K-G5-5587 systemd[1]: sysstat-collect.service: Deactivated su
 Dec 21 14:40:01 1S1K-G5-5587 systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
 2024-12-21 14:40:03 49.0s ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+----------------------------------------------------------------
 
 You can see the advantage of having `spacer` put a time stamp and line for each new log entry.
 
