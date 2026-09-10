@@ -305,10 +305,12 @@ You may ask why I installed the Gnome tool when this tool does everything the Gn
 
 - [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) - The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
 - [Customize Clock on Lock Screen](https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/) -  Create Custom Text on the Lock Screen
+- [focus on Active Windows](https://github.com/dayliver/focus-on-active-window) - Focus on Active Window is a GNOME Shell extension that helps you focus on your task by dimming inactive windows and highlighting the active window with a customizable border.
 - [GSConnect](https://github.com/GSConnect/gnome-shell-extension-gsconnect) - With GSConnect you can securely connect to mobile devices
 - [Logo Menu](https://extensions.gnome.org/away/https%253A%252F%252Fgithub.com%252FAryan20%252FLogomenu) - Adds a MacOS like button to the top left of the screen with `About my System`, `Force Quit App`, etc. Very cool extension.
 - [Removable Drive Menu](https://extensions.gnome.org/extension/7/removable-drive-menu/) - A status menu for accessing and unmounting removable devices.
-- [Systemd Manager](https://github.com/hardpixel/systemd-manager) - Systemd Manager is a Gnome Shell Extension which allows you to start/stop systemd services via a menu in the status area in the top panel. You can preselect which services should be shown in the extension preferences dialog.
+- [Rudra](https://github.com/narkagni/rudra) - Rudra is a modern, deeply integrated launcher designed to replace the default GNOME overview.
+- [Vitals](https://github.com/corecoding/Vitals) - Vitals puts .
 
 !!! Tip
     From the terminal you can list the installed extensions
@@ -401,6 +403,22 @@ The week number is very popular in Europe. After I worked in France for awhile I
 **Installation Instructions**
 
 Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `customize clock on Lock Screen`. Once Extension Manager finds `customize clock on Lock Screen` click on the `Install...` button.
+
+----------------------------------------------------------------
+
+#### Focus on Active Window
+
+This is a must have if you use two monitors! It places a custom color around the active windows border. So if I'm working in a terminal, click on vs code on a different monitor, copy, then move the mouse over to the terminal, it's completely obvious that the terminal doesn't have the focus.
+
+----------------------------------------------------------------
+
+![screenshot](img/focus-on-active-window.resized.png)
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `focus on active window`. Once Extension Manager finds `focus on active window` by hwaryong.com, click on the `Install...` button.
 
 ----------------------------------------------------------------
 
@@ -558,7 +576,7 @@ On some projects I end up using flash drives quite a lot. All this extension doe
 
 **Installation Instructions**
 
-Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `Removable Drive Menu`. Once Extension Manager finds `Removable Drive Menu` click on the `Install...` button.
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `Removable Drive Menu`. Once Extension Manager finds `Removable Drive Menu` by fmuellner, click on the `Install...` button.
 
 Now, any time a flash drive is installed, the Removable Drive icon will be in the status menu. Simply click the icon, then select the drive to eject!
 
@@ -594,97 +612,94 @@ If you don't want to have to type the `-e7`.
 
 ----------------------------------------------------------------
 
-#### Systemd Manager
+#### Rudra
 
-Systemd is a system and service manager for Linux operating systems. There are hundreds of services running on the system and usually terminal commands are used to start/stop/enable and check status. There are a few services like the `UFW Firewall`, `ssh server` and `tftp server` that I turn on and off often. The `Systemd Manager` extensions lets me easily check the status from the `status menu`. The icon looks like the Gnome setting gear - ![screenshot](img/Systemd-Manager.png).
+Rudra is a launcher for Gnome. I use Mac/Linux daily and having to use "cmd+space" on Mac, super key on Linux was a pain! Rudra allows me to use "alt+space" on Linux. The alt key is the cmd key on Mac so it's the same combination!
+
+THe latest version of Rudra adds:
+
+- Emoji & Icon picker
+- AI chatbot capability
+- Clipboard history
+- Calculator
+- Snippets Manager
+- Quick Web Search
+  - Google
+  - Youtube
+  - DuckDuckGo
+  - Wikipedia
+
+It's as good as macOS 26!
+
+----------------------------------------------------------------
+
+Here is Rudra searching for LibreOffice
+
+![screenshot](img/rudra.png)
 
 ----------------------------------------------------------------
 
 **Installation Instructions**
 
-This extension isn't available using the `Extension Manager` flatpak. There appears to be some friction between the developer and the Gnome Project. At least that's what it seemed like on the Github Issues page. So far I have not had any problems with the extension. Follow these instructions to install.
+This extension isn't available using the `Extension Manager` flatpak. THe developer states that he will put it back into the Gnome Extensions store once he has completed all new features. So far I have not had any problems with the extension. Follow these instructions to install. Click this link [Rudra](https://github.com/narkagni/rudra) to open Rudra's github page.
 
-Click this link [Systemd Manager](https://github.com/hardpixel/systemd-manager) to download the zip file of release V17. Version 17 supports Gnome 45/46/47.
+Open a terminal `ctrl+alt+t`. cd to a directory where you keep tools, I use 04_tools and paste the following:
 
-Right click on the zip file and select `Extract To..`. In the Files dialog that opens search for `~/.local/share/gnome-shell/extensions` and click `Select`. This will extract the file into a folder named `systemd-manager-v17` under the `extensions` directory. Locate the folder in Files and rename it to `systemd-manager@hardpixel.eu`
+```bash
+# 1. Clone the repository
+git clone https://github.com/NarkAgni/rudra.git
+cd rudra
 
-You will need to restart Ubuntu to activate the extension.
+# 2. Install
+make install
 
-One of files in the directory is named `metadata.json` Below are the contents of the json file. You can see the shell version the extension works with and the uuid. The uuid is the required name of the directory containing the extension's configuration files. I right clicked on `metadata.json` and used `Text Edit` to open the configuration file.
+# 3. Restart GNOME Shell
+#    On X11:     Press Alt+F2, type 'r', press Enter
+#    On Wayland: Log out and back in
 
-```json
-{
-  "shell-version": ["45", "46", "47"],
-  "uuid": "systemd-manager@hardpixel.eu",
-  "url": "https://github.com/hardpixel/systemd-manager",
-  "settings-schema": "org.gnome.shell.extensions.systemd-manager",
-  "gettext-domain": "systemd-manager",
-  "version": 17,
-  "name": "Systemd Manager",
-  "description": "Toggle systemd services on/off from a popup menu in the top gnome panel. Can be used to start services like apache2, mysql, postgres. It uses `pkexec' to run `sytemctl'. If you want to start services without entering a password you have to polkit policy file. An example policy file can be found in the github repository.",
-  "donations": {
-    "github": "jonian"
-  }
-}
+# 4. Enable the extension
+gnome-extensions enable rudra@narkagni
 ```
-
-**Configuration**
-
-Click on the `Systemd-Manager` icon in the status menu and select `Add Service`. Here is what it will look like:
-
-![screenshot](img/Systemd-Manager-settings.png)
 
 ----------------------------------------------------------------
 
-Type a name for the service in the `Name in menu` field and enter the service in the `Search for service` field. Click the `+ Add` button and then click the `X` at the top right corner of the dialog to close it.
+Click the down arrow next to the magnifying glass to see all `Rudra` features:
 
-Now click the `Systemd-Manager` icon in the `status menu` and you will see the services you added.
-
-![screenshot](img/Systemd-Manager-status.png)
+![screenshot](img/rudra1.png)
 
 ----------------------------------------------------------------
 
-Simply slide the slider to the right to enable a service or to the left to disable a service. You can also restart a service by clicking the icon with the circular arrow or mask a service by clicking the icon on the right.
+I love the Emojis picker!
 
-**Why the Red**
-
-Notice that the TFTP entry is red. I wasn't sure what that meant so I ran the following command from a terminal:
-
-```bash
-sudo systemctl restart tftpd-hpa
-```
-
-And received a message that the service couldn't be started. I ran the following command to view the journal for tftpd-hpa:
-
-```bash
-journalctl -u tftpd-hpa
-```
-
-And found that tftpd-hpa had been failing since I upgraded to 24.10 on November 17th! I Googled the error message but nothing really jumped out so I did the following:
-
-```bash
-sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.bak
-sudo dpkg --purge --force-all tftpd-hpa
-sudo nala install tftpd-hpa
-sudo cp /etc/default/tftpd-hpa.bak /etc/default/tftpd-hpa
-sudo systemctl is-enabled tftpd-hpa
-sudo systemctl start tftpd-hpa
-```
-
-Those commands did the following
-
-- made a backup of the tftpd-hpa configuration file
-- removed the tftpd-hpa service and the configuration file
-- reinstalled the tftpd-hpa service
-- copied the tftpd-hpa configuration file from the backup
-- verified that the tftpd-hpa was enabled so that it could start after a reboot
-- started the tftpd-hpa service
-
-Now when I click on the Systemd-Manager icon the TFTP entry is black
+![screenshot](img/rudra2.png)
 
 ----------------------------------------------------------------
 
-![screenshot](img/SystemMonitor1.png)
+And the icon picker!
+
+![screenshot](img/rudra3.png)
+
+----------------------------------------------------------------
+
+#### Vitals
+
+Vitals is a GNOME Shell extension for displaying your computer's temperature, voltage, fan speed, memory usage, processor load, system resources, network speed and storage stats in your GNOME Shell's top menu bar. This is a one stop shop to monitor all of your vital sensors. Vitals uses asynchronous polling to provide a smooth user experience.
+
+----------------------------------------------------------------
+
+**Installation Instructions**
+
+Open the Extension Manager flatpak, click the `Browse` tab at the top, then type `Vitals`. Once Extension Manager finds `VItals`  by corecoding, click on the `Install...` button.
+
+As you can see, there are a lot of options available. The Vitals icon will be in the status menu. Simply click the icon, then select the metric you want to see!
+
+![screenshot](img/vitals.png)
+
+----------------------------------------------------------------
+
+Here is Vitals in action:
+
+![screenshot](img/howtouse.gif)
 
 ----------------------------------------------------------------
 
@@ -973,7 +988,7 @@ Features include:
 
 Technical education is changing. When I got into network engineering back in 1999 you almost had to take an instructor led class at an organization like New Horizons or a local community college.
 
-But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from [Packt Publising](https://www.packtpub.com/en-us), [No Starch Press](https://nostarch.com/), and [Gumroad](https://gumroad.com). Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is a great tool for organizing and reading ebooks.
+But the Internet has changed that. I haven't taken an instructor led course in years. I do a lot of webinars and YouTube videos. I also buy ebooks from [Packt Publishing](https://www.packtpub.com/en-us), [No Starch Press](https://nostarch.com/), and [Gumroad](https://gumroad.com). Even though Amazon makes $billions with its AWS service running 100% on Linux, they do not offer a Kindle app for Linux. Foliate solves that problem and is a great tool for organizing and reading ebooks.
 
 ----------------------------------------------------------------
 
