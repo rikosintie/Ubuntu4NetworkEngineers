@@ -584,34 +584,6 @@ Now, any time a flash drive is installed, the Removable Drive icon will be in th
 
 ----------------------------------------------------------------
 
-One annoying feature of snaps is that they install as [Loop devices](https://itsfoss.com/loop-device-linux/). This means that when you run `lsblk` from the terminal to view your disks you see a lot of `loop` entries.
-
-```bash hl_lines="1"
-lsblk
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-loop0         7:0    0   9.5M  1 loop /snap/asciinema/35
-loop1         7:1    0  11.6M  1 loop /snap/auto-cpufreq/146
-loop2         7:2    0  76.5M  1 loop /snap/aurora-editor/55
-loop3         7:3    0   9.4M  1 loop /snap/asciinema/32
-loop4         7:4    0  11.6M  1 loop /snap/auto-cpufreq/147
-```
-
-To avoid this, add the -e7 flag:
-
-```bash
-lsblk -e7
-```
-
-You can add an alias in the `.bahsrc` or `.zshrc` file using:
-
-```bash
-alias lsblk='lsblk -e7'
-```
-
-If you don't want to have to type the `-e7`.
-
-----------------------------------------------------------------
-
 #### Rudra
 
 Rudra is a launcher for Gnome. I use Mac/Linux daily and having to use "cmd+space" on Mac, super key on Linux was a pain! Rudra allows me to use "alt+space" on Linux. The alt key is the cmd key on Mac so it's the same combination!
