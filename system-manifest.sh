@@ -9,15 +9,56 @@
 #
 # Usage:
 #   chmod +x system-manifest.sh
-#   ./system-manifest.sh
+#   ./system-manifest.sh <dest-dir>          e.g. /media/mhubbard/Backup
+#   ./system-manifest.sh --force <dest-dir>  allow a dest on the root disk
 #
-# Output: ~/system-manifest-<host>-<date>/   (copy this OFF the drive you wipe)
+# Output: <dest-dir>/system-manifest-<host>-<date>/
+# The destination is REQUIRED and must not be on the same filesystem as /,
+# so the manifest is already off the disk you're about to wipe.
 # ============================================================================
 
 set -uo pipefail   # NOT -e: we want to continue past individual failures
+USER="${USER:-$(id -un)}"
 
-OUTDIR="$HOME/system-manifest-$(hostname)-$(date +%Y-%m-%d)"
-mkdir -p "$OUTDIR"/{packages,dev,shell,network,system,kvm,SENSITIVE}
+usage() {
+  echo "usage: $0 [--force] <dest-dir>   (e.g. /media/mhubbard/Backup)" >&2
+  exit 2
+}
+
+FORCE=0
+if [ "${1:-}" = "--force" ]; then FORCE=1; shift; fi
+[ $# -eq 1 ] || usage
+DEST="${1%/}"
+
+if [ ! -d "$DEST" ]; then
+  echo "ERROR: $DEST does not exist or isn't mounted." >&2
+  exit 1
+fi
+if [ ! -w "$DEST" ]; then
+  echo "ERROR: $DEST is not writable by $USER." >&2
+  exit 1
+fi
+# Refuse a destination on the same filesystem as / (the disk you're wiping)
+root_dev=$(findmnt -n -o SOURCE --target / 2>/dev/null)
+dest_dev=$(findmnt -n -o SOURCE --target "$DEST" 2>/dev/null)
+if [ -n "$root_dev" ] && [ "$root_dev" = "$dest_dev" ] && [ "$FORCE" -eq 0 ]; then
+  echo "ERROR: $DEST is on the root filesystem ($root_dev) — the disk you're about to wipe." >&2
+  echo "       Pick a path on the backup drive, or use --force if you really mean it." >&2
+  exit 1
+fi
+
+# Warn if the destination can't hold Linux permissions/ownership
+dest_fs=$(findmnt -n -o FSTYPE --target "$DEST" 2>/dev/null)
+case "$dest_fs" in
+  ntfs|ntfs3|fuseblk|exfat|vfat|msdos)
+    echo "WARNING: $DEST is $dest_fs — Linux permissions and ownership won't stick." >&2
+    echo "         SENSITIVE/ will NOT be locked to 700, and some copies may report [warn]." >&2
+    ;;
+esac
+
+OUTDIR="$DEST/system-manifest-$(hostname)-$(date +%Y-%m-%d)"
+mkdir -p "$OUTDIR"/{packages,dev,shell,network,system,kvm,SENSITIVE} || {
+  echo "ERROR: could not create $OUTDIR" >&2; exit 1; }
 chmod 700 "$OUTDIR/SENSITIVE"
 
 have() { command -v "$1" >/dev/null 2>&1; }
@@ -141,7 +182,7 @@ have dconf && dconf dump / > "$OUTDIR/system/dconf-dump.ini" 2>/dev/null \
   && echo "  [ok]   dconf (GNOME settings)     -> system/dconf-dump.ini"
 # Custom local binaries and udev rules you may have added
 [ -d /usr/local/bin ] && ls -la /usr/local/bin > "$OUTDIR/system/usr-local-bin.txt" 2>/dev/null
-sudo ls -la /etc/udev/rules.d 2>/dev/null > "$OUTDIR/system/udev-rules.txt"
+copy "udev rules" "/etc/udev/rules.d" "$OUTDIR/system"
 # Fonts
 copy "user fonts"  "$HOME/.local/share/fonts" "$OUTDIR/system"
 
@@ -172,7 +213,7 @@ if have virsh; then
       | awk 'NR>2 && $1=="file" && $2=="disk" && $4!="-" {print $3" "$4}' \
       | while read -r target src; do
           [ -n "$src" ] || continue
-          # Walk the backing chain so a flattened/overlay image never gets
+          # Walk the backing chain so an overlay image never gets
           # separated from its base — copying only the overlay = dead VM.
           members=""
           if have qemu-img; then
@@ -206,7 +247,7 @@ if have virsh; then
 
   # Total footprint so you know if it fits on the 1TB before you start
   if [ -s "$OUTDIR/kvm/disk-copy-list.txt" ]; then
-    total=$(sudo du -ch $(cat "$OUTDIR/kvm/disk-copy-list.txt") 2>/dev/null | tail -1 | cut -f1)
+    total=$(xargs -d '\n' sudo du -ch < "$OUTDIR/kvm/disk-copy-list.txt" 2>/dev/null | tail -1 | cut -f1)
     echo "  >> Total VM disk data to copy off: ${total:-unknown}"
   fi
 
@@ -229,7 +270,7 @@ CPEOF
   chmod +x "$OUTDIR/kvm/copy-vm-disks.sh"
   echo "  [ok]   copy helper       -> kvm/copy-vm-disks.sh"
   echo "  !! Disk images live on the drive you will wipe. Run:"
-  echo "        sudo $OUTDIR/kvm/copy-vm-disks.sh /media/mhubbard/Backup/vm-images"
+  echo "        sudo $OUTDIR/kvm/copy-vm-disks.sh $DEST/vm-images"
 fi
 
 # ---------------------------------------------------------------------------
@@ -239,37 +280,35 @@ cat > "$OUTDIR/REINSTALL-NOTES.md" <<'NOTES'
 
 ## 1. APT packages you asked for
     xargs -a packages/apt-manual.txt sudo apt install -y
-Review the list first — some may be plucky-only or renamed on 26.04.
+Review the list first — some may be 25.04-only or renamed on 26.04.
 
 ## 2. Homebrew
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew bundle install --file=packages/Brewfile
 
 ## 3. VS Code extensions
-    while read ext; do code --install-extension "$ext"; done < dev/vscode-extensions.txt
+    while read -r ext; do code --install-extension "$ext"; done < dev/vscode-extensions.txt
 
 ## 4. pipx CLI tools  (see packages/pipx.txt)
     pipx install <each>
 
 ## 5. Shell — copy back .zshrc etc. from shell/, then re-source.
-   Re-check any absolute paths that assumed plucky.
+   Re-check any absolute paths that assumed 25.04.
 
 ## 6. Groups — re-add yourself (see system/groups.txt). Likely:
     sudo usermod -aG libvirt,kvm,dialout,wireshark $USER
    (dialout = serial console to Cisco gear — easy to forget)
 
-## 7. Network — DO NOT blind-copy plucky netplan onto 26.04.
-   Interface names (enp60s0/wlp61s0) usually persist, but review
-   SENSITIVE/netplan against a fresh 26.04 default before applying.
+## 7. Network — DO NOT blind-copy 25.04 netplan onto 26.04.
+   Review SENSITIVE/netplan against a fresh 26.04 default before applying.
    Customer WiFi: SENSITIVE/NM-system-connections/*.nmconnection ->
    /etc/NetworkManager/system-connections/  (chmod 600, chown root:root).
 
 ## 8. APT sources — reference only. On 26.04 the ubuntu.sources codename
-   differs. Re-add third-party repos (vscode w/ keyring, termius, gierens,
-   insync, chrome, solaar) from system/apt-sources.list.d/ as reference.
+   differs. Re-add third-party repos from system/apt-sources.list.d/.
 
 ## 9. libvirt VMs — redefine from kvm/*.xml AFTER copying qcow2 images back:
-    virsh define kvm/<vm>.xml
+    sudo virsh define kvm/<vm>.xml
 NOTES
 echo "  [ok]   REINSTALL-NOTES.md"
 
@@ -283,11 +322,7 @@ Manifest complete: $OUTDIR  ($SIZE)
   SENSITIVE/  holds WiFi PSKs and ssh config — treat accordingly.
               Do NOT sync to cloud unless you're OK with that.
 
-NEXT (important): this folder is on the drive you're about to wipe.
-Copy it off NOW, e.g.:
-    cp -a "$OUTDIR" /media/mhubbard/Backup/     # your 1TB
-  or (non-sensitive parts) into ~/Insync to reach Google Drive.
-
-Optional tarball:
-    tar czf "$OUTDIR.tar.gz" -C "$HOME" "$(basename "$OUTDIR")"
+Already written to $DEST — nothing to copy off.
+Still to do before the wipe: VM disks (kvm/copy-vm-disks.sh) and your
+encrypted ~/.ssh key tarball.
 EOF
