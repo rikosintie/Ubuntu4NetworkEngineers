@@ -45,23 +45,26 @@ Keep `SENSITIVE/` off Insync and Google Drive. It holds customer Wi-Fi PSKs from
 
 The VM XML is small and is already in the manifest. The qcow2 disks are large and live on the 2TB, so they need a separate copy. The script walks each disk's backing chain, so an overlay never gets separated from its base.
 
-1. Check sizes and the total against the 1TB's free space:
+\1. Check sizes and the total against the 1TB's free space:
 
    ```bash
    cat /media/mhubbard/Backup/system-manifest-1S1K-G5-*/kvm/disk-images.txt
    ```
-2. Shut down every running VM. Copying a running VM gives you an inconsistent disk:
+
+\2. Shut down every running VM. Copying a running VM gives you an inconsistent disk:
 
    ```bash
    sudo virsh list --all
    sudo virsh shutdown <vm>
    ```
-3. Run the generated helper. It uses `rsync --sparse`, so qcow2 files don't balloon:
+
+\3. Run the generated helper. It uses `rsync --sparse`, so qcow2 files don't balloon:
 
    ```bash
    sudo /media/mhubbard/Backup/system-manifest-1S1K-G5-*/kvm/copy-vm-disks.sh /media/mhubbard/Backup/vm-images
    ```
-4. Confirm every file listed in `kvm/disk-copy-list.txt` is in `vm-images/`, including any `~base` images.
+
+\4. Confirm every file listed in `kvm/disk-copy-list.txt` is in `vm-images/`, including any `~base` images.
 
 ## Phase 3 — Final checks before the wipe
 
