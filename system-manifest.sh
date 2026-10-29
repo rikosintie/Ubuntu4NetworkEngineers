@@ -9,7 +9,7 @@
 #
 # Usage:
 #   chmod +x system-manifest.sh
-#   ./system-manifest.sh <dest-dir>          e.g. /media/mhubbard/Backup
+#   ./system-manifest.sh <dest-dir>          e.g. /media/$USER/Data
 #   ./system-manifest.sh --force <dest-dir>  allow a dest on the root disk
 #
 # Output: <dest-dir>/system-manifest-<host>-<date>/
@@ -21,7 +21,7 @@ set -uo pipefail   # NOT -e: we want to continue past individual failures
 USER="${USER:-$(id -un)}"
 
 usage() {
-  echo "usage: $0 [--force] <dest-dir>   (e.g. /media/mhubbard/Backup)" >&2
+  echo "usage: $0 [--force] <dest-dir>   (e.g. /media/$USER/Data)" >&2
   exit 2
 }
 
@@ -124,6 +124,10 @@ copy "git ignore global" "$HOME/.gitignore"     "$OUTDIR/dev"
 find "$HOME" -maxdepth 5 -type d -name .git 2>/dev/null \
   | sed 's|/.git$||' > "$OUTDIR/dev/local-git-repos.txt" \
   && echo "  [ok]   local git repos            -> dev/local-git-repos.txt"
+# Python venvs: where each lives and which Python built it (your rebuild list)
+find "$HOME" -maxdepth 6 -name pyvenv.cfg -not -path '*/.cache/*' -not -path '*/.local/share/*' \
+  -exec grep -H '^version' {} \; 2>/dev/null | sort > "$OUTDIR/dev/python-venvs.txt" \
+  && echo "  [ok]   python venv inventory      -> dev/python-venvs.txt"
 
 # ---------------------------------------------------------------------------
 sec "Shell / zsh"
@@ -140,14 +144,14 @@ if [ -n "${ZSH_VERSION:-}" ] || have zsh; then
 fi
 
 # ---------------------------------------------------------------------------
-sec "Network config  (br0 / VLANs / customer WiFi)"
+sec "Network config  (netplan, bridges/VLANs, Wi-Fi/VPN profiles)"
 # netplan — root-readable; captured to SENSITIVE (may embed keys)
 if [ -d /etc/netplan ]; then
   sudo cp -a /etc/netplan "$OUTDIR/SENSITIVE/netplan" 2>/dev/null \
     && sudo chown -R "$USER":"$USER" "$OUTDIR/SENSITIVE/netplan" \
     && echo "  [ok]   /etc/netplan              -> SENSITIVE/netplan/"
 fi
-# NetworkManager system connections — CONTAIN WiFi PSKs
+# NetworkManager keyfiles (older releases; 23.10+ stores profiles as netplan 90-NM-*.yaml)
 if [ -d /etc/NetworkManager/system-connections ]; then
   sudo cp -a /etc/NetworkManager/system-connections "$OUTDIR/SENSITIVE/NM-system-connections" 2>/dev/null \
     && sudo chown -R "$USER":"$USER" "$OUTDIR/SENSITIVE/NM-system-connections" \
@@ -158,7 +162,7 @@ cap "ip route snapshot" "$OUTDIR/network/ip-route.txt"  ip route
 copy "/etc/hosts"       "/etc/hosts"                    "$OUTDIR/network"
 
 # ---------------------------------------------------------------------------
-sec "APT sources + keyrings  (your cleaned config)"
+sec "APT sources + keyrings"
 sudo cp -a /etc/apt/sources.list.d "$OUTDIR/system/apt-sources.list.d" 2>/dev/null \
   && sudo chown -R "$USER":"$USER" "$OUTDIR/system/apt-sources.list.d" \
   && echo "  [ok]   /etc/apt/sources.list.d    -> system/apt-sources.list.d/"
@@ -180,17 +184,34 @@ cap "foreign arches"       "$OUTDIR/system/dpkg-arches.txt"     dpkg --print-for
 # Desktop settings
 have dconf && dconf dump / > "$OUTDIR/system/dconf-dump.ini" 2>/dev/null \
   && echo "  [ok]   dconf (GNOME settings)     -> system/dconf-dump.ini"
-# Custom local binaries and udev rules you may have added
+# GNOME Shell extensions — the list is the restore path (reinstall current
+# versions for the new GNOME); the copied code is only a fallback.
+if have gnome-extensions; then
+  cap "gnome ext (all)"     "$OUTDIR/system/gnome-extensions.txt"         gnome-extensions list --user --details
+  cap "gnome ext (enabled)" "$OUTDIR/system/gnome-extensions-enabled.txt" gnome-extensions list --user --enabled
+fi
+copy "gnome ext (code)" "$HOME/.local/share/gnome-shell/extensions" "$OUTDIR/system"
+# Custom local binaries and udev rules (e.g., USB-serial console adapters)
 [ -d /usr/local/bin ] && ls -la /usr/local/bin > "$OUTDIR/system/usr-local-bin.txt" 2>/dev/null
 copy "udev rules" "/etc/udev/rules.d" "$OUTDIR/system"
 # Fonts
 copy "user fonts"  "$HOME/.local/share/fonts" "$OUTDIR/system"
 
 # ---------------------------------------------------------------------------
-sec "SSH config  (legacy Cisco kex etc.)"
-copy "ssh config"      "$HOME/.ssh/config"      "$OUTDIR/SENSITIVE"
-copy "ssh known_hosts" "$HOME/.ssh/known_hosts" "$OUTDIR/SENSITIVE"
-echo "  note: private keys NOT auto-copied. Handle ~/.ssh/id_* yourself, encrypted."
+sec "SSH  (keys, config, known_hosts)"
+# Plain tar, permissions preserved. Lands in SENSITIVE/ — keep it off cloud drives.
+if [ -d "$HOME/.ssh" ]; then
+  tar czpf "$OUTDIR/SENSITIVE/ssh-keys.tgz" -C "$HOME" .ssh 2>/dev/null \
+    && chmod 600 "$OUTDIR/SENSITIVE/ssh-keys.tgz" \
+    && echo "  [ok]   ~/.ssh (all keys)          -> SENSITIVE/ssh-keys.tgz" \
+    || echo "  [warn] ~/.ssh tarball failed — back up ~/.ssh by hand!"
+  ls -la "$HOME/.ssh" > "$OUTDIR/SENSITIVE/ssh-listing.txt" 2>/dev/null
+  # Warn about keys referenced from outside ~/.ssh (the tarball won't have them)
+  grep -iE '^\s*IdentityFile' "$HOME/.ssh/config" 2>/dev/null | grep -v '\.ssh/' \
+    && echo "  !! IdentityFile entries above point OUTSIDE ~/.ssh — copy those keys by hand."
+else
+  echo "  [skip] ~/.ssh                       (not found)"
+fi
 
 # ---------------------------------------------------------------------------
 sec "KVM / libvirt  (VM definitions + disk image paths)"
@@ -245,7 +266,7 @@ if have virsh; then
     [ -n "$net" ] && $VIRSH net-dumpxml "$net" > "$OUTDIR/kvm/net-$net.xml" 2>/dev/null
   done
 
-  # Total footprint so you know if it fits on the 1TB before you start
+  # Total footprint so you know it fits on the backup disk before you start
   if [ -s "$OUTDIR/kvm/disk-copy-list.txt" ]; then
     total=$(xargs -d '\n' sudo du -ch < "$OUTDIR/kvm/disk-copy-list.txt" 2>/dev/null | tail -1 | cut -f1)
     echo "  >> Total VM disk data to copy off: ${total:-unknown}"
@@ -255,7 +276,8 @@ if have virsh; then
   cat > "$OUTDIR/kvm/copy-vm-disks.sh" <<'CPEOF'
 #!/usr/bin/env bash
 # Copy all VM disk images (including backing files) off before you wipe.
-# Usage: sudo ./copy-vm-disks.sh /media/mhubbard/Backup/vm-images
+# Usage: sudo ./copy-vm-disks.sh <backup-dir>/vm-images
+# Shut the VMs down first. Verify afterwards with: qemu-img check <copy>
 set -euo pipefail
 DEST="${1:?usage: copy-vm-disks.sh <dest-dir>}"
 mkdir -p "$DEST"
@@ -276,39 +298,31 @@ fi
 # ---------------------------------------------------------------------------
 sec "Writing reinstall notes"
 cat > "$OUTDIR/REINSTALL-NOTES.md" <<'NOTES'
-# Reinstall checklist  (26.04)
+# Reinstall quick reference  (full steps: the Nuke & Pave runbook)
 
-## 1. APT packages you asked for
-    xargs -a packages/apt-manual.txt sudo apt install -y
-Review the list first — some may be 25.04-only or renamed on 26.04.
+    M=<this folder>
 
-## 2. Homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew bundle install --file=packages/Brewfile
-
-## 3. VS Code extensions
-    while read -r ext; do code --install-extension "$ext"; done < dev/vscode-extensions.txt
-
-## 4. pipx CLI tools  (see packages/pipx.txt)
-    pipx install <each>
-
-## 5. Shell — copy back .zshrc etc. from shell/, then re-source.
-   Re-check any absolute paths that assumed 25.04.
-
-## 6. Groups — re-add yourself (see system/groups.txt). Likely:
-    sudo usermod -aG libvirt,kvm,dialout,wireshark $USER
-   (dialout = serial console to Cisco gear — easy to forget)
-
-## 7. Network — DO NOT blind-copy 25.04 netplan onto 26.04.
-   Review SENSITIVE/netplan against a fresh 26.04 default before applying.
-   Customer WiFi: SENSITIVE/NM-system-connections/*.nmconnection ->
-   /etc/NetworkManager/system-connections/  (chmod 600, chown root:root).
-
-## 8. APT sources — reference only. On 26.04 the ubuntu.sources codename
-   differs. Re-add third-party repos from system/apt-sources.list.d/.
-
-## 9. libvirt VMs — redefine from kvm/*.xml AFTER copying qcow2 images back:
-    sudo virsh define kvm/<vm>.xml
+1. APT packages (review first; some may be renamed in the new release)
+       xargs -a $M/packages/apt-manual.txt sudo apt install -y
+2. Homebrew
+       brew bundle install --file=$M/packages/Brewfile
+3. VS Code extensions
+       while read -r ext; do code --install-extension "$ext"; done < $M/dev/vscode-extensions.txt
+4. SSH keys
+       tar xzpf $M/SENSITIVE/ssh-keys.tgz -C ~
+5. Groups (see system/groups.txt), then log out/in
+       sudo usermod -aG libvirt,kvm,dialout,wireshark $USER
+6. NetworkManager profiles are netplan files: SENSITIVE/netplan/90-NM-*.yaml
+       sudo cp $M/SENSITIVE/netplan/90-NM-*.yaml /etc/netplan/
+       sudo chmod 600 /etc/netplan/90-NM-*.yaml && sudo netplan generate
+   Don't blind-copy the other netplan files; compare with the fresh defaults.
+7. udev rules: copy custom ones from system/rules.d/, then
+       sudo udevadm control --reload
+8. GNOME extensions: reinstall from system/gnome-extensions-enabled.txt,
+   then:  dconf load /org/gnome/shell/extensions/ < <section of system/dconf-dump.ini>
+9. APT sources: reference only (codename changes). Re-add third-party repos.
+10. libvirt: copy qcow2 images back, then
+       sudo virsh define $M/kvm/<vm>.xml
 NOTES
 echo "  [ok]   REINSTALL-NOTES.md"
 
@@ -319,10 +333,10 @@ cat <<EOF
 
 Manifest complete: $OUTDIR  ($SIZE)
 
-  SENSITIVE/  holds WiFi PSKs and ssh config — treat accordingly.
-              Do NOT sync to cloud unless you're OK with that.
+  SENSITIVE/  holds WiFi PSKs, ssh keys and ssh config.
+              Keep it off cloud drives.
 
 Already written to $DEST — nothing to copy off.
-Still to do before the wipe: VM disks (kvm/copy-vm-disks.sh) and your
-encrypted ~/.ssh key tarball.
+Still to do before the wipe: copy the VM disks (kvm/copy-vm-disks.sh) and
+check them, then verify the ssh tarball:  tar tzvf SENSITIVE/ssh-keys.tgz
 EOF
