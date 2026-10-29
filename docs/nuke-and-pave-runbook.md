@@ -48,12 +48,13 @@ An unverified image isn't a rollback. A clean save log only proves the image was
 1. Take a full-disk image of the OS disk with Clonezilla live (**device-image → savedisk**). At the end, choose **reboot** or **cmd**, not poweroff, so you can read the final messages.
 2. Read the save log. In the image folder on the Clonezilla drive:
 
-   ```bash
-   IMG=/media/$USER/<clonezilla-drive>/<image-folder>
-   grep -iE 'restorable|succe|fail|error' "$IMG"/clonezilla-img
-   ```
+    ```bash
+    IMG=/media/$USER/<clonezilla-drive>/<image-folder>
+    grep -iE 'restorable|succe|fail|error' "$IMG"/clonezilla-img
+    ```
 
-   You want `Partclone successfully cloned` for every partition and `The operation has completed successfully`. The `If this action fails or hangs, check:` lines are boilerplate.
+    You want `Partclone successfully cloned` for every partition and `The operation has completed successfully`. The `If this action fails or hangs, check:` lines are boilerplate.
+
 3. If there are no `restorable` lines, the post-save check didn't run. Run it now. Boot Clonezilla live (any machine works, because the check only reads the image), then **device-image → local_dev**. Pick the Clonezilla drive by size and model, browse to the image folder, then **Beginner → chk-img-restorable** and select the image. It reads the entire image, which takes about 2.5 hours for ~300G over USB-C.
 4. Confirm the final message says the check completed successfully.
 
@@ -67,32 +68,33 @@ The script writes straight to `$BACKUP` and refuses any path on the root disk, s
 
 1. Save the Appendix script as `~/system-manifest.sh`, then lint and run it:
 
-   ```bash
-   chmod +x ~/system-manifest.sh
-   shellcheck ~/system-manifest.sh
-   ~/system-manifest.sh "$BACKUP"
-   ```
+    ```bash
+    chmod +x ~/system-manifest.sh
+    shellcheck ~/system-manifest.sh
+    ~/system-manifest.sh "$BACKUP"
+    ```
 
 2. Read every `[skip]` and `[warn]` line. A skip can mean a tool isn't installed, or something you should grab by hand. A `!!` line about `IdentityFile` means some SSH keys live outside `~/.ssh`. Copy those yourself.
 3. Point `M` at the new manifest folder:
 
-   ```bash
-   M=$(ls -d "$BACKUP"/system-manifest-$(hostname)-* | tail -1); echo "$M"
-   ```
+    ```bash
+    M=$(ls -d "$BACKUP"/system-manifest-$(hostname)-* | tail -1); echo "$M"
+    ```
 
 4. Verify that every SSH key is in the tarball. This is your only copy outside the image, so look for each `id_*` file:
 
-   ```bash
-   tar tzvf "$M/SENSITIVE/ssh-keys.tgz"
-   ```
+    ```bash
+    tar tzvf "$M/SENSITIVE/ssh-keys.tgz"
+    ```
 
-   Copy the tarball to a second drive as well.
+    Copy the tarball to a second drive as well.
+
 5. Verify the network profiles. On Ubuntu 23.10 and later, NetworkManager saves connections as netplan files named `90-NM-<uuid>.yaml`, so an empty `NetworkManager/system-connections` folder is normal:
 
-   ```bash
-   sudo diff -r /etc/netplan "$M/SENSITIVE/netplan" && echo "netplan OK"
-   ls "$M/SENSITIVE/netplan" | grep -c '^90-NM-'   # ≈ number of Wi-Fi/VPN profiles
-   ```
+    ```bash
+    sudo diff -r /etc/netplan "$M/SENSITIVE/netplan" && echo "netplan OK"
+    ls "$M/SENSITIVE/netplan" | grep -c '^90-NM-'   # ≈ number of Wi-Fi/VPN profiles
+    ```
 
 Keep `SENSITIVE/` off cloud drives. It holds Wi-Fi passwords, SSH keys and your SSH config.
 
@@ -104,35 +106,37 @@ The manifest records configs, not your files. Pictures, Documents, Downloads and
 
 1. See what's big, hidden folders included. In zsh:
 
-   ```bash
-   du -sh ~/*(D) 2>/dev/null | sort -h | tail -25
-   ```
+    ```bash
+    du -sh ~/*(D) 2>/dev/null | sort -h | tail -25
+    ```
 
-   In bash, use `du -sh ~/* ~/.[!.]* 2>/dev/null | sort -h | tail -25`.
+    In bash, use `du -sh ~/* ~/.[!.]* 2>/dev/null | sort -h | tail -25`.
+
 2. Decide what to exclude. Typical candidates:
 
-   | Exclude | Why |
-   | --- | --- |
-   | `.cache` | Rebuilds itself |
-   | Search indexes (e.g. `.recoll`) | The indexer rebuilds them |
-   | Cloud-sync folders (Google Drive, Dropbox clients) | Resync after install, but only if 100% synced |
+    | Exclude | Why |
+    | --- | --- |
+    | `.cache` | Rebuilds itself |
+    | Search indexes (e.g. `.recoll`) | The indexer rebuilds them |
+    | Cloud-sync folders (Google Drive, Dropbox clients) | Resync after install, but only if 100% synced |
 
 3. Copy, preserving permissions, hard links, ACLs and extended attributes. The destination must be ext4/btrfs/xfs for `-AX`:
 
-   ```bash
-   rsync -aHAX --info=progress2 \
-     --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
-     ~/ "$HOMECOPY"/
-   ```
+    ```bash
+    rsync -aHAX --info=progress2 \
+      --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
+      ~/ "$HOMECOPY"/
+    ```
 
-   The trailing slash on `~/` matters. Without it you get `home-$USER/$USER/...`.
+    The trailing slash on `~/` matters. Without it you get `home-$USER/$USER/...`.
+
 4. Verify with a dry run. Only files changed since the copy should show up:
 
-   ```bash
-   rsync -aHAXn --itemize-changes \
-     --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
-     ~/ "$HOMECOPY"/ | head -20
-   ```
+    ```bash
+    rsync -aHAXn --itemize-changes \
+      --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
+      ~/ "$HOMECOPY"/ | head -20
+    ```
 
 ## Phase 4 — Copy and check the VM disks
 
@@ -140,31 +144,31 @@ By default, libvirt keeps VM disks in `/var/lib/libvirt/images/`, on the disk yo
 
 1. Check where the disks live and how big they are:
 
-   ```bash
-   for vm in $(sudo virsh list --all --name); do echo "== $vm"; sudo virsh domblklist "$vm"; done
-   cat "$M/kvm/disk-images.txt"
-   ```
+    ```bash
+    for vm in $(sudo virsh list --all --name); do echo "== $vm"; sudo virsh domblklist "$vm"; done
+    cat "$M/kvm/disk-images.txt"
+    ```
 
 2. Shut down every VM. Copying a running VM gives you an inconsistent disk:
 
-   ```bash
-   sudo virsh list --all
-   sudo virsh shutdown <vm>
-   ```
+    ```bash
+    sudo virsh list --all
+    sudo virsh shutdown <vm>
+    ```
 
 3. Copy them with the helper the manifest generated. It includes backing files and uses `rsync --sparse`:
 
-   ```bash
-   sudo "$M/kvm/copy-vm-disks.sh" "$BACKUP/vm-images"
-   ```
+    ```bash
+    sudo "$M/kvm/copy-vm-disks.sh" "$BACKUP/vm-images"
+    ```
 
 4. Check each copy. You want `No errors were found on the image.` for every disk:
 
-   ```bash
-   sudo sh -c 'for f in '"$BACKUP"'/vm-images/*.qcow2; do echo "== $f"; qemu-img check "$f"; done'
-   ```
+    ```bash
+    sudo sh -c 'for f in '"$BACKUP"'/vm-images/*.qcow2; do echo "== $f"; qemu-img check "$f"; done'
+    ```
 
-   rsync already verifies a whole-file checksum on every transfer. For a byte-for-byte comparison anyway, run `sudo qemu-img compare -p <original> <copy>`. It reads both images in full, which takes several minutes per 100G.
+    rsync already verifies a whole-file checksum on every transfer. For a byte-for-byte comparison anyway, run `sudo qemu-img compare -p <original> <copy>`. It reads both images in full, which takes several minutes per 100G.
 
 ## Phase 5 — Final checks before the wipe
 
@@ -186,11 +190,12 @@ A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real
 
 1. **Make the backups reachable.** If `$BACKUP` is an internal disk in the old machine, copy the manifest folder (small) to a portable drive the spare can read:
 
-   ```bash
-   cp -a "$M" /media/$USER/<portable-drive>/
-   ```
+    ```bash
+    cp -a "$M" /media/$USER/<portable-drive>/
+    ```
 
-   For VMs, copy one small disk to test the restore, not all of them.
+    For VMs, copy one small disk to test the restore, not all of them.
+
 2. **On the spare,** set `BACKUP` and `HOMECOPY` to wherever the portable drive mounts, then work through Phase 7 and Phase 8.
 3. **⚠️ Don't delete anything inside a cloud-synced folder on the spare.** The sync client mirrors deletions to every machine, including your working one. Leave old venvs and stray copies alone there, and clean them up later from one machine on purpose.
 4. **Write down every surprise** (a renamed package, a missing step, a repo that needs a new key) and fix the runbook before you wipe the real machine.
@@ -199,35 +204,36 @@ A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real
 
 1. **Pick the ISO.** Newer CPUs can use the AMD64v3 build, which is compiled for x86-64-v3:
 
-   ```bash
-   /lib64/ld-linux-x86-64.so.2 --help | grep x86-64-v3   # "supported" = v3 OK
-   ```
+    ```bash
+    /lib64/ld-linux-x86-64.so.2 --help | grep x86-64-v3   # "supported" = v3 OK
+    ```
 
-   - Standard ISO: [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)
-   - AMD64v3 ISO: [cdimage.ubuntu.com/ubuntu/releases/26.10/release/](https://cdimage.ubuntu.com/ubuntu/releases/26.10/release/). Use the file with `amd64v3` in its name.
+    - Standard ISO: [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)
+    - AMD64v3 ISO: [cdimage.ubuntu.com/ubuntu/releases/26.10/release/](https://cdimage.ubuntu.com/ubuntu/releases/26.10/release/). Use the file with `amd64v3` in its name.
 
 2. **Verify the ISO** before writing it to USB. Download `SHA256SUMS` from the same directory:
 
-   ```bash
-   sha256sum -c SHA256SUMS --ignore-missing   # want: OK
-   ```
+    ```bash
+    sha256sum -c SHA256SUMS --ignore-missing   # want: OK
+    ```
 
 3. **Boot the USB** and choose **Manual installation**. Pick the OS disk by model and size. Leave every other disk alone, especially any disk with a filesystem directly on it and no partitions, which some installer screens display oddly.
 4. **Partition the OS disk.** Keeping the system and `/home` on separate partitions means the next clean install formats only `/`:
 
-   | Partition | Size | Format | Mount |
-   | --- | --- | --- | --- |
-   | EFI | 1G | FAT32 | `/boot/efi` |
-   | System | 200G | ext4 | `/` |
-   | Data | the rest | ext4 | `/home` |
+    | Partition | Size | Format | Mount |
+    | --- | --- | --- | --- |
+    | EFI | 1G | FAT32 | `/boot/efi` |
+    | System | 200G | ext4 | `/` |
+    | Data | the rest | ext4 | `/home` |
 
-   200G leaves room for snaps, flatpaks, apt caches and old kernels. 100G gets tight within a release or two. A Clonezilla image of just the system partition is small, quick, and restorable without touching your data.
+    200G leaves room for snaps, flatpaks, apt caches and old kernels. 100G gets tight within a release or two. A Clonezilla image of just the system partition is small, quick, and restorable without touching your data.
+
 5. Use the same username as before. Paths in your shell configs probably assume it.
 6. After the first boot, update before restoring anything:
 
-   ```bash
-   sudo apt update && sudo apt full-upgrade -y
-   ```
+    ```bash
+    sudo apt update && sudo apt full-upgrade -y
+    ```
 
 ## Phase 7 — Restore, in order
 
@@ -241,38 +247,38 @@ M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1); echo "$M"
 
 1. **Your files.** Copy back the visible folders (Documents, Pictures and so on) and leave the old hidden config folders behind. You'll restore those selectively below:
 
-   ```bash
-   rsync -aHAX --info=progress2 --exclude='.*' "$HOMECOPY"/ ~/
-   ```
+    ```bash
+    rsync -aHAX --info=progress2 --exclude='.*' "$HOMECOPY"/ ~/
+    ```
 
 2. **SSH keys:**
 
-   ```bash
-   tar xzpf "$M/SENSITIVE/ssh-keys.tgz" -C ~
-   chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_* ~/.ssh/config
-   ```
+    ```bash
+    tar xzpf "$M/SENSITIVE/ssh-keys.tgz" -C ~
+    chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_* ~/.ssh/config
+    ```
 
 3. **Third-party APT repos.** `$M/system/apt-sources.list.d/` is reference only, because the release codename changed. Re-add each repo with its vendor's current instructions and keyring.
 4. **APT packages.** Review the list first, since some packages are renamed or gone:
 
-   ```bash
-   less "$M/packages/apt-manual.txt"
-   xargs -a "$M/packages/apt-manual.txt" sudo apt install -y
-   ```
+    ```bash
+    less "$M/packages/apt-manual.txt"
+    xargs -a "$M/packages/apt-manual.txt" sudo apt install -y
+    ```
 
 5. **Homebrew:**
 
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   brew bundle install --file="$M/packages/Brewfile"
-   ```
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew bundle install --file="$M/packages/Brewfile"
+    ```
 
 6. **pipx, cargo, npm.** Reinstall from `$M/packages/pipx.txt`, `cargo.txt` and `npm-global.txt`.
 7. **VS Code extensions:**
 
-   ```bash
-   while read -r ext; do code --install-extension "$ext"; done < "$M/dev/vscode-extensions.txt"
-   ```
+    ```bash
+    while read -r ext; do code --install-extension "$ext"; done < "$M/dev/vscode-extensions.txt"
+    ```
 
 8. **Git and gh.** Copy `.gitconfig` and `.gitignore` from `$M/dev/`, run `gh auth login`, then reinstall the extensions listed in `gh-extensions.txt`.
 9. **Shell.** Copy `.zshrc`, `.zsh_history`, oh-my-zsh `custom/` and `.tmux.conf` from `$M/shell/`. Check for hard-coded paths, then open a new terminal.
@@ -291,6 +297,7 @@ M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1); echo "$M"
     ```
 
     Don't copy the other netplan files over blind. Compare them with the fresh defaults, then rebuild bridges and VLANs by hand.
+
 12. **udev rules.** Copy back only your custom rules from `$M/system/rules.d/`, then run `sudo udevadm control --reload`.
 13. **GNOME extensions.** Extensions are tied to the GNOME version, so reinstall current builds (Extension Manager or extensions.gnome.org) from `$M/system/gnome-extensions-enabled.txt`. Then restore only their settings:
 
@@ -315,6 +322,7 @@ M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1); echo "$M"
     ```
 
     Re-create any non-default networks with `sudo virsh net-define "$M/kvm/net-<name>.xml"`.
+
 15. **Everything else.** Compare `$M/system/systemd-*.txt`, `crontab-user.txt` and `usr-local-bin.txt` with the new system. Restore other desktop settings selectively with `dconf load` rather than loading the whole dump.
 
 ## Phase 8 — Rebuild your Python dev environments
@@ -336,39 +344,40 @@ Keep your code in the synced folder and keep the venvs out of it. A venv holds a
 2. **Decide what to rebuild now.** `$M/dev/python-venvs.txt` lists every old venv and the Python version that built it. Rebuild only what you need right now; the rest can wait. Entries with `home = /usr/local/opt/python@…` were built on a Mac and never worked on Linux.
 3. **Install the Python version your lock files were built with.** A newer release may ship a newer default `python3`, and lock files pinned on an older Python often fail to install on a newer one. Check apt first:
 
-   ```bash
-   apt-cache policy python3.13
-   sudo apt install python3.13 python3.13-venv          # if apt has it
-   # otherwise, without touching the system Python:
-   pipx install uv && uv python install 3.13
-   ```
+    ```bash
+    apt-cache policy python3.13
+    sudo apt install python3.13 python3.13-venv          # if apt has it
+    # otherwise, without touching the system Python:
+    pipx install uv && uv python install 3.13
+    ```
 
 4. **Build a venv for each project** (example: a project called `Discovery`):
 
-   ```bash
-   python3.13 -m venv ~/.venvs/Discovery                # or: uv venv --seed --python 3.13 ~/.venvs/Discovery
-   source ~/.venvs/Discovery/bin/activate
-   cd ~/<sync-folder>/Discovery
-   python -m pip install -r requirements-lock.txt
-   ```
+    ```bash
+    python3.13 -m venv ~/.venvs/Discovery                # or: uv venv --seed --python 3.13 ~/.venvs/Discovery
+    source ~/.venvs/Discovery/bin/activate
+    cd ~/<sync-folder>/Discovery
+    python -m pip install -r requirements-lock.txt
+    ```
 
 5. **Point VS Code at it.** Use the interpreter picker at the bottom-right of the status bar, then **Enter interpreter path** → `~/.venvs/Discovery/bin/python`. VS Code remembers it per folder.
 6. **Optional shortcut,** one shell function per project:
 
-   ```bash
-   disc() { source ~/.venvs/Discovery/bin/activate && cd ~/<sync-folder>/Discovery; }
-   ```
+    ```bash
+    disc() { source ~/.venvs/Discovery/bin/activate && cd ~/<sync-folder>/Discovery; }
+    ```
 
 7. **MkDocs sites** (Material theme with the `social` and `glightbox` plugins). Install MkDocs once with pipx so it works from every docs project, venv active or not:
 
-   ```bash
-   sudo apt install libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
-   pipx install mkdocs
-   pipx inject mkdocs "mkdocs-material[imaging]" mkdocs-glightbox
-   cd ~/<sync-folder>/<docs-project> && mkdocs serve    # test it
-   ```
+    ```bash
+    sudo apt install libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
+    pipx install mkdocs
+    pipx inject mkdocs "mkdocs-material[imaging]" mkdocs-glightbox
+    cd ~/<sync-folder>/<docs-project> && mkdocs serve    # test it
+    ```
 
-   The `social` plugin downloads theme fonts on its first build. Build each site once while you're online so later builds work offline.
+    The `social` plugin downloads theme fonts on its first build. Build each site once while you're online so later builds work offline.
+
 8. **Clean up the old synced venvs later.** Only do it once the new venvs work on every machine you use, and only from one machine, because deletions sync everywhere. Then add an ignore rule in your sync client for venv folder names.
 
 ## Gotchas
