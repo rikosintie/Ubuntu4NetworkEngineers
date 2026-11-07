@@ -11,7 +11,7 @@
 - Ubuntu supports the Gnome Project's [Flat Pack](https://flathub.org/) applications.
 - Ubuntu supports [App Images](https://appimage.org/). Linux apps that run anywhere!
 - If you are coming from MacOS, you can use [Homebrew](https://docs.brew.sh/Homebrew-on-Linux) to install packages.
-- Thousands of networking tools are available on [github](github.com)
+- Thousands of networking tools are available on [github](https://github.com)
 - The [Packet Pushers](https://packetpushers.net) network maintains a list of [Open Source Networking Projects](https://packetpushers.net/blog/open-source-networking-projects/). Most work on Ubuntu.
 
 ----------------------------------------------------------------
@@ -679,7 +679,7 @@ Here is Vitals in action:
 
 Now that we have the Gnome Extensions installed let's install some Flatpak applications that you might call "Quality of Life" improvements! I listed them in alphabetical order order, not the order that you will use the most!
 
-- [Dev Toolbox](CH02-Install-Tools.md/#Dev-Toolbox) - Dev tools at your fingertips
+- [Dev Toolbox](CH02-Install-Tools.md/#dev-toolbox) - Dev tools at your fingertips
 - [Disk Usage Analyzer](CH02-Install-Tools.md/#disk-usage-analyzer) - A GUI disk Space analyzer tool
 - [Draw.io](CH02-Install-Tools.md/#drawio) - A flexible and privacy-focused production grade diagramming tool.
 - [Flatseal](CH02-Install-Tools.md/#flatseal) - A tool to manage flatpak security settings

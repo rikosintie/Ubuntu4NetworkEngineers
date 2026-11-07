@@ -13,8 +13,12 @@ Work through the phases in order, and don't start Phase 6 until every box in Pha
 **Set these once per terminal.** Every command below uses them:
 
 ```bash
-BACKUP=/media/$USER/<backup-drive>   # a separate disk, NOT the one you're wiping
-HOMECOPY=/media/$USER/<home-copy-drive>/home-$USER
+# Plugged-in drives mount under /media/$USER/ or /run/media/$USER/ depending on the
+# release, so look them up by label instead of typing the path:
+lsblk -o NAME,SIZE,LABEL,MOUNTPOINT
+BACKUP=$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)   # a separate disk, NOT the one you're wiping
+HOMECOPY=$(findmnt -n -o TARGET -S LABEL=<home-copy-drive-label>)/home-$USER
+echo "BACKUP=$BACKUP  HOMECOPY=$HOMECOPY"   # both must show a real path
 ```
 
 26.10 is an interim release with 9 months of support. Future 6-month upgrades can be done in place with `do-release-upgrade`. With the partition layout in Phase 6, a future clean install only needs the system partition formatted.
@@ -39,7 +43,7 @@ Write down the role of each disk:
 
 Check that a backup disk is ext4 with `findmnt -no FSTYPE --target "$BACKUP"`. A `lost+found` folder at its root is also a giveaway.
 
-A disk mounted under `/media/$USER/` with no `/etc/fstab` entry is automounted by GNOME. It will automount the same way after the reinstall, so there's nothing to restore for it.
+Plugged-in drives are automounted by the desktop under `/media/$USER/<label>`, or `/run/media/$USER/<label>` on newer releases. Find the real path with `findmnt -n -o TARGET -S LABEL=<label>` rather than assuming one. A drive with no `/etc/fstab` entry automounts the same way after the reinstall, so there's nothing to restore for it.
 
 ## Phase 1 — Make and verify the Clonezilla rollback image
 
@@ -49,7 +53,7 @@ An unverified image isn't a rollback. A clean save log only proves the image was
 2. Read the save log. In the image folder on the Clonezilla drive:
 
     ```bash
-    IMG=/media/$USER/<clonezilla-drive>/<image-folder>
+    IMG=$(findmnt -n -o TARGET -S LABEL=<clonezilla-drive-label>)/<image-folder>
     grep -iE 'restorable|succe|fail|error' "$IMG"/clonezilla-img
     ```
 
@@ -191,7 +195,7 @@ A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real
 1. **Make the backups reachable.** If `$BACKUP` is an internal disk in the old machine, copy the manifest folder (small) to a portable drive the spare can read:
 
     ```bash
-    cp -a "$M" /media/$USER/<portable-drive>/
+    cp -a "$M" "$(findmnt -n -o TARGET -S LABEL=<portable-drive-label>)"/
     ```
 
     For VMs, copy one small disk to test the restore, not all of them.
@@ -240,9 +244,10 @@ A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real
 Set the variables again in the new system's terminal:
 
 ```bash
-BACKUP=/media/$USER/<backup-drive>
-HOMECOPY=/media/$USER/<home-copy-drive>/home-$USER
-M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1); echo "$M"
+BACKUP=$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)
+HOMECOPY=$(findmnt -n -o TARGET -S LABEL=<home-copy-drive-label>)/home-$USER
+M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1)
+echo "BACKUP=$BACKUP  HOMECOPY=$HOMECOPY  M=$M"   # all three must show a real path
 ```
 
 1. **Your files.** Copy back the visible folders (Documents, Pictures and so on) and leave the old hidden config folders behind. You'll restore those selectively below:
@@ -390,10 +395,13 @@ Keep your code in the synced folder and keep the venvs out of it. A venv holds a
 | `NetworkManager/system-connections` is empty | NM saves profiles as netplan `90-NM-*.yaml` | Normal. They're in the netplan backup |
 | A command path starts with `/SENSITIVE/...` | `$M` isn't set in this terminal | Re-run the `M=...` line |
 | `qemu-img compare` sits silent for minutes | It reads both images in full | Add `-p` for progress, or rely on `qemu-img check` |
-| A doubled folder such as `Downloads/Downloads` | rsync source given without a trailing slash | Use `src/` to copy the contents of src |
+| A doubled folder name inside your copy | rsync source given without a trailing slash | Use `src/` to copy the contents of src |
 | A project's venv works on one machine and is broken on the others | The venv lives in a synced folder; it's tied to one machine's Python and OS | Keep venvs in `~/.venvs/<project>` (Phase 8) |
 | `which mkdocs` points into some project's venv | That venv is active and first on `PATH` | `deactivate` first; install MkDocs with pipx (Phase 8) |
 | A folder you deleted on the test machine vanished from your main one | Sync clients mirror deletions | Never delete in synced folders on a test machine |
+| A drive shows up under `/run/media/$USER/` instead of `/media/$USER/` | Newer releases use udisks2's upstream mount location | Look it up by label: `findmnt -n -o TARGET -S LABEL=<label>` |
+| The installer vanishes after "Update Now" and leaves you at the live desktop | It updated itself and closed | Run `ubuntu-desktop-bootstrap` in a terminal, or reboot and choose Skip at the update prompt |
+| Manual partitioning adds a second FAT32 partition with no mount point | The installer adds its own EFI partition | Don't create one yourself: add `/` first and let the installer add EFI |
 
 ## Appendix — system-manifest.sh
 

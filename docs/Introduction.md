@@ -60,7 +60,7 @@ Here is an image of the Microsoft 365 launcher in Linux:
 
 ----------------------------------------------------------------
 
-I don't have a license for Visio, I use the web based tool [Excalidraw](excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an Flatpak application called [Draw.io](/docs/CH02-Install-Tools.md#drawio) that doesn't need an Internet connection to work.
+I don't have a license for Visio, I use the web based tool [Excalidraw](https://excalidraw.com) to create network diagrams. It's not as full featured as Visio but I know three Solutions Architects that have switched because it works on any OS and customers don't need Visio Viewers. In the Tools section of the guide I will show you an Flatpak application called [Draw.io](CH02-Install-Tools.md#drawio) that doesn't need an Internet connection to work.
 
 ----------------------------------------------------------------
 

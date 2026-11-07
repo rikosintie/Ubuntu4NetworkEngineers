@@ -450,7 +450,7 @@ end
 
 ### Connect to VM Console
 
-- `sudo virsh console win2k16` See [How to enable KVM virsh console access]([#how-to-enable-kvm-virsh-console-access](https://ravada.readthedocs.io/en/latest/docs/config_console.html)) for a detailed article on how to setup console access
+- `sudo virsh console win2k16` See [How to enable KVM virsh console access](https://ravada.readthedocs.io/en/latest/docs/config_console.html) for a detailed article on how to setup console access
 
 ### View DHCP leases
 

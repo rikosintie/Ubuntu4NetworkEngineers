@@ -1,6 +1,6 @@
 # Useful aliases
 
-If you find any aliases here that you want to use just open `~//home/mhubbard/.oh-my-zsh/custom/my-aliases.zsh` and paste them in. Save and close the file and reload zsh suing `exec zsh` or `sc` if you followed the `oh-my-zsh` [install instructions](/docs/terminal.md#install-oh-my-zsh). If you hover over an alias, you will see an icon that looks like two sheets of paper on top of each other. You can click that icon to copy the alias.
+If you find any aliases here that you want to use just open `~//home/mhubbard/.oh-my-zsh/custom/my-aliases.zsh` and paste them in. Save and close the file and reload zsh suing `exec zsh` or `sc` if you followed the `oh-my-zsh` [install instructions](terminal.md#install-oh-my-zsh). If you hover over an alias, you will see an icon that looks like two sheets of paper on top of each other. You can click that icon to copy the alias.
 
 ----------------------------------------------------------------
 
@@ -730,7 +730,7 @@ alias df='duf'
 
 ----------------------------------------------------------------
 
-![screenshot](/docs/img/duf.resized.png)
+![screenshot](img/duf.resized.png)
 
 ----------------------------------------------------------------
 

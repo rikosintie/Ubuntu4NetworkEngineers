@@ -286,7 +286,7 @@ typeset -U path PATH
 
 This makes the `path` array **unique**, keeping `$PATH` clean.
 
-If you already have duplicates use the [tips here](/docs/fix_zsh_path_duplicates.md) to remove them correctly.
+If you already have duplicates use the [tips here](fix_zsh_path_duplicates.md) to remove them correctly.
 
 ----------------------------------------------------------------
 
@@ -1157,7 +1157,6 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 - [How to See Beautiful Git Project Stats in Your Terminal](https://www.howtogeek.com/how-to-see-beautiful-git-project-stats-in-your-terminal/)
 - [The Linux .bashrc File: What It Is, Plus 6 Things You Can Do With It](https://www.howtogeek.com/the-linux-bashrc-file-explained/)
 - [Hack The Box themes](https://github.com/botnetbuddies/hackthebox-themes)
-[https://blog.confirm.ch/zsh-tips-auto-completion-correction/](zsh tips: Auto completion & correction)
 - [git-delta](https://github.com/dandavison/delta) - A syntax highlighting tool for git diffs
 - [Modern replacements for Unix tools](https://github.com/ibraheemdev/modern-unix) - a git repo full of modern replacement tools
 - [A list of new-ish terminal tools](https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/)
