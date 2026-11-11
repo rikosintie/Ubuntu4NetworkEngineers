@@ -1,5 +1,7 @@
 # Ubuntu Nuke & Pave Runbook (25.04 → 26.10)
 
+Oct 28, 2026 · @Mike
+
 ## Overview
 
 This runbook takes a device from Ubuntu 25.04 to a clean 26.10 install on the same drive without losing any tools, configs, or VMs. This is commonly referred to as a "Nuke & Pave" because the old Operating system is destroyed (Nuked) before the new Operating system is installed (Disk is Paved).
@@ -10,15 +12,20 @@ This runbook takes a device from Ubuntu 25.04 to a clean 26.10 install on the sa
 
 Work through the phases in order, and don't start Phase 6 until every box in Phase 5 is ticked. If this is a machine you can't afford to have down, rehearse the restore on a spare machine first (see the Rehearsal section after Phase 5).
 
-**Set these once per terminal.** Every command below uses them:
+**Set the restore variables in every terminal.** The commands below use `$BACKUP` (the backup drive), `$HOMECOPY` (your home-directory copy) and `$M` (the newest manifest folder). Plugged-in drives mount under `/media/$USER/` or `/run/media/$USER/` depending on the release, so this function looks the drive up by its label and refuses to run if it isn't mounted. Put it in your shell config (Phase 7, Shell) and run `bkenv` in each new terminal. It picks the manifest for the current hostname; `bkenv <hostname>` picks another machine's.
 
 ```bash
-# Plugged-in drives mount under /media/$USER/ or /run/media/$USER/ depending on the
-# release, so look them up by label instead of typing the path:
-lsblk -o NAME,SIZE,LABEL,MOUNTPOINT
-BACKUP=$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)   # a separate disk, NOT the one you're wiping
-HOMECOPY=$(findmnt -n -o TARGET -S LABEL=<home-copy-drive-label>)/home-$USER
-echo "BACKUP=$BACKUP  HOMECOPY=$HOMECOPY"   # both must show a real path
+lsblk -o NAME,SIZE,LABEL,MOUNTPOINT          # find your backup drive's label
+
+# Set restore variables from the backup drive:  bkenv [hostname]
+bkenv() {
+  local mnt host="${1:-$(hostname)}"
+  mnt="$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)"
+  [ -n "$mnt" ] || { echo "<backup-drive-label> is not mounted" >&2; return 1; }
+  export BACKUP="$mnt" HOMECOPY="$mnt/home-$USER"
+  export M="$(ls -d "$mnt"/system-manifest-"$host"-* 2>/dev/null | tail -1)"
+  echo "BACKUP=$BACKUP"; echo "HOMECOPY=$HOMECOPY"; echo "M=${M:-<no manifest for $host>}"
+}
 ```
 
 26.10 is an interim release with 9 months of support. Future 6-month upgrades can be done in place with `do-release-upgrade`. With the partition layout in Phase 6, a future clean install only needs the system partition formatted.
@@ -52,14 +59,13 @@ An unverified image isn't a rollback. A clean save log only proves the image was
 1. Take a full-disk image of the OS disk with Clonezilla live (**device-image → savedisk**). At the end, choose **reboot** or **cmd**, not poweroff, so you can read the final messages.
 2. Read the save log. In the image folder on the Clonezilla drive:
 
-    ```bash
-    IMG=$(findmnt -n -o TARGET -S LABEL=<clonezilla-drive-label>)/<image-folder>
-    grep -iE 'restorable|succe|fail|error' "$IMG"/clonezilla-img
-    ```
+   ```bash
+   IMG=$(findmnt -n -o TARGET -S LABEL=<clonezilla-drive-label>)/<image-folder>
+   grep -iE 'restorable|succe|fail|error' "$IMG"/clonezilla-img
+   ```
 
-    You want `Partclone successfully cloned` for every partition and `The operation has completed successfully`. The `If this action fails or hangs, check:` lines are boilerplate.
-
-3. If there are no `restorable` lines, the post-save check didn't run. Run it now. Boot Clonezilla live (any machine works, because the check only reads the image), then **device-image → local_dev**. Pick the Clonezilla drive by size and model, browse to the image folder, then **Beginner → chk-img-restorable** and select the image. It reads the entire image, which takes about 2.5 hours for ~300G over USB-C.
+   You want `Partclone successfully cloned` for every partition and `The operation has completed successfully`. The `If this action fails or hangs, check:` lines are boilerplate.
+3. If there are no `restorable` lines, the post-save check didn't run. Run it now. Boot Clonezilla live (any machine works, because the check only reads the image), then **device-image → local\_dev**. Pick the Clonezilla drive by size and model, browse to the image folder, then **Beginner → chk-img-restorable** and select the image. It reads the entire image, which takes about 2.5 hours for \~300G over USB-C.
 4. Confirm the final message says the check completed successfully.
 
 Don't verify with Ubuntu's `partclone.chkimg`. Images made by a newer Clonezilla use a checksum format that Ubuntu's older partclone can't read. It fails with `Unknown checksum mode`, which says nothing about the image itself. `Info-packages.txt` in the image folder shows which partclone version wrote it.
@@ -68,41 +74,37 @@ If a machine won't boot the stick, use its one-time boot menu (F9 on HP, F12 on 
 
 ## Phase 2 — Run the manifest
 
-The script writes straight to `$BACKUP` and refuses any path on the root disk, so there's no copy-off step to forget. Run it as your normal user. It calls sudo itself where it needs to.
+The script writes straight to the backup drive and refuses any path on the root disk, so there's no copy-off step to forget. Run it as your normal user; it calls sudo itself where it needs to.
 
 1. Save the Appendix script as `~/system-manifest.sh`, then lint and run it:
 
-    ```bash
-    chmod +x ~/system-manifest.sh
-    shellcheck ~/system-manifest.sh
-    ~/system-manifest.sh "$BACKUP"
-    ```
+   ```bash
+   chmod +x ~/system-manifest.sh
+   shellcheck ~/system-manifest.sh
+   ~/system-manifest.sh "$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)"
+   ```
+2. Read every `[skip]`, `[warn]` and `!!` line. A skip can mean a tool isn't installed, or something to grab by hand. A `!!` line about `IdentityFile` means some SSH keys live outside `~/.ssh`.
+3. Run `bkenv` (Overview) so `$M` points at the new manifest.
+4. Verify every SSH key is in the tarball, and copy it to a second drive too:
 
-2. Read every `[skip]` and `[warn]` line. A skip can mean a tool isn't installed, or something you should grab by hand. A `!!` line about `IdentityFile` means some SSH keys live outside `~/.ssh`. Copy those yourself.
-3. Point `M` at the new manifest folder:
+   ```bash
+   tar tzvf "$M/SENSITIVE/ssh-keys.tgz"
+   ```
+5. Verify the network profiles. On Ubuntu 23.10 and later, NetworkManager saves connections as netplan files named `90-NM-<uuid>.yaml`, so an empty `NM-system-connections` folder is normal:
 
-    ```bash
-    M=$(ls -d "$BACKUP"/system-manifest-$(hostname)-* | tail -1); echo "$M"
-    ```
+   ```bash
+   sudo diff -r /etc/netplan "$M/SENSITIVE/netplan" && echo "netplan OK"
+   ls "$M/SENSITIVE/netplan" | grep -c '^90-NM-'   # about one per Wi-Fi/VPN profile
+   ```
+6. **List what no package manager knows about.** Native installers and `curl | sh` tools (Claude Code, Tailscale, Ollama, uv and so on) aren't in any apt, snap or Flatpak list, so they're easy to forget:
 
-4. Verify that every SSH key is in the tarball. This is your only copy outside the image, so look for each `id_*` file:
+   ```bash
+   cat "$M/packages/native-tools.txt" "$M/system/non-package-installs.txt"
+   ```
 
-    ```bash
-    tar tzvf "$M/SENSITIVE/ssh-keys.tgz"
-    ```
+Keep `SENSITIVE/` **and** `shell/` off cloud drives. `SENSITIVE/` holds Wi-Fi passwords and SSH keys, and `shell/` holds your `.zshrc`, so keep passwords out of `.zshrc` (Phase 7, Shell, has a safer way).
 
-    Copy the tarball to a second drive as well.
-
-5. Verify the network profiles. On Ubuntu 23.10 and later, NetworkManager saves connections as netplan files named `90-NM-<uuid>.yaml`, so an empty `NetworkManager/system-connections` folder is normal:
-
-    ```bash
-    sudo diff -r /etc/netplan "$M/SENSITIVE/netplan" && echo "netplan OK"
-    ls "$M/SENSITIVE/netplan" | grep -c '^90-NM-'   # ≈ number of Wi-Fi/VPN profiles
-    ```
-
-Keep `SENSITIVE/` off cloud drives. It holds Wi-Fi passwords, SSH keys and your SSH config.
-
-The manifest also writes `dev/python-venvs.txt`, a list of every Python venv and the version that built it. Phase 8 uses it.
+**Run the manifest again, and the Phase 3 home rsync, on the day of the wipe.** Anything you changed since the last run is otherwise lost. Both only take a minute or two the second time.
 
 ## Phase 3 — Copy your home directory
 
@@ -110,644 +112,254 @@ The manifest records configs, not your files. Pictures, Documents, Downloads and
 
 1. See what's big, hidden folders included. In zsh:
 
-    ```bash
-    du -sh ~/*(D) 2>/dev/null | sort -h | tail -25
-    ```
+   ```bash
+   du -sh ~/*(D) 2>/dev/null | sort -h | tail -25
+   ```
 
-    In bash, use `du -sh ~/* ~/.[!.]* 2>/dev/null | sort -h | tail -25`.
-
+   In bash, use `du -sh ~/* ~/.[!.]* 2>/dev/null | sort -h | tail -25`.
 2. Decide what to exclude. Typical candidates:
 
-    | Exclude | Why |
-    | --- | --- |
-    | `.cache` | Rebuilds itself |
-    | Search indexes (e.g. `.recoll`) | The indexer rebuilds them |
-    | Cloud-sync folders (Google Drive, Dropbox clients) | Resync after install, but only if 100% synced |
-
+   | Exclude | Why |
+   | --- | --- |
+   | `.cache` | Rebuilds itself |
+   | Search indexes (e.g. `.recoll`) | The indexer rebuilds them |
+   | Cloud-sync folders (Google Drive, Dropbox clients) | Resync after install, but only if 100% synced |
 3. Copy, preserving permissions, hard links, ACLs and extended attributes. The destination must be ext4/btrfs/xfs for `-AX`:
 
-    ```bash
-    rsync -aHAX --info=progress2 \
-      --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
-      ~/ "$HOMECOPY"/
-    ```
+   ```bash
+   rsync -aHAX --info=progress2 \
+     --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
+     ~/ "$HOMECOPY"/
+   ```
 
-    The trailing slash on `~/` matters. Without it you get `home-$USER/$USER/...`.
-
+   The trailing slash on `~/` matters. Without it you get `home-$USER/$USER/...`.
 4. Verify with a dry run. Only files changed since the copy should show up:
 
-    ```bash
-    rsync -aHAXn --itemize-changes \
-      --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
-      ~/ "$HOMECOPY"/ | head -20
-    ```
+   ```bash
+   rsync -aHAXn --itemize-changes \
+     --exclude='.cache/' --exclude='.recoll/' --exclude='<cloud-folder>/' \
+     ~/ "$HOMECOPY"/ | head -20
+   ```
 
 ## Phase 4 — Copy and check the VM disks
 
-By default, libvirt keeps VM disks in `/var/lib/libvirt/images/`, on the disk you're wiping. The manifest saved each VM's XML definition, but the qcow2 files need their own copy.
+By default, libvirt keeps VM disks in `/var/lib/libvirt/images/`, on the disk you're wiping. The manifest saved each VM's XML definition; the qcow2 files need their own copy. Copy them **compacted**: `qemu-img convert` writes a fresh image without the unused space and flattens any backing chain into one standalone file. In testing, an 87G image came out at 26G and a 101G one at 42G.
 
-1. Check where the disks live and how big they are:
+1. List the VMs, their disks and sizes:
 
-    ```bash
-    for vm in $(sudo virsh list --all --name); do echo "== $vm"; sudo virsh domblklist "$vm"; done
-    cat "$M/kvm/disk-images.txt"
-    ```
+   ```bash
+   sudo virsh list --all
+   cat "$M/kvm/disk-images.txt"
+   ```
+2. Leave out VMs you no longer want. Simply don't copy their disks, and note their names so you skip their XML at restore time.
+3. Shut down every VM you're keeping (`sudo virsh shutdown <vm>`). Copying a running VM gives an inconsistent disk.
+4. Copy and compact each disk straight onto the backup drive:
 
-2. Shut down every VM. Copying a running VM gives you an inconsistent disk:
+   ```bash
+   sudo mkdir -p "$BACKUP/vm-images"
+   sudo qemu-img convert -p -O qcow2 /var/lib/libvirt/images/<vm>.qcow2 "$BACKUP/vm-images/<vm>.qcow2"
+   ```
 
-    ```bash
-    sudo virsh list --all
-    sudo virsh shutdown <vm>
-    ```
+   (`kvm/copy-vm-disks.sh` from the manifest also works. It copies uncompacted, keeping backing files as separate files.)
+5. Check each copy. You want `No errors were found on the image.`:
 
-3. Copy them with the helper the manifest generated. It includes backing files and uses `rsync --sparse`:
+   ```bash
+   sudo qemu-img check "$BACKUP/vm-images/<vm>.qcow2"
+   ```
 
-    ```bash
-    sudo "$M/kvm/copy-vm-disks.sh" "$BACKUP/vm-images"
-    ```
-
-4. Check each copy. You want `No errors were found on the image.` for every disk:
-
-    ```bash
-    sudo sh -c 'for f in '"$BACKUP"'/vm-images/*.qcow2; do echo "== $f"; qemu-img check "$f"; done'
-    ```
-
-    rsync already verifies a whole-file checksum on every transfer. For a byte-for-byte comparison anyway, run `sudo qemu-img compare -p <original> <copy>`. It reads both images in full, which takes several minutes per 100G.
+The `vm-images` folder and its files are root-owned. Use `sudo` to delete or move them, or `sudo chown $USER:` a file before copying it to another machine without `sudo`.
 
 ## Phase 5 — Final checks before the wipe
 
 Don't boot the installer until every box is ticked.
 
+- [ ] **Manifest and home rsync re-run today**, so the backups have your latest changes
 - [ ] Clonezilla image passed **chk-img-restorable**
-- [ ] Manifest is on `$BACKUP`, with no unexplained `[skip]`/`[warn]` lines
+- [ ] Manifest has no unexplained `[skip]`/`[warn]` lines
 - [ ] SSH tarball lists every key, and a second copy exists
-- [ ] Netplan backup matches `/etc/netplan` and contains the `90-NM-*` profiles
+- [ ] Netplan backup matches `/etc/netplan` and has the `90-NM-*` profiles
+- [ ] Non-package installs noted (`native-tools.txt`, `non-package-installs.txt`)
 - [ ] Home directory copied and the dry run is clean
-- [ ] VM disks copied and `qemu-img check` is clean on each
-- [ ] Local git repos with unpushed work are pushed or copied (see `$M/dev/local-git-repos.txt`)
-- [ ] 26.10 installer USB is written and its ISO checksum verified (Phase 6)
+- [ ] VM disks compacted onto the backup drive, and `qemu-img check` is clean on each
+- [ ] Local git repos with unpushed work are pushed (see `$M/dev/local-git-repos.txt`)
+- [ ] Installer USB written and ISO checksum verified (Phase 6)
 - [ ] You know which disk is the OS disk by **model and size**
 
 ## Rehearsal (optional) — restore onto a spare machine first
 
-A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real while your working machine stays untouched. Problems show up on the spare, not the night before a job. The same release or one close to it is fine for the rehearsal.
+A spare machine with a fresh Ubuntu install lets you run Phases 7 and 8 for real while your working machine stays untouched. Problems show up there instead of the night before a job. The same release, or one close to it, is fine.
 
-1. **Make the backups reachable.** If `$BACKUP` is an internal disk in the old machine, copy the manifest folder (small) to a portable drive the spare can read:
+1. **Make the backups reachable.** If the backup drive is inside the old machine, copy the manifest folder (small) onto a portable drive, or copy files across the network.
+2. **Copying across the network:** enable SSH on the spare (`sudo systemctl enable --now ssh.socket`; `ssh` shows "inactive" until a connection arrives, which is normal), then from the old machine:
 
-    ```bash
-    cp -a "$M" "$(findmnt -n -o TARGET -S LABEL=<portable-drive-label>)"/
-    ```
+   ```bash
+   rsync -ahz --sparse --partial --info=progress2 <file> <you>@<spare>:
+   ```
 
-    For VMs, copy one small disk to test the restore, not all of them.
-
-2. **On the spare,** set `BACKUP` and `HOMECOPY` to wherever the portable drive mounts, then work through Phase 7 and Phase 8.
-3. **⚠️ Don't delete anything inside a cloud-synced folder on the spare.** The sync client mirrors deletions to every machine, including your working one. Leave old venvs and stray copies alone there, and clean them up later from one machine on purpose.
-4. **Write down every surprise** (a renamed package, a missing step, a repo that needs a new key) and fix the runbook before you wipe the real machine.
+   `-z` compresses empty space in disk images, and `--partial` lets an interrupted copy resume. Check `df -h / /home` on the spare first, because restored home folders fill `/home` fast.
+3. **On the spare**, run `bkenv`, then work through Phases 7 and 8.
+4. **⚠️ Don't delete anything inside a cloud-synced folder on the spare.** The sync client mirrors deletions to every machine, including your working one.
+5. **Write down every surprise** and fix this runbook before wiping the real machine.
+6. If you plan to re-pave the spare as a test of the runbook itself, run the manifest on it first. Everything you set up there is otherwise lost.
 
 ## Phase 6 — Install 26.10
 
-1. **Pick the ISO.** Newer CPUs can use the AMD64v3 build, which is compiled for x86-64-v3:
+1. **Pick the ISO.** Newer CPUs can use the AMD64v3 build:
 
-    ```bash
-    /lib64/ld-linux-x86-64.so.2 --help | grep x86-64-v3   # "supported" = v3 OK
-    ```
+   ```bash
+   /lib64/ld-linux-x86-64.so.2 --help | grep x86-64-v3   # "supported" = v3 OK
+   ```
+   - Standard ISO: [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)
+   - AMD64v3 ISO: [cdimage.ubuntu.com/ubuntu/releases/26.10/release/](https://cdimage.ubuntu.com/ubuntu/releases/26.10/release/) (the file with `amd64v3` in its name)
+2. **Verify it** before writing the USB. Download `SHA256SUMS` from the same directory, then run `sha256sum -c SHA256SUMS --ignore-missing`. You want `OK`. A USB 3 stick is much faster than USB 2 here.
+3. **Boot the USB.** If the installer offers an update and you choose **Update now**, it updates itself, closes, and leaves you at the live desktop. Relaunch it with `ubuntu-desktop-bootstrap` in a terminal, or reboot and choose **Skip** instead.
+4. **Choose Default selection.** Phase 7 reinstalls the apps you actually used. Tick **third-party software for graphics and Wi-Fi** and **additional media formats**, which is needed for NVIDIA cards.
+5. **NVIDIA and Secure Boot:** if the installer asks for a Secure Boot (MOK) password, write it down and choose **Enroll MOK** on the blue screen at first reboot. If no such screen appears, that's fine too (Secure Boot is off, or Ubuntu used pre-signed modules). Confirm with `nvidia-smi` after logging in.
+6. **Choose Manual installation** and pick the OS disk by model and size. Leave every other disk alone. Delete its old partitions so it shows only free space, then:
+   - Create **`/` first**. The installer adds its own EFI partition (FAT32, `/boot/efi`) automatically, so **don't create one yourself**, or you'll end up with two.
+   - Then create `/home` from the remaining space.
 
-    - Standard ISO: [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)
-    - AMD64v3 ISO: [cdimage.ubuntu.com/ubuntu/releases/26.10/release/](https://cdimage.ubuntu.com/ubuntu/releases/26.10/release/). Use the file with `amd64v3` in its name.
+   | Partition | Size | Format | Mount |
+   | --- | --- | --- | --- |
+   | EFI (added by the installer) | \~1G | FAT32 | `/boot/efi` |
+   | System | 200G | ext4 | `/` |
+   | Data | the rest | ext4 | `/home` |
 
-2. **Verify the ISO** before writing it to USB. Download `SHA256SUMS` from the same directory:
-
-    ```bash
-    sha256sum -c SHA256SUMS --ignore-missing   # want: OK
-    ```
-
-3. **Boot the USB** and choose **Manual installation**. Pick the OS disk by model and size. Leave every other disk alone, especially any disk with a filesystem directly on it and no partitions, which some installer screens display oddly.
-4. **Partition the OS disk.** Keeping the system and `/home` on separate partitions means the next clean install formats only `/`:
-
-    | Partition | Size | Format | Mount |
-    | --- | --- | --- | --- |
-    | EFI | 1G | FAT32 | `/boot/efi` |
-    | System | 200G | ext4 | `/` |
-    | Data | the rest | ext4 | `/home` |
-
-    200G leaves room for snaps, flatpaks, apt caches and old kernels. 100G gets tight within a release or two. A Clonezilla image of just the system partition is small, quick, and restorable without touching your data.
-
-5. Use the same username as before. Paths in your shell configs probably assume it.
-6. After the first boot, update before restoring anything:
-
-    ```bash
-    sudo apt update && sudo apt full-upgrade -y
-    ```
+   200G leaves room for snaps, Flatpaks, caches, kernels and VM disks in `/var/lib/libvirt/images`. A separate `/home` means the next clean install formats only `/`.
+7. Use the same username and hostname as before. Paths, `bkenv` and the manifest names assume them.
+8. After the first boot: `sudo apt update && sudo apt full-upgrade -y`.
 
 ## Phase 7 — Restore, in order
 
-Set the variables again in the new system's terminal:
+Plug in the backup drive and run `bkenv` (Overview). Until your shell config is restored in step 4, paste the function into the terminal first. Work in this order: later steps depend on earlier ones.
 
-```bash
-BACKUP=$(findmnt -n -o TARGET -S LABEL=<backup-drive-label>)
-HOMECOPY=$(findmnt -n -o TARGET -S LABEL=<home-copy-drive-label>)/home-$USER
-M=$(ls -d "$BACKUP"/system-manifest-*-* | tail -1)
-echo "BACKUP=$BACKUP  HOMECOPY=$HOMECOPY  M=$M"   # all three must show a real path
-```
+### Files, SSH, git, shell, fonts
 
-1. **Your files.** Copy back the visible folders (Documents, Pictures and so on) and leave the old hidden config folders behind. You'll restore those selectively below:
+1. **Your files.** Copy back the visible folders (Documents, Pictures and so on). This deliberately skips **hidden** files and folders; the steps below restore those (SSH in 2, shell in 4, app settings in 17, Claude Code in 11).
+
+   ```bash
+   rsync -aHAX --info=progress2 --exclude='.*' "$HOMECOPY"/ ~/
+   ```
+2. **SSH keys and config:**
+
+   ```bash
+   tar xzpf "$M/SENSITIVE/ssh-keys.tgz" -C ~
+   chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_* ~/.ssh/config
+   ```
+
+   If your `Host *` block lists legacy algorithms for old network gear, each list must start with a **`+`** (for example `KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1`). Without the `+` it *replaces* OpenSSH's modern defaults, and modern hosts then fail with "no matching key exchange method found".
+3. **Git and GitHub:**
+
+   ```bash
+   cp "$M/dev/.gitconfig" ~/
+   ssh -T git@github.com                                      # want: "Hi <user>!"
+   git config --global url."git@github.com:".insteadOf https://github.com/
+   git config --global core.fileMode false
+   find ~/<sync-folder> -maxdepth 4 -type d -name .git -exec git --git-dir={} config core.fileMode false \;
+   ```
+   - The `insteadOf` line makes HTTPS remotes push over SSH. If git asks for a username and password, this is what's missing. GitHub rejects account passwords anyway.
+   - `core.fileMode false` stops repos in a synced folder from showing every script as "modified" (cloud drives don't keep the executable bit). Git writes `true` into each new clone, so run `git config core.fileMode false` after cloning. When you add a new script, record it as executable with `git update-index --chmod=+x <file>`.
+   - In synced folders, use git on **one machine at a time** and let the sync finish before switching.
+4. **Shell.** Install zsh, oh-my-zsh and your plugins **first**, because the oh-my-zsh installer replaces `~/.zshrc`. Then copy back `.zshrc` and `.oh-my-zsh/custom/` from `$M/shell/`, and zoxide's history from `$HOMECOPY/.local/share/zoxide/`. Reload with `exec zsh`.
+   - Check your aliases for apps that changed format. For example, an alias `code='flatpak run …'` breaks once VS Code comes from apt.
+   - Keep passwords out of `.zshrc`. Set them per terminal, without echo or history, using helpers in `~/.oh-my-zsh/custom/<your>.zsh` (oh-my-zsh loads only `*.zsh` files in `custom/`):
+
+   ```bash
+   venv()    { source ~/.venvs/"$1"/bin/activate; }          # venv <project>
+   askpass() { read -rs "$1?$1: "; export "$1"; echo; }       # askpass MY_PASSWORD_VAR (zsh)
+   ```
+   - Add `bkenv` there too. Variable names are case-sensitive, so match exactly what your scripts read.
+   - Add functions in an editor, not by pasting a heredoc at the prompt. A wrapped paste can write the command itself into the file. If a line ends up in there that sources `.zshrc`, every new shell hangs. Typing **Ctrl+X Ctrl+E** at the prompt opens long commands in your editor.
+5. **Fonts, before opening any apps** (otherwise they fall back to a default font). Fonts installed with `sudo` live in `/usr/local/share/fonts`:
+
+   ```bash
+   sudo tar xzf "$M/system/fonts-usr-local.tgz" -C /usr/local/share
+   cp -a "$M/system/fonts" ~/.local/share/ 2>/dev/null
+   sudo fc-cache -f
+   fc-match '<your editor font>'      # should name your font, not DejaVu
+   ```
+
+### Packages
+
+6. **Third-party APT repos.** Each file in `$M/system/apt-sources.list.d/` is one repo. Skip `ubuntu.sources`, since the new release has its own. Sort the rest by their `Suites:` line:
+
+   ```bash
+   for f in "$M"/system/apt-sources.list.d/*; do echo "== $(basename "$f")"; grep -hE '^(URIs|Suites|Signed-By):|^deb ' "$f"; done
+   ```
+
+   | `Suites:` | Meaning | Restore |
+   | --- | --- | --- |
+   | `stable`, `main` and similar | Not tied to an Ubuntu release | Copy the file back, plus its key from `system/apt-keyrings/` or `system/apt-keyrings-other/` |
+   | An Ubuntu codename (e.g. `plucky`) | Built per release | Use the vendor's current instructions, or their `.deb` (step 9) |
+   | A `ppa.launchpadcontent.net` URL | A PPA | `sudo add-apt-repository ppa:<owner>/<name>`; if there's no build for your release yet, use Ubuntu's own package |
+
+   Restored repo files and keys must be root-owned (`sudo chown root:root`, `sudo chmod 644`), then run `sudo apt update`.
+7. **APT packages.** apt aborts the **whole** install if a single name is unknown, so split the list first:
+
+   ```bash
+   while read -r p; do
+     if apt-cache policy "$p" 2>/dev/null | grep -q 'Candidate: [^(]'; then echo "$p"; else echo "$p" >&2; fi
+   done < "$M/packages/apt-manual.txt" > ~/apt-ok.txt 2> ~/apt-missing.txt
+   xargs -a ~/apt-ok.txt sudo apt install -y
+   ```
+
+   Then sort `~/apt-missing.txt`:
+
+   | Missing | What to do |
+   | --- | --- |
+   | Old libraries, kernels and HWE packages from older releases | Ignore. Apps pull in current versions |
+   | Packages from vendor repos (browser, sync client, editors, printer drivers) | Install from the vendor (step 9) |
+   | `python3.X-venv`, `python3.X-tk` | Normal: get older Pythons with uv (Phase 8) |
+   | `isc-dhcp-client`, `wireless-tools`, `speedtest-cli`, `p7zip-rar` | Removed. Use `dhcpcd-base` (`dhcpcd`), `iw`, `pipx install speedtest-cli`, `7zip-rar`. Update any scripts that call `dhclient` or `iwconfig` |
+   | `qemu-kvm` ("virtual package") | Install `qemu-system-x86` instead |
+
+   Also **skip** apt packages you'll run another way: apt's `mkdocs` (pipx, Phase 8), and apps you'll install as a Flatpak (for example `simplenote`), otherwise you get duplicates.
+8. **Homebrew, pipx, cargo, npm.** Run `brew bundle install --file="$M/packages/Brewfile"`. For the others, see `pipx.json`, `cargo.txt` and `npm-global.txt`. A missing file just means nothing was installed with that tool.
+
+### Apps that aren't in any package list
+
+Check `$M/packages/native-tools.txt` and `$M/system/non-package-installs.txt` (the `~/.local/bin` and `/opt` listings). Everything in them needs reinstalling by hand.
+
+9. **Vendor `.deb`s:** for example Chrome, your sync client, Termius and printer drivers (e.g. Epson `escpr2`). Download each from the vendor. Most add their own APT repo, so they keep updating.
+10. **VS Code** from Microsoft's repo (restored in step 6): `sudo apt install code`. Install it explicitly if it used to be a Flatpak, since it then won't be in the apt list. Sign in to Settings Sync for your extensions and settings.
+11. **Claude Code:** native installer (it updates itself), then your settings. **Log in fresh**; don't copy `.credentials.json`:
 
     ```bash
-    rsync -aHAX --info=progress2 --exclude='.*' "$HOMECOPY"/ ~/
+    curl -fsSL https://claude.ai/install.sh | bash
+    claude doctor
+    mkdir -p ~/.claude && cp -a "$M/dev/claude/." ~/.claude/
+    claude                                   # log in through the browser
     ```
-
-2. **SSH keys:**
+12. **Tailscale:** in the admin console, **remove the machine's old entry first** so the rebuilt machine can reuse its name. Then:
 
     ```bash
-    tar xzpf "$M/SENSITIVE/ssh-keys.tgz" -C ~
-    chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_* ~/.ssh/config
+    curl -fsSL https://tailscale.com/install.sh | sh
+    sudo tailscale up                        # add --advertise-routes=<subnet> if this machine was a subnet router
     ```
 
-3. **Third-party APT repos.** `$M/system/apt-sources.list.d/` is reference only, because the release codename changed. Re-add each repo with its vendor's current instructions and keyring.
-4. **APT packages.** Review the list first, since some packages are renamed or gone:
+    If you reach internal DNS names over Tailscale, add a **Split DNS** nameserver for your internal domain in the admin console (**DNS → Add nameserver → Restrict to domain**). Otherwise Tailscale's resolver (`100.100.100.100`) won't resolve them.
+13. **Ollama:** `curl -fsSL https://ollama.com/install.sh | sh`. Your old models are listed in `$M/packages/ollama.txt`, but small models move fast, so check for newer ones. Size them to your GPU memory (`nvidia-smi --query-gpu=name,memory.total --format=csv`). Anything bigger than the GPU runs partly on the CPU, which works but is slower. For a 4GB card:
+
+    | Model | Pull | Download | Role |
+    | --- | --- | --- | --- |
+    | Qwen 3.5 9B | `ollama pull qwen3.5:9b` | 6.6 GB | Everyday model (runs partly on the GPU) |
+    | Llama 3.2 3B | `ollama pull llama3.2:3b` | 2 GB | Quick tasks (fits entirely on a 4GB GPU) |
+14. **Samba** (test shares): `sudo apt install samba`, restore the config, re-add your Samba user, then restart:
 
     ```bash
-    less "$M/packages/apt-manual.txt"
-    xargs -a "$M/packages/apt-manual.txt" sudo apt install -y
+    sudo cp "$M/system/smb.conf" /etc/samba/smb.conf
+    sudo smbpasswd -a $USER
+    sudo systemctl restart smbd nmbd
     ```
-
-5. **Homebrew:**
+15. **Your own systemd units** (e.g. timers you wrote), saved in `system/systemd-local/`:
 
     ```bash
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew bundle install --file="$M/packages/Brewfile"
+    sudo cp "$M"/system/systemd-local/* /etc/systemd/system/
+    sudo systemctl daemon-reload && sudo systemctl enable --now <unit>.timer
     ```
-
-6. **pipx, cargo, npm.** Reinstall from `$M/packages/pipx.txt`, `cargo.txt` and `npm-global.txt`.
-7. **VS Code extensions:**
-
-    ```bash
-    while read -r ext; do code --install-extension "$ext"; done < "$M/dev/vscode-extensions.txt"
-    ```
-
-8. **Git and gh.** Copy `.gitconfig` and `.gitignore` from `$M/dev/`, run `gh auth login`, then reinstall the extensions listed in `gh-extensions.txt`.
-9. **Shell.** Copy `.zshrc`, `.zsh_history`, oh-my-zsh `custom/` and `.tmux.conf` from `$M/shell/`. Check for hard-coded paths, then open a new terminal.
-10. **Groups.** Log out and back in afterwards. `dialout` is what grants access to USB-serial console cables:
-
-    ```bash
-    sudo usermod -aG libvirt,kvm,dialout,wireshark $USER
-    ```
-
-11. **Wi-Fi and VPN profiles.** These are the `90-NM-*` netplan files:
-
-    ```bash
-    sudo cp "$M"/SENSITIVE/netplan/90-NM-*.yaml /etc/netplan/
-    sudo chown root:root /etc/netplan/90-NM-*.yaml && sudo chmod 600 /etc/netplan/90-NM-*.yaml
-    sudo netplan generate && sudo nmcli connection reload
-    ```
-
-    Don't copy the other netplan files over blind. Compare them with the fresh defaults, then rebuild bridges and VLANs by hand.
-
-12. **udev rules.** Copy back only your custom rules from `$M/system/rules.d/`, then run `sudo udevadm control --reload`.
-13. **GNOME extensions.** Extensions are tied to the GNOME version, so reinstall current builds (Extension Manager or extensions.gnome.org) from `$M/system/gnome-extensions-enabled.txt`. Then restore only their settings:
-
-    ```bash
-    awk '/^\[/{p=($0 ~ /^\[org\/gnome\/shell\/extensions\//)} p' "$M/system/dconf-dump.ini" \
-      | sed 's|^\[org/gnome/shell/extensions/|[|' \
-      | dconf load /org/gnome/shell/extensions/
-    ```
-
-14. **VMs.** Keep VM disks off the 200G system partition by putting them on `/home`:
-
-    ```bash
-    sudo mkdir -p /home/libvirt-images
-    sudo rsync -ah --sparse --info=progress2 "$BACKUP"/vm-images/ /home/libvirt-images/
-    sudo virsh pool-define-as home-images dir --target /home/libvirt-images
-    sudo virsh pool-autostart home-images && sudo virsh pool-start home-images
-    for x in "$M"/kvm/*.xml; do
-      case "$x" in */net-*) continue;; esac
-      sed 's|/var/lib/libvirt/images/|/home/libvirt-images/|' "$x" > /tmp/vm.xml
-      sudo virsh define /tmp/vm.xml
-    done
-    ```
-
-    Re-create any non-default networks with `sudo virsh net-define "$M/kvm/net-<name>.xml"`.
-
-15. **Everything else.** Compare `$M/system/systemd-*.txt`, `crontab-user.txt` and `usr-local-bin.txt` with the new system. Restore other desktop settings selectively with `dconf load` rather than loading the whole dump.
 
 ## Phase 8 — Rebuild your Python dev environments
 
-Keep your code in the synced folder and keep the venvs out of it. A venv holds a link to one machine's Python plus compiled packages for one OS. A synced copy is broken on any other machine, and on another OS it can never work. Each machine builds its own from the project's lock file:
-
-```
-~/<sync-folder>/<project>/     ← code + requirements files (synced, same everywhere)
-~/.venvs/<project>/            ← interpreter + installed packages (local, per machine)
-```
-
-| | Linux / Mac | Windows |
-| --- | --- | --- |
-| Layout | `bin/python` (symlink) | `Scripts\python.exe` (copy) |
-| Activate | `source ~/.venvs/<project>/bin/activate` | `~\.venvs\<project>\Scripts\Activate.ps1` |
-| Compiled packages (cffi, cryptography) | Linux or macOS binaries | Windows binaries |
-
-1. **Let your sync client finish** downloading your project folders before you start.
-2. **Decide what to rebuild now.** `$M/dev/python-venvs.txt` lists every old venv and the Python version that built it. Rebuild only what you need right now; the rest can wait. Entries with `home = /usr/local/opt/python@…` were built on a Mac and never worked on Linux.
-3. **Install the Python version your lock files were built with.** A newer release may ship a newer default `python3`, and lock files pinned on an older Python often fail to install on a newer one. Check apt first:
-
-    ```bash
-    apt-cache policy python3.13
-    sudo apt install python3.13 python3.13-venv          # if apt has it
-    # otherwise, without touching the system Python:
-    pipx install uv && uv python install 3.13
-    ```
-
-4. **Build a venv for each project** (example: a project called `Discovery`):
-
-    ```bash
-    python3.13 -m venv ~/.venvs/Discovery                # or: uv venv --seed --python 3.13 ~/.venvs/Discovery
-    source ~/.venvs/Discovery/bin/activate
-    cd ~/<sync-folder>/Discovery
-    python -m pip install -r requirements-lock.txt
-    ```
-
-5. **Point VS Code at it.** Use the interpreter picker at the bottom-right of the status bar, then **Enter interpreter path** → `~/.venvs/Discovery/bin/python`. VS Code remembers it per folder.
-6. **Optional shortcut,** one shell function per project:
-
-    ```bash
-    disc() { source ~/.venvs/Discovery/bin/activate && cd ~/<sync-folder>/Discovery; }
-    ```
-
-7. **MkDocs sites** (Material theme with the `social` and `glightbox` plugins). Install MkDocs once with pipx so it works from every docs project, venv active or not:
-
-    ```bash
-    sudo apt install libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
-    pipx install mkdocs
-    pipx inject mkdocs "mkdocs-material[imaging]" mkdocs-glightbox
-    cd ~/<sync-folder>/<docs-project> && mkdocs serve    # test it
-    ```
-
-    The `social` plugin downloads theme fonts on its first build. Build each site once while you're online so later builds work offline.
-
-8. **Clean up the old synced venvs later.** Only do it once the new venvs work on every machine you use, and only from one machine, because deletions sync everywhere. Then add an ignore rule in your sync client for venv folder names.
-
 ## Gotchas
 
-| Symptom | Cause | Fix |
-| --- | --- | --- |
-| `zsh: no matches found` on `sudo du /var/lib/libvirt/images/*` | Your shell expands the glob as you, before sudo, and can't read the root-only folder | `sudo sh -c 'du -sh /var/lib/libvirt/images/*'` |
-| `zsh: event not found` on `~/.[!.]*` | zsh treats `!` as history expansion | Use `~/*(D)` in zsh |
-| `partclone.chkimg`: `Unknown checksum mode` | Ubuntu's partclone is older than Clonezilla's | Verify inside Clonezilla live (Phase 1) |
-| `NetworkManager/system-connections` is empty | NM saves profiles as netplan `90-NM-*.yaml` | Normal. They're in the netplan backup |
-| A command path starts with `/SENSITIVE/...` | `$M` isn't set in this terminal | Re-run the `M=...` line |
-| `qemu-img compare` sits silent for minutes | It reads both images in full | Add `-p` for progress, or rely on `qemu-img check` |
-| A doubled folder name inside your copy | rsync source given without a trailing slash | Use `src/` to copy the contents of src |
-| A project's venv works on one machine and is broken on the others | The venv lives in a synced folder; it's tied to one machine's Python and OS | Keep venvs in `~/.venvs/<project>` (Phase 8) |
-| `which mkdocs` points into some project's venv | That venv is active and first on `PATH` | `deactivate` first; install MkDocs with pipx (Phase 8) |
-| A folder you deleted on the test machine vanished from your main one | Sync clients mirror deletions | Never delete in synced folders on a test machine |
-| A drive shows up under `/run/media/$USER/` instead of `/media/$USER/` | Newer releases use udisks2's upstream mount location | Look it up by label: `findmnt -n -o TARGET -S LABEL=<label>` |
-| The installer vanishes after "Update Now" and leaves you at the live desktop | It updated itself and closed | Run `ubuntu-desktop-bootstrap` in a terminal, or reboot and choose Skip at the update prompt |
-| Manual partitioning adds a second FAT32 partition with no mount point | The installer adds its own EFI partition | Don't create one yourself: add `/` first and let the installer add EFI |
-
 ## Appendix — system-manifest.sh
-
-Save as `~/system-manifest.sh` and run it with `~/system-manifest.sh "$BACKUP"`. The destination is required, and the script refuses one on the root disk.
-
-```bash
-#!/usr/bin/env bash
-# ============================================================================
-# system-manifest.sh
-# Capture a full tool + config inventory before an OS reinstall, so you can
-# rebuild your environment from a checklist instead of memory.
-#
-# Run as your NORMAL USER (not sudo) — brew/code/gh must run in user context.
-# The script calls sudo itself only for the few system files that need it.
-#
-# Usage:
-#   chmod +x system-manifest.sh
-#   ./system-manifest.sh <dest-dir>          e.g. /media/$USER/Data
-#   ./system-manifest.sh --force <dest-dir>  allow a dest on the root disk
-#
-# Output: <dest-dir>/system-manifest-<host>-<date>/
-# The destination is REQUIRED and must not be on the same filesystem as /,
-# so the manifest is already off the disk you're about to wipe.
-# ============================================================================
-
-set -uo pipefail   # NOT -e: we want to continue past individual failures
-USER="${USER:-$(id -un)}"
-
-usage() {
-  echo "usage: $0 [--force] <dest-dir>   (e.g. /media/$USER/Data)" >&2
-  exit 2
-}
-
-FORCE=0
-if [ "${1:-}" = "--force" ]; then FORCE=1; shift; fi
-[ $# -eq 1 ] || usage
-DEST="${1%/}"
-
-if [ ! -d "$DEST" ]; then
-  echo "ERROR: $DEST does not exist or isn't mounted." >&2
-  exit 1
-fi
-if [ ! -w "$DEST" ]; then
-  echo "ERROR: $DEST is not writable by $USER." >&2
-  exit 1
-fi
-# Refuse a destination on the same filesystem as / (the disk you're wiping)
-root_dev=$(findmnt -n -o SOURCE --target / 2>/dev/null)
-dest_dev=$(findmnt -n -o SOURCE --target "$DEST" 2>/dev/null)
-if [ -n "$root_dev" ] && [ "$root_dev" = "$dest_dev" ] && [ "$FORCE" -eq 0 ]; then
-  echo "ERROR: $DEST is on the root filesystem ($root_dev) — the disk you're about to wipe." >&2
-  echo "       Pick a path on the backup drive, or use --force if you really mean it." >&2
-  exit 1
-fi
-
-# Warn if the destination can't hold Linux permissions/ownership
-dest_fs=$(findmnt -n -o FSTYPE --target "$DEST" 2>/dev/null)
-case "$dest_fs" in
-  ntfs|ntfs3|fuseblk|exfat|vfat|msdos)
-    echo "WARNING: $DEST is $dest_fs — Linux permissions and ownership won't stick." >&2
-    echo "         SENSITIVE/ will NOT be locked to 700, and some copies may report [warn]." >&2
-    ;;
-esac
-
-OUTDIR="$DEST/system-manifest-$(hostname)-$(date +%Y-%m-%d)"
-mkdir -p "$OUTDIR"/{packages,dev,shell,network,system,kvm,SENSITIVE} || {
-  echo "ERROR: could not create $OUTDIR" >&2; exit 1; }
-chmod 700 "$OUTDIR/SENSITIVE"
-
-have() { command -v "$1" >/dev/null 2>&1; }
-sec()  { printf '\n\033[1;36m=== %s ===\033[0m\n' "$1"; }
-cap()  { # cap <label> <outfile> <command...>
-  local label="$1" out="$2"; shift 2
-  if "$@" >"$out" 2>/dev/null; then
-    printf '  [ok]   %-28s -> %s\n' "$label" "${out#"$OUTDIR"/}"
-  else
-    printf '  [skip] %-28s (not present / no output)\n' "$label"
-    rm -f "$out"
-  fi
-}
-copy() { # copy <label> <src> <destdir>
-  local label="$1" src="$2" dest="$3"
-  if [ -e "$src" ]; then
-    cp -a "$src" "$dest"/ 2>/dev/null \
-      && printf '  [ok]   %-28s -> %s\n' "$label" "${dest#"$OUTDIR"/}/" \
-      || printf '  [warn] %-28s (copy failed)\n' "$label"
-  else
-    printf '  [skip] %-28s (not found)\n' "$label"
-  fi
-}
-
-echo "Writing manifest to: $OUTDIR"
-
-# ---------------------------------------------------------------------------
-sec "Package managers"
-# apt: MANUALLY installed only — this is your rebuild list (covers nala too)
-cap "apt manual packages"   "$OUTDIR/packages/apt-manual.txt"        apt-mark showmanual
-cap "dpkg full (reference)" "$OUTDIR/packages/dpkg-full.txt"         dpkg -l
-cap "apt auto-installed"    "$OUTDIR/packages/apt-auto.txt"          apt-mark showauto
-have nala    && cap "nala history"      "$OUTDIR/packages/nala-history.txt"  nala history
-have snap    && cap "snap packages"     "$OUTDIR/packages/snap.txt"          snap list
-have flatpak && cap "flatpak apps"      "$OUTDIR/packages/flatpak.txt"       flatpak list --app --columns=application,name
-
-# Homebrew — Brewfile is the one-shot restore artifact
-if have brew; then
-  brew bundle dump --force --file="$OUTDIR/packages/Brewfile" >/dev/null 2>&1 \
-    && echo "  [ok]   Brewfile (taps+formulae+casks) -> packages/Brewfile"
-  cap "brew leaves (top-level)" "$OUTDIR/packages/brew-leaves.txt" brew leaves --installed-on-request
-fi
-
-# Language/dev package managers
-have pipx  && cap "pipx apps"        "$OUTDIR/packages/pipx.txt"        pipx list
-have pip   && cap "pip (system)"     "$OUTDIR/packages/pip-freeze.txt"  pip freeze
-have pip3  && cap "pip3 (system)"    "$OUTDIR/packages/pip3-freeze.txt" pip3 freeze
-have cargo && cap "cargo installed"  "$OUTDIR/packages/cargo.txt"       cargo install --list
-have npm   && cap "npm global"       "$OUTDIR/packages/npm-global.txt"  npm ls -g --depth=0
-have go    && cap "go version"       "$OUTDIR/packages/go-version.txt"  go version
-
-# ---------------------------------------------------------------------------
-sec "Dev tooling"
-have code && cap "VS Code extensions" "$OUTDIR/dev/vscode-extensions.txt" code --list-extensions
-if have gh; then
-  cap "gh extensions"  "$OUTDIR/dev/gh-extensions.txt" gh extension list
-  cap "gh auth status" "$OUTDIR/dev/gh-auth.txt"       gh auth status
-  cap "gh own repos"   "$OUTDIR/dev/gh-repos.txt"      gh repo list --limit 200
-fi
-copy "git global config" "$HOME/.gitconfig"     "$OUTDIR/dev"
-copy "git ignore global" "$HOME/.gitignore"     "$OUTDIR/dev"
-# Find local git repos (working copies you'll want to re-clone or re-sync)
-find "$HOME" -maxdepth 5 -type d -name .git 2>/dev/null \
-  | sed 's|/.git$||' > "$OUTDIR/dev/local-git-repos.txt" \
-  && echo "  [ok]   local git repos            -> dev/local-git-repos.txt"
-# Python venvs: where each lives and which Python built it (your rebuild list)
-find "$HOME" -maxdepth 6 -name pyvenv.cfg -not -path '*/.cache/*' -not -path '*/.local/share/*' \
-  -exec grep -H '^version' {} \; 2>/dev/null | sort > "$OUTDIR/dev/python-venvs.txt" \
-  && echo "  [ok]   python venv inventory      -> dev/python-venvs.txt"
-
-# ---------------------------------------------------------------------------
-sec "Shell / zsh"
-for f in .zshrc .zshenv .zprofile .zlogin .p10k.zsh .aliases .functions; do
-  copy "$f" "$HOME/$f" "$OUTDIR/shell"
-done
-copy "zsh history"    "$HOME/.zsh_history"        "$OUTDIR/shell"
-copy "oh-my-zsh custom" "$HOME/.oh-my-zsh/custom" "$OUTDIR/shell"
-[ -d "$HOME/.config/zsh" ] && copy ".config/zsh" "$HOME/.config/zsh" "$OUTDIR/shell"
-copy "tmux.conf"      "$HOME/.tmux.conf"          "$OUTDIR/shell"
-# Snapshot resolved aliases/functions as readable reference
-if [ -n "${ZSH_VERSION:-}" ] || have zsh; then
-  zsh -ic 'alias' 2>/dev/null > "$OUTDIR/shell/aliases-resolved.txt" || true
-fi
-
-# ---------------------------------------------------------------------------
-sec "Network config  (netplan, bridges/VLANs, Wi-Fi/VPN profiles)"
-# netplan — root-readable; captured to SENSITIVE (may embed keys)
-if [ -d /etc/netplan ]; then
-  sudo cp -a /etc/netplan "$OUTDIR/SENSITIVE/netplan" 2>/dev/null \
-    && sudo chown -R "$USER":"$USER" "$OUTDIR/SENSITIVE/netplan" \
-    && echo "  [ok]   /etc/netplan              -> SENSITIVE/netplan/"
-fi
-# NetworkManager keyfiles (older releases; 23.10+ stores profiles as netplan 90-NM-*.yaml)
-if [ -d /etc/NetworkManager/system-connections ]; then
-  sudo cp -a /etc/NetworkManager/system-connections "$OUTDIR/SENSITIVE/NM-system-connections" 2>/dev/null \
-    && sudo chown -R "$USER":"$USER" "$OUTDIR/SENSITIVE/NM-system-connections" \
-    && echo "  [ok]   NM system-connections      -> SENSITIVE/  (has WiFi passwords)"
-fi
-cap "ip addr snapshot"  "$OUTDIR/network/ip-addr.txt"   ip -br a
-cap "ip route snapshot" "$OUTDIR/network/ip-route.txt"  ip route
-copy "/etc/hosts"       "/etc/hosts"                    "$OUTDIR/network"
-
-# ---------------------------------------------------------------------------
-sec "APT sources + keyrings"
-sudo cp -a /etc/apt/sources.list.d "$OUTDIR/system/apt-sources.list.d" 2>/dev/null \
-  && sudo chown -R "$USER":"$USER" "$OUTDIR/system/apt-sources.list.d" \
-  && echo "  [ok]   /etc/apt/sources.list.d    -> system/apt-sources.list.d/"
-sudo cp -a /etc/apt/keyrings "$OUTDIR/system/apt-keyrings" 2>/dev/null \
-  && sudo chown -R "$USER":"$USER" "$OUTDIR/system/apt-keyrings" \
-  && echo "  [ok]   /etc/apt/keyrings          -> system/apt-keyrings/"
-[ -d /etc/apt/preferences.d ] && sudo cp -a /etc/apt/preferences.d "$OUTDIR/system/apt-preferences.d" 2>/dev/null \
-  && sudo chown -R "$USER":"$USER" "$OUTDIR/system/apt-preferences.d"
-
-# ---------------------------------------------------------------------------
-sec "System state"
-cap "groups (id)"          "$OUTDIR/system/groups.txt"          id
-cap "crontab (user)"       "$OUTDIR/system/crontab-user.txt"    crontab -l
-cap "enabled user units"   "$OUTDIR/system/systemd-user.txt"    systemctl --user list-unit-files --state=enabled
-cap "enabled sys units"    "$OUTDIR/system/systemd-system.txt"  systemctl list-unit-files --state=enabled
-cap "default target"       "$OUTDIR/system/systemd-target.txt"  systemctl get-default
-cap "timezone/locale"      "$OUTDIR/system/locale.txt"          localectl status
-cap "foreign arches"       "$OUTDIR/system/dpkg-arches.txt"     dpkg --print-foreign-architectures
-# Desktop settings
-have dconf && dconf dump / > "$OUTDIR/system/dconf-dump.ini" 2>/dev/null \
-  && echo "  [ok]   dconf (GNOME settings)     -> system/dconf-dump.ini"
-# GNOME Shell extensions — the list is the restore path (reinstall current
-# versions for the new GNOME); the copied code is only a fallback.
-if have gnome-extensions; then
-  cap "gnome ext (all)"     "$OUTDIR/system/gnome-extensions.txt"         gnome-extensions list --user --details
-  cap "gnome ext (enabled)" "$OUTDIR/system/gnome-extensions-enabled.txt" gnome-extensions list --user --enabled
-fi
-copy "gnome ext (code)" "$HOME/.local/share/gnome-shell/extensions" "$OUTDIR/system"
-# Custom local binaries and udev rules (e.g., USB-serial console adapters)
-[ -d /usr/local/bin ] && ls -la /usr/local/bin > "$OUTDIR/system/usr-local-bin.txt" 2>/dev/null
-copy "udev rules" "/etc/udev/rules.d" "$OUTDIR/system"
-# Fonts
-copy "user fonts"  "$HOME/.local/share/fonts" "$OUTDIR/system"
-
-# ---------------------------------------------------------------------------
-sec "SSH  (keys, config, known_hosts)"
-# Plain tar, permissions preserved. Lands in SENSITIVE/ — keep it off cloud drives.
-if [ -d "$HOME/.ssh" ]; then
-  tar czpf "$OUTDIR/SENSITIVE/ssh-keys.tgz" -C "$HOME" .ssh 2>/dev/null \
-    && chmod 600 "$OUTDIR/SENSITIVE/ssh-keys.tgz" \
-    && echo "  [ok]   ~/.ssh (all keys)          -> SENSITIVE/ssh-keys.tgz" \
-    || echo "  [warn] ~/.ssh tarball failed — back up ~/.ssh by hand!"
-  ls -la "$HOME/.ssh" > "$OUTDIR/SENSITIVE/ssh-listing.txt" 2>/dev/null
-  # Warn about keys referenced from outside ~/.ssh (the tarball won't have them)
-  grep -iE '^\s*IdentityFile' "$HOME/.ssh/config" 2>/dev/null | grep -v '\.ssh/' \
-    && echo "  !! IdentityFile entries above point OUTSIDE ~/.ssh — copy those keys by hand."
-else
-  echo "  [skip] ~/.ssh                       (not found)"
-fi
-
-# ---------------------------------------------------------------------------
-sec "KVM / libvirt  (VM definitions + disk image paths)"
-# sudo so we hit qemu:///system where your VMs live. Plain user virsh talks to
-# qemu:///session and would list NONE of your system VMs.
-VIRSH="sudo virsh"
-if have virsh; then
-  $VIRSH list --all > "$OUTDIR/kvm/vms.txt" 2>/dev/null && echo "  [ok]   VM list -> kvm/vms.txt"
-
-  : > "$OUTDIR/kvm/disk-copy-list.txt"
-  printf '%-28s %-12s %-9s %s\n' "VM" "TARGET" "SIZE" "SOURCE (chain member)" \
-    > "$OUTDIR/kvm/disk-images.txt"
-
-  for vm in $($VIRSH list --all --name 2>/dev/null); do
-    [ -n "$vm" ] || continue
-    $VIRSH dumpxml "$vm" > "$OUTDIR/kvm/$vm.xml" 2>/dev/null && echo "  [ok]   dumpxml $vm"
-
-    # file-backed disks only (skip cdroms and empty slots)
-    $VIRSH domblklist "$vm" --details 2>/dev/null \
-      | awk 'NR>2 && $1=="file" && $2=="disk" && $4!="-" {print $3" "$4}' \
-      | while read -r target src; do
-          [ -n "$src" ] || continue
-          # Walk the backing chain so an overlay image never gets
-          # separated from its base — copying only the overlay = dead VM.
-          members=""
-          if have qemu-img; then
-            members=$(sudo qemu-img info --backing-chain "$src" 2>/dev/null \
-                       | awk -F': ' '/^image:/{print $2}')
-          fi
-          [ -n "$members" ] || members="$src"
-          n=0
-          while read -r member; do
-            [ -n "$member" ] || continue
-            sz=$(sudo du -h "$member" 2>/dev/null | cut -f1)
-            tag="$target"; [ "$n" -gt 0 ] && tag="$target~base$n"
-            printf '%-28s %-12s %-9s %s\n' "$vm" "$tag" "${sz:-?}" "$member" \
-              >> "$OUTDIR/kvm/disk-images.txt"
-            echo "$member" >> "$OUTDIR/kvm/disk-copy-list.txt"
-            n=$((n+1))
-          done <<< "$members"
-        done
-  done
-
-  # De-dup shared backing files across VMs
-  sort -u "$OUTDIR/kvm/disk-copy-list.txt" -o "$OUTDIR/kvm/disk-copy-list.txt"
-  echo "  [ok]   disk image report -> kvm/disk-images.txt"
-  echo "  [ok]   copy list         -> kvm/disk-copy-list.txt"
-
-  # libvirt networks
-  $VIRSH net-list --all > "$OUTDIR/kvm/networks.txt" 2>/dev/null
-  for net in $($VIRSH net-list --all --name 2>/dev/null); do
-    [ -n "$net" ] && $VIRSH net-dumpxml "$net" > "$OUTDIR/kvm/net-$net.xml" 2>/dev/null
-  done
-
-  # Total footprint so you know it fits on the backup disk before you start
-  if [ -s "$OUTDIR/kvm/disk-copy-list.txt" ]; then
-    total=$(xargs -d '\n' sudo du -ch < "$OUTDIR/kvm/disk-copy-list.txt" 2>/dev/null | tail -1 | cut -f1)
-    echo "  >> Total VM disk data to copy off: ${total:-unknown}"
-  fi
-
-  # Ready-to-run helper that copies every image (chain included) to a target dir
-  cat > "$OUTDIR/kvm/copy-vm-disks.sh" <<'CPEOF'
-#!/usr/bin/env bash
-# Copy all VM disk images (including backing files) off before you wipe.
-# Usage: sudo ./copy-vm-disks.sh <backup-dir>/vm-images
-# Shut the VMs down first. Verify afterwards with: qemu-img check <copy>
-set -euo pipefail
-DEST="${1:?usage: copy-vm-disks.sh <dest-dir>}"
-mkdir -p "$DEST"
-LIST="$(dirname "$0")/disk-copy-list.txt"
-while read -r img; do
-  [ -n "$img" ] || continue
-  echo ">> $img"
-  rsync -ah --info=progress2 --sparse "$img" "$DEST/"
-done < "$LIST"
-echo "Done -> $DEST"; ls -lh "$DEST"
-CPEOF
-  chmod +x "$OUTDIR/kvm/copy-vm-disks.sh"
-  echo "  [ok]   copy helper       -> kvm/copy-vm-disks.sh"
-  echo "  !! Disk images live on the drive you will wipe. Run:"
-  echo "        sudo $OUTDIR/kvm/copy-vm-disks.sh $DEST/vm-images"
-fi
-
-# ---------------------------------------------------------------------------
-sec "Writing reinstall notes"
-cat > "$OUTDIR/REINSTALL-NOTES.md" <<'NOTES'
-# Reinstall quick reference  (full steps: the Nuke & Pave runbook)
-
-    M=<this folder>
-
-1. APT packages (review first; some may be renamed in the new release)
-       xargs -a $M/packages/apt-manual.txt sudo apt install -y
-2. Homebrew
-       brew bundle install --file=$M/packages/Brewfile
-3. VS Code extensions
-       while read -r ext; do code --install-extension "$ext"; done < $M/dev/vscode-extensions.txt
-4. SSH keys
-       tar xzpf $M/SENSITIVE/ssh-keys.tgz -C ~
-5. Groups (see system/groups.txt), then log out/in
-       sudo usermod -aG libvirt,kvm,dialout,wireshark $USER
-6. NetworkManager profiles are netplan files: SENSITIVE/netplan/90-NM-*.yaml
-       sudo cp $M/SENSITIVE/netplan/90-NM-*.yaml /etc/netplan/
-       sudo chmod 600 /etc/netplan/90-NM-*.yaml && sudo netplan generate
-   Don't blind-copy the other netplan files; compare with the fresh defaults.
-7. udev rules: copy custom ones from system/rules.d/, then
-       sudo udevadm control --reload
-8. GNOME extensions: reinstall from system/gnome-extensions-enabled.txt,
-   then:  dconf load /org/gnome/shell/extensions/ < <section of system/dconf-dump.ini>
-9. APT sources: reference only (codename changes). Re-add third-party repos.
-10. libvirt: copy qcow2 images back, then
-       sudo virsh define $M/kvm/<vm>.xml
-NOTES
-echo "  [ok]   REINSTALL-NOTES.md"
-
-# ---------------------------------------------------------------------------
-sec "Done"
-SIZE=$(du -sh "$OUTDIR" 2>/dev/null | cut -f1)
-cat <<EOF
-
-Manifest complete: $OUTDIR  ($SIZE)
-
-  SENSITIVE/  holds WiFi PSKs, ssh keys and ssh config.
-              Keep it off cloud drives.
-
-Already written to $DEST — nothing to copy off.
-Still to do before the wipe: copy the VM disks (kvm/copy-vm-disks.sh) and
-check them, then verify the ssh tarball:  tar tzvf SENSITIVE/ssh-keys.tgz
-EOF
-```
