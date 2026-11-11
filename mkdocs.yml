@@ -24,6 +24,19 @@ theme:
     previous: fontawesome/solid/angle-left
     next: fontawesome/solid/angle-right
     repo: fontawesome/brands/github
+    admonition:
+      info: octicons/info-16
+      note: octicons/tag-16
+      tip: octicons/squirrel-16
+      warning: octicons/alert-16
+      success: octicons/check-16
+      question: octicons/question-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+
   features:
     - content.tabs.link
     - content.code.copy
@@ -58,19 +71,6 @@ theme:
         name: Switch to light mode
       primary: teal
       accent: lime
-  icon:
-    admonition:
-      info: octicons/info-16
-      note: octicons/tag-16
-      tip: octicons/squirrel-16
-      warning: octicons/alert-16
-      success: octicons/check-16
-      question: octicons/question-16
-      failure: octicons/x-circle-16
-      danger: octicons/zap-16
-      bug: octicons/bug-16
-      example: octicons/beaker-16
-      quote: octicons/quote-16
 
 plugins:
     - social
@@ -103,6 +103,7 @@ markdown_extensions:
   - tables
   - pymdownx.mark
   - attr_list
+  - sane_lists
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
