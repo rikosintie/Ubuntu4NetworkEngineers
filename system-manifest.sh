@@ -128,6 +128,16 @@ find "$HOME" -maxdepth 5 -type d -name .git 2>/dev/null \
 find "$HOME" -maxdepth 6 -name pyvenv.cfg -not -path '*/.cache/*' -not -path '*/.local/share/*' \
   -exec grep -H '^version' {} \; 2>/dev/null | sort > "$OUTDIR/dev/python-venvs.txt" \
   && echo "  [ok]   python venv inventory      -> dev/python-venvs.txt"
+# Claude Code: your settings, not login or session state (log in fresh after a rebuild)
+if [ -d "$HOME/.claude" ]; then
+  mkdir -p "$OUTDIR/dev/claude"
+  for f in settings.json keybindings.json CLAUDE.md commands agents skills plugins; do
+    [ -e "$HOME/.claude/$f" ] && cp -a "$HOME/.claude/$f" "$OUTDIR/dev/claude/"
+  done
+  echo "  [ok]   Claude Code settings       -> dev/claude/"
+fi
+# pipx tools with injected plugins (e.g. mkdocs + mkdocs-material)
+have pipx && cap "pipx tools (json)" "$OUTDIR/packages/pipx.json" pipx list --json
 
 # ---------------------------------------------------------------------------
 sec "Shell / zsh"
@@ -171,6 +181,14 @@ sudo cp -a /etc/apt/keyrings "$OUTDIR/system/apt-keyrings" 2>/dev/null \
   && echo "  [ok]   /etc/apt/keyrings          -> system/apt-keyrings/"
 [ -d /etc/apt/preferences.d ] && sudo cp -a /etc/apt/preferences.d "$OUTDIR/system/apt-preferences.d" 2>/dev/null \
   && sudo chown -R "$USER":"$USER" "$OUTDIR/system/apt-preferences.d"
+# Keys referenced by Signed-By: that live outside /etc/apt/keyrings (e.g. /usr/share/keyrings)
+mkdir -p "$OUTDIR/system/apt-keyrings-other"
+grep -rhoE 'Signed-By:\s*/[^ ,]+(,/[^ ,]+)*|signed-by=/[^] ]+' /etc/apt/sources.list.d 2>/dev/null \
+  | sed -E 's/^(Signed-By:\s*|signed-by=)//' | tr ',' '\n' \
+  | grep -v '^/etc/apt/keyrings/' | sort -u \
+  | while read -r k; do [ -f "$k" ] && cp -a "$k" "$OUTDIR/system/apt-keyrings-other/"; done
+[ -n "$(ls -A "$OUTDIR/system/apt-keyrings-other" 2>/dev/null)" ] \
+  && echo "  [ok]   other Signed-By keys       -> system/apt-keyrings-other/"
 
 # ---------------------------------------------------------------------------
 sec "System state"
@@ -194,8 +212,35 @@ copy "gnome ext (code)" "$HOME/.local/share/gnome-shell/extensions" "$OUTDIR/sys
 # Custom local binaries and udev rules (e.g., USB-serial console adapters)
 [ -d /usr/local/bin ] && ls -la /usr/local/bin > "$OUTDIR/system/usr-local-bin.txt" 2>/dev/null
 copy "udev rules" "/etc/udev/rules.d" "$OUTDIR/system"
-# Fonts
+# Fonts — per-user and system-wide (fonts installed with sudo land in /usr/local/share/fonts)
 copy "user fonts"  "$HOME/.local/share/fonts" "$OUTDIR/system"
+[ -d /usr/local/share/fonts ] && [ -n "$(ls -A /usr/local/share/fonts 2>/dev/null)" ] \
+  && tar czf "$OUTDIR/system/fonts-usr-local.tgz" -C /usr/local/share fonts 2>/dev/null \
+  && echo "  [ok]   /usr/local/share/fonts     -> system/fonts-usr-local.tgz"
+# Software installed outside package managers (native installers, curl | sh, tarballs)
+{ echo "== ~/.local/bin";  ls -la "$HOME/.local/bin" 2>/dev/null
+  echo "== /opt";          ls -la /opt 2>/dev/null; } > "$OUTDIR/system/non-package-installs.txt"
+echo "  [ok]   ~/.local/bin + /opt listing -> system/non-package-installs.txt"
+: > "$OUTDIR/packages/native-tools.txt"
+for t in claude tailscale ollama uv espanso code docker vmware; do
+  have "$t" && printf '%-10s %s\n' "$t" "$(command -v "$t")" >> "$OUTDIR/packages/native-tools.txt"
+done
+echo "  [ok]   native tools present       -> packages/native-tools.txt"
+have ollama && cap "ollama models" "$OUTDIR/packages/ollama.txt" ollama list
+# Locally created systemd units (e.g. timers you wrote), not package-owned symlinks
+mkdir -p "$OUTDIR/system/systemd-local"
+find /etc/systemd/system -maxdepth 1 -type f \( -name '*.service' -o -name '*.timer' \) \
+  -exec cp -a {} "$OUTDIR/system/systemd-local/" \; 2>/dev/null
+[ -n "$(ls -A "$OUTDIR/system/systemd-local" 2>/dev/null)" ] \
+  && echo "  [ok]   local systemd units        -> system/systemd-local/"
+# Flatpak permission overrides (e.g. --filesystem=home for an app)
+for d in /var/lib/flatpak/overrides "$HOME/.local/share/flatpak/overrides"; do
+  [ -d "$d" ] && [ -n "$(ls -A "$d" 2>/dev/null)" ] && mkdir -p "$OUTDIR/system/flatpak-overrides" \
+    && cp -a "$d"/. "$OUTDIR/system/flatpak-overrides/" \
+    && echo "  [ok]   flatpak overrides ($d) -> system/flatpak-overrides/"
+done
+# Samba config (shares for testing)
+[ -f /etc/samba/smb.conf ] && copy "samba smb.conf" "/etc/samba/smb.conf" "$OUTDIR/system"
 
 # ---------------------------------------------------------------------------
 sec "SSH  (keys, config, known_hosts)"
